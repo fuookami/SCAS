@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="Globals">
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <ItemsProjectGuid>{08c99fa0-a760-4215-831a-6788c8a92ce8}</ItemsProjectGuid>
+    <ItemsRootNamespace>
+    </ItemsRootNamespace>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(MSBuildThisFileDirectory)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ProjectCapability Include="SourceItemsFromImports" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)ChineseNumberUtils.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)DataUtils.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)DateTimeUtils.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)FileUtils.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)MailTest.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)MailUtils.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)StringConvertUtils.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)ChineseNumberUtils.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)DataUtils.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)DateTimeUtils.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)FileUtils.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)StringConvertUtils.h" />
+  </ItemGroup>
+</Project>

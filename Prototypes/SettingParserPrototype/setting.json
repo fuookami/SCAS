@@ -1,0 +1,157 @@
+{
+    "name": "XX游泳比赛",
+
+    "sub_name": "暨XX游泳比赛",
+
+    "max_apply": {
+        "has_max_apply": true,
+        "max_apply_per_person": 2
+    },
+
+    "principal": {
+        "name": "李四",
+        "tel": "xxxxxx",
+        "emil": "xxx@163.com"
+    },
+
+    "dates": [
+        "2017-11-23", "2017-11-24"
+    ],
+
+    "types": [{
+        "id": 0,
+        "name": "学生男子"
+    }, {
+        "id": 1,
+        "name": "学生女子"
+    }],
+
+    "ranks": {
+        "be_devided_rank": true,
+        "forced": true,
+        "ranks": {
+            "advanced_ranks": [{
+                "id": 0,
+                "name": "甲组"
+            }, {
+                "id": 1,
+                "name": "乙组"
+            }],
+            "normal_rank": {
+                "id": 2,
+                "name": "丙组"
+            }
+        }
+    },
+
+    "scores": "9 7 6 5 4 3 2 1",
+
+    "score_rate_when_break_record": {
+        "enabled": true,
+        "rate": 2
+    },
+
+    "teams": [{
+        "id": 1,
+        "name": "航空宇航学院",
+        "short_name": "一院"
+    }, {
+        "id": 2,
+        "name": "能源与动力学院",
+        "short_name": "二院"
+    }],
+
+    "games": [{
+        "date": "2017-11-23",
+        "games": [{
+            "id": 0,
+            "name": "女子25米自由泳预决赛",
+            "types": "1",
+            "ranks": "0 1 2",
+            "score_rate": 1,
+            "plan_interval_time": "0:0:0",
+            "plan_time_per_group": "0:3:0",
+            "divided_groups": {
+                "enabled": true,
+                "people_per_gourp": 4
+            },
+            "max_per_team": {
+                "enabled": true,
+                "number": 2
+            },
+            "be_teamwork": {
+                "enabled": false
+            }
+        }, {
+            "id": 1,
+            "name": "女子4*25米自由泳接力预决赛",
+            "types": "1",
+            "ranks": "0 1 2",
+            "score_rate": 2,
+            "plan_interval_time": "0:0:0",
+            "plan_time_per_group": "0:3:0",
+            "divided_groups": {
+                "enabled": true,
+                "people_per_gourp": 4
+            },
+            "max_per_team": {
+                "enabled": true,
+                "number": 1
+            },
+            "be_teamwork": {
+                "enabled": true,
+                "need_every_person": {
+                    "enabled": true,
+                    "min": 4,
+                    "max": 4
+                }
+            }
+        }]
+    }, {
+        "date": "2017-11-24",
+        "games": [{
+            "id": 2,
+            "name": "女子25米自由泳预决赛",
+            "types": "1",
+            "ranks": "0 1 2",
+            "score_rate": 1,
+            "plan_interval_time": "0:0:0",
+            "plan_time_per_group": "0:3:0",
+            "divided_groups": {
+                "enabled": true,
+                "people_per_gourp": 4
+            },
+            "max_per_team": {
+                "enabled": true,
+                "number": 2
+            },
+            "be_teamwork": {
+                "enabled": false
+            }
+        }, {
+            "id": 3,
+            "name": "女子4*25米自由泳接力预决赛",
+            "types": "1",
+            "ranks": "0 1 2",
+            "score_rate": 2,
+            "plan_interval_time": "0:0:0",
+            "plan_time_per_group": "0:3:0",
+            "divided_groups": {
+                "enabled": true,
+                "people_per_gourp": 4
+            },
+            "max_per_team": {
+                "enabled": true,
+                "number": 1
+            },
+            "be_teamwork": {
+                "enabled": true,
+                "need_every_person": {
+                    "enabled": true,
+                    "min": 4,
+                    "max": 4
+                }
+            }
+        }]
+    }]
+}
