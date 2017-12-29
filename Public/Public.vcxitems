@@ -24,6 +24,8 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)MailUtils.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)NumberVariant.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)StringConvertUtils.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)StringUtils.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)UuidUtils.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)ChineseNumberUtils.h" />
@@ -34,5 +36,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)MailUtils.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)NumberVariant.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)StringConvertUtils.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)StringUtils.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)UuidUtils.h" />
   </ItemGroup>
 </Project>

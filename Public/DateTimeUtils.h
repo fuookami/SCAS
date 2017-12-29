@@ -56,7 +56,7 @@ namespace DateTimeUtils
 		unsigned char sec;
 
 		TimeDuration(void);
-		TimeDuration(const unsigned long long seconds);
+		TimeDuration(const unsigned int seconds);
 		TimeDuration(const unsigned short _hour, const unsigned char _min, const unsigned char _sec);
 		TimeDuration(const TimeDuration &ano);
 		TimeDuration(const TimeDuration &&ano);
@@ -74,7 +74,7 @@ namespace DateTimeUtils
 		std::string toString(void) const;
 	};
 
-	struct Datetime
+	struct DateTime
 	{
 		short year;
 		unsigned char month;
@@ -83,25 +83,25 @@ namespace DateTimeUtils
 		unsigned char min;
 		unsigned char sec;
 
-		Datetime(void);
-		Datetime(const Date &date, const unsigned char _hour = 0, const unsigned char _min = 0, const unsigned char _sec = 0);
-		Datetime(const Date &&date, const unsigned char _hour = 0, const unsigned char _min = 0, const unsigned char _sec = 0);
-		Datetime(const short _year, const unsigned char _month, const unsigned char _day, const unsigned char _hour, const unsigned char _min, const unsigned char _sec);
-		Datetime(const Datetime &ano);
-		Datetime(const Datetime &&ano);
-		Datetime &operator=(const Datetime &rhs);
-		Datetime &operator=(const Datetime &&rhs);
-		~Datetime(void);
+		DateTime(void);
+		DateTime(const Date &date, const unsigned char _hour = 0, const unsigned char _min = 0, const unsigned char _sec = 0);
+		DateTime(const Date &&date, const unsigned char _hour = 0, const unsigned char _min = 0, const unsigned char _sec = 0);
+		DateTime(const short _year, const unsigned char _month, const unsigned char _day, const unsigned char _hour, const unsigned char _min, const unsigned char _sec);
+		DateTime(const DateTime &ano);
+		DateTime(const DateTime &&ano);
+		DateTime &operator=(const DateTime &rhs);
+		DateTime &operator=(const DateTime &&rhs);
+		~DateTime(void);
 
-		Datetime getDatetimeAfter(const int year, const int month, const int day, const int hour, const int min, const int sec) const;
-		Datetime getDatetimeAfter(const Datetime &datetime) const;
-		Datetime getDateAfter(const Date &date) const;
-		Datetime getDayAfter(const int day) const;
-		Datetime getTimeAfter(const TimeDuration &time) const;
+		DateTime getDatetimeAfter(const int year, const int month, const int day, const int hour, const int min, const int sec) const;
+		DateTime getDatetimeAfter(const DateTime &datetime) const;
+		DateTime getDateAfter(const Date &date) const;
+		DateTime getDayAfter(const int day) const;
+		DateTime getTimeAfter(const TimeDuration &time) const;
 
-		Datetime getDatetimeBefore(const Datetime &datetime) const;
-		Datetime getDateBefore(const Date &date) const;
-		Datetime getTimeBefore(const TimeDuration &time) const;
+		DateTime getDatetimeBefore(const DateTime &datetime) const;
+		DateTime getDateBefore(const Date &date) const;
+		DateTime getTimeBefore(const TimeDuration &time) const;
 
 		std::string toString(void) const;
 	};
@@ -112,33 +112,53 @@ namespace DateTimeUtils
 	Date getDateAfterLocalDate(const int day);
 	Date getDateBeforeLocalDate(const Date &date);
 
-	Datetime getLocalDatetime(void);
-	Datetime getDatetimeAfterLocalDatetime(const int year, const int month, const int day, const int hour, const int min, const int sec);
-	Datetime getDatetimeAfterLocalDatetime(const Datetime &datetime);
-	Datetime getDatetimeAfterLocalDatetime(const Date &date);
-	Datetime getDatetimeAfterLocalDatetime(const int day);
-	Datetime getDatetimeAfterLocalDatetime(const TimeDuration &time);
-	Datetime getDatetimeBeforeLocalDatetime(const Datetime &datetime);
-	Datetime getDatetimeBeforeLocalDatetime(const Date &date);
-	Datetime getDatetimeBeforeLocalDatetime(const TimeDuration &time);
+	DateTime getLocalDatetime(void);
+	DateTime getDatetimeAfterLocalDatetime(const int year, const int month, const int day, const int hour, const int min, const int sec);
+	DateTime getDatetimeAfterLocalDatetime(const DateTime &datetime);
+	DateTime getDatetimeAfterLocalDatetime(const Date &date);
+	DateTime getDatetimeAfterLocalDatetime(const int day);
+	DateTime getDatetimeAfterLocalDatetime(const TimeDuration &time);
+	DateTime getDatetimeBeforeLocalDatetime(const DateTime &datetime);
+	DateTime getDatetimeBeforeLocalDatetime(const Date &date);
+	DateTime getDatetimeBeforeLocalDatetime(const TimeDuration &time);
 
-	bool isLeapYear(const unsigned char year);
+	bool isLeapYear(const unsigned short year);
 
 	unsigned char getDayInWeek(unsigned short year, unsigned char month, const unsigned char day);
 	unsigned char getDayInWeek(const Date &date);
-	unsigned char getDayInWeek(const Datetime &datetime);
+	unsigned char getDayInWeek(const DateTime &datetime);
 
 	unsigned char getDaysOfMonth(const unsigned short year, const unsigned char month);
 	unsigned char getDaysOfMonth(const Date &date);
-	unsigned char getDaysOfMonth(const Datetime &datetime);
+	unsigned char getDaysOfMonth(const DateTime &datetime);
 
-	Datetime getBuildDateTime(const std::string &BuildOriginalDateString, const std::string &BuildTimeString);
+	DateTime getBuildDateTime(const std::string &BuildOriginalDateString, const std::string &BuildTimeString);
 };
 
 const bool operator<(const DateTimeUtils::Date &lhs, const DateTimeUtils::Date &rhs);
 const bool operator<(const DateTimeUtils::TimeDuration &lhs, const DateTimeUtils::TimeDuration &rhs);
-const bool operator<(const DateTimeUtils::Datetime &lhs, const DateTimeUtils::Datetime &rhs);
+const bool operator<(const DateTimeUtils::DateTime &lhs, const DateTimeUtils::DateTime &rhs);
+
+const bool operator<=(const DateTimeUtils::Date &lhs, const DateTimeUtils::Date &rhs);
+const bool operator<=(const DateTimeUtils::TimeDuration &lhs, const DateTimeUtils::TimeDuration &rhs);
+const bool operator<=(const DateTimeUtils::DateTime &lhs, const DateTimeUtils::DateTime &rhs);
+
+const bool operator>(const DateTimeUtils::Date &lhs, const DateTimeUtils::Date &rhs);
+const bool operator>(const DateTimeUtils::TimeDuration &lhs, const DateTimeUtils::TimeDuration &rhs);
+const bool operator>(const DateTimeUtils::DateTime &lhs, const DateTimeUtils::DateTime &rhs);
+
+const bool operator>=(const DateTimeUtils::Date &lhs, const DateTimeUtils::Date &rhs);
+const bool operator>=(const DateTimeUtils::TimeDuration &lhs, const DateTimeUtils::TimeDuration &rhs);
+const bool operator>=(const DateTimeUtils::DateTime &lhs, const DateTimeUtils::DateTime &rhs);
+
+const bool operator==(const DateTimeUtils::Date &lhs, const DateTimeUtils::Date &rhs);
+const bool operator==(const DateTimeUtils::TimeDuration &lhs, const DateTimeUtils::TimeDuration &rhs);
+const bool operator==(const DateTimeUtils::DateTime &lhs, const DateTimeUtils::DateTime &rhs);
+
+const bool operator!=(const DateTimeUtils::Date &lhs, const DateTimeUtils::Date &rhs);
+const bool operator!=(const DateTimeUtils::TimeDuration &lhs, const DateTimeUtils::TimeDuration &rhs);
+const bool operator!=(const DateTimeUtils::DateTime &lhs, const DateTimeUtils::DateTime &rhs);
 
 const int operator-(const DateTimeUtils::Date &lhs, const DateTimeUtils::Date &rhs);
 const int operator-(const DateTimeUtils::TimeDuration &lhs, const DateTimeUtils::TimeDuration &rhs);
-const DateTimeUtils::TimeDuration operator-(const DateTimeUtils::Datetime &lhs, const DateTimeUtils::Datetime &rhs);
+const DateTimeUtils::TimeDuration operator-(const DateTimeUtils::DateTime &lhs, const DateTimeUtils::DateTime &rhs);

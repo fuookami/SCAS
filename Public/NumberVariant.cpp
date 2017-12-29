@@ -324,91 +324,118 @@ void NumberVariant::swap(NumberVariant & ano)
 	std::swap(m_value, ano.m_value);
 }
 
+void NumberVariant::clear(void)
+{
+	set(false);
+	m_empty = true;
+}
+
 const std::string NumberVariant::toString(const int digit, const int precision) const
 {
-	static const std::string EmptyString("");
-	static const std::string Seperator("_");
-	static const std::string TrueString("true");
-	static const std::string FalseString("false");
-
-	std::string ret(EmptyString);
-	std::ostringstream floatSout(EmptyString);
-	std::string numberStr(EmptyString);
-	int64 number(0);
-	uint64 unsignedNumber(0);
-
-	switch (m_classfication)
+	if (m_empty)
 	{
-	case NumberVariant::eClassfication::tBoolean:
-		ret = get<bool>() ? TrueString : FalseString;
-		break;
-	case NumberVariant::eClassfication::tFloat:
-		if (precision != -1)
-		{
-			floatSout << std::setprecision(precision) << get<double>();
-		}
-		else
-		{
-			floatSout << get<double>();
-		}
-		numberStr = floatSout.str();
-
-		if (digit != -1)
-		{
-			size_t pointPos(numberStr.find("."));
-			if (numberStr.size() > (digit + 1) && pointPos != std::string::npos && pointPos < (digit + 1))
-			{
-				numberStr.erase(numberStr.begin() + digit + 1, numberStr.end());
-			}
-			else if(numberStr.size() > digit)
-			{
-				numberStr.erase(numberStr.begin() + digit, numberStr.end());
-			}
-		}
-		ret = std::to_string(static_cast<int>(m_type)) + Seperator + numberStr;
-		break;
-	case NumberVariant::eClassfication::tInteger:
-		number = get<int64>();
-		numberStr = std::to_string(number);
-
-		if (digit != -1)
-		{
-			if (number < 0 && numberStr.size() > (digit + 1))
-			{
-				numberStr.erase(numberStr.begin() + digit + 1, numberStr.end());
-			}
-			else if (numberStr.size() > digit)
-			{
-				numberStr.erase(numberStr.begin() + digit, numberStr.end());
-			}
-		}
-		ret = std::to_string(static_cast<int>(m_type)) + Seperator + numberStr;
-		break;
-	case NumberVariant::eClassfication::tUnsigned:
-		unsignedNumber = get<uint64>();
-		numberStr = std::to_string(number);
-
-		if (digit != -1 && numberStr.size() > digit)
-		{
-			numberStr.erase(numberStr.begin() + digit, numberStr.end());
-		}
-		ret = std::to_string(static_cast<int>(m_type)) + Seperator + numberStr;
-		break;
-	default:
-		ret = EmptyString;
-		break;
+		static const std::string EmptyString("empty");
+		return EmptyString;
 	}
+	else
+	{
+		static const std::string EmptyString("");
+		static const std::string Seperator("_");
 
-	return ret;
+		std::string ret(EmptyString);
+		switch (m_classfication)
+		{
+		case NumberVariant::eClassfication::tBoolean:
+		{
+			static const std::string TrueString("true");
+			static const std::string FalseString("false");
+
+			ret = get<bool>() ? TrueString : FalseString;
+		}
+			break;
+		case NumberVariant::eClassfication::tFloat:
+		{
+			std::ostringstream floatSout(EmptyString);
+
+			if (precision != -1)
+			{
+				floatSout << std::setprecision(precision) << get<double>();
+			}
+			else
+			{
+				floatSout << get<double>();
+			}
+			std::string numberStr(floatSout.str());
+
+			if (digit != -1)
+			{
+				size_t pointPos(numberStr.find("."));
+				if (numberStr.size() > (digit + 1) && pointPos != std::string::npos && pointPos < (digit + 1))
+				{
+					numberStr.erase(numberStr.begin() + digit + 1, numberStr.end());
+				}
+				else if (numberStr.size() > digit)
+				{
+					numberStr.erase(numberStr.begin() + digit, numberStr.end());
+				}
+			}
+
+			ret = std::to_string(static_cast<int>(m_type)) + Seperator + numberStr;
+		}
+			break;
+		case NumberVariant::eClassfication::tInteger:
+		{
+			int64 number(get<int64>());
+			std::string numberStr(std::to_string(number));
+
+			if (digit != -1)
+			{
+				if (number < 0 && numberStr.size() >(digit + 1))
+				{
+					numberStr.erase(numberStr.begin() + digit + 1, numberStr.end());
+				}
+				else if (numberStr.size() > digit)
+				{
+					numberStr.erase(numberStr.begin() + digit, numberStr.end());
+				}
+			}
+
+			ret = std::to_string(static_cast<int>(m_type)) + Seperator + numberStr;
+		}
+			break;
+		case NumberVariant::eClassfication::tUnsigned:
+		{
+			uint64 number(get<uint64>());
+			std::string numberStr(std::to_string(number));
+
+			if (digit != -1 && numberStr.size() > digit)
+			{
+				numberStr.erase(numberStr.begin() + digit, numberStr.end());
+			}
+			ret = std::to_string(static_cast<int>(m_type)) + Seperator + numberStr;
+		}
+			break;
+		default:
+			ret = EmptyString;
+			break;
+		}
+
+		return ret;
+	}
 }
 
 const NumberVariant NumberVariant::fromString(const std::string & str)
 {
 	static const std::string Seperator("_");
+	static const std::string EmptyString("empty");
 	static const std::string TrueString("true");
 	static const std::string FalseString("false");
 
-	if (str == TrueString)
+	if (str == EmptyString)
+	{
+		return NumberVariant();
+	}
+	else if (str == TrueString)
 	{
 		return NumberVariant(true);
 	}
@@ -463,7 +490,6 @@ const NumberVariant NumberVariant::fromString(const std::string & str)
 				return NumberVariant();
 				break;
 			}
-			
 		}
 		else
 		{
@@ -475,64 +501,76 @@ const NumberVariant NumberVariant::fromString(const std::string & str)
 }
 
 const DataUtils::Data NumberVariant::toData(void) const
-{
-	static const DataUtils::Data EmptyData;
-	
-	DataUtils::byte flag(static_cast<DataUtils::byte>(m_type));
-	flag <<= 1;
-	flag |= static_cast<DataUtils::byte>(EndianUtils::Endian::BigEndian);
-
-	DataUtils::Data ret;
-	switch (m_type)
+{	
+	if (m_empty)
 	{
-	case NumberVariant::eValidType::tBool:
-		ret = DataUtils::fromBool(EndianUtils::fromLocalEndian(EndianUtils::Endian::BigEndian, getBool()));
-		break;
-	case NumberVariant::eValidType::tFloat:
-		ret = DataUtils::fromFloat(EndianUtils::fromLocalEndian(EndianUtils::Endian::BigEndian, getFloat()));
-		break;
-	case NumberVariant::eValidType::tDouble:
-		ret = DataUtils::fromDouble(EndianUtils::fromLocalEndian(EndianUtils::Endian::BigEndian, getDouble()));
-		break;
-	case NumberVariant::eValidType::tInt8:
-		ret = DataUtils::fromInt8(EndianUtils::fromLocalEndian(EndianUtils::Endian::BigEndian, getInt8()));
-		break;
-	case NumberVariant::eValidType::tUInt8:
-		ret = DataUtils::fromUInt8(EndianUtils::fromLocalEndian(EndianUtils::Endian::BigEndian, getUInt8()));
-		break;
-	case NumberVariant::eValidType::tInt16:
-		ret = DataUtils::fromInt16(EndianUtils::fromLocalEndian(EndianUtils::Endian::BigEndian, getUInt16()));
-		break;
-	case NumberVariant::eValidType::tUInt16:
-		ret = DataUtils::fromUInt16(EndianUtils::fromLocalEndian(EndianUtils::Endian::BigEndian, getUInt16()));
-		break;
-	case NumberVariant::eValidType::tInt32:
-		ret = DataUtils::fromInt32(EndianUtils::fromLocalEndian(EndianUtils::Endian::BigEndian, getInt32()));
-		break;
-	case NumberVariant::eValidType::tUInt32:
-		ret = DataUtils::fromUInt32(EndianUtils::fromLocalEndian(EndianUtils::Endian::BigEndian, getUInt32()));
-		break;
-	case NumberVariant::eValidType::tInt64:
-		ret = DataUtils::fromInt64(EndianUtils::fromLocalEndian(EndianUtils::Endian::BigEndian, getInt64()));
-		break;
-	case NumberVariant::eValidType::tUInt64:
-		ret = DataUtils::fromUInt64(EndianUtils::fromLocalEndian(EndianUtils::Endian::BigEndian, getUInt64()));
-		break;
-	default:
-		ret = EmptyData;
-		break;
+		static const DataUtils::Data EmptyData({ 0x00 });
+		return EmptyData;
 	}
-
-	if (!ret.empty())
+	else
 	{
-		ret.insert(ret.begin(), flag);
+		static const DataUtils::Data EmptyData;
+
+		DataUtils::byte flag(static_cast<DataUtils::byte>(m_type));
+		flag <<= 1;
+		flag |= static_cast<DataUtils::byte>(EndianUtils::Endian::BigEndian);
+
+		DataUtils::Data ret;
+		switch (m_type)
+		{
+		case NumberVariant::eValidType::tBool:
+			ret = DataUtils::fromBool(EndianUtils::fromLocalEndian(EndianUtils::Endian::BigEndian, getBool()));
+			break;
+		case NumberVariant::eValidType::tFloat:
+			ret = DataUtils::fromFloat(EndianUtils::fromLocalEndian(EndianUtils::Endian::BigEndian, getFloat()));
+			break;
+		case NumberVariant::eValidType::tDouble:
+			ret = DataUtils::fromDouble(EndianUtils::fromLocalEndian(EndianUtils::Endian::BigEndian, getDouble()));
+			break;
+		case NumberVariant::eValidType::tInt8:
+			ret = DataUtils::fromInt8(EndianUtils::fromLocalEndian(EndianUtils::Endian::BigEndian, getInt8()));
+			break;
+		case NumberVariant::eValidType::tUInt8:
+			ret = DataUtils::fromUInt8(EndianUtils::fromLocalEndian(EndianUtils::Endian::BigEndian, getUInt8()));
+			break;
+		case NumberVariant::eValidType::tInt16:
+			ret = DataUtils::fromInt16(EndianUtils::fromLocalEndian(EndianUtils::Endian::BigEndian, getUInt16()));
+			break;
+		case NumberVariant::eValidType::tUInt16:
+			ret = DataUtils::fromUInt16(EndianUtils::fromLocalEndian(EndianUtils::Endian::BigEndian, getUInt16()));
+			break;
+		case NumberVariant::eValidType::tInt32:
+			ret = DataUtils::fromInt32(EndianUtils::fromLocalEndian(EndianUtils::Endian::BigEndian, getInt32()));
+			break;
+		case NumberVariant::eValidType::tUInt32:
+			ret = DataUtils::fromUInt32(EndianUtils::fromLocalEndian(EndianUtils::Endian::BigEndian, getUInt32()));
+			break;
+		case NumberVariant::eValidType::tInt64:
+			ret = DataUtils::fromInt64(EndianUtils::fromLocalEndian(EndianUtils::Endian::BigEndian, getInt64()));
+			break;
+		case NumberVariant::eValidType::tUInt64:
+			ret = DataUtils::fromUInt64(EndianUtils::fromLocalEndian(EndianUtils::Endian::BigEndian, getUInt64()));
+			break;
+		default:
+			ret = EmptyData;
+			break;
+		}
+
+		if (!ret.empty())
+		{
+			ret.insert(ret.begin(), flag);
+		}
+		return ret;
 	}
-	return ret;
 }
 
 const NumberVariant NumberVariant::fromData(const DataUtils::Data & data)
 {
-	if (!data.empty())
+	if (data.size() == 1 && data.front() == 0x00)
+	{
+		return NumberVariant();
+	}
+	else if (!data.empty())
 	{
 		DataUtils::byte flag(data.front());
 		NumberVariant::eValidType type = static_cast<NumberVariant::eValidType>(flag >> 1);
@@ -576,7 +614,6 @@ const NumberVariant NumberVariant::fromData(const DataUtils::Data & data)
 			number.set(EndianUtils::toLocalEndian(srcEndian, DataUtils::toUInt64(valuePart)));
 			break;
 		default:
-			number.set(false);
 			break;
 		}
 
@@ -591,4 +628,34 @@ const NumberVariant NumberVariant::fromData(const DataUtils::Data & data)
 void NumberVariant::refreshClassfication(void)
 {
 	m_classfication = Type2Classfication.find(m_type)->second;
+}
+
+const bool operator<(const NumberVariant & lhs, const NumberVariant & rhs)
+{
+	return lhs.m_value < rhs.m_value;
+}
+
+const bool operator<=(const NumberVariant & lhs, const NumberVariant & rhs)
+{
+	return lhs.m_value <= rhs.m_value;
+}
+
+const bool operator>(const NumberVariant & lhs, const NumberVariant & rhs)
+{
+	return lhs.m_value > rhs.m_value;
+}
+
+const bool operator>=(const NumberVariant & lhs, const NumberVariant & rhs)
+{
+	return lhs.m_value >= rhs.m_value;
+}
+
+const bool operator==(const NumberVariant & lhs, const NumberVariant & rhs)
+{
+	return lhs.m_value == rhs.m_value;
+}
+
+const int operator!=(const NumberVariant & lhs, const NumberVariant & rhs)
+{
+	return lhs.m_value != rhs.m_value;
 }

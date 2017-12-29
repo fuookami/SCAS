@@ -15,6 +15,13 @@
 
 class NumberVariant
 {
+	friend const bool operator<(const NumberVariant &lhs, const NumberVariant &rhs);
+	friend const bool operator<=(const NumberVariant &lhs, const NumberVariant &rhs);
+	friend const bool operator>(const NumberVariant &lhs, const NumberVariant &rhs);
+	friend const bool operator>=(const NumberVariant &lhs, const NumberVariant &rhs);
+	friend const bool operator==(const NumberVariant &lhs, const NumberVariant &rhs);
+	friend const int operator!=(const NumberVariant &lhs, const NumberVariant &rhs);
+
 public:
 	using int8 = std::int8_t;
 	using uint8 = std::uint8_t;
@@ -28,7 +35,7 @@ public:
 
 	enum class eValidType
 	{
-		tBool,
+		tBool = 1,
 		tFloat,
 		tDouble,
 		tInt8,
@@ -226,6 +233,7 @@ public:
 	void swap(NumberVariant &ano);
 
 	inline const bool empty(void) const { return m_empty; }
+	void clear(void);
 	inline const eValidType type(void) const { return m_type; }
 
 	const std::string toString(const int digit = -1, const int precision = -1) const;

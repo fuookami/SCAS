@@ -62,7 +62,7 @@ namespace DateTimeUtils
 		targetDate = day > 0 ? (targetDate + days(day))
 			: day < 0 ? (targetDate - days(abs(day))) : targetDate;
 
-		return Date(targetDate.year(), targetDate.month(), targetDate.day());
+		return Date(static_cast<short>(targetDate.year()), static_cast<unsigned char>(targetDate.month()), static_cast<unsigned char>(targetDate.day()));
 	}
 
 	Date Date::getDateAfter(const Date & date) const
@@ -95,8 +95,8 @@ namespace DateTimeUtils
 	{
 	}
 
-	TimeDuration::TimeDuration(const unsigned long long seconds)
-		: hour(seconds / 3600), min(seconds % 3600 / 60), sec(seconds % 60)
+	TimeDuration::TimeDuration(const unsigned int seconds)
+		: hour(static_cast<unsigned short>(seconds / 3600)), min(static_cast<unsigned char>(seconds % 3600 / 60)), sec(static_cast<unsigned char>(seconds % 60))
 	{
 	}
 
@@ -150,7 +150,7 @@ namespace DateTimeUtils
 		targetTime = sec > 0 ? (targetTime + seconds(sec))
 			: sec < 0 ? (targetTime - seconds(abs(sec))) : targetTime;
 
-		return TimeDuration(targetTime.hours(), targetTime.minutes(), targetTime.seconds());
+		return TimeDuration(static_cast<unsigned short>(targetTime.hours()), static_cast<unsigned char>(targetTime.minutes()), static_cast<unsigned char>(targetTime.seconds()));
 	}
 
 	TimeDuration TimeDuration::getTimeDurationAfter(const TimeDuration & time) const
@@ -188,37 +188,37 @@ namespace DateTimeUtils
 		return timeSout.str();
 	}
 
-	Datetime::Datetime(void)
-		: Datetime(getLocalDatetime())
+	DateTime::DateTime(void)
+		: DateTime(getLocalDatetime())
 	{
 	}
 
-	Datetime::Datetime(const Date & date, const unsigned char _hour, const unsigned char _min, const unsigned char _sec)
+	DateTime::DateTime(const Date & date, const unsigned char _hour, const unsigned char _min, const unsigned char _sec)
 		: year(date.year), month(date.month), day(date.day), hour(_hour), min(_min), sec(_sec)
 	{
 	}
 
-	Datetime::Datetime(const Date && date, const unsigned char _hour, const unsigned char _min, const unsigned char _sec)
+	DateTime::DateTime(const Date && date, const unsigned char _hour, const unsigned char _min, const unsigned char _sec)
 		: year(date.year), month(date.month), day(date.day), hour(_hour), min(_min), sec(_sec)
 	{
 	}
 
-	Datetime::Datetime(const short _year, const unsigned char _month, const unsigned char _day, const unsigned char _hour, const unsigned char _min, const unsigned char _sec)
+	DateTime::DateTime(const short _year, const unsigned char _month, const unsigned char _day, const unsigned char _hour, const unsigned char _min, const unsigned char _sec)
 		: year(_year), month(_month), day(_day), hour(_hour), min(_min), sec(_sec)
 	{
 	}
 
-	Datetime::Datetime(const Datetime & ano)
+	DateTime::DateTime(const DateTime & ano)
 		: year(ano.year), month(ano.month), day(ano.day), hour(ano.hour), min(ano.min), sec(ano.sec)
 	{
 	}
 
-	Datetime::Datetime(const Datetime && ano)
+	DateTime::DateTime(const DateTime && ano)
 		: year(ano.year), month(ano.month), day(ano.day), hour(ano.hour), min(ano.min), sec(ano.sec)
 	{
 	}
 
-	Datetime & Datetime::operator=(const Datetime & rhs)
+	DateTime & DateTime::operator=(const DateTime & rhs)
 	{
 		year = rhs.year;
 		month = rhs.month;
@@ -230,7 +230,7 @@ namespace DateTimeUtils
 		return *this;
 	}
 
-	Datetime & Datetime::operator=(const Datetime && rhs)
+	DateTime & DateTime::operator=(const DateTime && rhs)
 	{
 		year = rhs.year;
 		month = rhs.month;
@@ -242,11 +242,11 @@ namespace DateTimeUtils
 		return *this;
 	}
 
-	Datetime::~Datetime(void)
+	DateTime::~DateTime(void)
 	{
 	}
 
-	Datetime Datetime::getDatetimeAfter(const int year, const int month, const int day, const int hour, const int min, const int sec) const
+	DateTime DateTime::getDatetimeAfter(const int year, const int month, const int day, const int hour, const int min, const int sec) const
 	{
 		using namespace boost::gregorian;
 		using namespace boost::posix_time;
@@ -271,46 +271,45 @@ namespace DateTimeUtils
 		const date &targetDate(targetDateTime.date());
 		const time_duration &targetTime(targetDateTime.time_of_day());
 
-		return Datetime(targetDate.year(), targetDate.month(), targetDate.day(),
-			static_cast<unsigned char>(targetTime.hours()), static_cast<unsigned char>(targetTime.minutes()),  static_cast<unsigned char>(targetTime.seconds()));
+		return DateTime(static_cast<short>(targetDate.year()), static_cast<unsigned char>(targetDate.month()), static_cast<unsigned char>(targetDate.day()), static_cast<unsigned char>(targetTime.hours()), static_cast<unsigned char>(targetTime.minutes()),  static_cast<unsigned char>(targetTime.seconds()));
 	}
 
-	Datetime Datetime::getDatetimeAfter(const Datetime & datetime) const
+	DateTime DateTime::getDatetimeAfter(const DateTime & datetime) const
 	{
 		return this->getDatetimeAfter(datetime.year, datetime.month, datetime.day, datetime.hour, datetime.min, datetime.sec);
 	}
 
-	Datetime Datetime::getDateAfter(const Date & date) const
+	DateTime DateTime::getDateAfter(const Date & date) const
 	{
 		return this->getDatetimeAfter(date.year, date.month, date.day, 0, 0, 0);
 	}
 
-	Datetime Datetime::getDayAfter(const int day) const
+	DateTime DateTime::getDayAfter(const int day) const
 	{
 		return this->getDatetimeAfter(0, 0, day, 0, 0, 0);
 	}
 
-	Datetime Datetime::getTimeAfter(const TimeDuration & time) const
+	DateTime DateTime::getTimeAfter(const TimeDuration & time) const
 	{
 		return this->getDatetimeAfter(0, 0, 0, time.hour, time.min, time.sec);
 	}
 
-	Datetime Datetime::getDatetimeBefore(const Datetime & datetime) const
+	DateTime DateTime::getDatetimeBefore(const DateTime & datetime) const
 	{
 		return this->getDatetimeAfter(-datetime.year, -datetime.month, -datetime.day, -datetime.hour, -datetime.min, -datetime.sec);
 	}
 
-	Datetime Datetime::getDateBefore(const Date & date) const
+	DateTime DateTime::getDateBefore(const Date & date) const
 	{
 		return this->getDatetimeAfter(-date.year, -date.month, -date.day, 0, 0, 0);
 	}
 
-	Datetime Datetime::getTimeBefore(const TimeDuration & time) const
+	DateTime DateTime::getTimeBefore(const TimeDuration & time) const
 	{
 		return this->getDatetimeAfter(0, 0, 0, -time.hour, -time.min, -time.sec);
 	}
 
-	std::string Datetime::toString() const
+	std::string DateTime::toString() const
 	{
 		std::ostringstream datetimeSout;
 		datetimeSout << std::setfill('0') << year << "-"
@@ -352,7 +351,7 @@ namespace DateTimeUtils
 		return getLocalDate().getDateBefore(date);
 	}
 
-	Datetime getLocalDatetime(void)
+	DateTime getLocalDatetime(void)
 	{
 		using namespace boost::gregorian;
 		using namespace boost::posix_time;
@@ -361,51 +360,50 @@ namespace DateTimeUtils
 		const date &localDate(localDateTime.date());
 		const time_duration &localTime(localDateTime.time_of_day());
 
-		return Datetime(localDate.year(), localDate.month(), localDate.day(),
-		static_cast<unsigned char>(localTime.hours()), static_cast<unsigned char>(localTime.minutes()),  static_cast<unsigned char>(localTime.seconds()));
+		return DateTime(static_cast<short>(localDate.year()), static_cast<unsigned char>(localDate.month()), static_cast<unsigned char>(localDate.day()), static_cast<unsigned char>(localTime.hours()), static_cast<unsigned char>(localTime.minutes()),  static_cast<unsigned char>(localTime.seconds()));
 	}
 
-	Datetime getDatetimeAfterLocalDatetime(const int year, const int month, const int day, const int hour, const int min, const int sec)
+	DateTime getDatetimeAfterLocalDatetime(const int year, const int month, const int day, const int hour, const int min, const int sec)
 	{
 		return getLocalDatetime().getDatetimeAfter(year, month, day, hour, min, sec);
 	}
 
-	Datetime getDatetimeAfterLocalDatetime(const Datetime & datetime)
+	DateTime getDatetimeAfterLocalDatetime(const DateTime & datetime)
 	{
 		return getLocalDatetime().getDatetimeAfter(datetime);
 	}
 
-	Datetime getDatetimeAfterLocalDatetime(const Date & date)
+	DateTime getDatetimeAfterLocalDatetime(const Date & date)
 	{
 		return getLocalDatetime().getDateAfter(date);
 	}
 
-	Datetime getDatetimeAfterLocalDatetime(const int day)
+	DateTime getDatetimeAfterLocalDatetime(const int day)
 	{
 		return getLocalDatetime().getDayAfter(day);
 	}
 
-	Datetime getDatetimeAfterLocalDatetime(const TimeDuration & time)
+	DateTime getDatetimeAfterLocalDatetime(const TimeDuration & time)
 	{
 		return getLocalDatetime().getTimeAfter(time);
 	}
 
-	Datetime getDatetimeBeforeLocalDatetime(const Datetime & datetime)
+	DateTime getDatetimeBeforeLocalDatetime(const DateTime & datetime)
 	{
 		return getLocalDatetime().getDatetimeBefore(datetime);
 	}
 
-	Datetime getDatetimeBeforeLocalDatetime(const Date & date)
+	DateTime getDatetimeBeforeLocalDatetime(const Date & date)
 	{
 		return getLocalDatetime().getDateBefore(date);
 	}
 
-	Datetime getDatetimeBeforeLocalDatetime(const TimeDuration & time)
+	DateTime getDatetimeBeforeLocalDatetime(const TimeDuration & time)
 	{
 		return getLocalDatetime().getTimeBefore(time);
 	}
 
-	bool isLeapYear(const unsigned char year)
+	bool isLeapYear(const unsigned short year)
 	{
 		return year % 4 == 0 && year % 100 != 0 ? true
 			: year % 100 == 0 && year % 400 == 0 ? true : false;
@@ -430,7 +428,7 @@ namespace DateTimeUtils
 		return getDayInWeek(date.year, date.month, date.day);
 	}
 
-	unsigned char getDayInWeek(const Datetime & datetime)
+	unsigned char getDayInWeek(const DateTime & datetime)
 	{
 		return getDayInWeek(datetime.year, datetime.month, datetime.day);
 	}
@@ -452,12 +450,12 @@ namespace DateTimeUtils
 		return getDaysOfMonth(date.year, date.month);
 	}
 
-	unsigned char getDaysOfMonth(const Datetime & datetime)
+	unsigned char getDaysOfMonth(const DateTime & datetime)
 	{
 		return getDaysOfMonth(datetime.year, datetime.month);
 	}
 
-	Datetime getBuildDateTime(const std::string &BuildOriginalDateString, const std::string &BuildTimeString)
+	DateTime getBuildDateTime(const std::string &BuildOriginalDateString, const std::string &BuildTimeString)
 	{
 		static const auto fromShortMonthName(
 			[](const std::string &shortName) -> unsigned char 
@@ -477,7 +475,7 @@ namespace DateTimeUtils
 		std::string BuildMinute(BuildTimeString.cbegin() + 3, BuildTimeString.cbegin() + 5);
 		std::string BuildSecond(BuildTimeString.cbegin() + 6, BuildTimeString.cbegin() + 8);
 
-		return Datetime(static_cast<short>(std::stoi(BuildYear)), fromShortMonthName(BuileMonth), static_cast<unsigned char>(std::stoi(BuildDay)),
+		return DateTime(static_cast<short>(std::stoi(BuildYear)), fromShortMonthName(BuileMonth), static_cast<unsigned char>(std::stoi(BuildDay)),
 			static_cast<unsigned char>(std::stoi(BuildHour)), static_cast<unsigned char>(std::stoi(BuildMinute)), static_cast<unsigned char>(std::stoi(BuildSecond)));
 	}
 };
@@ -500,7 +498,7 @@ const bool operator<(const DateTimeUtils::TimeDuration & lhs, const DateTimeUtil
 		: lhs.sec < rhs.sec ? true : false;
 }
 
-const bool operator<(const DateTimeUtils::Datetime & lhs, const DateTimeUtils::Datetime & rhs)
+const bool operator<(const DateTimeUtils::DateTime & lhs, const DateTimeUtils::DateTime & rhs)
 {
 	return lhs.year < rhs.year ? true
 		: lhs.year > rhs.year ? false
@@ -513,6 +511,137 @@ const bool operator<(const DateTimeUtils::Datetime & lhs, const DateTimeUtils::D
 		: lhs.min < rhs.min ? true
 		: lhs.min > rhs.min ? false
 		: lhs.sec < rhs.sec ? true : false;
+}
+
+const bool operator<=(const DateTimeUtils::Date & lhs, const DateTimeUtils::Date & rhs)
+{
+	return lhs.year < rhs.year ? true
+		: lhs.year > rhs.year ? false
+		: lhs.month < rhs.month ? true
+		: lhs.month > rhs.month ? false
+		: lhs.day <= rhs.day ? true : false;
+}
+
+const bool operator<=(const DateTimeUtils::TimeDuration & lhs, const DateTimeUtils::TimeDuration & rhs)
+{
+	return lhs.hour < rhs.hour ? true
+		: lhs.hour > rhs.hour ? false
+		: lhs.min < rhs.min ? true
+		: lhs.min > rhs.min ? false
+		: lhs.sec <= rhs.sec ? true : false;
+}
+
+const bool operator<=(const DateTimeUtils::DateTime & lhs, const DateTimeUtils::DateTime & rhs)
+{
+	return lhs.year < rhs.year ? true
+		: lhs.year > rhs.year ? false
+		: lhs.month < rhs.month ? true
+		: lhs.month > rhs.month ? false
+		: lhs.day < rhs.day ? true
+		: lhs.day > rhs.day ? false
+		: lhs.hour < rhs.hour ? true
+		: lhs.hour > rhs.hour ? false
+		: lhs.min < rhs.min ? true
+		: lhs.min > rhs.min ? false
+		: lhs.sec <= rhs.sec ? true : false;
+}
+
+const bool operator>(const DateTimeUtils::Date & lhs, const DateTimeUtils::Date & rhs)
+{
+	return lhs.year > rhs.year ? true
+		: lhs.year < rhs.year ? false
+		: lhs.month > rhs.month ? true
+		: lhs.month < rhs.month ? false
+		: lhs.day > rhs.day ? true : false;
+}
+
+const bool operator>(const DateTimeUtils::TimeDuration & lhs, const DateTimeUtils::TimeDuration & rhs)
+{
+	return lhs.hour > rhs.hour ? true
+		: lhs.hour < rhs.hour ? false
+		: lhs.min > rhs.min ? true
+		: lhs.min < rhs.min ? false
+		: lhs.sec > rhs.sec ? true : false;
+}
+
+const bool operator>(const DateTimeUtils::DateTime & lhs, const DateTimeUtils::DateTime & rhs)
+{
+	return lhs.year > rhs.year ? true
+		: lhs.year < rhs.year ? false
+		: lhs.month > rhs.month ? true
+		: lhs.month < rhs.month ? false
+		: lhs.day > rhs.day ? true
+		: lhs.day < rhs.day ? false
+		: lhs.hour > rhs.hour ? true
+		: lhs.hour < rhs.hour ? false
+		: lhs.min > rhs.min ? true
+		: lhs.min < rhs.min ? false
+		: lhs.sec > rhs.sec ? true : false;
+}
+
+const bool operator>=(const DateTimeUtils::Date & lhs, const DateTimeUtils::Date & rhs)
+{
+	return lhs.year > rhs.year ? true
+		: lhs.year < rhs.year ? false
+		: lhs.month > rhs.month ? true
+		: lhs.month < rhs.month ? false
+		: lhs.day >= rhs.day ? true : false;
+}
+
+const bool operator>=(const DateTimeUtils::TimeDuration & lhs, const DateTimeUtils::TimeDuration & rhs)
+{
+	return lhs.hour > rhs.hour ? true
+		: lhs.hour < rhs.hour ? false
+		: lhs.min > rhs.min ? true
+		: lhs.min < rhs.min ? false
+		: lhs.sec >= rhs.sec ? true : false;
+}
+
+const bool operator>=(const DateTimeUtils::DateTime & lhs, const DateTimeUtils::DateTime & rhs)
+{
+	return lhs.year > rhs.year ? true
+		: lhs.year < rhs.year ? false
+		: lhs.month > rhs.month ? true
+		: lhs.month < rhs.month ? false
+		: lhs.day > rhs.day ? true
+		: lhs.day < rhs.day ? false
+		: lhs.hour > rhs.hour ? true
+		: lhs.hour < rhs.hour ? false
+		: lhs.min > rhs.min ? true
+		: lhs.min < rhs.min ? false
+		: lhs.sec >= rhs.sec ? true : false;
+}
+
+const bool operator==(const DateTimeUtils::Date & lhs, const DateTimeUtils::Date & rhs)
+{
+	return lhs.year == rhs.year && lhs.month == rhs.month && lhs.day == rhs.day;
+}
+
+const bool operator==(const DateTimeUtils::TimeDuration & lhs, const DateTimeUtils::TimeDuration & rhs)
+{
+	return lhs.hour == rhs.hour && lhs.min == rhs.min && rhs.sec == rhs.sec;
+}
+
+const bool operator==(const DateTimeUtils::DateTime & lhs, const DateTimeUtils::DateTime & rhs)
+{
+	return lhs.year == rhs.year && lhs.month == rhs.month && lhs.day == rhs.day
+		&& lhs.hour == rhs.hour && lhs.min == rhs.min && lhs.sec == rhs.sec;
+}
+
+const bool operator!=(const DateTimeUtils::Date & lhs, const DateTimeUtils::Date & rhs)
+{
+	return lhs.year != rhs.year || lhs.month != rhs.month || lhs.day == rhs.day;
+}
+
+const bool operator!=(const DateTimeUtils::TimeDuration & lhs, const DateTimeUtils::TimeDuration & rhs)
+{
+	return lhs.hour != rhs.hour || lhs.min != rhs.min || rhs.sec != rhs.sec;
+}
+
+const bool operator!=(const DateTimeUtils::DateTime & lhs, const DateTimeUtils::DateTime & rhs)
+{
+	return lhs.year != rhs.year || lhs.month != rhs.month || lhs.day != rhs.day
+		|| lhs.hour != rhs.hour || lhs.min != rhs.min || lhs.sec != rhs.sec;
 }
 
 const int operator-(const DateTimeUtils::Date & lhs, const DateTimeUtils::Date & rhs)
@@ -531,10 +660,10 @@ const int operator-(const DateTimeUtils::TimeDuration & lhs, const DateTimeUtils
 	time_duration lTime(lhs.hour, lhs.min, lhs.sec), rTime(rhs.hour, rhs.min, rhs.sec);
 	time_duration disTime(lTime - rTime);
 
-	return DateTimeUtils::TimeDuration(disTime.hours(), disTime.minutes(), disTime.seconds()).totalSeconds();
+	return DateTimeUtils::TimeDuration(static_cast<unsigned short>(disTime.hours()), static_cast<unsigned char>(disTime.minutes()), static_cast<unsigned char>(disTime.seconds())).totalSeconds();
 }
 
-const DateTimeUtils::TimeDuration operator-(const DateTimeUtils::Datetime & lhs, const DateTimeUtils::Datetime & rhs)
+const DateTimeUtils::TimeDuration operator-(const DateTimeUtils::DateTime & lhs, const DateTimeUtils::DateTime & rhs)
 {
 	using namespace boost::gregorian;
 	using namespace boost::posix_time;
@@ -545,5 +674,5 @@ const DateTimeUtils::TimeDuration operator-(const DateTimeUtils::Datetime & lhs,
 
 	auto disTime(rhs < lhs ? (lDateTime - rDateTime) : (rDateTime - lDateTime));
 
-	return DateTimeUtils::TimeDuration(disTime.hours(), disTime.minutes(), disTime.seconds());
+	return DateTimeUtils::TimeDuration(static_cast<unsigned short>(disTime.hours()), static_cast<unsigned char>(disTime.minutes()), static_cast<unsigned char>(disTime.seconds()));
 }
