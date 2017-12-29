@@ -19,16 +19,20 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)ChineseNumberUtils.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)DataUtils.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)DateTimeUtils.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)EndianUtils.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)FileUtils.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)MailTest.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)MailUtils.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)NumberVariant.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)StringConvertUtils.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)ChineseNumberUtils.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)DataUtils.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)DateTimeUtils.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)EndianUtils.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)FileUtils.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)MailUtils.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)NumberVariant.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)StringConvertUtils.h" />
   </ItemGroup>
 </Project>

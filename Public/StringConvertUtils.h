@@ -12,7 +12,7 @@ namespace StringConvertUtils
 	static const std::string LocalStringCode = "UTF-8";
 #endif
 
-	enum StringCodeId
+	enum class StringCodeId
 	{
 		UTF8,
 		UTF16,
@@ -26,19 +26,22 @@ namespace StringConvertUtils
 	};
 
 	template<StringCodeId id>
-	std::string fromLocal(const std::string &src)
+	const std::string fromLocal(const std::string &src)
 	{
 		return boost::locale::conv::between(src, StringCodeName[static_cast<unsigned int>(id)], LocalStringCode);
 	}
 
 	template<StringCodeId id>
-	std::string toLocal(const std::string &src)
+	const std::string toLocal(const std::string &src)
 	{
 		return boost::locale::conv::between(src, LocalStringCode, StringCodeName[static_cast<unsigned int>(id)]);
 	}
 
 	// 转半角
-	std::string toDBS(const std::string &src);
+	const std::string toDBS(const std::string &src);
 	// 转全角
-	std::string toQBS(const std::string &src);
+	const std::string toQBS(const std::string &src);
+
+	const std::string base64Encode(const std::string &str, const char fillCharacter = '=');
+	const std::string base64Decode(const std::string &str);
 };
