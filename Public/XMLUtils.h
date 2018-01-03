@@ -27,15 +27,15 @@ namespace XMLUtils
 
 		inline void setTag(const std::string &tag) { m_tag.assign(tag); };
 		inline void setTag(const std::string &&tag) { m_tag.assign(std::move(tag)); }
-		inline const std::string &tag(void) const { return m_tag; }
+		inline const std::string &getTag(void) const { return m_tag; }
 
 		inline void setPath(const std::string &path) { m_path.assign(path); }
 		inline void setPath(const std::string &&path) { m_path.assign(std::move(path)); }
-		inline const std::string &path(void) const { return m_path; }
+		inline const std::string &getPath(void) const { return m_path; }
 
 		inline void setContent(const std::string &content) { m_content.assign(content); }
 		inline void setContent(const std::string &&content) { m_content.assign(std::move(content)); }
-		inline const std::string &content(void) const { return m_content; }
+		inline const std::string &getContent(void) const { return m_content; }
 
 		inline void addAttr(const std::pair<std::string, std::string> &pair) { m_attrs.insert(pair); }
 		inline void addAttr(const std::pair<std::string, std::string> &&pair) { m_attrs.insert(std::move(pair)); }
@@ -44,7 +44,7 @@ namespace XMLUtils
 		const std::string getAttr(const std::string &key, const std::string &defaultValue = DefaultAttrValue) const;
 		inline void setAttr(const std::string &key, const std::string &value) { m_attrs[key].assign(value); }
 		inline void setAttr(const std::string &key, const std::string &&value) { m_attrs[key].assign(std::move(value)); }
-		inline const std::map<std::string, std::string> &attrs(void) const { return m_attrs; }
+		inline const std::map<std::string, std::string> &getAttrs(void) const { return m_attrs; }
 
 	public:
 		void tidyStruct(void);
@@ -52,13 +52,13 @@ namespace XMLUtils
 	public:
 		inline void addChild(const XMLNode &child) { m_children.push_back(child); }
 		inline void addChild(const XMLNode &&child) { m_children.push_back(std::move(child)); }
-		inline const std::vector<XMLNode> &children(void) const { return m_children; }
-		inline std::vector<XMLNode> &children(void) { return m_children; }
+		inline const std::vector<XMLNode> &getChildren(void) const { return m_children; }
+		inline std::vector<XMLNode> &getChildren(void) { return m_children; }
 
 		inline void setParent(XMLNode &parent) { m_parent = &parent; }
 		inline void removeParent(void) { m_parent = nullptr; }
 		inline const bool hasParent(void) const { return m_parent == nullptr; }
-		inline XMLNode *parent(void) { return m_parent; }
+		inline XMLNode *getParent(void) { return m_parent; }
 
 	public:
 		static XMLNode shallowCopyFrom(const XMLNode &ano);

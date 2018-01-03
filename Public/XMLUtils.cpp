@@ -120,7 +120,7 @@ namespace XMLUtils
 	{
 		static const boost::property_tree::ptree EmptyPTree;
 
-		if (root.first == node.tag())
+		if (root.first == node.getTag())
 		{
 			const auto &attrs(root.second.get_child(AttrTag, EmptyPTree));
 			for (const auto &attr : attrs)
@@ -132,7 +132,7 @@ namespace XMLUtils
 
 	void getChildren(XMLNode & node, const boost::property_tree::ptree::value_type & root)
 	{
-		if (root.first == node.tag())
+		if (root.first == node.getTag())
 		{
 			for (const auto &childRoot : root.second)
 			{
@@ -179,7 +179,7 @@ namespace XMLUtils
 			
 			auto &node(nodes.back());
 			node.tidyStruct();
-			node.setPath(PathSeperator + node.path());
+			node.setPath(PathSeperator + node.getPath());
 		}
 
 		return nodes;
