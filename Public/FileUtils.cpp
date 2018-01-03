@@ -53,6 +53,11 @@ namespace FileUtils
 		return std::string(targetUrl.cbegin(), targetUrl.cbegin() + targetUrl.find_last_of("\\/"));
 	}
 
+	const std::string getFileNameOfUrl(const std::string & targetUrl)
+	{
+		return std::string(targetUrl.cbegin() + targetUrl.find_last_of("\\/") + 1, targetUrl.cend());
+	}
+
 	const std::vector<std::string> getAllFilesNameOfPath(const std::string & targetPath)
 	{
 		using namespace boost::filesystem;

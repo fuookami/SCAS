@@ -7,7 +7,7 @@
 #include <sstream>
 #include <iomanip>
 
-const boost::bimap<std::string, NumberVariant::eValidType> NumberVariant::TypeName2Type = NumberVariant::__initTypeName2Type();
+const boost::bimap<std::string, NumberVariant::eValidType> NumberVariant::TypeName2Type = NumberVariant::_initTypeName2Type();
 
 const std::map<NumberVariant::eValidType, std::set<NumberVariant::eValidType>> NumberVariant::ValidTypeTransformation =
 {
@@ -49,7 +49,7 @@ const std::map<NumberVariant::eValidType, NumberVariant::eClassfication> NumberV
 	std::make_pair(eValidType::tUInt64, eClassfication::tUnsigned)
 };
 
-const boost::bimap<std::string, NumberVariant::eValidType> NumberVariant::__initTypeName2Type(void)
+const boost::bimap<std::string, NumberVariant::eValidType> NumberVariant::_initTypeName2Type(void)
 {
 	using PairType = boost::bimap<std::string, eValidType>::value_type;
 

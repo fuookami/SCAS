@@ -60,7 +60,7 @@ private:
 	static const boost::bimap<std::string, eValidType> TypeName2Type;
 	static const std::map<eValidType, std::set<eValidType>> ValidTypeTransformation;
 	static const std::map<eValidType, eClassfication> Type2Classfication;
-	static const boost::bimap<std::string, eValidType> __initTypeName2Type(void);
+	static const boost::bimap<std::string, eValidType> _initTypeName2Type(void);
 
 	template<typename T>
 	static const bool set(NumberVariant &dest, T src)

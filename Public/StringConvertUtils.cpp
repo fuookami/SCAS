@@ -53,11 +53,11 @@ namespace StringConvertUtils
 
 			if (thisByte == 0x20) // 半角空格
 			{
-				ret.insert(ret.end(), 2, 0xA1);
+				ret.insert(ret.end(), 2, 0xA1i8);
 			}
 			else if (thisByte >= 0x21 && thisByte < 0x80)
 			{
-				ret.push_back(0xA3);
+				ret.push_back(0xA3i8);
 				ret.push_back(thisByte + 0x80);
 			}
 			else

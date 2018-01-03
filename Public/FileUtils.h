@@ -5,6 +5,12 @@
 
 namespace FileUtils
 {
+#ifdef _WIN32
+	static const std::string PathSeperator("\\");
+#else
+	static const std::string PathSeperator("/");
+#endif
+
 	const std::string &initailPath();
 
 	bool checkFileExist(const std::string &targetUrl);
@@ -12,6 +18,7 @@ namespace FileUtils
 	bool removeFile(const std::string &targetUrl);
 
 	const std::string getPathOfUrl(const std::string &targetUrl);
+	const std::string getFileNameOfUrl(const std::string &targetUrl);
 	const std::vector<std::string> getAllFilesNameOfPath(const std::string &targetPath);
 	const std::vector<std::string> getAllDirectoryPathsOfPath(const std::string &targetPath);
 	

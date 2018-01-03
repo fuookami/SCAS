@@ -6,7 +6,7 @@
 
 namespace StringConvertUtils
 {
-#ifdef WIN32
+#ifdef _WIN32
 	static const std::string LocalStringCode = "GB2312";
 #else
 	static const std::string LocalStringCode = "UTF-8";
