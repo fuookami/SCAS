@@ -2,7 +2,7 @@
 
 namespace StringUtils
 {
-	std::string getSpaceChars(void)
+	const std::string &getSpaceChars(void)
 	{
 		static std::string ret;
 		if (ret.empty())

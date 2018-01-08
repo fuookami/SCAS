@@ -4,5 +4,5 @@
 
 namespace StringUtils
 {
-	std::string getSpaceChars(void);
+	const std::string &getSpaceChars(void);
 };

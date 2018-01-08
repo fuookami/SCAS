@@ -8,6 +8,7 @@
 namespace XMLUtils
 {
 	const std::string XMLNode::DefaultAttrValue("");
+	const int XMLNode::NoChild = -1;
 
 	XMLNode::XMLNode(const std::string & tag)
 		: m_tag(tag), m_path(tag), m_content(), m_attrs(), m_children(), m_parent(nullptr)
@@ -69,6 +70,16 @@ namespace XMLUtils
 			child.m_parent = this;
 			child.tidyStruct();
 		}
+	}
+
+	int XMLNode::findChild(const std::string & tag, const int pos) const
+	{
+		auto it(std::find_if(m_children.cbegin() + pos, m_children.cend(), [&tag](const XMLNode &node)->bool
+		{
+			return node.m_tag == tag;
+		}));
+
+		return it != m_children.cend() ? (it - m_children.cbegin()) : NoChild;
 	}
 
 	XMLNode XMLNode::shallowCopyFrom(const XMLNode & ano)

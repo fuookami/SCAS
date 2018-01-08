@@ -15,6 +15,7 @@ namespace XMLUtils
 	{
 	private:
 		static const std::string DefaultAttrValue;
+		static const int NoChild;
 
 	public:
 		XMLNode(const std::string &tag);
@@ -52,6 +53,9 @@ namespace XMLUtils
 	public:
 		inline void addChild(const XMLNode &child) { m_children.push_back(child); }
 		inline void addChild(const XMLNode &&child) { m_children.push_back(std::move(child)); }
+		inline const bool hasChild(const std::string &tag) const { return findChild(tag) != NoChild; }
+		inline const bool hasAnyChild(void) const { return !m_children.empty(); }
+		int findChild(const std::string &tag, const int pos = 0) const;
 		inline const std::vector<XMLNode> &getChildren(void) const { return m_children; }
 		inline std::vector<XMLNode> &getChildren(void) { return m_children; }
 

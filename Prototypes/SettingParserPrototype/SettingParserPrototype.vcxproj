@@ -125,7 +125,7 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Competition.h" />
+    <ClInclude Include="CompetitionInfo.h" />
     <ClInclude Include="GameInfo.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
