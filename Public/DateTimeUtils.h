@@ -74,6 +74,14 @@ namespace DateTimeUtils
 		std::string toString(void) const;
 	};
 
+	struct TimeDurationMs
+	{
+		unsigned short hour;
+		unsigned char min;
+		unsigned char sec;
+		unsigned short msec;
+	};
+
 	struct DateTime
 	{
 		short year;
