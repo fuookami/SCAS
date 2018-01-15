@@ -126,7 +126,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CompetitionInfo.h" />
+    <ClInclude Include="EventInfo.h" />
     <ClInclude Include="GameInfo.h" />
+    <ClInclude Include="GradeInfo.h" />
+    <ClInclude Include="SCASPublic.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

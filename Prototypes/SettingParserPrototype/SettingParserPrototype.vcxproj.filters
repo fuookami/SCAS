@@ -36,5 +36,14 @@
     <ClInclude Include="CompetitionInfo.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="EventInfo.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="GradeInfo.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="SCASPublic.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

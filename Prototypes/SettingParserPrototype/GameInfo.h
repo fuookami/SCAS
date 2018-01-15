@@ -1,6 +1,9 @@
 #pragma once
 
+#include "EventInfo.h"
+
 #include <vector>
+#include <memory>
 #include "DateTimeUtils.h"
 
 namespace SCAS
@@ -30,45 +33,30 @@ namespace SCAS
 			int m_peoplePerGroup;
 		};
 
-		class TeamworkInfo
+		class GameTypeInfo
 		{
 		public:
-			static const int NoTeamwork = -1;
-			static const int NotNeedEveryPerson = -1;
+			enum class eType
+			{
+				Group,				// 小组赛
+				QuarterFinal,		// 复赛
+				SemiFinal,			// 半决赛
+				ThridPlaceMatch,	// 三四名决赛（仅在对抗性运动中出现）
+				Fianls				// 决赛
+			};
 
-			TeamworkInfo(void);
-			TeamworkInfo(const TeamworkInfo &ano);
-			TeamworkInfo(const TeamworkInfo &&ano);
-			TeamworkInfo &operator=(const TeamworkInfo &rhs);
-			TeamworkInfo &operator=(const TeamworkInfo &&rhs);
-			~TeamworkInfo(void);
-
-			inline const bool getIsTeamwork(void) const { return m_beTeamwork; }
-			inline const bool getNeedEveryPerson(void) const { return m_needEveryPerson; }
-			inline const int getMinPeople(void) const { return m_minPeople; }
-			inline const int getMaxPeople(void) const { return m_maxPeople; }
-
-			inline void setNoTeamwork(void) { m_beTeamwork = false; m_needEveryPerson = false; m_minPeople = NoTeamwork; m_maxPeople = NoTeamwork; }
-			inline void setIsTeamwork(void) { m_beTeamwork = true; m_needEveryPerson = false; m_minPeople = NotNeedEveryPerson; m_maxPeople = NotNeedEveryPerson; }
-			void setNeedEveryOne(const int minPeople, const int maxPeople);
-			inline void setNotNeedEveryOne(void) { if (m_beTeamwork) { m_needEveryPerson = false; m_minPeople = NotNeedEveryPerson; m_maxPeople = NotNeedEveryPerson; } }
-			void setMinPeople(const int minPeople);
-			void setMaxPeople(const int maxPeople);
-
+			enum class ePattern
+			{
+				Elimination,		// 淘汰制 / 竞标赛制
+				Ranking,			// 名次制（仅在非对抗性运动中出现）
+				Circulation			// 循环制（仅在对抗性运动中出现）
+			};
 		private:
-			bool m_beTeamwork;
+			std::string m_eventInfoId;
+			std::shared_ptr<EventInfo> ref_eventInfo;
 
-			bool m_needEveryPerson;
-			int m_minPeople;
-			int m_maxPeople;
-		};
-
-		class AthleteValidator
-		{
-		private:
-			std::vector<std::string> m_types;
-			std::vector<std::string> m_ranks;
-			int m_maxPerTeam;
+			eType type;
+			ePattern m_pattern;
 		};
 
 		class GameInfo
@@ -76,14 +64,12 @@ namespace SCAS
 		private:
 			std::string m_id;
 			std::string m_name;
-			int m_scoreRate;
 			
 			DateTimeUtils::TimeDuration m_planIntervalTime;
 			DateTimeUtils::TimeDuration m_planTimePerGroup;
 
+			GameTypeInfo m_gameTypeInfo;
 			GroupInfo m_groupInfo;
-			TeamworkInfo m_teamworkInfo;
-			AthleteValidator m_athleteValidator;
 		};
 	};
 };
