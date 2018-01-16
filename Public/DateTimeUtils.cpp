@@ -90,32 +90,37 @@ namespace DateTimeUtils
 		return dataSout.str();
 	}
 
-	TimeDuration::TimeDuration(void)
+	Time::Time(void)
 		: hour(0), min(0), sec(0)
 	{
 	}
 
-	TimeDuration::TimeDuration(const unsigned int seconds)
+	Time::Time(const unsigned int seconds)
 		: hour(static_cast<unsigned short>(seconds / 3600)), min(static_cast<unsigned char>(seconds % 3600 / 60)), sec(static_cast<unsigned char>(seconds % 60))
 	{
 	}
 
-	TimeDuration::TimeDuration(const unsigned short _hour, const unsigned char _min, const unsigned char _sec)
+	Time::Time(const unsigned short _hour, const unsigned char _min, const unsigned char _sec)
 		: hour(_hour), min(_min), sec(_sec)
 	{
 	}
 
-	TimeDuration::TimeDuration(const TimeDuration & ano)
+	Time::Time(const TimeMs & ano)
 		: hour(ano.hour), min(ano.min), sec(ano.sec)
 	{
 	}
 
-	TimeDuration::TimeDuration(const TimeDuration && ano)
+	Time::Time(const Time & ano)
 		: hour(ano.hour), min(ano.min), sec(ano.sec)
 	{
 	}
 
-	TimeDuration & TimeDuration::operator=(const TimeDuration & rhs)
+	Time::Time(const Time && ano)
+		: hour(ano.hour), min(ano.min), sec(ano.sec)
+	{
+	}
+
+	Time & Time::operator=(const Time & rhs)
 	{
 		hour = rhs.hour;
 		min = rhs.min;
@@ -124,7 +129,7 @@ namespace DateTimeUtils
 		return *this;
 	}
 
-	TimeDuration & TimeDuration::operator=(const TimeDuration && rhs)
+	Time & Time::operator=(const Time && rhs)
 	{
 		hour = rhs.hour;
 		min = rhs.min;
@@ -133,11 +138,11 @@ namespace DateTimeUtils
 		return *this;
 	}
 
-	TimeDuration::~TimeDuration(void)
+	Time::~Time(void)
 	{
 	}
 
-	TimeDuration TimeDuration::getTimeDurationAfter(const int hour, const int min, const int sec) const
+	Time Time::getTimeAfter(const int hour, const int min, const int sec) const
 	{
 		using namespace boost::posix_time;
 
@@ -150,35 +155,45 @@ namespace DateTimeUtils
 		targetTime = sec > 0 ? (targetTime + seconds(sec))
 			: sec < 0 ? (targetTime - seconds(abs(sec))) : targetTime;
 
-		return TimeDuration(static_cast<unsigned short>(targetTime.hours()), static_cast<unsigned char>(targetTime.minutes()), static_cast<unsigned char>(targetTime.seconds()));
+		return Time(static_cast<unsigned short>(targetTime.hours()), static_cast<unsigned char>(targetTime.minutes()), static_cast<unsigned char>(targetTime.seconds()));
 	}
 
-	TimeDuration TimeDuration::getTimeDurationAfter(const TimeDuration & time) const
+	Time Time::getTimeAfter(const Time & time) const
 	{
-		return this->getTimeDurationAfter(time.hour, time.min, time.sec);
+		return this->getTimeAfter(time.hour, time.min, time.sec);
 	}
 
-	TimeDuration TimeDuration::getTimeDurationAfter(const int second) const
+	Time Time::getTimeAfter(const int second) const
 	{
-		return this->getTimeDurationAfter(0, 0, second);
+		return this->getTimeAfter(0, 0, second);
 	}
 
-	TimeDuration TimeDuration::getTimeDurationBefore(const TimeDuration & time) const
+	Time Time::getTimeBefore(const Time & time) const
 	{
-		return this->getTimeDurationAfter(-time.hour, -time.min, -time.sec);
+		return this->getTimeAfter(-time.hour, -time.min, -time.sec);
 	}
 
-	int TimeDuration::totalSeconds(void) const
+	int Time::totalSeconds(void) const
 	{
 		return hour * 3600 + min * 60 + sec;
 	}
 
-	int TimeDuration::totalDays(void) const
+	int Time::totalMinutes(void) const
+	{
+		return hour * 60 + min * 60;
+	}
+
+	int Time::totalHours(void) const
+	{
+		return hour;
+	}
+
+	int Time::totalDays(void) const
 	{
 		return hour / 24;
 	}
 
-	std::string TimeDuration::toString(void) const
+	std::string Time::toString(void) const
 	{
 		std::ostringstream timeSout;
 		timeSout << std::setfill('0') << hour << ":"
@@ -289,7 +304,7 @@ namespace DateTimeUtils
 		return this->getDatetimeAfter(0, 0, day, 0, 0, 0);
 	}
 
-	DateTime DateTime::getTimeAfter(const TimeDuration & time) const
+	DateTime DateTime::getTimeAfter(const Time & time) const
 	{
 		return this->getDatetimeAfter(0, 0, 0, time.hour, time.min, time.sec);
 	}
@@ -304,7 +319,7 @@ namespace DateTimeUtils
 		return this->getDatetimeAfter(-date.year, -date.month, -date.day, 0, 0, 0);
 	}
 
-	DateTime DateTime::getTimeBefore(const TimeDuration & time) const
+	DateTime DateTime::getTimeBefore(const Time & time) const
 	{
 		return this->getDatetimeAfter(0, 0, 0, -time.hour, -time.min, -time.sec);
 	}
@@ -383,7 +398,7 @@ namespace DateTimeUtils
 		return getLocalDatetime().getDayAfter(day);
 	}
 
-	DateTime getDatetimeAfterLocalDatetime(const TimeDuration & time)
+	DateTime getDatetimeAfterLocalDatetime(const Time & time)
 	{
 		return getLocalDatetime().getTimeAfter(time);
 	}
@@ -398,7 +413,7 @@ namespace DateTimeUtils
 		return getLocalDatetime().getDateBefore(date);
 	}
 
-	DateTime getDatetimeBeforeLocalDatetime(const TimeDuration & time)
+	DateTime getDatetimeBeforeLocalDatetime(const Time & time)
 	{
 		return getLocalDatetime().getTimeBefore(time);
 	}
@@ -489,7 +504,7 @@ const bool operator<(const DateTimeUtils::Date & lhs, const DateTimeUtils::Date 
 		: lhs.day < rhs.day ? true : false;
 }
 
-const bool operator<(const DateTimeUtils::TimeDuration & lhs, const DateTimeUtils::TimeDuration & rhs)
+const bool operator<(const DateTimeUtils::Time & lhs, const DateTimeUtils::Time & rhs)
 {
 	return lhs.hour < rhs.hour ? true
 		: lhs.hour > rhs.hour ? false
@@ -522,7 +537,7 @@ const bool operator<=(const DateTimeUtils::Date & lhs, const DateTimeUtils::Date
 		: lhs.day <= rhs.day ? true : false;
 }
 
-const bool operator<=(const DateTimeUtils::TimeDuration & lhs, const DateTimeUtils::TimeDuration & rhs)
+const bool operator<=(const DateTimeUtils::Time & lhs, const DateTimeUtils::Time & rhs)
 {
 	return lhs.hour < rhs.hour ? true
 		: lhs.hour > rhs.hour ? false
@@ -555,7 +570,7 @@ const bool operator>(const DateTimeUtils::Date & lhs, const DateTimeUtils::Date 
 		: lhs.day > rhs.day ? true : false;
 }
 
-const bool operator>(const DateTimeUtils::TimeDuration & lhs, const DateTimeUtils::TimeDuration & rhs)
+const bool operator>(const DateTimeUtils::Time & lhs, const DateTimeUtils::Time & rhs)
 {
 	return lhs.hour > rhs.hour ? true
 		: lhs.hour < rhs.hour ? false
@@ -588,7 +603,7 @@ const bool operator>=(const DateTimeUtils::Date & lhs, const DateTimeUtils::Date
 		: lhs.day >= rhs.day ? true : false;
 }
 
-const bool operator>=(const DateTimeUtils::TimeDuration & lhs, const DateTimeUtils::TimeDuration & rhs)
+const bool operator>=(const DateTimeUtils::Time & lhs, const DateTimeUtils::Time & rhs)
 {
 	return lhs.hour > rhs.hour ? true
 		: lhs.hour < rhs.hour ? false
@@ -617,7 +632,7 @@ const bool operator==(const DateTimeUtils::Date & lhs, const DateTimeUtils::Date
 	return lhs.year == rhs.year && lhs.month == rhs.month && lhs.day == rhs.day;
 }
 
-const bool operator==(const DateTimeUtils::TimeDuration & lhs, const DateTimeUtils::TimeDuration & rhs)
+const bool operator==(const DateTimeUtils::Time & lhs, const DateTimeUtils::Time & rhs)
 {
 	return lhs.hour == rhs.hour && lhs.min == rhs.min && rhs.sec == rhs.sec;
 }
@@ -633,7 +648,7 @@ const bool operator!=(const DateTimeUtils::Date & lhs, const DateTimeUtils::Date
 	return lhs.year != rhs.year || lhs.month != rhs.month || lhs.day == rhs.day;
 }
 
-const bool operator!=(const DateTimeUtils::TimeDuration & lhs, const DateTimeUtils::TimeDuration & rhs)
+const bool operator!=(const DateTimeUtils::Time & lhs, const DateTimeUtils::Time & rhs)
 {
 	return lhs.hour != rhs.hour || lhs.min != rhs.min || rhs.sec != rhs.sec;
 }
@@ -653,17 +668,17 @@ const int operator-(const DateTimeUtils::Date & lhs, const DateTimeUtils::Date &
 	return (lDate - rDate).days();
 }
 
-const int operator-(const DateTimeUtils::TimeDuration & lhs, const DateTimeUtils::TimeDuration & rhs)
+const int operator-(const DateTimeUtils::Time & lhs, const DateTimeUtils::Time & rhs)
 {
 	using namespace boost::posix_time;
 
 	time_duration lTime(lhs.hour, lhs.min, lhs.sec), rTime(rhs.hour, rhs.min, rhs.sec);
 	time_duration disTime(lTime - rTime);
 
-	return DateTimeUtils::TimeDuration(static_cast<unsigned short>(disTime.hours()), static_cast<unsigned char>(disTime.minutes()), static_cast<unsigned char>(disTime.seconds())).totalSeconds();
+	return DateTimeUtils::Time(static_cast<unsigned short>(disTime.hours()), static_cast<unsigned char>(disTime.minutes()), static_cast<unsigned char>(disTime.seconds())).totalSeconds();
 }
 
-const DateTimeUtils::TimeDuration operator-(const DateTimeUtils::DateTime & lhs, const DateTimeUtils::DateTime & rhs)
+const DateTimeUtils::Time operator-(const DateTimeUtils::DateTime & lhs, const DateTimeUtils::DateTime & rhs)
 {
 	using namespace boost::gregorian;
 	using namespace boost::posix_time;
@@ -674,5 +689,5 @@ const DateTimeUtils::TimeDuration operator-(const DateTimeUtils::DateTime & lhs,
 
 	auto disTime(rhs < lhs ? (lDateTime - rDateTime) : (rDateTime - lDateTime));
 
-	return DateTimeUtils::TimeDuration(static_cast<unsigned short>(disTime.hours()), static_cast<unsigned char>(disTime.minutes()), static_cast<unsigned char>(disTime.seconds()));
+	return DateTimeUtils::Time(static_cast<unsigned short>(disTime.hours()), static_cast<unsigned char>(disTime.minutes()), static_cast<unsigned char>(disTime.seconds()));
 }
