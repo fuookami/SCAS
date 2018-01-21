@@ -1,9 +1,8 @@
-#include "UUIDUtils.h"
+#include "XMLUtils.h"
 
 int main(void)
 {
-	auto ret1 = UUIDUtil::generateUUIDV1();
-	auto ret2 = UUIDUtil::generateUUIDV4();
+	auto roots(XMLUtils::scanXMLFile<StringConvertUtils::StringCodeId::UTF8>("setting.xml"));
 
 	system("pause");
 	return 0;

@@ -1,10 +1,14 @@
 #pragma once
 
 #include <boost/property_tree/ptree.hpp>
+#include <boost/property_tree/xml_parser.hpp>
 
 #include <vector>
 #include <map>
 #include <string>
+
+#include "FileUtils.h"
+#include "StringConvertUtils.h"
 
 namespace XMLUtils
 {
@@ -79,12 +83,139 @@ namespace XMLUtils
 		std::vector<XMLNode> m_children;
 	};
 
+	template<StringConvertUtils::StringCodeId code>
 	XMLNode getNode(const boost::property_tree::ptree::value_type & root);
+	template<StringConvertUtils::StringCodeId code>
 	XMLNode getTree(const boost::property_tree::ptree::value_type & root);
+	template<StringConvertUtils::StringCodeId code>
 	void getAttrs(XMLNode &node, const boost::property_tree::ptree::value_type & root);
+	template<StringConvertUtils::StringCodeId code>
 	void getChildren(XMLNode &node, const boost::property_tree::ptree::value_type & root);
+	template<StringConvertUtils::StringCodeId code>
+	void getContent(XMLNode &node, const boost::property_tree::ptree::value_type &root);
 
+	template<StringConvertUtils::StringCodeId code>
 	const bool openXMLFile(boost::property_tree::ptree &pt, const std::string &fileUrl);
+	template<StringConvertUtils::StringCodeId code>
 	std::vector<XMLNode> scanXMLFile(const std::string &fileUrl);
+	template<StringConvertUtils::StringCodeId code>
 	std::vector<XMLNode> scanXMLFile(const boost::property_tree::ptree &root);
+
+	template<StringConvertUtils::StringCodeId code>
+	XMLNode getNode(const boost::property_tree::ptree::value_type & root)
+	{
+		if (root.first == AttrTag)
+		{
+			return XMLNode("");
+		}
+
+		XMLNode ret(root.first);
+		getAttrs<code>(ret, root);
+		getContent<code>(ret, root);
+
+		return ret;
+	}
+
+	template<StringConvertUtils::StringCodeId code>
+	XMLNode getTree(const boost::property_tree::ptree::value_type & root)
+	{
+		if (root.first == AttrTag)
+		{
+			return XMLNode("");
+		}
+
+		XMLNode ret(root.first);
+		getAttrs<code>(ret, root);
+		getChildren<code>(ret, root);
+
+		if (!ret.hasAnyChild())
+		{
+			getContent<code>(ret, root);
+		}
+
+		return ret;
+	}
+
+	template<StringConvertUtils::StringCodeId code>
+	void getAttrs(XMLNode & node, const boost::property_tree::ptree::value_type & root)
+	{
+		static const boost::property_tree::ptree EmptyPTree;
+
+		if (root.first == node.getTag())
+		{
+			const auto &attrs(root.second.get_child(AttrTag, EmptyPTree));
+			for (const auto &attr : attrs)
+			{
+				node.addAttr(std::make_pair(StringConvertUtils::toLocal<code>(attr.first), StringConvertUtils::toLocal<code>(attr.second.data())));
+			}
+		}
+	}
+
+	template<StringConvertUtils::StringCodeId code>
+	void getChildren(XMLNode & node, const boost::property_tree::ptree::value_type & root)
+	{
+		if (root.first == node.getTag())
+		{
+			for (const auto &childRoot : root.second)
+			{
+				if (childRoot.first != AttrTag)
+				{
+					node.addChild(getTree<code>(childRoot));
+				}
+			}
+		}
+	}
+
+	template<StringConvertUtils::StringCodeId code>
+	void getContent(XMLNode & node, const boost::property_tree::ptree::value_type & root)
+	{
+		if (root.first == node.getTag())
+		{
+			node.setContent(StringConvertUtils::toLocal<code>(root.second.data()));
+		}
+	}
+
+	template<StringConvertUtils::StringCodeId code>
+	const bool openXMLFile(boost::property_tree::ptree & pt, const std::string & fileUrl)
+	{
+		if (FileUtils::checkFileExist(fileUrl))
+		{
+			boost::property_tree::xml_parser::read_xml(fileUrl, pt);
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+	template<StringConvertUtils::StringCodeId code>
+	std::vector<XMLNode> scanXMLFile(const std::string & fileUrl)
+	{
+		boost::property_tree::ptree root;
+		if (openXMLFile<code>(root, fileUrl))
+		{
+			return scanXMLFile<code>(root);
+		}
+		else
+		{
+			return std::vector<XMLNode>();
+		}
+	}
+
+	template<StringConvertUtils::StringCodeId code>
+	std::vector<XMLNode> scanXMLFile(const boost::property_tree::ptree & root)
+	{
+		std::vector<XMLNode> nodes;
+		for (const auto &nodeRoot : root)
+		{
+			nodes.push_back(getTree<code>(nodeRoot));
+
+			auto &node(nodes.back());
+			node.tidyStruct();
+			node.setPath(PathSeperator + node.getPath());
+		}
+
+		return nodes;
+	}
 };
