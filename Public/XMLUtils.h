@@ -160,7 +160,11 @@ namespace XMLUtils
 			{
 				if (childRoot.first != AttrTag)
 				{
-					node.addChild(getTree<code>(childRoot));
+					auto tree(getTree<code>(childRoot));
+					if (!tree.getTag().empty())
+					{
+						node.addChild(std::move(tree));
+					}
 				}
 			}
 		}
@@ -209,11 +213,15 @@ namespace XMLUtils
 		std::vector<XMLNode> nodes;
 		for (const auto &nodeRoot : root)
 		{
-			nodes.push_back(getTree<code>(nodeRoot));
+			auto tree(getTree<code>(nodeRoot));
+			if (!tree.getTag().empty())
+			{
+				nodes.push_back(std::move(tree));
 
-			auto &node(nodes.back());
-			node.tidyStruct();
-			node.setPath(PathSeperator + node.getPath());
+				auto &node(nodes.back());
+				node.tidyStruct();
+				node.setPath(PathSeperator + node.getPath());
+			}
 		}
 
 		return nodes;

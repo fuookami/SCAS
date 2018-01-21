@@ -1,6 +1,8 @@
 #pragma once
 
 #include "GradeInfo.h"
+#include "UUIDUtils.h"
+#include "DataUtils.h"
 
 #include <string>
 #include <vector>
@@ -124,7 +126,7 @@ namespace SCAS
 			};
 
 		public:
-			EventInfo(const std::string &id = "");
+			EventInfo(const std::string &id = DataUtils::toBase64String(DataUtils::fromArray(UUIDUtil::generateUUIDV1())));
 			EventInfo(const std::string &&id);
 			EventInfo(const EventInfo &ano);
 			EventInfo(const EventInfo &&ano);
@@ -133,6 +135,13 @@ namespace SCAS
 			~EventInfo(void);
 
 			inline const std::string &getId(void) const { return m_id; }
+
+			inline const DatetimeUtils::Date getDate(void) const { return m_date; }
+			inline void setDate(const DatetimeUtils::Date &date) { m_date = date; }
+			inline void setDate(const DatetimeUtils::Date &&date) { m_date = std::move(date); }
+
+			inline const int getOrderInDay(void) const { return m_orderInDay; }
+			inline void setOrderInDay(const int order) { m_orderInDay = order ; }
 
 			inline const std::string &getName(void) const { return m_name; }
 			inline void setName(const std::string &name) { m_name.assign(name); }
@@ -158,6 +167,10 @@ namespace SCAS
 
 		private:
 			const std::string m_id;
+
+			DatetimeUtils::Date m_date;
+			int m_orderInDay;
+
 			std::string m_name;
 			eType m_type;
 
