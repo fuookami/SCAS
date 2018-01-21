@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vector>
+#include <array>
 #include <string>
 
 namespace DataUtils
@@ -109,6 +110,9 @@ namespace DataUtils
 	inline const Data fromInt64(const int64 value) { return DataUtils::_DataUtils::toData(static_cast<uint64>(value)); }
 	inline const uint64 toUInt64(const Data &data) { return DataUtils::_DataUtils::fromData2UInt64(data); }
 	inline const Data fromUInt64(const uint64 value) { return DataUtils::_DataUtils::toData(value); }
+
+	template<int size>
+	inline const Data fromArray(const std::array<byte, size> &data) { return Data(data.cbegin(), data.cend()); }
 
 	const std::string toHexString(const Data &data, const std::string seperator = "");
 	const Data fromHexString(const std::string &str, const std::string seperator = "");

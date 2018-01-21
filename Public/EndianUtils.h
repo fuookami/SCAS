@@ -75,11 +75,11 @@ namespace EndianUtils
 			static const uint8 DataLength = sizeof(T);
 
 			std::array<int8, DataLength> buff;
-			memcpy(reinterpret_cast<void *>(buff.data()), reinterpret_cast<const void *>(&src), DataLength);
+			std::copy(reinterpret_cast<const int8 *>(&src), reinterpret_cast<const int8 *>(&src) + DataLength, buff.begin());
 			std::reverse(buff.begin(), buff.end());
 
 			T ret;
-			memcpy(reinterpret_cast<void *>(&ret), reinterpret_cast<const void *>(buff.data()), DataLength);
+			std::copy(buff.cbegin(), buff.cend(), reinterpret_cast<int8 *>(&ret));
 			return ret;
 		}
 

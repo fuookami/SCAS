@@ -21,11 +21,11 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)DateTimeUtils.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)EndianUtils.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)FileUtils.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)MailUtils.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)NumberVariant.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)RandomUtils.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)StringConvertUtils.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)StringUtils.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)UuidUtils.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)UUIDUtils.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XMLUtils.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -34,11 +34,11 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)DateTimeUtils.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)EndianUtils.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)FileUtils.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)MailUtils.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)NumberVariant.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)RandomUtils.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)StringConvertUtils.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)StringUtils.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)UuidUtils.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)UUIDUtils.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)XMLUtils.h" />
   </ItemGroup>
 </Project>

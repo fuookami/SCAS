@@ -81,24 +81,37 @@ namespace SCAS
 		class ScoreInfo
 		{
 		public:
+			static const float NoScoreRate;
+
+		public:
 			ScoreInfo(void);
 			ScoreInfo(const ScoreInfo &ano);
 			ScoreInfo(const ScoreInfo &&ano);
 			ScoreInfo &operator=(const ScoreInfo &rhs);
 			ScoreInfo &operator=(const ScoreInfo &&rhs);
 			~ScoreInfo(void);
-
-			inline const float getScoreRate(void) const { return m_scoreRate; }
-			inline void setScoreRate(const float scoreRate) { m_scoreRate = scoreRate; }
 			
 			inline std::vector<int> &getScores(void) { return m_scores; }
 			inline const std::vector<int> &getScores(void) const { return m_scores; }
 			inline void setScores(const std::vector<int> &scores) { m_scores = scores; }
 			inline void setScores(const std::vector<int> &&scores) { m_scores = std::move(scores); }
 
+			inline const float getScoreRate(void) const { return m_scoreRate; }
+			inline void setScoreRate(const float scoreRate) { m_scoreRate = scoreRate; }
+
+			inline const bool getBreakRecordRateEnable(void) const { return m_breakRecordRateEnabled; }
+			void setBreakRecordRateEnable(const bool enabled);
+
+			inline const float getBreakRecordRate(void) { return m_breakRecordRate; }
+			void setBreakRecordRate(const float breakRecordScoreRate);
+
 		private:
-			float m_scoreRate;
 			std::vector<int> m_scores;
+
+			float m_scoreRate;
+			
+			bool m_breakRecordRateEnabled;
+			float m_breakRecordRate;
 		};
 
 		class EventInfo

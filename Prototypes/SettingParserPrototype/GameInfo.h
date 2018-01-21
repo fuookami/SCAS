@@ -115,15 +115,15 @@ namespace SCAS
 			inline const uint32 getOrderInDay(void) const { return m_orderInDay; }
 			inline void setOrderInDay(const uint32 orderInDay) { m_orderInDay = orderInDay; }
 
-			inline DateTimeUtils::TimeDuration &getPlanIntervalTime(void) { return m_planIntervalTime; }
-			inline const DateTimeUtils::TimeDuration &getPlanIntervalTime(void) const { return m_planIntervalTime; }
-			inline void setPlanIntervalTime(const DateTimeUtils::TimeDuration &planIntervalTime) { m_planIntervalTime = planIntervalTime; }
-			inline void setPlanIntervalTime(const DateTimeUtils::TimeDuration &&planIntervalTime) { m_planIntervalTime = std::move(planIntervalTime); }
+			inline DateTimeUtils::Time &getPlanIntervalTime(void) { return m_planIntervalTime; }
+			inline const DateTimeUtils::Time &getPlanIntervalTime(void) const { return m_planIntervalTime; }
+			inline void setPlanIntervalTime(const DateTimeUtils::Time &planIntervalTime) { m_planIntervalTime = planIntervalTime; }
+			inline void setPlanIntervalTime(const DateTimeUtils::Time &&planIntervalTime) { m_planIntervalTime = std::move(planIntervalTime); }
 
-			inline DateTimeUtils::TimeDuration &getPlanIntervalTime(void) { return m_planTimePerGroup; }
-			inline const DateTimeUtils::TimeDuration &getPlanTimePerGroup(void) const { return m_planTimePerGroup; }
-			inline void setPlanTimePerGroup(const DateTimeUtils::TimeDuration &planTimePerGroup) { m_planTimePerGroup = planTimePerGroup; }
-			inline void setPlanTimePerGroup(const DateTimeUtils::TimeDuration &&planTimePerGroup) { m_planTimePerGroup = std::move(planTimePerGroup); }
+			inline DateTimeUtils::Time &getPlanIntervalTime(void) { return m_planTimePerGroup; }
+			inline const DateTimeUtils::Time &getPlanTimePerGroup(void) const { return m_planTimePerGroup; }
+			inline void setPlanTimePerGroup(const DateTimeUtils::Time &planTimePerGroup) { m_planTimePerGroup = planTimePerGroup; }
+			inline void setPlanTimePerGroup(const DateTimeUtils::Time &&planTimePerGroup) { m_planTimePerGroup = std::move(planTimePerGroup); }
 
 			inline GameTypeInfo &getGameTypeInfo(void) { return m_gameTypeInfo; }
 			inline const GameTypeInfo &getGameTypeInfo(void) const { return m_gameTypeInfo; }
@@ -142,8 +142,8 @@ namespace SCAS
 			uint32 m_athleteNumber;
 			uint32 m_orderInDay;
 
-			DateTimeUtils::TimeDuration m_planIntervalTime;
-			DateTimeUtils::TimeDuration m_planTimePerGroup;
+			DateTimeUtils::Time m_planIntervalTime;
+			DateTimeUtils::Time m_planTimePerGroup;
 
 			GameTypeInfo m_gameTypeInfo;
 			GroupInfo m_groupInfo;
