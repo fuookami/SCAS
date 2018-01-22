@@ -125,7 +125,10 @@
     <None Include="setting.json" />
   </ItemGroup>
   <ItemGroup>
-    <Xml Include="setting.xml" />
+    <Xml Include="ac_menu.xml" />
+    <Xml Include="setting.xml">
+      <SubType>Designer</SubType>
+    </Xml>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />

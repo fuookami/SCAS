@@ -21,12 +21,12 @@ namespace XMLUtils
 	}
 
 	XMLNode::XMLNode(const XMLNode & ano)
-		: m_tag(ano.m_tag), m_path(m_tag), m_content(ano.m_content), m_attrs(ano.m_attrs), m_children(ano.m_children), m_parent(nullptr)
+		: m_tag(ano.m_tag), m_path(ano.m_path), m_content(ano.m_content), m_attrs(ano.m_attrs), m_children(ano.m_children), m_parent(ano.m_parent)
 	{
 	}
 
 	XMLNode::XMLNode(const XMLNode && ano)
-		: m_tag(std::move(ano.m_tag)), m_path(m_tag), m_content(std::move(ano.m_content)), m_attrs(std::move(ano.m_attrs)), m_children(std::move(ano.m_children)), m_parent(nullptr)
+		: m_tag(std::move(ano.m_tag)), m_path(std::move(ano.m_path)), m_content(std::move(ano.m_content)), m_attrs(std::move(ano.m_attrs)), m_children(std::move(ano.m_children)), m_parent(ano.m_parent)
 	{
 	}
 
@@ -37,6 +37,7 @@ namespace XMLUtils
 		m_content.assign(rhs.m_content);
 		m_children = rhs.m_children;
 		m_attrs = rhs.m_attrs;
+		m_parent = rhs.m_parent;
 
 		return *this;
 	}
@@ -48,6 +49,7 @@ namespace XMLUtils
 		m_content.assign(std::move(rhs.m_content));
 		m_attrs = std::move(rhs.m_attrs);
 		m_children = std::move(rhs.m_children);
+		m_parent = rhs.m_parent;
 
 		return *this;
 	}
@@ -64,7 +66,7 @@ namespace XMLUtils
 
 	void XMLNode::tidyStruct(void)
 	{
-		m_path = m_parent != nullptr ? (m_parent->m_path + PathSeperator + m_tag) : m_tag;
+		m_path = m_parent != nullptr ? (m_parent->m_path + PathSeperator + m_tag) : (PathSeperator + m_tag);
 		for (auto &child : m_children)
 		{
 			child.m_parent = this;

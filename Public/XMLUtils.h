@@ -220,7 +220,6 @@ namespace XMLUtils
 
 				auto &node(nodes.back());
 				node.tidyStruct();
-				node.setPath(PathSeperator + node.getPath());
 			}
 		}
 
