@@ -22,11 +22,17 @@ namespace EndianUtils
 	using int64 = std::int64_t;
 	using uint64 = std::uint64_t;
 
-	class _EndianUtils
+	class _EndianUtils abstract
 	{
 	public:
-		~_EndianUtils() {};
+		_EndianUtils(void) = delete;
+		_EndianUtils(const _EndianUtils &ano) = delete;
+		_EndianUtils(_EndianUtils &&ano) = delete;
+		_EndianUtils &operator=(const _EndianUtils &rhs) = delete;
+		_EndianUtils &operator=(_EndianUtils &&rhs) = delete;
+		~_EndianUtils(void) = delete;
 
+	public:
 		inline static const uint16 toLocalEndian(const Endian srcEndian, const uint16 src) { return _toLocalEndian(srcEndian, src); }
 		inline static const uint16 fromLocalEndian(const Endian targetEndian, const uint16 src) { return _fromLocalEndian(targetEndian, src); }
 
@@ -82,9 +88,6 @@ namespace EndianUtils
 			std::copy(buff.cbegin(), buff.cend(), reinterpret_cast<int8 *>(&ret));
 			return ret;
 		}
-
-	private:
-		_EndianUtils() {};
 	};
 
 	Endian getLocalEndian(void);

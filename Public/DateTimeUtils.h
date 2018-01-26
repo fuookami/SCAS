@@ -47,11 +47,11 @@ namespace DatetimeUtils
 
 		Date(void);
 		Date(const short _year, const unsigned char _month, const unsigned char _day);
-		Date(const Date &ano);
-		Date(const Date &&ano);
-		Date &operator=(const Date &rhs);
-		Date &operator=(const Date &&rhs);
-		~Date(void);
+		Date(const Date &ano) = default;
+		Date(Date &&ano) = default;
+		Date &operator=(const Date &rhs) = default;
+		Date &operator=(Date &&rhs) = default;
+		~Date(void) = default;
 
 		inline Date getDateAfter(const int year, const int month, const int day) const;
 		inline Date getDateAfter(const Date &date) const;
@@ -72,11 +72,11 @@ namespace DatetimeUtils
 		Time(void);
 		Time(const int seconds);
 		Time(const unsigned short _hour, const unsigned char _min, const unsigned char _sec, const bool _negative = false);
-		Time(const Time &ano);
-		Time(const Time &&ano);
-		Time &operator=(const Time &rhs);
-		Time &operator=(const Time &&rhs);
-		virtual ~Time(void);
+		Time(const Time &ano) = default;
+		Time(Time &&ano) = default;
+		Time &operator=(const Time &rhs) = default;
+		Time &operator=(Time &&rhs) = default;
+		virtual ~Time(void) = default;
 
 		inline Time operator+(void) const;
 		inline Time operator-(void) const;
@@ -105,14 +105,14 @@ namespace DatetimeUtils
 		TimeMs(const int milliseconds);
 		TimeMs(const unsigned short _hour, const unsigned char _min, const unsigned char _sec, const unsigned short _msec = 0, const bool _negative = false);
 		TimeMs(const Time &ano, const unsigned short _msec = 0);
-		TimeMs(const Time &&ano, const unsigned short _msec = 0);
-		TimeMs(const TimeMs &ano);
-		TimeMs(const TimeMs &&ano);
+		TimeMs(Time &&ano, const unsigned short _msec = 0);
+		TimeMs(const TimeMs &ano) = default;
+		TimeMs(TimeMs &&ano) = default;
 		TimeMs &operator=(const Time &rhs);
-		TimeMs &operator=(const Time &&rhs);
-		TimeMs &operator=(const TimeMs &rhs);
-		TimeMs &operator=(const TimeMs &&rhs);
-		~TimeMs(void);
+		TimeMs &operator=(Time &&rhs);
+		TimeMs &operator=(const TimeMs &rhs) = default;
+		TimeMs &operator=(TimeMs &&rhs) = default;
+		~TimeMs(void) = default;
 
 		inline TimeMs operator+(void) const;
 		inline TimeMs operator-(void) const;
@@ -147,13 +147,13 @@ namespace DatetimeUtils
 
 		Datetime(void);
 		Datetime(const Date &date, const unsigned char _hour = 0, const unsigned char _min = 0, const unsigned char _sec = 0);
-		Datetime(const Date &&date, const unsigned char _hour = 0, const unsigned char _min = 0, const unsigned char _sec = 0);
+		Datetime(Date &&date, const unsigned char _hour = 0, const unsigned char _min = 0, const unsigned char _sec = 0);
 		Datetime(const short _year, const unsigned char _month, const unsigned char _day, const unsigned char _hour = 0, const unsigned char _min = 0, const unsigned char _sec = 0);
-		Datetime(const Datetime &ano);
-		Datetime(const Datetime &&ano);
-		Datetime &operator=(const Datetime &rhs);
-		Datetime &operator=(const Datetime &&rhs);
-		~Datetime(void);
+		Datetime(const Datetime &ano) = default;
+		Datetime(Datetime &&ano) = default;
+		Datetime &operator=(const Datetime &rhs) = default;
+		Datetime &operator=(Datetime &&rhs) = default;
+		virtual ~Datetime(void) = default;
 
 		inline Datetime getDatetimeAfter(const int year, const int month, const int day, const int hour = 0, const int min = 0, const int sec = 0) const;
 		inline Datetime getDatetimeAfter(const Datetime &datetime) const;
@@ -183,14 +183,14 @@ namespace DatetimeUtils
 		DatetimeMs(const Date &&date, const unsigned char _hour = 0, const unsigned char _min = 0, const unsigned char _sec = 0, const unsigned short _msec = 0);
 		DatetimeMs(const short _year, const unsigned char _month, const unsigned char _day, const unsigned char _hour = 0, const unsigned char _min = 0, const unsigned char _sec = 0, const unsigned short _msec = 0);
 		DatetimeMs(const Datetime &ano, const unsigned short _msec = 0);
-		DatetimeMs(const Datetime &&ano, const unsigned short _msec = 0);
-		DatetimeMs(const DatetimeMs &ano);
-		DatetimeMs(const DatetimeMs &&ano);
+		DatetimeMs(Datetime &&ano, const unsigned short _msec = 0);
+		DatetimeMs(const DatetimeMs &ano) = default;
+		DatetimeMs(DatetimeMs &&ano) = default;
 		DatetimeMs &operator=(const Datetime &rhs);
-		DatetimeMs &operator=(const Datetime &&rhs);
-		DatetimeMs &operator=(const DatetimeMs &rhs);
-		DatetimeMs &operator=(const DatetimeMs &&rhs);
-		~DatetimeMs(void);
+		DatetimeMs &operator=(Datetime &&rhs);
+		DatetimeMs &operator=(const DatetimeMs &rhs) = default;
+		DatetimeMs &operator=(DatetimeMs &&rhs) = default;
+		~DatetimeMs(void) = default;
 
 		inline DatetimeMs getDatetimeMsAfter(const int year, const int month, const int day, const int hour = 0, const int min = 0, const int sec = 0, const int msec = 0) const;
 		inline DatetimeMs getDatetimeMsAfter(const Datetime &datetime) const;

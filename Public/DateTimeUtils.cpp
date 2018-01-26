@@ -18,38 +18,6 @@ namespace DatetimeUtils
 	{
 	}
 
-	Date::Date(const Date & ano)
-		: Date(ano.year, ano.month, ano.day)
-	{
-	}
-
-	Date::Date(const Date && ano)
-		: Date(ano)
-	{
-	}
-
-	Date & Date::operator=(const Date & rhs)
-	{
-		year = rhs.year;
-		month = rhs.month;
-		day = rhs.day;
-
-		return *this;
-	}
-
-	Date & Date::operator=(const Date && rhs)
-	{
-		year = rhs.year;
-		month = rhs.month;
-		day = rhs.day;
-
-		return *this;
-	}
-
-	Date::~Date(void)
-	{
-	}
-
 	Date Date::getDateAfter(const int year, const int month, const int day) const
 	{
 		using namespace boost::gregorian;
@@ -102,40 +70,6 @@ namespace DatetimeUtils
 
 	Time::Time(const unsigned short _hour, const unsigned char _min, const unsigned char _sec, const bool _negative)
 		: hour(_hour), min(_min), sec(_sec), negative(_negative)
-	{
-	}
-
-	Time::Time(const Time & ano)
-		: Time(ano.hour, ano.min, ano.sec, ano.negative)
-	{
-	}
-
-	Time::Time(const Time && ano)
-		: Time(ano.hour, ano.min, ano.sec, ano.negative)
-	{
-	}
-
-	Time & Time::operator=(const Time & rhs)
-	{
-		hour = rhs.hour;
-		min = rhs.min;
-		sec = rhs.sec;
-		negative = rhs.negative;
-
-		return *this;
-	}
-
-	Time & Time::operator=(const Time && rhs)
-	{
-		hour = rhs.hour;
-		min = rhs.min;
-		sec = rhs.sec;
-		negative = rhs.negative;
-
-		return *this;
-	}
-
-	Time::~Time(void)
 	{
 	}
 
@@ -243,18 +177,8 @@ namespace DatetimeUtils
 	{
 	}
 
-	TimeMs::TimeMs(const Time &&ano, const unsigned short _msec /* = 0 */)
+	TimeMs::TimeMs(Time &&ano, const unsigned short _msec /* = 0 */)
 		: Time(std::move(ano)), msec(_msec)
-	{
-	}
-
-	TimeMs::TimeMs(const TimeMs &ano)
-		: Time(ano), msec(ano.msec)
-	{
-	}
-
-	TimeMs::TimeMs(const TimeMs &&ano)
-		: Time(std::move(ano)), msec(ano.msec)
 	{
 	}
 
@@ -267,35 +191,13 @@ namespace DatetimeUtils
 		return *this;
 	}
 
-	TimeMs & TimeMs::operator=(const Time && rhs)
+	TimeMs & TimeMs::operator=(Time && rhs)
 	{
 		msec = 0;
 
 		Time::operator=(std::move(rhs));
 
 		return *this;
-	}
-
-	TimeMs & TimeMs::operator=(const TimeMs & rhs)
-	{
-		msec = rhs.msec;
-
-		Time::operator=(rhs);
-
-		return *this;
-	}
-
-	TimeMs & TimeMs::operator=(const TimeMs && rhs)
-	{
-		msec = rhs.msec;
-
-		Time::operator=(std::move(rhs));
-
-		return *this;
-	}
-
-	TimeMs::~TimeMs(void)
-	{
 	}
 
 	TimeMs TimeMs::operator+(void) const
@@ -396,7 +298,7 @@ namespace DatetimeUtils
 	{
 	}
 
-	Datetime::Datetime(const Date && date, const unsigned char _hour, const unsigned char _min, const unsigned char _sec)
+	Datetime::Datetime(Date && date, const unsigned char _hour, const unsigned char _min, const unsigned char _sec)
 		: year(date.year), month(date.month), day(date.day), hour(_hour), min(_min), sec(_sec)
 	{
 	}
@@ -408,39 +310,6 @@ namespace DatetimeUtils
 
 	Datetime::Datetime(const Datetime & ano)
 		: year(ano.year), month(ano.month), day(ano.day), hour(ano.hour), min(ano.min), sec(ano.sec)
-	{
-	}
-
-	Datetime::Datetime(const Datetime && ano)
-		: year(ano.year), month(ano.month), day(ano.day), hour(ano.hour), min(ano.min), sec(ano.sec)
-	{
-	}
-
-	Datetime & Datetime::operator=(const Datetime & rhs)
-	{
-		year = rhs.year;
-		month = rhs.month;
-		day = rhs.day;
-		hour = rhs.hour;
-		min = rhs.min;
-		sec = rhs.sec;
-
-		return *this;
-	}
-
-	Datetime & Datetime::operator=(const Datetime && rhs)
-	{
-		year = rhs.year;
-		month = rhs.month;
-		day = rhs.day;
-		hour = rhs.hour;
-		min = rhs.min;
-		sec = rhs.sec;
-
-		return *this;
-	}
-
-	Datetime::~Datetime(void)
 	{
 	}
 
@@ -560,23 +429,13 @@ namespace DatetimeUtils
 	{
 	}
 
-	DatetimeMs::DatetimeMs(const Datetime &ano, const unsigned short _msec /* = 0 */)
+	DatetimeMs::DatetimeMs(const Datetime & ano, const unsigned short _msec)
 		: Datetime(ano), msec(_msec)
 	{
 	}
 
-	DatetimeMs::DatetimeMs(const Datetime &&ano, const unsigned short _msec /* = 0 */)
+	DatetimeMs::DatetimeMs(Datetime && ano, const unsigned short _msec)
 		: Datetime(std::move(ano)), msec(_msec)
-	{
-	}
-
-	DatetimeMs::DatetimeMs(const DatetimeMs &ano)
-		: Datetime(ano), msec(ano.msec)
-	{
-	}
-
-	DatetimeMs::DatetimeMs(const DatetimeMs &&ano)
-		: Datetime(std::move(ano)), msec(ano.msec)
 	{
 	}
 
@@ -589,35 +448,13 @@ namespace DatetimeUtils
 		return *this;
 	}
 
-	DatetimeMs & DatetimeMs::operator=(const Datetime && rhs)
+	DatetimeMs & DatetimeMs::operator=(Datetime && rhs)
 	{
 		msec = 0;
 
 		Datetime::operator=(std::move(rhs));
 
 		return *this;
-	}
-
-	DatetimeMs & DatetimeMs::operator=(const DatetimeMs & rhs)
-	{
-		msec = rhs.msec;
-
-		Datetime::operator=(rhs);
-
-		return *this;
-	}
-
-	DatetimeMs & DatetimeMs::operator=(const DatetimeMs && rhs)
-	{
-		msec = rhs.msec;
-
-		Datetime::operator=(std::move(rhs));
-
-		return *this;
-	}
-
-	DatetimeMs::~DatetimeMs(void)
-	{
 	}
 
 	DatetimeMs DatetimeMs::getDatetimeMsAfter(const int year, const int month, const int day, const int hour /* = 0 */, const int min /* = 0 */, const int sec /* = 0 */, const int msec /* = 0 */) const

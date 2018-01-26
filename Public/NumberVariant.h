@@ -195,11 +195,11 @@ public:
 	NumberVariant(const uint64 value);
 	NumberVariant(const std::string &str);
 	NumberVariant(const DataUtils::Data &data);
-	NumberVariant(const NumberVariant &ano);
-	NumberVariant(const NumberVariant &&ano);
-	NumberVariant &operator=(const NumberVariant &rhs);
-	NumberVariant &operator=(const NumberVariant &&rhs);
-	~NumberVariant(void);
+	NumberVariant(const NumberVariant &ano) = default;
+	NumberVariant(NumberVariant &&ano) = default;
+	NumberVariant &operator=(const NumberVariant &rhs) = default;
+	NumberVariant &operator=(NumberVariant &&rhs) = default;
+	~NumberVariant(void) = default;
 
 	inline const bool set(const bool value) { return set(*this, value); }
 	inline const bool set(const float value) { return set(*this, value); }

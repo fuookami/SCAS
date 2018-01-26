@@ -23,12 +23,12 @@ namespace XMLUtils
 
 	public:
 		XMLNode(const std::string &tag);
-		XMLNode(const std::string &&tag);
-		XMLNode(const XMLNode &rhs);
-		XMLNode(const XMLNode &&rhs);
-		XMLNode &operator=(const XMLNode &rhs);
-		XMLNode &operator=(const XMLNode &&rhs);
-		~XMLNode(void);
+		XMLNode(std::string &&tag);
+		XMLNode(const XMLNode &rhs) = default;
+		XMLNode(XMLNode &&rhs) = default;
+		XMLNode &operator=(const XMLNode &rhs) = default;
+		XMLNode &operator=(XMLNode &&rhs) = default;
+		~XMLNode(void) = default;
 
 		inline void setTag(const std::string &tag) { m_tag.assign(tag); };
 		inline void setTag(const std::string &&tag) { m_tag.assign(std::move(tag)); }

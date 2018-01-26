@@ -15,46 +15,8 @@ namespace XMLUtils
 	{
 	}
 
-	XMLNode::XMLNode(const std::string && tag)
+	XMLNode::XMLNode(std::string && tag)
 		: m_tag(std::move(tag)), m_path(m_tag), m_content(), m_attrs(), m_children(), m_parent(nullptr)
-	{
-	}
-
-	XMLNode::XMLNode(const XMLNode & ano)
-		: m_tag(ano.m_tag), m_path(ano.m_path), m_content(ano.m_content), m_attrs(ano.m_attrs), m_children(ano.m_children), m_parent(ano.m_parent)
-	{
-	}
-
-	XMLNode::XMLNode(const XMLNode && ano)
-		: m_tag(std::move(ano.m_tag)), m_path(std::move(ano.m_path)), m_content(std::move(ano.m_content)), m_attrs(std::move(ano.m_attrs)), m_children(std::move(ano.m_children)), m_parent(ano.m_parent)
-	{
-	}
-
-	XMLNode & XMLNode::operator=(const XMLNode & rhs)
-	{
-		m_tag.assign(rhs.m_tag);
-		m_path.assign(m_tag);
-		m_content.assign(rhs.m_content);
-		m_children = rhs.m_children;
-		m_attrs = rhs.m_attrs;
-		m_parent = rhs.m_parent;
-
-		return *this;
-	}
-
-	XMLNode & XMLNode::operator=(const XMLNode && rhs)
-	{
-		m_tag.assign(std::move(rhs.m_tag));
-		m_path.assign(m_tag);
-		m_content.assign(std::move(rhs.m_content));
-		m_attrs = std::move(rhs.m_attrs);
-		m_children = std::move(rhs.m_children);
-		m_parent = rhs.m_parent;
-
-		return *this;
-	}
-
-	XMLNode::~XMLNode(void)
 	{
 	}
 

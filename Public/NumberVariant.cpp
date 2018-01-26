@@ -151,40 +151,6 @@ NumberVariant::NumberVariant(const DataUtils::Data & data)
 {
 }
 
-NumberVariant::NumberVariant(const NumberVariant & ano)
-	: m_empty(ano.m_empty), m_classfication(ano.m_classfication), m_type(ano.m_type), m_value(ano.m_value)
-{
-}
-
-NumberVariant::NumberVariant(const NumberVariant && ano)
-	: m_empty(ano.m_empty), m_classfication(ano.m_classfication), m_type(ano.m_type), m_value(std::move(ano.m_value))
-{
-}
-
-NumberVariant & NumberVariant::operator=(const NumberVariant & rhs)
-{
-	m_empty = rhs.m_empty;
-	m_classfication = rhs.m_classfication;
-	m_type = rhs.m_type;
-	m_value = rhs.m_value;
-
-	return *this;
-}
-
-NumberVariant & NumberVariant::operator=(const NumberVariant && rhs)
-{
-	m_empty = rhs.m_empty;
-	m_classfication = rhs.m_classfication;
-	m_type = rhs.m_type;
-	m_value = std::move(rhs.m_value);
-
-	return *this;
-}
-
-NumberVariant::~NumberVariant(void)
-{
-}
-
 const bool NumberVariant::getBool(void) const
 {
 	try
