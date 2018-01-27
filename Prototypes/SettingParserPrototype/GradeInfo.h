@@ -58,11 +58,11 @@ namespace SCAS
 
 		public:
 			GradeInfo(void);
-			GradeInfo(const GradeInfo &ano);
-			GradeInfo(const GradeInfo &&ano);
-			GradeInfo &operator=(const GradeInfo &rhs);
-			GradeInfo &operator=(const GradeInfo &&rhs);
-			~GradeInfo(void);
+			GradeInfo(const GradeInfo &ano) = default;
+			GradeInfo(GradeInfo &&ano) = default;
+			GradeInfo &operator=(const GradeInfo &rhs) = default;
+			GradeInfo &operator=(GradeInfo &&rhs) = default;
+			~GradeInfo(void) = default;
 
 			inline const eType getType(void) const { return m_type; }
 			inline void setType(const eType type) { m_type = type; m_betterType = Type2BetterType.find(type)->second; }

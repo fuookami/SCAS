@@ -17,11 +17,11 @@ namespace SCAS
 
 		public:
 			GroupInfo(void);
-			GroupInfo(const GroupInfo &ano);
-			GroupInfo(const GroupInfo &&ano);
-			GroupInfo &operator=(const GroupInfo &rhs);
-			GroupInfo &operator=(const GroupInfo &&rhs);
-			~GroupInfo(void);
+			GroupInfo(const GroupInfo &ano) = default;
+			GroupInfo(GroupInfo &&ano) = default;
+			GroupInfo &operator=(const GroupInfo &rhs) = default;
+			GroupInfo &operator=(GroupInfo &&rhs) = default;
+			~GroupInfo(void) = default;
 
 			inline const bool getEnabled(void) const { return m_enabled; }
 			inline const int getPeoplePerGroup(void) const { return m_peoplePerGroup; }
@@ -55,11 +55,11 @@ namespace SCAS
 
 		public:
 			GameTypeInfo(const std::string &eventInfoId, const std::shared_ptr<EventInfo> &refEventInfo = nullptr);
-			GameTypeInfo(const GameTypeInfo &ano);
-			GameTypeInfo(const GameTypeInfo &&ano);
-			GameTypeInfo &operator=(const GameTypeInfo &rhs);
-			GameTypeInfo &operator=(const GameTypeInfo &&rhs);
-			~GameTypeInfo(void);
+			GameTypeInfo(const GameTypeInfo &ano) = default;
+			GameTypeInfo(GameTypeInfo &&ano) = default;
+			GameTypeInfo &operator=(const GameTypeInfo &rhs) = default;
+			GameTypeInfo &operator=(GameTypeInfo &&rhs) = default;
+			~GameTypeInfo(void) = default;
 
 			inline const std::string &getEventInfoId(void) const { return m_eventInfoId; }
 			
@@ -96,12 +96,12 @@ namespace SCAS
 
 		public:
 			GameInfo(const std::string &id = DataUtils::toBase64String(DataUtils::fromArray(UUIDUtil::generateUUIDV1())));
-			GameInfo(const std::string &&id);
-			GameInfo(const GameInfo &ano);
-			GameInfo(const GameInfo &&ano);
-			GameInfo &operator=(const GameInfo &rhs);
-			GameInfo &operator=(const GameInfo &&rhs);
-			~GameInfo(void);
+			GameInfo(std::string &&id);
+			GameInfo(const GameInfo &ano) = default;
+			GameInfo(GameInfo &&ano) = default;
+			GameInfo &operator=(const GameInfo &rhs) = default;
+			GameInfo &operator=(GameInfo &&rhs) = default;
+			~GameInfo(void) = default;
 
 			inline const std::string &getId(void) const { return m_id; }
 
@@ -118,22 +118,22 @@ namespace SCAS
 			inline DatetimeUtils::Time &getPlanIntervalTime(void) { return m_planIntervalTime; }
 			inline const DatetimeUtils::Time &getPlanIntervalTime(void) const { return m_planIntervalTime; }
 			inline void setPlanIntervalTime(const DatetimeUtils::Time &planIntervalTime) { m_planIntervalTime = planIntervalTime; }
-			inline void setPlanIntervalTime(const DatetimeUtils::Time &&planIntervalTime) { m_planIntervalTime = std::move(planIntervalTime); }
+			inline void setPlanIntervalTime(DatetimeUtils::Time &&planIntervalTime) { m_planIntervalTime = std::move(planIntervalTime); }
 
 			inline DatetimeUtils::Time &getPlanIntervalTime(void) { return m_planTimePerGroup; }
 			inline const DatetimeUtils::Time &getPlanTimePerGroup(void) const { return m_planTimePerGroup; }
 			inline void setPlanTimePerGroup(const DatetimeUtils::Time &planTimePerGroup) { m_planTimePerGroup = planTimePerGroup; }
-			inline void setPlanTimePerGroup(const DatetimeUtils::Time &&planTimePerGroup) { m_planTimePerGroup = std::move(planTimePerGroup); }
+			inline void setPlanTimePerGroup(DatetimeUtils::Time &&planTimePerGroup) { m_planTimePerGroup = std::move(planTimePerGroup); }
 
 			inline GameTypeInfo &getGameTypeInfo(void) { return m_gameTypeInfo; }
 			inline const GameTypeInfo &getGameTypeInfo(void) const { return m_gameTypeInfo; }
 			inline void getGameTypeInfo(const GameTypeInfo &gameTypeInfo) { m_gameTypeInfo = gameTypeInfo; }
-			inline void getGameTypeInfo(const GameTypeInfo &&gameTypeInfo) { m_gameTypeInfo = std::move(gameTypeInfo); }
+			inline void getGameTypeInfo(GameTypeInfo &&gameTypeInfo) { m_gameTypeInfo = std::move(gameTypeInfo); }
 
 			inline GroupInfo &getGroupInfo(void) { return m_groupInfo; }
 			inline const GroupInfo &getGroupInfo(void) const { return m_groupInfo; }
 			inline void getGroupInfo(const GroupInfo &groupInfo) { m_groupInfo = groupInfo; }
-			inline void getGroupInfo(const GroupInfo &&groupInfo) { m_groupInfo = std::move(groupInfo); }
+			inline void getGroupInfo(GroupInfo &&groupInfo) { m_groupInfo = std::move(groupInfo); }
 
 		private:
 			const std::string m_id;
