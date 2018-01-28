@@ -81,7 +81,7 @@ namespace EndianUtils
 			static const uint8 DataLength = sizeof(T);
 
 			std::array<int8, DataLength> buff;
-			std::copy(reinterpret_cast<const int8 *>(&src), reinterpret_cast<const int8 *>(&src) + DataLength, buff.begin());
+			std::copy(DataUtils::getDataCBegin(src), DataUtils::getDataCEnd(src), buff.begin());
 			std::reverse(buff.begin(), buff.end());
 
 			T ret;

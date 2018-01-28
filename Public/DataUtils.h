@@ -3,6 +3,8 @@
 #include <vector>
 #include <array>
 #include <string>
+#include <memory>
+#include <algorithm>
 
 namespace DataUtils
 {
@@ -17,6 +19,34 @@ namespace DataUtils
 	using uint32 = std::uint32_t;
 	using int64 = std::int64_t;
 	using uint64 = std::uint64_t;
+
+	template <typename T>
+	inline const byte *getDataCBegin(const T &src)
+	{
+		return reinterpret_cast<const byte *>(std::addressof(src));
+	}
+
+	template <typename T>
+	inline byte *getDataBegin(T &src)
+	{
+		return reinterpret_cast<byte *>(std::addressof(src));
+	}
+
+	template <typename T>
+	inline const byte *getDataCEnd(const T &src)
+	{
+		static const uint8 DataLength(sizeof(T));
+
+		return reinterpret_cast<const byte *>(std::addressof(src)) + DataLength;
+	}
+
+	template <typename T>
+	inline byte *getDataEnd(T &src)
+	{
+		static const uint8 DataLength(sizeof(T));
+
+		return reinterpret_cast<byte *>(std::addressof(src)) + DataLength;
+	}
 
 	class _DataUtils
 	{
@@ -52,10 +82,8 @@ namespace DataUtils
 		template <typename T>
 		static const Data _toData(const T src)
 		{
-			static const uint8 DataLength(sizeof(T));
-
-			Data buff(DataLength);
-			memcpy(reinterpret_cast<void *>(buff.data()), reinterpret_cast<const void *>(&src), DataLength);
+			Data buff;
+			std::copy(getDataCBegin(src), getDataCEnd(src), std::back_inserter(buff));
 
 			return buff;
 		}
@@ -72,7 +100,7 @@ namespace DataUtils
 			else
 			{
 				T ret;
-				memcpy(reinterpret_cast<void *>(&ret), reinterpret_cast<const void *>(data.data()), DataLength);
+				std::copy(data.cbegin(), data.cend(), getDataBegin(ret));
 
 				return ret;
 			}
