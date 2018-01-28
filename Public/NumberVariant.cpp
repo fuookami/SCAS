@@ -296,6 +296,100 @@ void NumberVariant::clear(void)
 	m_empty = true;
 }
 
+const std::string NumberVariant::getValueString(const int digit, const int precision) const
+{
+	if (m_empty)
+	{
+		static const std::string EmptyString("empty");
+		return EmptyString;
+	}
+	else
+	{
+		static const std::string EmptyString("");
+
+		std::string ret(EmptyString);
+		switch (m_classfication)
+		{
+		case NumberVariant::eClassfication::tBoolean:
+		{
+			static const std::string TrueString("true");
+			static const std::string FalseString("false");
+
+			ret = get<bool>() ? TrueString : FalseString;
+		}
+		break;
+		case NumberVariant::eClassfication::tFloat:
+		{
+			std::ostringstream floatSout(EmptyString);
+
+			if (precision != -1)
+			{
+				floatSout << std::setprecision(precision) << get<double>();
+			}
+			else
+			{
+				floatSout << get<double>();
+			}
+			std::string numberStr(floatSout.str());
+
+			if (digit != -1)
+			{
+				size_t pointPos(numberStr.find("."));
+				if (numberStr.size() > (digit + 1) && pointPos != std::string::npos && pointPos < (digit + 1))
+				{
+					numberStr.erase(numberStr.begin() + digit + 1, numberStr.end());
+				}
+				else if (numberStr.size() > digit)
+				{
+					numberStr.erase(numberStr.begin() + digit, numberStr.end());
+				}
+			}
+
+			ret = std::move(numberStr);
+		}
+		break;
+		case NumberVariant::eClassfication::tInteger:
+		{
+			int64 number(get<int64>());
+			std::string numberStr(std::to_string(number));
+
+			if (digit != -1)
+			{
+				if (number < 0 && numberStr.size() >(digit + 1))
+				{
+					numberStr.erase(numberStr.begin() + digit + 1, numberStr.end());
+				}
+				else if (numberStr.size() > digit)
+				{
+					numberStr.erase(numberStr.begin() + digit, numberStr.end());
+				}
+			}
+
+			ret = std::move(numberStr);
+		}
+		break;
+		case NumberVariant::eClassfication::tUnsigned:
+		{
+			uint64 number(get<uint64>());
+			std::string numberStr(std::to_string(number));
+
+			if (digit != -1 && numberStr.size() > digit)
+			{
+				numberStr.erase(numberStr.begin() + digit, numberStr.end());
+			}
+
+			ret = std::move(numberStr);
+		}
+		break;
+		default:
+			ret = EmptyString;
+			break;
+		}
+
+		return ret;
+	}
+}
+
 const std::string NumberVariant::toString(const int digit, const int precision) const
 {
 	if (m_empty)

@@ -4,7 +4,9 @@
 
 #include <boost/bimap.hpp>
 #include <boost/variant.hpp>
+#include <boost/numeric/conversion/cast.hpp>
 
+#include <sstream>
 #include <typeinfo>
 #include <map>
 #include <set>
@@ -86,43 +88,45 @@ private:
 	template <typename T>
 	static const T getValue(const eValidType type, const ValueType &value)
 	{
+		using boost::numeric_cast;
+
 		switch (type)
 		{
 		case eValidType::tBool:
-			return static_cast<T>(boost::get<bool>(value));
+			return numeric_cast<T>(boost::get<bool>(value));
 			break;
 		case eValidType::tFloat:
-			return static_cast<T>(boost::get<float>(value));
+			return numeric_cast<T>(boost::get<float>(value));
 			break;
 		case eValidType::tDouble:
-			return static_cast<T>(boost::get<double>(value));
+			return numeric_cast<T>(boost::get<double>(value));
 			break;
 		case eValidType::tInt8:
-			return static_cast<T>(boost::get<int8>(value));
+			return numeric_cast<T>(boost::get<int8>(value));
 			break;
 		case eValidType::tUInt8:
-			return static_cast<T>(boost::get<uint8>(value));
+			return numeric_cast<T>(boost::get<uint8>(value));
 			break;
 		case eValidType::tInt16:
-			return static_cast<T>(boost::get<int16>(value));
+			return numeric_cast<T>(boost::get<int16>(value));
 			break;
 		case eValidType::tUInt16:
-			return static_cast<T>(boost::get<uint16>(value));
+			return numeric_cast<T>(boost::get<uint16>(value));
 			break;
 		case eValidType::tInt32:
-			return static_cast<T>(boost::get<int32>(value));
+			return numeric_cast<T>(boost::get<int32>(value));
 			break;
 		case eValidType::tUInt32:
-			return static_cast<T>(boost::get<uint32>(value));
+			return numeric_cast<T>(boost::get<uint32>(value));
 			break;
 		case eValidType::tInt64:
-			return static_cast<T>(boost::get<int64>(value));
+			return numeric_cast<T>(boost::get<int64>(value));
 			break;
 		case eValidType::tUInt64:
-			return static_cast<T>(boost::get<uint64>(value)); 
+			return numeric_cast<T>(boost::get<uint64>(value));
 			break;
 		default:
-			return static_cast<T>(0); 
+			return numeric_cast<T>(0);
 			break;
 		}
 
@@ -132,6 +136,17 @@ private:
 	template <typename T>
 	static const T get(const NumberVariant &dest)
 	{
+		static const auto generateErrorMessage([](const std::string &destType, const std::string &destValue, const std::string &targetType) -> std::string
+		{
+			static const std::string ErrorMessagePrefix("Invalid Type Transformation: ");
+			static const std::string TypeTransformationSeparator(" --> ");
+
+			std::ostringstream sout;
+			sout << ErrorMessagePrefix << destType << "(" << destValue << ")" << TypeTransformationSeparator << targetType;
+
+			return sout.str();
+		});
+
 		if (dest.m_empty)
 		{
 			const auto &typeInfo(typeid(T));
@@ -150,13 +165,18 @@ private:
 					const std::set<eValidType> validTypeSet(ValidTypeTransformation.find(dest.m_type)->second);
 					if (validTypeSet.find(targetType) != validTypeSet.cend())
 					{
-						return getValue<T>(dest.m_type, dest.m_value);
+						try
+						{
+							return getValue<T>(dest.m_type, dest.m_value);
+						}
+						catch (bad_numeric_cast& e) 
+						{
+							throw std::logic_error(generateErrorMessage(TypeName2Type.right.find(dest.m_type)->first, dest.getValueString(), typeInfo.name()));
+						}
 					}
 					else
 					{
-						static const std::string ErrorMessagePrefix("Invalid Type Transformation: ");
-						static const std::string TypeTransformationSeparator(" --> ");
-						throw std::logic_error(ErrorMessagePrefix + typeInfo.name() + TypeTransformationSeparator + TypeName2Type.right.find(dest.m_type)->second);
+						throw std::logic_error(generateErrorMessage(TypeName2Type.right.find(dest.m_type)->first, dest.getValueString(), typeInfo.name()));
 					}
 				}
 			}
@@ -168,8 +188,7 @@ private:
 				}
 				catch (std::exception &e)
 				{
-					static const std::string ErrorMessage("Invalid Type And Cannot transform to: ");
-					throw std::logic_error(ErrorMessage + typeInfo.name() + "\n" + e.what());
+					throw std::logic_error(generateErrorMessage(TypeName2Type.right.find(dest.m_type)->first, dest.getValueString(), typeInfo.name()));
 				}
 			}
 		}
@@ -236,6 +255,7 @@ public:
 	void clear(void);
 	inline const eValidType type(void) const { return m_type; }
 
+	const std::string getValueString(const int digit = -1, const int precision = -1) const;
 	const std::string toString(const int digit = -1, const int precision = -1) const;
 	static const NumberVariant fromString(const std::string &str);
 
