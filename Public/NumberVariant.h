@@ -169,14 +169,14 @@ private:
 						{
 							return getValue<T>(dest.m_type, dest.m_value);
 						}
-						catch (bad_numeric_cast& e) 
+						catch (boost::bad_numeric_cast &e) 
 						{
-							throw std::logic_error(generateErrorMessage(TypeName2Type.right.find(dest.m_type)->first, dest.getValueString(), typeInfo.name()));
+							throw std::logic_error(generateErrorMessage(TypeName2Type.right.find(dest.m_type)->second, dest.getValueString(), typeInfo.name()));
 						}
 					}
 					else
 					{
-						throw std::logic_error(generateErrorMessage(TypeName2Type.right.find(dest.m_type)->first, dest.getValueString(), typeInfo.name()));
+						throw std::logic_error(generateErrorMessage(TypeName2Type.right.find(dest.m_type)->second, dest.getValueString(), typeInfo.name()));
 					}
 				}
 			}
@@ -188,7 +188,7 @@ private:
 				}
 				catch (std::exception &e)
 				{
-					throw std::logic_error(generateErrorMessage(TypeName2Type.right.find(dest.m_type)->first, dest.getValueString(), typeInfo.name()));
+					throw std::logic_error(generateErrorMessage(TypeName2Type.right.find(dest.m_type)->second, dest.getValueString(), typeInfo.name()));
 				}
 			}
 		}

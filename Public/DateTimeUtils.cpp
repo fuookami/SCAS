@@ -308,11 +308,6 @@ namespace DatetimeUtils
 	{
 	}
 
-	Datetime::Datetime(const Datetime & ano)
-		: year(ano.year), month(ano.month), day(ano.day), hour(ano.hour), min(ano.min), sec(ano.sec)
-	{
-	}
-
 	Datetime Datetime::getDatetimeAfter(const int year, const int month, const int day, const int hour /* = 0 */, const int min /* = 0 */, const int sec /* = 0 */) const
 	{
 		using namespace boost::gregorian;
