@@ -131,14 +131,22 @@
     </Xml>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CompetitionInfo.cpp" />
+    <ClCompile Include="EventInfo.cpp" />
+    <ClCompile Include="GameInfo.cpp" />
+    <ClCompile Include="GradeInfo.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="SCASCompCfgParser.cpp" />
+    <ClCompile Include="test.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CompetitionInfo.h" />
     <ClInclude Include="EventInfo.h" />
     <ClInclude Include="GameInfo.h" />
     <ClInclude Include="GradeInfo.h" />
+    <ClInclude Include="SCASCompCfgParser.h" />
     <ClInclude Include="SCASPublic.h" />
+    <ClInclude Include="test.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
