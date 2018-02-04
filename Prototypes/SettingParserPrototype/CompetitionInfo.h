@@ -39,6 +39,8 @@ namespace SCAS
 		class TypeInfo
 		{
 		public:
+			using TypeDataType = std::pair<std::string, std::string>;
+
 			TypeInfo(void);
 			TypeInfo(const TypeInfo &ano) = default;
 			TypeInfo(TypeInfo &&ano) = default;
@@ -46,19 +48,21 @@ namespace SCAS
 			TypeInfo &operator=(TypeInfo &&rhs) = default;
 			~TypeInfo(void) = default;
 
-			inline std::vector<std::pair<std::string, std::string>> getTypes(void) { return m_types; }
-			inline const std::vector<std::pair<std::string, std::string>> getTypes(void) const { return m_types; }
-			inline void setTypes(const std::vector<std::pair<std::string, std::string>> &types) { m_types = types; }
-			inline void setTypes(std::vector<std::pair<std::string, std::string>> &&types) { m_types = std::move(types); }
+			inline std::vector<TypeDataType> getTypes(void) { return m_types; }
+			inline const std::vector<TypeDataType> getTypes(void) const { return m_types; }
+			inline void setTypes(const std::vector<TypeDataType> &types) { m_types = types; }
+			inline void setTypes(std::vector<TypeDataType> &&types) { m_types = std::move(types); }
 
 		private:
-			std::vector<std::pair<std::string, std::string>> m_types; // <id, name>
+			std::vector<TypeDataType> m_types; // <id, name>
 		};
 
 		class RankInfo
 		{
 		public:
-			RankInfo(void);
+			using RankDataType = std::pair<std::string, std::string>;
+
+			RankInfo(void) = default;
 			RankInfo(const RankInfo &ano) = default;
 			RankInfo(RankInfo &&ano) = default;
 			RankInfo &operator=(const RankInfo &rhs) = default;
@@ -66,22 +70,22 @@ namespace SCAS
 			~RankInfo(void) = default;
 
 			inline const bool getEnabled(void) const { return m_enabled; }
-			inline void setEnabled(void) { if (!m_enabled) { m_enabled = true; m_forced = false; m_ranks.clear(); m_defaultRank = std::pair<std::string, std::string>(); } }
-			inline void setDisabled(void) { if (m_enabled) { m_enabled = false; m_forced = false; m_ranks.clear(); m_defaultRank = std::pair<std::string, std::string>(); } }
+			inline void setEnabled(void) { if (!m_enabled) { m_enabled = true; m_forced = false; m_ranks.clear(); m_defaultRank = RankDataType(); } }
+			inline void setDisabled(void) { if (m_enabled) { m_enabled = false; m_forced = false; m_ranks.clear(); m_defaultRank = RankDataType(); } }
 
 			inline const bool getForced(void) const { return m_forced; }
 			inline void setForced(const bool forced) { if (m_enabled) { m_forced = forced; } }
 
-			inline std::vector<std::pair<std::string, std::string>> &getRanks(void) { return m_ranks; }
-			inline const std::vector<std::pair<std::string, std::string>> &getRanks(void) const { return m_ranks; }
-			inline void setRanks(std::vector<std::pair<std::string, std::string>> &&ranks) { m_ranks = std::move(ranks); }
+			inline std::vector<RankDataType> &getRanks(void) { return m_ranks; }
+			inline const std::vector<RankDataType> &getRanks(void) const { return m_ranks; }
+			inline void setRanks(std::vector<RankDataType> &&ranks) { m_ranks = std::move(ranks); }
 
 		private:
 			bool m_enabled;
 			bool m_forced;
 			
-			std::vector<std::pair<std::string, std::string>> m_ranks;
-			std::pair<std::string, std::string> m_defaultRank;
+			std::vector<RankDataType> m_ranks;
+			RankDataType m_defaultRank;
 		};
 
 		class PrincipalInfo

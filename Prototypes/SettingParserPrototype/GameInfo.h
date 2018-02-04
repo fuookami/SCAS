@@ -13,7 +13,7 @@ namespace SCAS
 		class GroupInfo
 		{
 		public:
-			static const int NoGroup = -1;
+			static const int NoGroup = 0;
 
 		public:
 			GroupInfo(void);
@@ -37,6 +37,8 @@ namespace SCAS
 		class GameTypeInfo
 		{
 		public:
+			static const int NoPos = -1;
+
 			enum class eType
 			{
 				Group,				// Ð¡×éÈü
@@ -72,11 +74,11 @@ namespace SCAS
 			inline const ePattern getPattern(void) const { return m_pattern; }
 			inline void setPattern(const ePattern pattern) { m_pattern = pattern; }
 
-			inline const uint32 getOrderInEvent(void) const { return m_orderInEvent; }
-			inline void setOrderInEvent(const uint32 orderInEvent) { m_orderInEvent = orderInEvent; }
+			inline const int getOrderInEvent(void) const { return m_orderInEvent; }
+			inline void setOrderInEvent(const int orderInEvent) { m_orderInEvent = orderInEvent; }
 
-			inline const uint32 getOrderInType(void) const { return m_orderInType; }
-			inline void setOrderInType(const uint32 orderInType) { m_orderInType = orderInType; }
+			inline const int getOrderInType(void) const { return m_orderInType; }
+			inline void setOrderInType(const int orderInType) { m_orderInType = orderInType; }
 
 		private:
 			std::string m_eventInfoId;
@@ -85,18 +87,19 @@ namespace SCAS
 			eType m_type;
 			ePattern m_pattern;
 
-			uint32 m_orderInEvent;
-			uint32 m_orderInType;
+			int m_orderInEvent;
+			int m_orderInType;
 		};
 
 		class GameInfo
 		{
 		public:
 			static const uint32 NoAthleteNumber = 0;
+			static const int NoPos = -1;
 
 		public:
-			GameInfo(const std::string &id = DataUtils::toBase64String(DataUtils::fromArray(UUIDUtil::generateUUIDV1())));
-			GameInfo(std::string &&id);
+			GameInfo(const std::string &eventInfoId, const std::string &id = DataUtils::toBase64String(DataUtils::fromArray(UUIDUtil::generateUUIDV1())));
+			GameInfo(const std::string &eventInfoId, std::string &&id);
 			GameInfo(const GameInfo &ano) = default;
 			GameInfo(GameInfo &&ano) = default;
 			GameInfo &operator=(const GameInfo &rhs) = default;
@@ -140,7 +143,7 @@ namespace SCAS
 			std::string m_name;
 
 			uint32 m_athleteNumber;
-			uint32 m_orderInDay;
+			int m_orderInDay;
 
 			DatetimeUtils::Time m_planIntervalTime;
 			DatetimeUtils::Time m_planTimePerGroup;

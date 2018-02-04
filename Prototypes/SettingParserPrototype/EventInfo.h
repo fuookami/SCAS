@@ -15,7 +15,7 @@ namespace SCAS
 		class TeamworkInfo
 		{
 		public:
-			static const int NoTeamwork = -1;
+			static const int NoTeamwork = -2;
 			static const int NotNeedEveryPerson = -1;
 
 		public:
