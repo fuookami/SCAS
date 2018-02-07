@@ -248,19 +248,19 @@ public:
 	const uint64 getUInt64(void) const;
 
 	inline void assign(const NumberVariant &ano) { *this = ano; }
-	inline void assign(const NumberVariant &&ano) { *this = std::move(ano); }
+	inline void assign(NumberVariant &&ano) { *this = std::move(ano); }
 	void swap(NumberVariant &ano);
 
 	inline const bool empty(void) const { return m_empty; }
 	void clear(void);
 	inline const eValidType type(void) const { return m_type; }
 
-	const std::string getValueString(const int digit = -1, const int precision = -1) const;
-	const std::string toString(const int digit = -1, const int precision = -1) const;
-	static const NumberVariant fromString(const std::string &str);
+	std::string getValueString(const int digit = -1, const int precision = -1) const;
+	std::string toString(const int digit = -1, const int precision = -1) const;
+	static NumberVariant fromString(const std::string &str);
 
-	const DataUtils::Data toData(void) const;
-	static const NumberVariant fromData(const DataUtils::Data &data);
+	DataUtils::Data toData(void) const;
+	static NumberVariant fromData(const DataUtils::Data &data);
 
 private:
 	void refreshClassfication(void);

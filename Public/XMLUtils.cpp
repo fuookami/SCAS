@@ -20,7 +20,7 @@ namespace XMLUtils
 	{
 	}
 
-	const std::string XMLNode::getAttr(const std::string & key, const std::string & defaultValue) const
+	const std::string &XMLNode::getAttr(const std::string & key, const std::string & defaultValue) const
 	{
 		auto it(m_attrs.find(key));
 		return it != m_attrs.cend() ? it->second : defaultValue;

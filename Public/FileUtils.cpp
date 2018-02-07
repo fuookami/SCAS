@@ -15,7 +15,7 @@ namespace FileUtils
 		return initailPath;
 	}
 
-	bool checkFileExist(const std::string & targetUrl)
+	const bool checkFileExist(const std::string & targetUrl)
 	{
 		std::ifstream fin(targetUrl);
 		if (!fin.is_open())
@@ -36,7 +36,7 @@ namespace FileUtils
 		fout.close();
 	}
 
-	bool removeFile(const std::string & targetUrl)
+	const bool removeFile(const std::string & targetUrl)
 	{
 		try
 		{
@@ -48,17 +48,17 @@ namespace FileUtils
 		}
 	}
 
-	const std::string getPathOfUrl(const std::string & targetUrl)
+	std::string getPathOfUrl(const std::string & targetUrl)
 	{
 		return std::string(targetUrl.cbegin(), targetUrl.cbegin() + targetUrl.find_last_of("\\/"));
 	}
 
-	const std::string getFileNameOfUrl(const std::string & targetUrl)
+	std::string getFileNameOfUrl(const std::string & targetUrl)
 	{
 		return std::string(targetUrl.cbegin() + targetUrl.find_last_of("\\/") + 1, targetUrl.cend());
 	}
 
-	const std::vector<std::string> getAllFilesNameOfPath(const std::string & targetPath)
+	std::vector<std::string> getAllFilesNameOfPath(const std::string & targetPath)
 	{
 		using namespace boost::filesystem;
 
@@ -82,7 +82,7 @@ namespace FileUtils
 		return fileNames;
 	}
 
-	const std::vector<std::string> getAllDirectoryPathsOfPath(const std::string & targetPath)
+	std::vector<std::string> getAllDirectoryPathsOfPath(const std::string & targetPath)
 	{
 		using namespace boost::filesystem;
 
@@ -130,7 +130,7 @@ namespace FileUtils
 		fout.close();
 	}
 
-	bool checkPathExist(const std::string & targetPath)
+	const bool checkPathExist(const std::string & targetPath)
 	{
 		using namespace boost::filesystem;
 
@@ -138,7 +138,7 @@ namespace FileUtils
 		return exists(fullPath);
 	}
 
-	bool insurePathExist(const std::string & targetPath)
+	const bool insurePathExist(const std::string & targetPath)
 	{
 		using namespace boost::filesystem;
 
@@ -163,7 +163,7 @@ namespace FileUtils
 		return true;
 	}
 
-	bool removePath(const std::string & targetPath)
+	const bool removePath(const std::string & targetPath)
 	{
 		try
 		{
@@ -175,7 +175,7 @@ namespace FileUtils
 		}
 	}
 
-	const std::string getSystemNativePath(const std::string & targetPath)
+	std::string getSystemNativePath(const std::string & targetPath)
 	{
 		using namespace boost::filesystem;
 

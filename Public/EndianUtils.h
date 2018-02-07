@@ -3,6 +3,7 @@
 #include <cstdint>
 #include <array>
 #include <algorithm>
+#include "DataUtils.h"
 
 namespace EndianUtils
 {
@@ -33,24 +34,19 @@ namespace EndianUtils
 		~_EndianUtils(void) = delete;
 
 	public:
-		inline static const uint16 toLocalEndian(const Endian srcEndian, const uint16 src) { return _toLocalEndian(srcEndian, src); }
-		inline static const uint16 fromLocalEndian(const Endian targetEndian, const uint16 src) { return _fromLocalEndian(targetEndian, src); }
+		template <typename T>
+		inline static T toLocalEndian_ref(const Endian srcEndian, const T &src) { return _toLocalEndian_ref(srcEndian, src); }
+		template <typename T>
+		inline static T fromLocalEndian_ref(const Endian targetEndian, const T &src) { return _fromLocalEndian_ref(targetEndian, src); }
 
-		inline static const uint32 toLocalEndian(const Endian srcEndian, const uint32 src) { return _toLocalEndian(srcEndian, src); }
-		inline static const uint32 fromLocalEndian(const Endian targetEndian, const uint32 src) { return _fromLocalEndian(targetEndian, src); }
-
-		inline static const uint64 toLocalEndian(const Endian srcEndian, const uint64 src) { return _toLocalEndian(srcEndian, src); }
-		inline static const uint64 fromLocalEndian(const Endian targetEndian, const uint64 src) { return _fromLocalEndian(targetEndian, src); }
-
-		inline static const float toLocalEndian(const Endian srcEndian, const float src) { return _toLocalEndian(srcEndian, src); }
-		inline static const float fromLocalEndian(const Endian targetEndian, const float src) { return _fromLocalEndian(targetEndian, src); }
-
-		inline static const double toLocalEndian(const Endian srcEndian, const double src) { return _toLocalEndian(srcEndian, src); }
-		inline static const double fromLocalEndian(const Endian targetEndian, const double src) { return _fromLocalEndian(targetEndian, src); }
+		template <typename T>
+		inline static const T toLocalEndian(const Endian srcEndian, const T src) { return _toLocalEndian(srcEndian, src); }
+		template <typename T>
+		inline static const T fromLocalEndian(const Endian targetEndian, const T src) { return _fromLocalEndian(targetEndian, src); }
 
 	private:
 		template <class T>
-		inline static const T _toLocalEndian(const Endian srcEndian, const T src)
+		inline static T _toLocalEndian(const Endian srcEndian, const T src)
 		{
 			if (getLocalEndian() == srcEndian)
 			{
@@ -63,7 +59,20 @@ namespace EndianUtils
 		}
 
 		template <class T>
-		inline static const T _fromLocalEndian(const Endian targetEndian, const T src)
+		inline static T _toLocalEndian_ref(const Endian srcEndian, const T &src)
+		{
+			if (getLocalEndian() == srcEndian)
+			{
+				return src;
+			}
+			else
+			{
+				return _translateEndian(src);
+			}
+		}
+
+		template <class T>
+		inline static T _fromLocalEndian(const Endian targetEndian, const T src)
 		{
 			if (getLocalEndian() == targetEndian)
 			{
@@ -76,21 +85,62 @@ namespace EndianUtils
 		}
 
 		template <class T>
-		static const T _translateEndian(const T src)
+		inline static T _fromLocalEndian_ref(const Endian targetEndian, const T &src)
+		{
+			if (getLocalEndian() == targetEndian)
+			{
+				return src;
+			}
+			else
+			{
+				return _translateEndian(src);
+			}
+		}
+
+		template <class T>
+		static T _translateEndian(const T src)
 		{
 			static const uint8 DataLength = sizeof(T);
 
-			std::array<int8, DataLength> buff;
-			std::copy(DataUtils::getDataCBegin(src), DataUtils::getDataCEnd(src), buff.begin());
-			std::reverse(buff.begin(), buff.end());
+			if (DataLength <= 1)
+			{
+				return src;
+			}
+			else
+			{
+				std::array<int8, DataLength> buff;
+				std::copy(DataUtils::getDataCBegin(src), DataUtils::getDataCEnd(src), buff.begin());
+				std::reverse(buff.begin(), buff.end());
 
-			T ret;
-			std::copy(buff.cbegin(), buff.cend(), reinterpret_cast<int8 *>(&ret));
-			return ret;
+				T ret;
+				std::copy(buff.cbegin(), buff.cend(), reinterpret_cast<int8 *>(&ret));
+				return ret;
+			}
+		}
+
+		template <class T>
+		static T _translateEndian_ref(const T &src)
+		{
+			static const uint8 DataLength = sizeof(T);
+
+			if (DataLength <= 1)
+			{
+				return src;
+			}
+			else
+			{
+				std::array<int8, DataLength> buff;
+				std::copy(DataUtils::getDataCBegin(src), DataUtils::getDataCEnd(src), buff.begin());
+				std::reverse(buff.begin(), buff.end());
+
+				T ret;
+				std::copy(buff.cbegin(), buff.cend(), reinterpret_cast<int8 *>(&ret));
+				return ret;
+			}
 		}
 	};
 
-	Endian getLocalEndian(void);
+	const Endian getLocalEndian(void);
 
 	inline const uint16 toLocalEndian(const Endian srcEndian, const uint16 src) { return _EndianUtils::toLocalEndian(srcEndian, src); }
 	inline const uint16 fromLocalEndian(const Endian targetEndian, const uint16 src) { return _EndianUtils::fromLocalEndian(targetEndian, src); }

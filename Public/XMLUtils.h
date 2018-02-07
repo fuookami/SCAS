@@ -46,7 +46,7 @@ namespace XMLUtils
 		inline void addAttr(const std::pair<std::string, std::string> &&pair) { m_attrs.insert(std::move(pair)); }
 		inline void eraseAttr(const std::string &key) { m_attrs.erase(key); }
 		inline const bool hasAttr(const std::string &key) const { return m_attrs.find(key) != m_attrs.cend(); }
-		const std::string getAttr(const std::string &key, const std::string &defaultValue = DefaultAttrValue) const;
+		const std::string &getAttr(const std::string &key, const std::string &defaultValue = DefaultAttrValue) const;
 		inline void setAttr(const std::string &key, const std::string &value) { m_attrs[key].assign(value); }
 		inline void setAttr(const std::string &key, const std::string &&value) { m_attrs[key].assign(std::move(value)); }
 		inline const std::map<std::string, std::string> &getAttrs(void) const { return m_attrs; }
@@ -63,7 +63,7 @@ namespace XMLUtils
 		inline const std::vector<XMLNode> &getChildren(void) const { return m_children; }
 		inline std::vector<XMLNode> &getChildren(void) { return m_children; }
 
-		inline void setParent(XMLNode &parent) { m_parent = &parent; }
+		inline void setParent(XMLNode &parent) { m_parent = std::addressof(parent); }
 		inline void removeParent(void) { m_parent = nullptr; }
 		inline const bool hasParent(void) const { return m_parent == nullptr; }
 		inline XMLNode *getParent(void) { return m_parent; }

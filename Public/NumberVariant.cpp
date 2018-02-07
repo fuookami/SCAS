@@ -296,7 +296,7 @@ void NumberVariant::clear(void)
 	m_empty = true;
 }
 
-const std::string NumberVariant::getValueString(const int digit, const int precision) const
+std::string NumberVariant::getValueString(const int digit, const int precision) const
 {
 	if (m_empty)
 	{
@@ -390,7 +390,7 @@ const std::string NumberVariant::getValueString(const int digit, const int preci
 	}
 }
 
-const std::string NumberVariant::toString(const int digit, const int precision) const
+std::string NumberVariant::toString(const int digit, const int precision) const
 {
 	if (m_empty)
 	{
@@ -484,7 +484,7 @@ const std::string NumberVariant::toString(const int digit, const int precision) 
 	}
 }
 
-const NumberVariant NumberVariant::fromString(const std::string & str)
+NumberVariant NumberVariant::fromString(const std::string & str)
 {
 	static const std::string Seperator("_");
 	static const std::string EmptyString("empty");
@@ -560,7 +560,7 @@ const NumberVariant NumberVariant::fromString(const std::string & str)
 	return NumberVariant();
 }
 
-const DataUtils::Data NumberVariant::toData(void) const
+DataUtils::Data NumberVariant::toData(void) const
 {	
 	if (m_empty)
 	{
@@ -624,7 +624,7 @@ const DataUtils::Data NumberVariant::toData(void) const
 	}
 }
 
-const NumberVariant NumberVariant::fromData(const DataUtils::Data & data)
+NumberVariant NumberVariant::fromData(const DataUtils::Data & data)
 {
 	if (data.size() == 1 && data.front() == 0x00)
 	{

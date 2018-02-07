@@ -6,42 +6,70 @@
 
 namespace StringConvertUtils
 {
-#ifdef _WIN32
-	static const std::string LocalStringCode = "GB2312";
-#else
-	static const std::string LocalStringCode = "UTF-8";
-#endif
-
 	enum class StringCodeId
 	{
 		UTF8,
 		UTF16,
 		BIG5,
-		GBK
+		GBK,
+		GB2312
 	};
 
-	static const std::vector<std::string> StringCodeName = 
+	static const std::vector<std::string> StringCodeName =
 	{
-		"UTF-8", "UTF-16", "BIG5", "GBK"
+		"UTF-8", "UTF-16", "BIG5", "GBK", "GB2312"
 	};
 
-	template<StringCodeId id>
-	const std::string fromLocal(const std::string &src)
+#ifdef _WIN32
+	static const StringCodeId LocalStringCodeId = StringCodeId::GB2312;
+#else
+	static const StringCodeId LocalStringCodeId = StringCodeId::UTF8;
+#endif
+
+	static const std::string LocalStringCode = StringCodeName[static_cast<unsigned int>(LocalStringCodeId)];
+
+	template<StringCodeId srcCodeId, StringCodeId destCodeId = LocalStringCodeId>
+	inline std::string convert(const std::string &src)
 	{
-		return boost::locale::conv::between(src, StringCodeName[static_cast<unsigned int>(id)], LocalStringCode);
+		if (srcCodeId == destCodeId)
+		{
+			return src;
+		}
+		else
+		{
+			return boost::locale::conv::between(src, LocalStringCode, StringCodeName[static_cast<unsigned int>(id)]);
+		}
 	}
 
 	template<StringCodeId id>
-	const std::string toLocal(const std::string &src)
+	inline std::string fromLocal(const std::string &src)
 	{
-		return boost::locale::conv::between(src, LocalStringCode, StringCodeName[static_cast<unsigned int>(id)]);
+		return convert<LocalStringCodeId, id>(src);
+	}
+	template<StringCodeId id>
+	inline std::string toLocal(const std::string &src)
+	{
+		return convert<id, LocalStringCodeId>(src);
 	}
 
-	// 转半角
-	const std::string toDBS(const std::string &src);
-	// 转全角
-	const std::string toQBS(const std::string &src);
+	// GBK全角转半角
+	std::string _toDBS(const std::string &src);
+	// GBK半角转全角
+	std::string _toQBS(const std::string &src);
 
-	const std::string base64Encode(const std::string &str, const char fillCharacter = '=');
-	const std::string base64Decode(const std::string &str);
+	// 全角转半角
+	template<StringCodeId id>
+	inline std::string toDBS(const std::string &src)
+	{
+		return convert<id>(_toDBS(convert<StringCodeId::GBK>(src)));
+	}
+	// 半角转全角
+	template<StringCodeId id>
+	inline std::string toQBS(const std::string &src)
+	{
+		return convert<id>(_toQBS(convert<StringCodeId::GBK>(src)));
+	}
+
+	std::string base64Encode(const std::string &str, const char fillCharacter = '=');
+	std::string base64Decode(const std::string &str);
 };

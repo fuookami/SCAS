@@ -6,7 +6,7 @@
 
 namespace StringConvertUtils
 {
-	const std::string toDBS(const std::string & src)
+	std::string _toDBS(const std::string & src)
 	{
 		std::string ret;
 
@@ -43,7 +43,7 @@ namespace StringConvertUtils
 		return ret;
 	}
 
-	const std::string toQBS(const std::string & src)
+	std::string _toQBS(const std::string & src)
 	{
 		std::string ret;
 
@@ -78,7 +78,7 @@ namespace StringConvertUtils
 		return ret;
 	}
 
-	const std::string base64Encode(const std::string & str, const char fillCharacter)
+	std::string base64Encode(const std::string & str, const char fillCharacter)
 	{
 		using namespace boost::archive::iterators;
 		typedef base64_from_binary<transform_width<std::string::const_iterator, 6, 8>> Base64EncodeIter;
@@ -94,7 +94,7 @@ namespace StringConvertUtils
 		return result.str();
 	}
 
-	const std::string base64Decode(const std::string & str)
+	std::string base64Decode(const std::string & str)
 	{
 		using namespace boost::archive::iterators;
 		typedef transform_width<binary_from_base64<std::string::const_iterator>, 8, 6> Base64DecodeIter;

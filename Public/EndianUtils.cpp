@@ -2,7 +2,7 @@
 
 namespace EndianUtils
 {
-	Endian getLocalEndian(void)
+	const Endian getLocalEndian(void)
 	{
 		static Endian localEndian(Endian::Unknown);
 		if (localEndian == Endian::Unknown)

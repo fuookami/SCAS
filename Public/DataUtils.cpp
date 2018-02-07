@@ -9,7 +9,7 @@
 
 namespace DataUtils
 {
-	const std::string toHexString(const Data & data, const std::string seperator)
+	std::string toHexString(const Data & data, const std::string seperator)
 	{
 		std::ostringstream sout;
 		for (const byte b : data)
@@ -19,7 +19,8 @@ namespace DataUtils
 
 		return sout.str();
 	}
-	const Data fromHexString(const std::string & str, const std::string seperator)
+
+	Data fromHexString(const std::string & str, const std::string seperator)
 	{
 		static const uint32 HexSize(2);
 
@@ -35,7 +36,7 @@ namespace DataUtils
 		return ret;
 	}
 
-	const std::string toBase64String(const Data & data, const char fillCharacter)
+	std::string toBase64String(const Data & data, const char fillCharacter)
 	{
 		using namespace boost::archive::iterators;
 		typedef base64_from_binary<transform_width<std::vector<byte>::const_iterator, 6, 8>> Base64EncodeIter;
@@ -51,7 +52,7 @@ namespace DataUtils
 		return result.str();
 	}
 
-	const Data fromBase64String(const std::string & str)
+	Data fromBase64String(const std::string & str)
 	{
 		using namespace boost::archive::iterators;
 		typedef transform_width<binary_from_base64<std::string::const_iterator>, 8, 6> Base64DecodeIter;
@@ -68,12 +69,12 @@ namespace DataUtils
 		}
 	}
 
-	const std::string toString(const Data & data)
+	std::string toString(const Data & data)
 	{
 		return std::string(data.cbegin(), data.cend());
 	}
 
-	const Data fromString(const std::string & str)
+	Data fromString(const std::string & str)
 	{
 		return Data(str.cbegin(), str.cend());
 	}
