@@ -69,7 +69,4 @@ namespace StringConvertUtils
 	{
 		return convert<id>(_toQBS(convert<StringCodeId::GBK>(src)));
 	}
-
-	std::string base64Encode(const std::string &str, const char fillCharacter = '=');
-	std::string base64Decode(const std::string &str);
 };
