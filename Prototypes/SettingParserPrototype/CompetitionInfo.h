@@ -41,7 +41,7 @@ namespace SCAS
 		public:
 			using TypeDataType = std::pair<std::string, std::string>;
 
-			TypeInfo(void);
+			TypeInfo(void) = default;
 			TypeInfo(const TypeInfo &ano) = default;
 			TypeInfo(TypeInfo &&ano) = default;
 			TypeInfo &operator=(const TypeInfo &rhs) = default;
@@ -62,7 +62,7 @@ namespace SCAS
 		public:
 			using RankDataType = std::pair<std::string, std::string>;
 
-			RankInfo(void) = default;
+			RankInfo(void);
 			RankInfo(const RankInfo &ano) = default;
 			RankInfo(RankInfo &&ano) = default;
 			RankInfo &operator=(const RankInfo &rhs) = default;

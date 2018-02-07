@@ -123,7 +123,7 @@ namespace SCAS
 			inline void setPlanIntervalTime(const DatetimeUtils::Time &planIntervalTime) { m_planIntervalTime = planIntervalTime; }
 			inline void setPlanIntervalTime(DatetimeUtils::Time &&planIntervalTime) { m_planIntervalTime = std::move(planIntervalTime); }
 
-			inline DatetimeUtils::Time &getPlanIntervalTime(void) { return m_planTimePerGroup; }
+			inline DatetimeUtils::Time &getPlanTimePerGroup(void) { return m_planTimePerGroup; }
 			inline const DatetimeUtils::Time &getPlanTimePerGroup(void) const { return m_planTimePerGroup; }
 			inline void setPlanTimePerGroup(const DatetimeUtils::Time &planTimePerGroup) { m_planTimePerGroup = planTimePerGroup; }
 			inline void setPlanTimePerGroup(DatetimeUtils::Time &&planTimePerGroup) { m_planTimePerGroup = std::move(planTimePerGroup); }
