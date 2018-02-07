@@ -37,7 +37,7 @@ namespace StringConvertUtils
 		}
 		else
 		{
-			return boost::locale::conv::between(src, LocalStringCode, StringCodeName[static_cast<unsigned int>(id)]);
+			return boost::locale::conv::between(src, StringCodeName[static_cast<unsigned int>(srcCodeId)], StringCodeName[static_cast<unsigned int>(destCodeId)]);
 		}
 	}
 
