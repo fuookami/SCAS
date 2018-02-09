@@ -115,6 +115,10 @@ namespace SCAS
 			inline const uint32 getAthleteNumber(void) const { return m_athleteNumber; }
 			inline void setAthleteNumber(const uint32 athleteNumber) { m_athleteNumber = athleteNumber; }
 
+			inline const DatetimeUtils::Date getDate(void) const { return m_date; };
+			inline void setDate(const DatetimeUtils::Date &date) { m_date = date; }
+			inline void setDate(DatetimeUtils::Date &&date) { m_date = std::move(date); }
+
 			inline const uint32 getOrderInDay(void) const { return m_orderInDay; }
 			inline void setOrderInDay(const uint32 orderInDay) { m_orderInDay = orderInDay; }
 
@@ -143,6 +147,7 @@ namespace SCAS
 			std::string m_name;
 
 			uint32 m_athleteNumber;
+			DatetimeUtils::Date m_date;
 			int m_orderInDay;
 
 			DatetimeUtils::Time m_planIntervalTime;

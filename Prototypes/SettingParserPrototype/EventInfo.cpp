@@ -68,13 +68,13 @@ namespace SCAS
 		}
 
 		EventInfo::EventInfo(const std::string & id)
-			: m_id(id), m_date(), m_orderInDay(-1), m_name(), m_type(eType::Ranking), 
+			: m_id(id), m_name(), m_type(eType::Ranking), 
 			m_gradeInfo(), m_teamworkInfo(), m_athleteValidator()
 		{
 		}
 
 		EventInfo::EventInfo(std::string && id)
-			: m_id(std::move(id)), m_date(), m_orderInDay(-1), m_name(), m_type(eType::Ranking),
+			: m_id(std::move(id)), m_name(), m_type(eType::Ranking),
 			m_gradeInfo(), m_teamworkInfo(), m_athleteValidator()
 		{
 		}

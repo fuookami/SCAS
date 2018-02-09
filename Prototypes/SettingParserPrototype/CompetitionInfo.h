@@ -78,7 +78,13 @@ namespace SCAS
 
 			inline std::vector<RankDataType> &getRanks(void) { return m_ranks; }
 			inline const std::vector<RankDataType> &getRanks(void) const { return m_ranks; }
+			inline void setRanks(const std::vector<RankDataType> &ranks) { m_ranks = ranks; }
 			inline void setRanks(std::vector<RankDataType> &&ranks) { m_ranks = std::move(ranks); }
+
+			inline RankDataType &getDefaultRank(void) { return m_defaultRank; }
+			inline const RankDataType &getDefaultRank(void) const { return m_defaultRank; }
+			inline void setDefaultRank(const RankDataType &defaultRank) { m_defaultRank = defaultRank; }
+			inline void setDefaultRank(RankDataType &&defaultRank) { m_defaultRank = std::move(defaultRank); }
 
 		private:
 			bool m_enabled;
