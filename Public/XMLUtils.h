@@ -17,9 +17,11 @@ namespace XMLUtils
 
 	class XMLNode
 	{
+	public:
+		static const int NoChild = -1;
+
 	private:
 		static const std::string DefaultAttrValue;
-		static const int NoChild;
 
 	public:
 		XMLNode(const std::string &tag);

@@ -8,7 +8,6 @@
 namespace XMLUtils
 {
 	const std::string XMLNode::DefaultAttrValue("");
-	const int XMLNode::NoChild = -1;
 
 	XMLNode::XMLNode(const std::string & tag)
 		: m_tag(tag), m_path(tag), m_content(), m_attrs(), m_children(), m_parent(nullptr)
