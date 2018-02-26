@@ -1,4 +1,5 @@
 ﻿#include "FileUtils.h"
+#include "StringUtils.h"
 
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem/operations.hpp>
@@ -50,7 +51,14 @@ namespace FileUtils
 
 	std::string getPathOfUrl(const std::string & targetUrl)
 	{
-		return std::string(targetUrl.cbegin(), targetUrl.cbegin() + targetUrl.find_last_of("\\/"));
+		if (targetUrl.find_last_of("\\/") == -1)
+		{
+			return StringUtils::EmptyString;
+		}
+		else
+		{
+			return std::string(targetUrl.cbegin(), targetUrl.cbegin() + targetUrl.find_last_of("\\/"));
+		}
 	}
 
 	std::string getFileNameOfUrl(const std::string & targetUrl)
@@ -121,13 +129,18 @@ namespace FileUtils
 		}
 	}
 
-	void saveFile(const std::string & targetUrl, const std::vector<unsigned char>& fileData)
+	void saveFile(const std::string & targetUrl, const DataUtils::Data& fileData)
 	{
 		insurePathExist(getPathOfUrl(targetUrl));
 
-		std::ofstream fout(targetUrl, std::ofstream::binary);
-		fout.write(reinterpret_cast<const char *>(fileData.data()), fileData.size());
-		fout.close();
+		_saveFile(targetUrl, fileData.cbegin(), fileData.cend());
+	}
+
+	void saveFile(const std::string & targetUrl, const std::string & fileData)
+	{
+		insurePathExist(getPathOfUrl(targetUrl));
+
+		_saveFile(targetUrl, fileData.cbegin(), fileData.cend());
 	}
 
 	const bool checkPathExist(const std::string & targetPath)
@@ -142,21 +155,24 @@ namespace FileUtils
 	{
 		using namespace boost::filesystem;
 
-		path fullPath(system_complete(path(targetPath, native)));
-
-		if (!exists(fullPath))
+		if (!targetPath.empty())
 		{
-			// 创建多层子目录
-			bool ret = create_directories(fullPath);
-			if (ret == false)
-			{
-				/*
-				std::ostringstream sout;
-				sout << "无法创建目录: " << fullPath << std::endl;
-				throw std::runtime_error(sout.str().c_str());
-				*/
+			path fullPath(system_complete(path(targetPath, native)));
 
-				return false;
+			if (!exists(fullPath))
+			{
+				// 创建多层子目录
+				bool ret = create_directories(fullPath);
+				if (ret == false)
+				{
+					/*
+					std::ostringstream sout;
+					sout << "无法创建目录: " << fullPath << std::endl;
+					throw std::runtime_error(sout.str().c_str());
+					*/
+
+					return false;
+				}
 			}
 		}
 

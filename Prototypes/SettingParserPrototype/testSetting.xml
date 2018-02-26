@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="gb2312"?>
+<?xml version="1.0" encoding="GB2312"?>
 <SCAS_CompCfg>
 	<Name>某游泳比赛</Name>
 	<Apply_Validator enabled="true" enabled_in_teamwork="false" max_apply="2"/>

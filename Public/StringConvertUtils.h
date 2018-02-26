@@ -6,7 +6,7 @@
 
 namespace StringConvertUtils
 {
-	enum class StringCodeId
+	enum class CharType
 	{
 		UTF8,
 		UTF16,
@@ -21,14 +21,14 @@ namespace StringConvertUtils
 	};
 
 #ifdef _WIN32
-	static const StringCodeId LocalStringCodeId = StringCodeId::GB2312;
+	static const CharType LocalStringCodeId = CharType::GB2312;
 #else
 	static const StringCodeId LocalStringCodeId = StringCodeId::UTF8;
 #endif
 
 	static const std::string LocalStringCode = StringCodeName[static_cast<unsigned int>(LocalStringCodeId)];
 
-	template<StringCodeId srcCodeId, StringCodeId destCodeId = LocalStringCodeId>
+	template<CharType srcCodeId, CharType destCodeId = LocalStringCodeId>
 	inline std::string convert(const std::string &src)
 	{
 		if (srcCodeId == destCodeId)
@@ -37,16 +37,16 @@ namespace StringConvertUtils
 		}
 		else
 		{
-			return boost::locale::conv::between(src, StringCodeName[static_cast<unsigned int>(srcCodeId)], StringCodeName[static_cast<unsigned int>(destCodeId)]);
+			return boost::locale::conv::between(src, StringCodeName[static_cast<unsigned int>(destCodeId)], StringCodeName[static_cast<unsigned int>(srcCodeId)]);
 		}
 	}
 
-	template<StringCodeId id>
+	template<CharType id>
 	inline std::string fromLocal(const std::string &src)
 	{
 		return convert<LocalStringCodeId, id>(src);
 	}
-	template<StringCodeId id>
+	template<CharType id>
 	inline std::string toLocal(const std::string &src)
 	{
 		return convert<id, LocalStringCodeId>(src);
@@ -58,15 +58,15 @@ namespace StringConvertUtils
 	std::string _toQBS(const std::string &src);
 
 	// 全角转半角
-	template<StringCodeId id>
+	template<CharType id>
 	inline std::string toDBS(const std::string &src)
 	{
-		return convert<id>(_toDBS(convert<StringCodeId::GBK>(src)));
+		return convert<id>(_toDBS(convert<CharType::GBK>(src)));
 	}
 	// 半角转全角
-	template<StringCodeId id>
+	template<CharType id>
 	inline std::string toQBS(const std::string &src)
 	{
-		return convert<id>(_toQBS(convert<StringCodeId::GBK>(src)));
+		return convert<id>(_toQBS(convert<CharType::GBK>(src)));
 	}
 };

@@ -6,6 +6,7 @@
 #include <vector>
 #include <map>
 #include <string>
+#include <sstream>
 
 #include "FileUtils.h"
 #include "StringConvertUtils.h"
@@ -86,31 +87,31 @@ namespace XMLUtils
 		std::vector<XMLNode> m_children;
 	};
 
-	template<StringConvertUtils::StringCodeId code>
+	template<StringConvertUtils::CharType code>
 	XMLNode getNode(const boost::property_tree::ptree::value_type & root);
-	template<StringConvertUtils::StringCodeId code>
+	template<StringConvertUtils::CharType code>
 	XMLNode getTree(const boost::property_tree::ptree::value_type & root);
-	template<StringConvertUtils::StringCodeId code>
+	template<StringConvertUtils::CharType code>
 	void getAttrs(XMLNode &node, const boost::property_tree::ptree::value_type & root);
-	template<StringConvertUtils::StringCodeId code>
+	template<StringConvertUtils::CharType code>
 	void getChildren(XMLNode &node, const boost::property_tree::ptree::value_type & root);
-	template<StringConvertUtils::StringCodeId code>
+	template<StringConvertUtils::CharType code>
 	void getContent(XMLNode &node, const boost::property_tree::ptree::value_type &root);
 
-	template<StringConvertUtils::StringCodeId code>
+	template<StringConvertUtils::CharType code>
 	const bool openXMLFile(boost::property_tree::ptree &pt, const std::string &fileUrl);
-	template<StringConvertUtils::StringCodeId code>
+	template<StringConvertUtils::CharType code>
 	std::vector<XMLNode> scanXMLFile(const std::string &fileUrl);
-	template<StringConvertUtils::StringCodeId code>
+	template<StringConvertUtils::CharType code>
 	std::vector<XMLNode> scanXMLFile(const boost::property_tree::ptree &root);
 	
-	template <StringConvertUtils::StringCodeId code = StringConvertUtils::LocalStringCodeId>
+	template <StringConvertUtils::CharType code = StringConvertUtils::LocalStringCodeId>
 	const bool saveToFile(const std::string &url, const XMLNode &root);
 	boost::property_tree::ptree::value_type saveToPTreeNode(const XMLNode &node);
 	boost::property_tree::ptree saveToPTree(const XMLNode &node);
 	boost::property_tree::ptree saveToPTree(const std::vector<XMLNode> &nodes);
 
-	template<StringConvertUtils::StringCodeId code>
+	template<StringConvertUtils::CharType code>
 	XMLNode getNode(const boost::property_tree::ptree::value_type & root)
 	{
 		if (root.first == AttrTag)
@@ -125,7 +126,7 @@ namespace XMLUtils
 		return ret;
 	}
 
-	template<StringConvertUtils::StringCodeId code>
+	template<StringConvertUtils::CharType code>
 	XMLNode getTree(const boost::property_tree::ptree::value_type & root)
 	{
 		if (root.first == AttrTag)
@@ -145,7 +146,7 @@ namespace XMLUtils
 		return ret;
 	}
 
-	template<StringConvertUtils::StringCodeId code>
+	template<StringConvertUtils::CharType code>
 	void getAttrs(XMLNode & node, const boost::property_tree::ptree::value_type & root)
 	{
 		static const boost::property_tree::ptree EmptyPTree;
@@ -155,12 +156,12 @@ namespace XMLUtils
 			const auto &attrs(root.second.get_child(AttrTag, EmptyPTree));
 			for (const auto &attr : attrs)
 			{
-				node.addAttr(std::make_pair(StringConvertUtils::toLocal<code>(attr.first), StringConvertUtils::toLocal<code>(attr.second.data())));
+				node.addAttr(std::make_pair(StringConvertUtils<code>(attr.first), StringConvertUtils::toLocal<code>(attr.second.data())));
 			}
 		}
 	}
 
-	template<StringConvertUtils::StringCodeId code>
+	template<StringConvertUtils::CharType code>
 	void getChildren(XMLNode & node, const boost::property_tree::ptree::value_type & root)
 	{
 		if (root.first == node.getTag())
@@ -179,7 +180,7 @@ namespace XMLUtils
 		}
 	}
 
-	template<StringConvertUtils::StringCodeId code>
+	template<StringConvertUtils::CharType code>
 	void getContent(XMLNode & node, const boost::property_tree::ptree::value_type & root)
 	{
 		if (root.first == node.getTag())
@@ -188,7 +189,7 @@ namespace XMLUtils
 		}
 	}
 
-	template<StringConvertUtils::StringCodeId code>
+	template<StringConvertUtils::CharType code>
 	const bool openXMLFile(boost::property_tree::ptree & pt, const std::string & fileUrl)
 	{
 		if (FileUtils::checkFileExist(fileUrl))
@@ -202,7 +203,7 @@ namespace XMLUtils
 		}
 	}
 
-	template<StringConvertUtils::StringCodeId code>
+	template<StringConvertUtils::CharType code>
 	std::vector<XMLNode> scanXMLFile(const std::string & fileUrl)
 	{
 		boost::property_tree::ptree root;
@@ -216,7 +217,7 @@ namespace XMLUtils
 		}
 	}
 
-	template<StringConvertUtils::StringCodeId code>
+	template<StringConvertUtils::CharType code>
 	std::vector<XMLNode> scanXMLFile(const boost::property_tree::ptree & root)
 	{
 		std::vector<XMLNode> nodes;
@@ -235,7 +236,7 @@ namespace XMLUtils
 		return nodes;
 	}
 
-	template<StringConvertUtils::StringCodeId code>
+	template <StringConvertUtils::CharType code>
 	const bool saveToFile(const std::string & url, const XMLNode & root)
 	{
 		static const boost::property_tree::ptree EmptyPTree;
@@ -246,9 +247,12 @@ namespace XMLUtils
 			return false;
 		}
 
-		boost::property_tree::xml_parser::write_xml(url, pt,
-			std::locale(), boost::property_tree::xml_writer_settings<std::string>('\t', 1,
-				StringConvertUtils::StringCodeName[static_cast<unsigned int>(code)]));
+		std::ostringstream sout;
+		boost::property_tree::xml_parser::write_xml(sout, pt, 
+			boost::property_tree::xml_writer_settings<std::string>('\t', 1, StringConvertUtils::StringCodeName[static_cast<unsigned int>(code)]));
+
+		std::string outData(StringConvertUtils::fromLocal<code>(sout.str()));
+		FileUtils::saveFile(url, outData);
 		return true;
 	}
 };
