@@ -6,10 +6,18 @@ namespace SCAS
 {
 	namespace CompCfg
 	{
-		struct ApplyValidator
+		class ApplyValidator
 		{
 		public:
 			static const int NoMaxApply = 0;
+
+			class Attributes abstract
+			{
+			public:
+				static const std::string Enabled;
+				static const std::string EnabledInTeamwork;
+				static const std::string MaxApply;
+			};
 
 		public:
 			ApplyValidator(void);
@@ -48,8 +56,8 @@ namespace SCAS
 			TypeInfo &operator=(TypeInfo &&rhs) = default;
 			~TypeInfo(void) = default;
 
-			inline std::vector<TypeDataType> getTypes(void) { return m_types; }
-			inline const std::vector<TypeDataType> getTypes(void) const { return m_types; }
+			inline std::vector<TypeDataType> &getTypes(void) { return m_types; }
+			inline const std::vector<TypeDataType> &getTypes(void) const { return m_types; }
 			inline void setTypes(const std::vector<TypeDataType> &types) { m_types = types; }
 			inline void setTypes(std::vector<TypeDataType> &&types) { m_types = std::move(types); }
 
@@ -196,6 +204,19 @@ namespace SCAS
 			inline void setSubName(const std::string &subName) { m_subName.assign(subName); }
 			inline void setSubName(std::string &&subName) { m_subName.assign(std::move(subName)); }
 
+			inline const std::string &getVersion(void) const { return m_version; }
+			inline void setVersion(const std::string &version) { m_version.assign(version); }
+			inline void setVersion(std::string &version) { m_version.assign(std::move(version)); }
+
+			inline const std::string &getIdentifier(void) const { return m_identifier; }
+			inline void setIdentifier(const std::string &identifier) { m_identifier.assign(identifier); }
+			inline void setIdentifier(std::string &identifier) { m_identifier.assign(std::move(identifier)); }
+
+			inline ApplyValidator &getApplyValidator(void) { return m_applyValidator; }
+			inline const ApplyValidator &getApplyValidator(void) const { return m_applyValidator; }
+			inline void setApplyValidator(const ApplyValidator &applyValidator) { m_applyValidator = applyValidator; }
+			inline void setApplyValidator(ApplyValidator &applyValidator) { m_applyValidator = std::move(applyValidator); }
+
 			inline PrincipalInfo &getPrincipalInfo(void) { return m_principalInfo; }
 			inline const PrincipalInfo &getPrincipalInfo(void) const { m_principalInfo; }
 			inline void setPrincipalInfo(const PrincipalInfo &principalInfo) { m_principalInfo = principalInfo; }
@@ -237,7 +258,10 @@ namespace SCAS
 
 			std::string m_name;
 			std::string m_subName;
+			std::string m_version;
+			std::string m_identifier;
 
+			ApplyValidator m_applyValidator;
 			PrincipalInfo m_principalInfo;
 			DateInfo m_dateInfo;
 			TypeInfo m_typeInfo;

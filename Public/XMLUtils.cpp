@@ -1,7 +1,6 @@
 #include "XMLUtils.h"
 #include "FileUtils.h"
-
-#include <boost/property_tree/xml_parser.hpp>
+#include "StringUtils.h"
 
 #include <algorithm>
 
@@ -48,18 +47,59 @@ namespace XMLUtils
 	XMLNode XMLNode::shallowCopyFrom(const XMLNode & ano)
 	{
 		XMLNode ret(ano.m_tag);
-		ret.m_content = ano.m_content;
+		ret.m_content.assign(ano.m_content);
 		ret.m_attrs = ano.m_attrs;
 
 		return ret;
 	}
 
-	XMLNode XMLNode::shallowCopyFrom(const XMLNode && ano)
+	XMLNode XMLNode::shallowCopyFrom(XMLNode && ano)
 	{
 		XMLNode ret(std::move(ano.m_tag));
-		ret.m_content.assign(ano.m_content);
+		ret.m_content.assign(std::move(ano.m_content));
 		ret.m_attrs = std::move(ano.m_attrs);
 
+		return ret;
+	}
+
+	boost::property_tree::ptree::value_type saveToPTreeNode(const XMLNode & node)
+	{
+		boost::property_tree::ptree::value_type ret;
+
+		for (const auto &attr : node.getAttrs())
+		{
+			ret.second.put(AttrTag + AttrSeperator + attr.first, attr.second);
+		}
+
+		if (node.hasAnyChild())
+		{
+			for (const auto &childNode : node.getChildren())
+			{
+				ret.second.push_back(saveToPTreeNode(childNode));
+			}
+		}
+		else
+		{
+			ret.second.put(StringUtils::EmptyString, node.getContent());
+		}
+
+		return std::make_pair(node.getTag(), ret.second);
+	}
+
+	boost::property_tree::ptree saveToPTree(const XMLNode & node)
+	{
+		boost::property_tree::ptree ret;
+		ret.insert(ret.end(), saveToPTreeNode(node));
+		return ret;
+	}
+
+	boost::property_tree::ptree saveToPTree(const std::vector<XMLNode>& nodes)
+	{
+		boost::property_tree::ptree ret;
+		for (const auto &node : nodes)
+		{
+			ret.insert(ret.end(), saveToPTreeNode(node));
+		}
 		return ret;
 	}
 };

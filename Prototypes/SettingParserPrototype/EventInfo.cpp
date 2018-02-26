@@ -63,7 +63,7 @@ namespace SCAS
 		{
 			if (m_breakRecordRateEnabled)
 			{
-				m_breakRecordRate - breakRecordScoreRate;
+				m_breakRecordRate = breakRecordScoreRate;
 			}
 		}
 

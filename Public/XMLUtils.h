@@ -14,6 +14,7 @@ namespace XMLUtils
 {
 	static const std::string AttrTag("<xmlattr>");
 	static const std::string PathSeperator("/");
+	static const std::string AttrSeperator(".");
 
 	class XMLNode
 	{
@@ -72,7 +73,7 @@ namespace XMLUtils
 
 	public:
 		static XMLNode shallowCopyFrom(const XMLNode &ano);
-		static XMLNode shallowCopyFrom(const XMLNode &&ano);
+		static XMLNode shallowCopyFrom(XMLNode &&ano);
 
 	private:
 		std::string m_tag;
@@ -102,6 +103,12 @@ namespace XMLUtils
 	std::vector<XMLNode> scanXMLFile(const std::string &fileUrl);
 	template<StringConvertUtils::StringCodeId code>
 	std::vector<XMLNode> scanXMLFile(const boost::property_tree::ptree &root);
+	
+	template <StringConvertUtils::StringCodeId code = StringConvertUtils::LocalStringCodeId>
+	const bool saveToFile(const std::string &url, const XMLNode &root);
+	boost::property_tree::ptree::value_type saveToPTreeNode(const XMLNode &node);
+	boost::property_tree::ptree saveToPTree(const XMLNode &node);
+	boost::property_tree::ptree saveToPTree(const std::vector<XMLNode> &nodes);
 
 	template<StringConvertUtils::StringCodeId code>
 	XMLNode getNode(const boost::property_tree::ptree::value_type & root)
@@ -226,5 +233,22 @@ namespace XMLUtils
 		}
 
 		return nodes;
+	}
+
+	template<StringConvertUtils::StringCodeId code>
+	const bool saveToFile(const std::string & url, const XMLNode & root)
+	{
+		static const boost::property_tree::ptree EmptyPTree;
+
+		auto pt(saveToPTree(root));
+		if (pt == EmptyPTree)
+		{
+			return false;
+		}
+
+		boost::property_tree::xml_parser::write_xml(url, pt,
+			std::locale(), boost::property_tree::xml_writer_settings<std::string>('\t', 1,
+				StringConvertUtils::StringCodeName[static_cast<unsigned int>(code)]));
+		return true;
 	}
 };

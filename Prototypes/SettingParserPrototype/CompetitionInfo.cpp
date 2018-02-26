@@ -4,6 +4,10 @@ namespace SCAS
 {
 	namespace CompCfg
 	{
+		const std::string ApplyValidator::Attributes::Enabled("enabled");
+		const std::string ApplyValidator::Attributes::EnabledInTeamwork("enabled_in_teamwork");
+		const std::string ApplyValidator::Attributes::MaxApply("max_apply");
+
 		ApplyValidator::ApplyValidator(void)
 			: m_enabled(false), m_enabledInTeamwork(false), m_maxApply(NoMaxApply)
 		{

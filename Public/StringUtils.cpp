@@ -54,7 +54,6 @@ namespace StringUtils
 		}
 		catch (...)
 		{
-			static const std::string EmptyString("");
 			return EmptyString;
 		}
 	}

@@ -1,4 +1,6 @@
 #include "test.h"
+#include "XMLUtils.h"
+#include "StringUtils.h"
 
 const std::shared_ptr<SCAS::CompCfg::CompetitionInfo> generateTestCompetitionInfo(void)
 {
@@ -8,6 +10,14 @@ const std::shared_ptr<SCAS::CompCfg::CompetitionInfo> generateTestCompetitionInf
 
 	ret->setName("某游泳比赛");
 	ret->setSubName("暨某游泳比赛");
+	ret->setVersion("某年某比赛第某版（测试）");
+	ret->setIdentifier("给自己看的标识符");
+
+	ApplyValidator applyValidator;
+	applyValidator.setEnabled();
+	applyValidator.setEnabledInTeamwork(false);
+	applyValidator.setMaxApply(2);
+	ret->setApplyValidator(std::move(applyValidator));
 
 	PrincipalInfo principalInfo;
 	principalInfo.setName("负责人的姓名");
@@ -59,25 +69,51 @@ const std::shared_ptr<SCAS::CompCfg::CompetitionInfo> generateTestCompetitionInf
 	}
 	ret->setTeamInfo(std::move(teamInfo));
 
-	std::shared_ptr<EventInfo> eventInfo_dual(new EventInfo());
-	std::shared_ptr<EventInfo> eventInfo_single_rank(new EventInfo());
-	std::shared_ptr<EventInfo> eventInfo_plural_rank(new EventInfo());
-	std::shared_ptr<EventInfo> eventInfo_dual_team(new EventInfo());
-	std::shared_ptr<EventInfo> eventInfo_single_rank_team(new EventInfo());
-	std::shared_ptr<EventInfo> eventInfo_plural_rank_team(new EventInfo());
-
-	ret->getEventInfos().insert(std::make_pair(eventInfo_dual->getId(), eventInfo_dual));
-	ret->getEventInfos().insert(std::make_pair(eventInfo_single_rank->getId(), eventInfo_single_rank));
-	ret->getEventInfos().insert(std::make_pair(eventInfo_plural_rank->getId(), eventInfo_plural_rank));
-	ret->getEventInfos().insert(std::make_pair(eventInfo_dual_team->getId(), eventInfo_dual_team));
-	ret->getEventInfos().insert(std::make_pair(eventInfo_single_rank_team->getId(), eventInfo_single_rank_team));
-	ret->getEventInfos().insert(std::make_pair(eventInfo_plural_rank_team->getId(), eventInfo_plural_rank_team));
+	// ! to do
+// 	std::shared_ptr<EventInfo> eventInfo_dual(new EventInfo());
+// 	ret->getEventInfos().insert(std::make_pair(eventInfo_dual->getId(), eventInfo_dual));
+// 	std::shared_ptr<EventInfo> eventInfo_single_rank(new EventInfo());
+// 	ret->getEventInfos().insert(std::make_pair(eventInfo_single_rank->getId(), eventInfo_single_rank));
+// 	std::shared_ptr<EventInfo> eventInfo_plural_rank(new EventInfo());
+// 	ret->getEventInfos().insert(std::make_pair(eventInfo_plural_rank->getId(), eventInfo_plural_rank));
+// 	std::shared_ptr<EventInfo> eventInfo_dual_team(new EventInfo());
+// 	ret->getEventInfos().insert(std::make_pair(eventInfo_dual_team->getId(), eventInfo_dual_team));
+// 	std::shared_ptr<EventInfo> eventInfo_single_rank_team(new EventInfo());
+// 	ret->getEventInfos().insert(std::make_pair(eventInfo_single_rank_team->getId(), eventInfo_single_rank_team));
+// 	std::shared_ptr<EventInfo> eventInfo_plural_rank_team(new EventInfo());
+// 	ret->getEventInfos().insert(std::make_pair(eventInfo_plural_rank_team->getId(), eventInfo_plural_rank_team));
 
 	return ret;
 }
 
 void testSaveToXML(const std::shared_ptr<SCAS::CompCfg::CompetitionInfo> info)
 {
+	using namespace SCAS::CompCfg;
+
+	XMLUtils::XMLNode root("SCAS_CompCfg");
+
+	XMLUtils::XMLNode nameNode("Name");
+	nameNode.setContent(info->getName());
+	root.addChild(nameNode);
+
+	XMLUtils::XMLNode applyValidatorNode("Apply_Validator");
+	auto &applyValidator(info->getApplyValidator());
+	applyValidatorNode.addAttr(std::make_pair(ApplyValidator::Attributes::Enabled, StringUtils::to_string(applyValidator.getEnabled())));
+	if (applyValidator.getEnabled())
+	{
+		applyValidatorNode.addAttr(std::make_pair(ApplyValidator::Attributes::EnabledInTeamwork, StringUtils::to_string(applyValidator.getEnabledInTeamwork())));
+		applyValidatorNode.addAttr(std::make_pair(ApplyValidator::Attributes::MaxApply, std::to_string(applyValidator.getMaxApply())));
+	}
+	root.addChild(applyValidatorNode);
+
+	if (XMLUtils::saveToFile("testSetting.xml", root))
+	{
+		std::cout << "OK to write" << std::endl;
+	}
+	else
+	{
+		std::cout << "False to write" << std::endl;
+	}
 }
 
 const std::shared_ptr<SCAS::CompCfg::CompetitionInfo> testLoadFromXML(void)
