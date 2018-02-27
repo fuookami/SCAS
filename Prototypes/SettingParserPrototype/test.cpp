@@ -1,6 +1,7 @@
 #include "test.h"
 #include "XMLUtils.h"
 #include "StringUtils.h"
+#include "SCASCompCfgParser.h"
 
 const std::shared_ptr<SCAS::CompCfg::CompetitionInfo> generateTestCompetitionInfo(void)
 {
@@ -11,7 +12,7 @@ const std::shared_ptr<SCAS::CompCfg::CompetitionInfo> generateTestCompetitionInf
 	ret->setName("某游泳比赛");
 	ret->setSubName("暨某游泳比赛");
 	ret->setVersion("某年某比赛第某版（测试）");
-	ret->setIdentifier("给自己看的标识符");
+	ret->setIdentifier("给自己看的标识符/标签之类的");
 
 	ApplyValidator applyValidator;
 	applyValidator.setEnabled();
@@ -70,43 +71,25 @@ const std::shared_ptr<SCAS::CompCfg::CompetitionInfo> generateTestCompetitionInf
 	ret->setTeamInfo(std::move(teamInfo));
 
 	// ! to do
-// 	std::shared_ptr<EventInfo> eventInfo_dual(new EventInfo());
-// 	ret->getEventInfos().insert(std::make_pair(eventInfo_dual->getId(), eventInfo_dual));
-// 	std::shared_ptr<EventInfo> eventInfo_single_rank(new EventInfo());
-// 	ret->getEventInfos().insert(std::make_pair(eventInfo_single_rank->getId(), eventInfo_single_rank));
-// 	std::shared_ptr<EventInfo> eventInfo_plural_rank(new EventInfo());
-// 	ret->getEventInfos().insert(std::make_pair(eventInfo_plural_rank->getId(), eventInfo_plural_rank));
-// 	std::shared_ptr<EventInfo> eventInfo_dual_team(new EventInfo());
-// 	ret->getEventInfos().insert(std::make_pair(eventInfo_dual_team->getId(), eventInfo_dual_team));
-// 	std::shared_ptr<EventInfo> eventInfo_single_rank_team(new EventInfo());
-// 	ret->getEventInfos().insert(std::make_pair(eventInfo_single_rank_team->getId(), eventInfo_single_rank_team));
-// 	std::shared_ptr<EventInfo> eventInfo_plural_rank_team(new EventInfo());
-// 	ret->getEventInfos().insert(std::make_pair(eventInfo_plural_rank_team->getId(), eventInfo_plural_rank_team));
+ 	std::shared_ptr<EventInfo> eventInfo_dual(new EventInfo());
+	ret->getEventInfos().insert(std::make_pair(eventInfo_dual->getId(), eventInfo_dual));
+	std::shared_ptr<EventInfo> eventInfo_single_rank(new EventInfo());
+	ret->getEventInfos().insert(std::make_pair(eventInfo_single_rank->getId(), eventInfo_single_rank));
+	std::shared_ptr<EventInfo> eventInfo_plural_rank(new EventInfo());
+	ret->getEventInfos().insert(std::make_pair(eventInfo_plural_rank->getId(), eventInfo_plural_rank));
+	std::shared_ptr<EventInfo> eventInfo_dual_team(new EventInfo());
+	ret->getEventInfos().insert(std::make_pair(eventInfo_dual_team->getId(), eventInfo_dual_team));
+	std::shared_ptr<EventInfo> eventInfo_single_rank_team(new EventInfo());
+	ret->getEventInfos().insert(std::make_pair(eventInfo_single_rank_team->getId(), eventInfo_single_rank_team));
+	std::shared_ptr<EventInfo> eventInfo_plural_rank_team(new EventInfo());
+	ret->getEventInfos().insert(std::make_pair(eventInfo_plural_rank_team->getId(), eventInfo_plural_rank_team));
 
 	return ret;
 }
 
 void testSaveToXML(const std::shared_ptr<SCAS::CompCfg::CompetitionInfo> info)
 {
-	using namespace SCAS::CompCfg;
-
-	XMLUtils::XMLNode root("SCAS_CompCfg");
-
-	XMLUtils::XMLNode nameNode("Name");
-	nameNode.setContent(info->getName());
-	root.addChild(nameNode);
-
-	XMLUtils::XMLNode applyValidatorNode("Apply_Validator");
-	auto &applyValidator(info->getApplyValidator());
-	applyValidatorNode.addAttr(std::make_pair(ApplyValidator::Attributes::Enabled, StringUtils::to_string(applyValidator.getEnabled())));
-	if (applyValidator.getEnabled())
-	{
-		applyValidatorNode.addAttr(std::make_pair(ApplyValidator::Attributes::EnabledInTeamwork, StringUtils::to_string(applyValidator.getEnabledInTeamwork())));
-		applyValidatorNode.addAttr(std::make_pair(ApplyValidator::Attributes::MaxApply, std::to_string(applyValidator.getMaxApply())));
-	}
-	root.addChild(applyValidatorNode);
-
-	if (XMLUtils::saveToFile("testSetting.xml", root))
+	if (SCAS::CompCfg::saveToXML(info, "testSetting.xml"))
 	{
 		std::cout << "OK to write" << std::endl;
 	}
@@ -118,5 +101,14 @@ void testSaveToXML(const std::shared_ptr<SCAS::CompCfg::CompetitionInfo> info)
 
 const std::shared_ptr<SCAS::CompCfg::CompetitionInfo> testLoadFromXML(void)
 {
-	return nullptr;
+	auto ret(SCAS::CompCfg::readFromXML("testSetting.xml"));
+	if (ret != nullptr)
+	{
+		std::cout << "OK to read" << std::endl;
+	}
+	else
+	{
+		std::cout << "OK to write" << std::endl;
+	}
+	return ret;
 }

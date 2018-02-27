@@ -4,9 +4,25 @@ namespace SCAS
 {
 	namespace CompCfg
 	{
+		const std::string ApplyValidator::Tag("Apply_Validator");
 		const std::string ApplyValidator::Attributes::Enabled("enabled");
 		const std::string ApplyValidator::Attributes::EnabledInTeamwork("enabled_in_teamwork");
 		const std::string ApplyValidator::Attributes::MaxApply("max_apply");
+
+		const std::string PrincipalInfo::Tag("Principal");
+		const std::string PrincipalInfo::NameTag("Name");
+		const std::string PrincipalInfo::TelephoneTag("Telephone");
+		const std::string PrincipalInfo::EMailTag("EMail");
+
+		const std::string DateInfo::Tag("Dates");
+		const std::string DateInfo::DateTag("Date");
+
+		const std::string CompetitionInfo::RootTag("SCAS_CompCfg");
+		const std::string CompetitionInfo::NameTag("Name");
+		const std::string CompetitionInfo::SubNameTag("Sub_Name");
+		const std::string CompetitionInfo::VersionTag("Version");
+		const std::string CompetitionInfo::IdentifierTag("Identifier");
+		const std::string CompetitionInfo::PublicScoreInfoTag("Public_Score_Info");
 
 		ApplyValidator::ApplyValidator(void)
 			: m_enabled(false), m_enabledInTeamwork(false), m_maxApply(NoMaxApply)

@@ -10,7 +10,8 @@ namespace SCAS
 		{
 		public:
 			static const int NoMaxApply = 0;
-
+			static const std::string Tag;
+			
 			class Attributes abstract
 			{
 			public:
@@ -105,6 +106,12 @@ namespace SCAS
 		class PrincipalInfo
 		{
 		public:
+			static const std::string Tag;
+			static const std::string NameTag;
+			static const std::string TelephoneTag;
+			static const std::string EMailTag;
+
+		public:
 			PrincipalInfo(void) = default;
 			PrincipalInfo(const PrincipalInfo &ano) = default;
 			PrincipalInfo(PrincipalInfo &&ano) = default;
@@ -132,6 +139,10 @@ namespace SCAS
 
 		class DateInfo
 		{
+		public:
+			static const std::string Tag;
+			static const std::string DateTag;
+
 		public:
 			DateInfo(void) = default;
 			DateInfo(const DateInfo &ano) = default;
@@ -185,6 +196,14 @@ namespace SCAS
 
 		class CompetitionInfo
 		{
+		public:
+			static const std::string RootTag;
+			static const std::string NameTag;
+			static const std::string SubNameTag;
+			static const std::string VersionTag;
+			static const std::string IdentifierTag;
+			static const std::string PublicScoreInfoTag;
+
 		public:
 			CompetitionInfo(const std::string &id = DataUtils::toBase64String(DataUtils::fromArray(UUIDUtil::generateUUIDV1())));
 			CompetitionInfo(std::string &&id);

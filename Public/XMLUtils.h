@@ -35,24 +35,24 @@ namespace XMLUtils
 		~XMLNode(void) = default;
 
 		inline void setTag(const std::string &tag) { m_tag.assign(tag); };
-		inline void setTag(const std::string &&tag) { m_tag.assign(std::move(tag)); }
+		inline void setTag(std::string &&tag) { m_tag.assign(std::move(tag)); }
 		inline const std::string &getTag(void) const { return m_tag; }
 
 		inline void setPath(const std::string &path) { m_path.assign(path); }
-		inline void setPath(const std::string &&path) { m_path.assign(std::move(path)); }
+		inline void setPath(std::string &&path) { m_path.assign(std::move(path)); }
 		inline const std::string &getPath(void) const { return m_path; }
 
 		inline void setContent(const std::string &content) { m_content.assign(content); }
-		inline void setContent(const std::string &&content) { m_content.assign(std::move(content)); }
+		inline void setContent(std::string &&content) { m_content.assign(std::move(content)); }
 		inline const std::string &getContent(void) const { return m_content; }
 
 		inline void addAttr(const std::pair<std::string, std::string> &pair) { m_attrs.insert(pair); }
-		inline void addAttr(const std::pair<std::string, std::string> &&pair) { m_attrs.insert(std::move(pair)); }
+		inline void addAttr(std::pair<std::string, std::string> &&pair) { m_attrs.insert(std::move(pair)); }
 		inline void eraseAttr(const std::string &key) { m_attrs.erase(key); }
 		inline const bool hasAttr(const std::string &key) const { return m_attrs.find(key) != m_attrs.cend(); }
 		const std::string &getAttr(const std::string &key, const std::string &defaultValue = DefaultAttrValue) const;
 		inline void setAttr(const std::string &key, const std::string &value) { m_attrs[key].assign(value); }
-		inline void setAttr(const std::string &key, const std::string &&value) { m_attrs[key].assign(std::move(value)); }
+		inline void setAttr(const std::string &key, std::string &&value) { m_attrs[key].assign(std::move(value)); }
 		inline const std::map<std::string, std::string> &getAttrs(void) const { return m_attrs; }
 
 	public:
@@ -60,7 +60,7 @@ namespace XMLUtils
 
 	public:
 		inline void addChild(const XMLNode &child) { m_children.push_back(child); }
-		inline void addChild(const XMLNode &&child) { m_children.push_back(std::move(child)); }
+		inline void addChild(XMLNode &&child) { m_children.push_back(std::move(child)); }
 		inline const bool hasChild(const std::string &tag) const { return findChild(tag) != NoChild; }
 		inline const bool hasAnyChild(void) const { return !m_children.empty(); }
 		int findChild(const std::string &tag, const int pos = 0) const;

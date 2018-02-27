@@ -23,7 +23,7 @@ namespace StringConvertUtils
 #ifdef _WIN32
 	static const CharType LocalStringCodeId = CharType::GB2312;
 #else
-	static const StringCodeId LocalStringCodeId = StringCodeId::UTF8;
+	static const CharType LocalStringCodeId = CharType::UTF8;
 #endif
 
 	static const std::string LocalStringCode = StringCodeName[static_cast<unsigned int>(LocalStringCodeId)];

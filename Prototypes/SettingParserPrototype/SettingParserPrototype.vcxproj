@@ -129,6 +129,7 @@
     <Xml Include="setting.xml">
       <SubType>Designer</SubType>
     </Xml>
+    <Xml Include="testSetting.xml" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CompetitionInfo.cpp" />

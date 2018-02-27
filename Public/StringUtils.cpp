@@ -2,6 +2,8 @@
 
 #include <sstream>
 
+#include <boost/algorithm/string/classification.hpp>
+#include <boost/algorithm/string/split.hpp>
 #include <boost/archive/iterators/base64_from_binary.hpp>  
 #include <boost/archive/iterators/binary_from_base64.hpp>  
 #include <boost/archive/iterators/transform_width.hpp>
@@ -56,5 +58,20 @@ namespace StringUtils
 		{
 			return EmptyString;
 		}
+	}
+
+	std::vector<std::string> split(const std::string & source, const std::string & tokens, const bool removeSpace)
+	{
+		std::vector<std::string> ret;
+		if (removeSpace)
+		{
+			boost::split(ret, source, boost::is_any_of(tokens));
+		}
+		else
+		{
+			boost::split(ret, source, boost::is_any_of(tokens), boost::token_compress_off);
+		}
+		
+		return ret;
 	}
 };

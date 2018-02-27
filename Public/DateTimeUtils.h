@@ -41,6 +41,8 @@ namespace DatetimeUtils
 
 	struct Date
 	{
+		static const Date EmptyDate;
+
 		short year;
 		unsigned char month;
 		unsigned char day;
@@ -59,9 +61,11 @@ namespace DatetimeUtils
 
 		inline Date getDateBefore(const Date &date) const;
 
+		inline const bool isLegalDate(void) const;
 		inline const bool isLeapYear(void) const;
 		inline const unsigned char getDayOfMonth(void) const;
 		inline const unsigned char getDayInWeek(void) const;
+		static inline Date fromString(const std::string &str);
 		virtual inline std::string toString(void) const;
 	};
 
@@ -97,6 +101,7 @@ namespace DatetimeUtils
 		inline const int totalMinutes(void) const;
 		inline const int totalHours(void) const;
 		inline const int totalDays(void) const;
+		static inline Time fromString(const std::string &str);;
 		virtual inline std::string toString(void) const;
 	};
 
@@ -136,11 +141,14 @@ namespace DatetimeUtils
 		inline const int totalMilliseconds(void) const;
 
 		inline Time toTime(void) const;
+		static inline TimeMs fromString(const std::string &str);
 		inline std::string toString(void) const override;
 	};
 
 	struct Datetime : public Date
 	{
+		static const Datetime EmptyDatetime;
+
 		unsigned char hour;
 		unsigned char min;
 		unsigned char sec;
@@ -167,11 +175,14 @@ namespace DatetimeUtils
 
 		inline Date getDate(void) const;
 		inline Time getTime(void) const;
+		static inline Datetime fromString(const std::string &str);
 		virtual inline std::string toString(void) const;
 	};
 
 	struct DatetimeMs : public Datetime
 	{
+		static const DatetimeMs EmptyDatetimeMs;
+
 		unsigned short msec;
 
 		DatetimeMs(void);
@@ -204,6 +215,7 @@ namespace DatetimeUtils
 
 		inline Datetime getDatetime(void) const;
 		inline TimeMs getTimeMs(void) const;
+		static inline DatetimeMs fromString(const std::string &str);
 		inline std::string toString(void) const;
 	};
 

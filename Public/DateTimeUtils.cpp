@@ -1,4 +1,5 @@
 #include "DatetimeUtils.h"
+#include "StringUtils.h"
 
 #include <boost/date_time/gregorian/gregorian.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
@@ -8,6 +9,8 @@
 
 namespace DatetimeUtils
 {
+	const Date Date::EmptyDate(0, 0, 0);
+
 	Date::Date(void)
 		: Date(getLocalDate())
 	{
@@ -48,6 +51,21 @@ namespace DatetimeUtils
 		return this->getDateAfter(-date.year, -date.month, -date.day);
 	}
 
+	inline const bool Date::isLegalDate(void) const
+	{
+		if (year == 0 || month == 0 || day == 0)
+		{
+			return false;
+		}
+
+		if (month > 12 || day > DaysOfMonth[month - 1])
+		{
+			return false;
+		}
+
+		return true;
+	}
+
 	const bool Date::isLeapYear(void) const
 	{
 		return DatetimeUtils::isLeapYear(year);
@@ -61,6 +79,20 @@ namespace DatetimeUtils
 	const unsigned char Date::getDayInWeek(void) const
 	{
 		return DatetimeUtils::getDayInWeek(year, month, day);
+	}
+
+	inline Date Date::fromString(const std::string & str)
+	{
+		static const std::string Tokens("-");
+		const auto numbers(StringUtils::split(str, Tokens));
+
+		if (numbers.size() != 3)
+		{
+			return EmptyDate;
+		}
+
+		Date ret(std::stoi(numbers[0]), std::stoul(numbers[1]), std::stoul(numbers[2]));
+		return ret.isLegalDate() ? ret : EmptyDate;
 	}
 
 	std::string Date::toString() const
@@ -156,6 +188,25 @@ namespace DatetimeUtils
 	{
 		int temp(hour / HoursPerDay);
 		return negative ? -temp : temp;
+	}
+
+	inline Time Time::fromString(const std::string & str)
+	{
+		static const std::string Tokens("-:");
+		if (str.empty())
+		{
+			return Time();
+		}
+
+		const bool negative(str[0] == '-');
+		const auto numbers(StringUtils::split(str, Tokens));
+
+		if (numbers.size() != 3)
+		{
+			return Time();
+		}
+
+		return Time(std::stoul(numbers[0]) * SecondsPerHour + std::stoul(numbers[1]) * SecondsPerMinute + std::stoul(numbers[2]));
 	}
 
 	std::string Time::toString(void) const
@@ -295,6 +346,26 @@ namespace DatetimeUtils
 		return Time(hour, min, sec, negative);
 	}
 
+	inline TimeMs TimeMs::fromString(const std::string & str)
+	{
+		static const std::string Tokens("-:");
+		if (str.empty())
+		{
+			return TimeMs();
+		}
+
+		const bool negative(str[0] == '-');
+		const auto numbers(StringUtils::split(str, Tokens));
+
+		if (numbers.size() != 4)
+		{
+			return TimeMs();
+		}
+
+		return TimeMs((std::stoul(numbers[0]) * SecondsPerHour + std::stoul(numbers[1]) * SecondsPerMinute + std::stoul(numbers[2])) 
+			* MillisecondsPerSecond + std::stoul(numbers[3]));
+	}
+
 	std::string TimeMs::toString(void) const
 	{
 		std::ostringstream timeSout;
@@ -302,6 +373,8 @@ namespace DatetimeUtils
 
 		return timeSout.str();
 	}
+
+	const Datetime Datetime::EmptyDatetime(Date::EmptyDate);
 
 	Datetime::Datetime(void)
 		: Datetime(getLocalDatetime())
@@ -396,6 +469,27 @@ namespace DatetimeUtils
 		return Time(hour, min, sec);
 	}
 
+	inline Datetime Datetime::fromString(const std::string & str)
+	{
+		static const std::string Tokens(" ");
+		const auto parts(StringUtils::split(str, Tokens));
+		
+		if (parts.size() != 2)
+		{
+			return EmptyDatetime;
+		}
+
+		Date date(Date::fromString(parts[0]));
+		Time time(Time::fromString(parts[1]));
+
+		if (!date.isLegalDate() || time.hour >= 24)
+		{
+			return EmptyDatetime;
+		}
+
+		return Datetime(std::move(date), time.hour, time.min, time.sec);
+	}
+
 	std::string Datetime::toString() const
 	{
 		std::ostringstream datetimeSout;
@@ -403,6 +497,8 @@ namespace DatetimeUtils
 
 		return datetimeSout.str();
 	}
+
+	const DatetimeMs DatetimeMs::EmptyDatetimeMs(Date::EmptyDate);
 
 	DatetimeMs::DatetimeMs(void)
 		: DatetimeMs(getLocalDatetimeMs())
@@ -545,6 +641,27 @@ namespace DatetimeUtils
 	TimeMs DatetimeMs::getTimeMs(void) const
 	{
 		return TimeMs(getTime(), msec);
+	}
+
+	inline DatetimeMs DatetimeMs::fromString(const std::string & str)
+	{
+		static const std::string Tokens(" ");
+		const auto parts(StringUtils::split(str, Tokens));
+
+		if (parts.size() != 2)
+		{
+			return EmptyDatetimeMs;
+		}
+
+		Date date(Date::fromString(parts[0]));
+		TimeMs timeMs(TimeMs::fromString(parts[1]));
+
+		if (!date.isLegalDate() || timeMs.hour >= 24)
+		{
+			return EmptyDatetimeMs;
+		}
+
+		return DatetimeMs(std::move(date), timeMs.hour, timeMs.min, timeMs.sec, timeMs.msec);
 	}
 
 	std::string DatetimeMs::toString(void) const

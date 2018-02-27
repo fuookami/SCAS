@@ -26,6 +26,9 @@
     <Xml Include="ac_menu.xml">
       <Filter>资源文件</Filter>
     </Xml>
+    <Xml Include="testSetting.xml">
+      <Filter>资源文件</Filter>
+    </Xml>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">

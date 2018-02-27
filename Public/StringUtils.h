@@ -1,5 +1,6 @@
 #pragma once
 
+#include <vector>
 #include <string>
 
 namespace StringUtils
@@ -24,6 +25,8 @@ namespace StringUtils
 
 	std::string base64Encode(const std::string &str, const char fillCharacter = '=');
 	std::string base64Decode(const std::string &str);
+
+	std::vector<std::string> split(const std::string &source, const std::string &tokens, const bool removeSpace = true);
 
 	inline std::string to_string(const bool val) { return val ? True : False; }
 	inline const bool to_bool(const std::string &src) { return src == True ? true : false; }
