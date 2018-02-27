@@ -48,6 +48,16 @@ namespace SCAS
 		class TypeInfo
 		{
 		public:
+			static const std::string Tag;
+			static const std::string TypeTag;
+
+			class Attributes abstract
+			{
+			public:
+				static const std::string Id;
+			};
+
+		public:
 			using TypeDataType = std::pair<std::string, std::string>;
 
 			TypeInfo(void) = default;
@@ -56,6 +66,8 @@ namespace SCAS
 			TypeInfo &operator=(const TypeInfo &rhs) = default;
 			TypeInfo &operator=(TypeInfo &&rhs) = default;
 			~TypeInfo(void) = default;
+
+			inline static TypeDataType generate(const std::string &typeName) { return std::make_pair(DataUtils::toBase64String(DataUtils::fromArray(UUIDUtil::generateUUIDV1())), typeName); }
 
 			inline std::vector<TypeDataType> &getTypes(void) { return m_types; }
 			inline const std::vector<TypeDataType> &getTypes(void) const { return m_types; }
@@ -68,6 +80,27 @@ namespace SCAS
 
 		class RankInfo
 		{
+		public:
+			static const std::string Tag;
+			static const std::string RankTag;
+			static const std::string DefaultRankTag;
+
+			class Attributes abstract
+			{
+			public:
+				static const std::string Enabled;
+				static const std::string Forced;
+				static const std::string Id;
+				static const std::string DefaultRankType;
+			};
+
+			class DefaultRankTypes abstract
+			{
+			public:
+				static const std::string Id;
+				static const std::string Name;
+			};
+
 		public:
 			using RankDataType = std::pair<std::string, std::string>;
 
@@ -84,6 +117,8 @@ namespace SCAS
 
 			inline const bool getForced(void) const { return m_forced; }
 			inline void setForced(const bool forced) { if (m_enabled) { m_forced = forced; } }
+
+			inline static RankDataType generate(const std::string &rankName) { return std::make_pair(DataUtils::toBase64String(DataUtils::fromArray(UUIDUtil::generateUUIDV1())), rankName); }
 
 			inline std::vector<RankDataType> &getRanks(void) { return m_ranks; }
 			inline const std::vector<RankDataType> &getRanks(void) const { return m_ranks; }
@@ -163,6 +198,17 @@ namespace SCAS
 		class TeamInfo
 		{
 		public:
+			static const std::string Tag;
+			static const std::string TeamTag;
+
+			class Attributes abstract
+			{
+			public:
+				static const std::string Id;
+				static const std::string ShortName;
+			};
+
+		public:
 			struct Team
 			{
 				Team(void) = default;
@@ -184,6 +230,8 @@ namespace SCAS
 			TeamInfo &operator=(const TeamInfo &rhs) = default;
 			TeamInfo &operator=(TeamInfo &&rhs) = default;
 			~TeamInfo(void) = default;
+
+			inline static Team generate(const std::string &shortName, const std::string &name) { return Team{ DataUtils::toBase64String(DataUtils::fromArray(UUIDUtil::generateUUIDV1())), shortName, name }; }
 
 			inline std::vector<Team> &getTeams(void) { return m_teams; }
 			inline const std::vector<Team> &getTeams(void) const { return m_teams; }

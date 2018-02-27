@@ -85,6 +85,17 @@ namespace SCAS
 		{
 		public:
 			static const float NoScoreRate;
+			static const std::string Tag;
+			static const std::string ScoresTag;
+			static const std::string ScoreCfgTag;
+			static const std::string ScoreRateTag;
+			static const std::string BreakRecordRateTag;
+
+			class Attributes abstract
+			{
+			public:
+				static const std::string Enabled;
+			};
 
 		public:
 			ScoreInfo(void);
@@ -105,7 +116,7 @@ namespace SCAS
 			inline const bool getBreakRecordRateEnable(void) const { return m_breakRecordRateEnabled; }
 			void setBreakRecordRateEnable(const bool enabled);
 
-			inline const float getBreakRecordRate(void) { return m_breakRecordRate; }
+			inline const float getBreakRecordRate(void) const { return m_breakRecordRate; }
 			void setBreakRecordRate(const float breakRecordScoreRate);
 
 		private:
@@ -159,6 +170,9 @@ namespace SCAS
 			inline void setAthleteValidator(const AthleteValidator &athleteValidator) { m_athleteValidator = athleteValidator; }
 			inline void setAthleteValidator(AthleteValidator &&athleteValidator) { m_athleteValidator = std::move(athleteValidator); }
 
+			inline std::shared_ptr<ScoreInfo> getScoreInfo(void) { return m_scoreInfo; }
+			inline void setScoreInfo(const std::shared_ptr<ScoreInfo> &scoreInfo) { m_scoreInfo = scoreInfo; }
+
 		private:
 			const std::string m_id;
 
@@ -168,6 +182,7 @@ namespace SCAS
 			GradeInfo m_gradeInfo;
 			TeamworkInfo m_teamworkInfo;
 			AthleteValidator m_athleteValidator;
+			std::shared_ptr<ScoreInfo> m_scoreInfo;
 		};
 	};
 };

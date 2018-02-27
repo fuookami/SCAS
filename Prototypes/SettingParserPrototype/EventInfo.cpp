@@ -4,6 +4,13 @@ namespace SCAS
 {
 	namespace CompCfg
 	{
+		const std::string ScoreInfo::Tag("Score_Info");
+		const std::string ScoreInfo::ScoresTag("Scores");
+		const std::string ScoreInfo::ScoreCfgTag("Score_Cfg");
+		const std::string ScoreInfo::ScoreRateTag("Score_Rate");
+		const std::string ScoreInfo::BreakRecordRateTag("Break_Record_Rate");
+		const std::string ScoreInfo::Attributes::Enabled("enabled");
+
 		TeamworkInfo::TeamworkInfo(void)
 			: m_beTeamwork(false), m_needEveryPerson(false), m_minPeople(NoTeamwork), m_maxPeople(NoTeamwork)
 		{
@@ -69,13 +76,13 @@ namespace SCAS
 
 		EventInfo::EventInfo(const std::string & id)
 			: m_id(id), m_name(), m_type(eType::Ranking), 
-			m_gradeInfo(), m_teamworkInfo(), m_athleteValidator()
+			m_gradeInfo(), m_teamworkInfo(), m_athleteValidator(), m_scoreInfo(nullptr)
 		{
 		}
 
 		EventInfo::EventInfo(std::string && id)
 			: m_id(std::move(id)), m_name(), m_type(eType::Ranking),
-			m_gradeInfo(), m_teamworkInfo(), m_athleteValidator()
+			m_gradeInfo(), m_teamworkInfo(), m_athleteValidator(), m_scoreInfo(nullptr)
 		{
 		}
 	};

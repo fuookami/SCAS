@@ -32,18 +32,18 @@ const std::shared_ptr<SCAS::CompCfg::CompetitionInfo> generateTestCompetitionInf
 	ret->setDateInfo(std::move(dateinfo));
 
 	TypeInfo typeInfo;
-	typeInfo.getTypes().push_back(std::make_pair(DataUtils::toBase64String(DataUtils::fromArray(UUIDUtil::generateUUIDV1())), "学生男子"));
-	typeInfo.getTypes().push_back(std::make_pair(DataUtils::toBase64String(DataUtils::fromArray(UUIDUtil::generateUUIDV1())), "学生女子"));
-	typeInfo.getTypes().push_back(std::make_pair(DataUtils::toBase64String(DataUtils::fromArray(UUIDUtil::generateUUIDV1())), "教师男子"));
-	typeInfo.getTypes().push_back(std::make_pair(DataUtils::toBase64String(DataUtils::fromArray(UUIDUtil::generateUUIDV1())), "教师女子"));
+	typeInfo.getTypes().push_back(TypeInfo::generate("学生男子"));
+	typeInfo.getTypes().push_back(TypeInfo::generate("学生女子"));
+	typeInfo.getTypes().push_back(TypeInfo::generate("教师男子"));
+	typeInfo.getTypes().push_back(TypeInfo::generate("教师女子"));
 	ret->setTypeInfo(std::move(typeInfo));
 
 	RankInfo rankInfo;
 	rankInfo.setEnabled();
 	rankInfo.setForced(true);
-	rankInfo.getRanks().push_back(RankInfo::RankDataType(DataUtils::toBase64String(DataUtils::fromArray(UUIDUtil::generateUUIDV1())), "乙组"));
-	rankInfo.getRanks().push_back(RankInfo::RankDataType(DataUtils::toBase64String(DataUtils::fromArray(UUIDUtil::generateUUIDV1())), "丙组"));
-	RankInfo::RankDataType defaultRank(DataUtils::toBase64String(DataUtils::fromArray(UUIDUtil::generateUUIDV1())), "甲组");
+	rankInfo.getRanks().push_back(RankInfo::generate("乙组"));
+	rankInfo.getRanks().push_back(RankInfo::generate("丙组"));
+	RankInfo::RankDataType defaultRank(RankInfo::generate("甲组"));
 	rankInfo.getRanks().push_back(defaultRank);
 	rankInfo.setDefaultRank(std::move(defaultRank));
 	ret->setRankInfo(std::move(rankInfo));
@@ -62,11 +62,7 @@ const std::shared_ptr<SCAS::CompCfg::CompetitionInfo> generateTestCompetitionInf
 	};
 	for (const auto &teamName : teamNames)
 	{
-		TeamInfo::Team team;
-		team.id = DataUtils::toBase64String(DataUtils::fromArray(UUIDUtil::generateUUIDV1()));
-		team.shortName = teamName.first;
-		team.name = teamName.second;
-		teamInfo.getTeams().push_back(std::move(team));
+		teamInfo.getTeams().push_back(std::move(TeamInfo::generate(teamName.first, teamName.second)));
 	}
 	ret->setTeamInfo(std::move(teamInfo));
 

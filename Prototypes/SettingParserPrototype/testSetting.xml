@@ -14,4 +14,26 @@
 		<Date>2018-02-27</Date>
 		<Date>2018-02-28</Date>
 	</Dates>
+	<Types>
+		<Type id="3vMzdNqlUkGAHteICpq9uA==">学生男子</Type>
+		<Type id="Cesvkz5GPE6O1488JO7XuQ==">学生女子</Type>
+		<Type id="YYHqhkNgYUS48tLIyZuTCQ==">教师男子</Type>
+		<Type id="fp39OWXZt0S2leEWg5CtLQ==">教师女子</Type>
+	</Types>
+	<Ranks enabled="true" forced="true">
+		<Rank id="vmtqj44RiEyl3up4BM7sVg==">乙组</Rank>
+		<Rank id="aIC4PEItSUCAHC+jtvCTbw==">丙组</Rank>
+		<Rank id="cPPce199pkWTCGHFM1NU0w==">甲组</Rank>
+		<Default_Rank type="id">cPPce199pkWTCGHFM1NU0w==</Default_Rank>
+	</Ranks>
+	<Teams>
+		<Team id="/lxv+Nbwa0OjvZ9L9DwCyg==" short_name="一院">航空宇航学院</Team>
+		<Team id="2z4ixsyC50q4X2YASKmvsw==" short_name="二院">能源与动力学院</Team>
+		<Team id="sheeSynkPUqvVvUTNRZacQ==" short_name="三院">自动化学院</Team>
+	</Teams>
+	<Public_Score_Info>
+		<Scores>9 7 6 5 4 3 2 1</Scores>
+		<Score_Rate>1.000000</Score_Rate>
+		<Break_Record_Rate enabled="true">2.000000</Break_Record_Rate>
+	</Public_Score_Info>
 </SCAS_CompCfg>
