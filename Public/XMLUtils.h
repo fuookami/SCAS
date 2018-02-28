@@ -70,7 +70,7 @@ namespace XMLUtils
 		inline void setParent(XMLNode &parent) { m_parent = std::addressof(parent); }
 		inline void removeParent(void) { m_parent = nullptr; }
 		inline const bool hasParent(void) const { return m_parent == nullptr; }
-		inline XMLNode *getParent(void) { return m_parent; }
+		inline XMLNode *getParent(void) const { return m_parent; }
 
 	public:
 		static XMLNode shallowCopyFrom(const XMLNode &ano);
@@ -156,7 +156,7 @@ namespace XMLUtils
 			const auto &attrs(root.second.get_child(AttrTag, EmptyPTree));
 			for (const auto &attr : attrs)
 			{
-				node.addAttr(std::make_pair(StringConvertUtils<code>(attr.first), StringConvertUtils::toLocal<code>(attr.second.data())));
+				node.addAttr(std::make_pair(StringConvertUtils::toLocal<code>(attr.first), StringConvertUtils::toLocal<code>(attr.second.data())));
 			}
 		}
 	}
