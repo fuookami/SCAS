@@ -13,9 +13,9 @@
 
 namespace XMLUtils
 {
-	static const std::string AttrTag("<xmlattr>");
-	static const std::string PathSeperator("/");
-	static const std::string AttrSeperator(".");
+	extern const std::string AttrTag;
+	extern const std::string PathSeperator;
+	extern const std::string AttrSeperator;
 
 	class XMLNode
 	{

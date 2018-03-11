@@ -7,21 +7,21 @@
 
 namespace StringUtils
 {
-	static const std::string EmptyString("");
+	extern const std::string EmptyString;
 
-	static const std::string Empty("empty");
-	static const std::string Null("null");
-	static const std::string None("none");
+	extern const std::string Empty;
+	extern const std::string Null;
+	extern const std::string None;
 
-	static const std::string Right("right");
-	static const std::string Error("error");
-	static const std::string Wrong("wrong");
+	extern const std::string Right;
+	extern const std::string Error;
+	extern const std::string Wrong;
 
-	static const std::string Enabled("enabled");
-	static const std::string Disabled("disabled");
+	extern const std::string Enabled;
+	extern const std::string Disabled;
 
-	static const std::string True("true");
-	static const std::string False("false");
+	extern const std::string True;
+	extern const std::string False;
 
 	const std::string &getSpaceChars(void);
 

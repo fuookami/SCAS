@@ -6,6 +6,10 @@
 
 namespace XMLUtils
 {
+	const std::string AttrTag("<xmlattr>");
+	const std::string PathSeperator("/");
+	const std::string AttrSeperator(".");
+
 	const std::string XMLNode::DefaultAttrValue("");
 
 	XMLNode::XMLNode(const std::string & tag)

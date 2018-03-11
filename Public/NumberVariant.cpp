@@ -1,5 +1,6 @@
 #include "NumberVariant.h"
 #include "EndianUtils.h"
+#include "StringUtils.h"
 
 #include <boost/algorithm/string.hpp>
 
@@ -142,7 +143,7 @@ NumberVariant::NumberVariant(const uint64 value)
 }
 
 NumberVariant::NumberVariant(const std::string & str)
-	: NumberVariant(fromString(str))
+	: NumberVariant(fromValueString(str))
 {
 }
 
@@ -300,14 +301,11 @@ std::string NumberVariant::getValueString(const int digit, const int precision) 
 {
 	if (m_empty)
 	{
-		static const std::string EmptyString("empty");
-		return EmptyString;
+		return StringUtils::EmptyString;
 	}
 	else
 	{
-		static const std::string EmptyString("");
-
-		std::string ret(EmptyString);
+		std::string ret(StringUtils::EmptyString);
 		switch (m_classfication)
 		{
 		case NumberVariant::eClassfication::tBoolean:
@@ -320,7 +318,7 @@ std::string NumberVariant::getValueString(const int digit, const int precision) 
 		break;
 		case NumberVariant::eClassfication::tFloat:
 		{
-			std::ostringstream floatSout(EmptyString);
+			std::ostringstream floatSout(StringUtils::EmptyString);
 
 			if (precision != -1)
 			{
@@ -382,7 +380,7 @@ std::string NumberVariant::getValueString(const int digit, const int precision) 
 		}
 		break;
 		default:
-			ret = EmptyString;
+			ret = StringUtils::EmptyString;
 			break;
 		}
 
@@ -390,19 +388,22 @@ std::string NumberVariant::getValueString(const int digit, const int precision) 
 	}
 }
 
-std::string NumberVariant::toString(const int digit, const int precision) const
+NumberVariant NumberVariant::fromValueString(const std::string & str)
+{
+	return NumberVariant();
+}
+
+std::string NumberVariant::toFormatString(const int digit, const int precision) const
 {
 	if (m_empty)
 	{
-		static const std::string EmptyString("empty");
-		return EmptyString;
+		return StringUtils::EmptyString;
 	}
 	else
 	{
-		static const std::string EmptyString("");
 		static const std::string Seperator("_");
 
-		std::string ret(EmptyString);
+		std::string ret(StringUtils::EmptyString);
 		switch (m_classfication)
 		{
 		case NumberVariant::eClassfication::tBoolean:
@@ -415,7 +416,7 @@ std::string NumberVariant::toString(const int digit, const int precision) const
 			break;
 		case NumberVariant::eClassfication::tFloat:
 		{
-			std::ostringstream floatSout(EmptyString);
+			std::ostringstream floatSout(StringUtils::EmptyString);
 
 			if (precision != -1)
 			{
@@ -476,7 +477,7 @@ std::string NumberVariant::toString(const int digit, const int precision) const
 		}
 			break;
 		default:
-			ret = EmptyString;
+			ret = StringUtils::EmptyString;
 			break;
 		}
 
@@ -484,22 +485,19 @@ std::string NumberVariant::toString(const int digit, const int precision) const
 	}
 }
 
-NumberVariant NumberVariant::fromString(const std::string & str)
+NumberVariant NumberVariant::fromFormatString(const std::string & str)
 {
 	static const std::string Seperator("_");
-	static const std::string EmptyString("empty");
-	static const std::string TrueString("true");
-	static const std::string FalseString("false");
 
-	if (str == EmptyString)
+	if (str == StringUtils::Empty)
 	{
 		return NumberVariant();
 	}
-	else if (str == TrueString)
+	else if (str == StringUtils::True)
 	{
 		return NumberVariant(true);
 	}
-	else if (str == FalseString)
+	else if (str == StringUtils::False)
 	{
 		return NumberVariant(false);
 	}
@@ -718,4 +716,10 @@ const bool operator==(const NumberVariant & lhs, const NumberVariant & rhs)
 const int operator!=(const NumberVariant & lhs, const NumberVariant & rhs)
 {
 	return lhs.m_value != rhs.m_value;
+}
+
+std::ostream & operator<<(std::ostream & os, const NumberVariant & number)
+{
+	os << number.getValueString();
+	return os;
 }

@@ -2,6 +2,8 @@
 
 namespace StringConvertUtils
 {
+	const std::string LocalStringCode = StringCodeName[static_cast<unsigned int>(LocalStringCodeId)];
+
 	std::string _toDBS(const std::string & src)
 	{
 		std::string ret;

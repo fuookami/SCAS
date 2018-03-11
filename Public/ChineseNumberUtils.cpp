@@ -1,10 +1,15 @@
 #include "ChineseNumberUtils.h"
+#include "StringUtils.h"
 
 namespace ChineseNumberUtils
 {
+	const std::vector<std::string> SingleDigitChineseNumber =
+	{
+		"零", "一", "二", "三", "四", "五", "六", "七", "八", "九", "十"
+	};
+
 	std::string getChineseNumberUnderHundred(const unsigned char number)
 	{
-		static const std::string empty("");
 		if (number < 10)
 		{
 			return SingleDigitChineseNumber[number];
@@ -23,7 +28,7 @@ namespace ChineseNumberUtils
 		}
 		else
 		{
-			return empty;
+			return StringUtils::EmptyString;
 		}
 	}
 };

@@ -25,8 +25,7 @@ namespace StringConvertUtils
 #else
 	static const CharType LocalStringCodeId = CharType::UTF8;
 #endif
-
-	static const std::string LocalStringCode = StringCodeName[static_cast<unsigned int>(LocalStringCodeId)];
+	extern const std::string LocalStringCode;
 
 	template<CharType srcCodeId, CharType destCodeId = LocalStringCodeId>
 	inline std::string convert(const std::string &src)

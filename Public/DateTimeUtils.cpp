@@ -9,6 +9,33 @@
 
 namespace DatetimeUtils
 {
+	const std::array<unsigned char, 12> DaysOfMonth =
+	{
+		31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31
+	};
+
+	const std::array<std::string, 12> MonthShortName =
+	{
+		std::string("Jan"), std::string("Feb"), std::string("Mar"),
+		std::string("Apr"), std::string("May"), std::string("Jun"),
+		std::string("Jul"), std::string("Aug"), std::string("Sep"),
+		std::string("Oct"), std::string("Nov"), std::string("Dec")
+	};
+
+	const std::array<std::string, 7> DayInWeekChineseName =
+	{
+		std::string("星期日"), std::string("星期一"), std::string("星期二"),
+		std::string("星期三"), std::string("星期四"), std::string("星期五"),
+		std::string("星期六")
+	};
+
+	const unsigned short MillisecondsPerSecond = 1000;
+	const unsigned short MicrosecondsPerMillisecond = 1000;
+	const unsigned short SecondsPerHour = 3600;
+	const unsigned short SecondsPerMinute = 60;
+	const unsigned short MinutesPerHour = 60;
+	const unsigned short HoursPerDay = 24;
+
 	const Date Date::EmptyDate(0, 0, 0);
 
 	Date::Date(void)
@@ -1302,4 +1329,16 @@ DatetimeUtils::TimeMs operator-(const DatetimeUtils::DatetimeMs & lhs, const Dat
 	auto disTime(rhs < lhs ? (lDatetime - rDatetime) : (rDatetime - lDatetime));
 
 	return DatetimeUtils::TimeMs(static_cast<unsigned short>(disTime.hours()), static_cast<unsigned char>(disTime.minutes()), static_cast<unsigned char>(disTime.seconds()), static_cast<unsigned short>(disTime.fractional_seconds() / DatetimeUtils::MicrosecondsPerMillisecond));
+}
+
+std::ostream & operator<<(std::ostream & os, const DatetimeUtils::Date & date)
+{
+	os << date.toString();
+	return os;
+}
+
+std::ostream & operator<<(std::ostream & os, const DatetimeUtils::Time & time)
+{
+	os << time.toString();
+	return os;
 }

@@ -10,6 +10,22 @@
 
 namespace StringUtils
 {
+	const std::string EmptyString("");
+
+	const std::string Empty("empty");
+	const std::string Null("null");
+	const std::string None("none");
+
+	const std::string Right("right");
+	const std::string Error("error");
+	const std::string Wrong("wrong");
+
+	const std::string Enabled("enabled");
+	const std::string Disabled("disabled");
+
+	const std::string True("true");
+	const std::string False("false");
+
 	const std::string &getSpaceChars(void)
 	{
 		static std::string ret;

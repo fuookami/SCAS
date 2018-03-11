@@ -6,6 +6,7 @@
 #include <boost/variant.hpp>
 #include <boost/numeric/conversion/cast.hpp>
 
+#include <ostream>
 #include <sstream>
 #include <typeinfo>
 #include <map>
@@ -231,6 +232,7 @@ public:
 	inline const bool set(const uint32 value) { return set(*this, value); }
 	inline const bool set(const int64 value) { return set(*this, value); }
 	inline const bool set(const uint64 value) { return set(*this, value); }
+	inline const bool set(const std::string &str) { assign(fromValueString(str)); return true; }
 
 	template<typename T>
 	inline const T get(void) const { return get<T>(*this); }
@@ -256,8 +258,9 @@ public:
 	inline const eValidType type(void) const { return m_type; }
 
 	std::string getValueString(const int digit = -1, const int precision = -1) const;
-	std::string toString(const int digit = -1, const int precision = -1) const;
-	static NumberVariant fromString(const std::string &str);
+	static NumberVariant fromValueString(const std::string &str);
+	std::string toFormatString(const int digit = -1, const int precision = -1) const;
+	static NumberVariant fromFormatString(const std::string &str);
 
 	DataUtils::Data toData(void) const;
 	static NumberVariant fromData(const DataUtils::Data &data);
@@ -274,3 +277,5 @@ private:
 	static const uint8 ValueDataOffset = 8;
 	static const uint8 ValueDataLength = 8;
 };
+
+std::ostream &operator<<(std::ostream &os, const NumberVariant &number);
