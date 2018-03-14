@@ -1,6 +1,7 @@
 #include "StringUtils.h"
 
 #include <sstream>
+#include <iomanip>
 
 #include <boost/algorithm/string/classification.hpp>
 #include <boost/algorithm/string/split.hpp>
@@ -41,6 +42,13 @@ namespace StringUtils
 		}
 
 		return ret;
+	}
+
+	std::string getVersion(const int major, const int sub, const int modify)
+	{
+		std::ostringstream sout;
+		sout << major << "." << std::setfill('0') << std::setw(2) << sub << "." << std::setw(3) << modify;
+		return sout.str();
 	}
 
 	std::string base64Encode(const std::string & str, const char fillCharacter)

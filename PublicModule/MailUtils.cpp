@@ -9,7 +9,7 @@ namespace MailUtils
 		using namespace StringConvertUtils;
 
 		jwsmtp::mailer mail(receiverMail.c_str(), senderMail.c_str(),
-			fromLocal<StringCodeId::UTF8>(title).c_str(), fromLocal<StringCodeId::UTF8>(content).c_str(),
+			fromLocal<CharType::UTF8>(title).c_str(), fromLocal<CharType::UTF8>(content).c_str(),
 			senderServer.c_str(), jwsmtp::mailer::SMTP_PORT, false);
 
 		return __sendMail(senderMail, senderPassword, mail);
@@ -20,7 +20,7 @@ namespace MailUtils
 		using namespace StringConvertUtils;
 
 		jwsmtp::mailer mail("", senderMail.c_str(),
-			fromLocal<StringCodeId::UTF8>(title).c_str(), fromLocal<StringCodeId::UTF8>(content).c_str(),
+			fromLocal<CharType::UTF8>(title).c_str(), fromLocal<CharType::UTF8>(content).c_str(),
 			senderServer.c_str(), jwsmtp::mailer::SMTP_PORT, false);
 
 		for (const auto &receiverMail : receiverMails)
@@ -36,9 +36,9 @@ namespace MailUtils
 		using namespace StringConvertUtils;
 
 		jwsmtp::mailer mail(receiverMail.c_str(), senderMail.c_str(),
-			fromLocal<StringCodeId::UTF8>(title).c_str(), "",
+			fromLocal<CharType::UTF8>(title).c_str(), "",
 			senderServer.c_str(), jwsmtp::mailer::SMTP_PORT, false);
-		mail.setmessageHTML(fromLocal<StringCodeId::UTF8>(content).c_str());
+		mail.setmessageHTML(fromLocal<CharType::UTF8>(content).c_str());
 		
 		return __sendMail(senderMail, senderPassword, mail);
 	}
@@ -48,9 +48,9 @@ namespace MailUtils
 		using namespace StringConvertUtils;
 
 		jwsmtp::mailer mail("", senderMail.c_str(),
-			fromLocal<StringCodeId::UTF8>(title).c_str(), "",
+			fromLocal<CharType::UTF8>(title).c_str(), "",
 			senderServer.c_str(), jwsmtp::mailer::SMTP_PORT, false);
-		mail.setmessageHTML(fromLocal<StringCodeId::UTF8>(content).c_str());
+		mail.setmessageHTML(fromLocal<CharType::UTF8>(content).c_str());
 
 		for (const auto &receiverMail : receiverMails)
 		{

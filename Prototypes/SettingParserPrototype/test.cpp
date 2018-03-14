@@ -66,19 +66,30 @@ const std::shared_ptr<SCAS::CompCfg::CompetitionInfo> generateTestCompetitionInf
 	}
 	ret->setTeamInfo(std::move(teamInfo));
 
-	// ! to do
- 	std::shared_ptr<EventInfo> eventInfo_dual(new EventInfo());
+ 	// 对抗赛例子
+	std::shared_ptr<EventInfo> eventInfo_dual(new EventInfo());
 	ret->getEventInfos().insert(std::make_pair(eventInfo_dual->getId(), eventInfo_dual));
+	ret->setName("一个对抗赛的例子（循环小组赛 + 淘汰晋级赛）");
+
 	std::shared_ptr<EventInfo> eventInfo_single_rank(new EventInfo());
 	ret->getEventInfos().insert(std::make_pair(eventInfo_single_rank->getId(), eventInfo_single_rank));
+	ret->setName("一个名次赛的例子（竞标赛制，单组内算名次）");
+
 	std::shared_ptr<EventInfo> eventInfo_plural_rank(new EventInfo());
 	ret->getEventInfos().insert(std::make_pair(eventInfo_plural_rank->getId(), eventInfo_plural_rank));
+	ret->setName("一个名次赛的例子（名次制，全部组在一起算名次）");
+
 	std::shared_ptr<EventInfo> eventInfo_dual_team(new EventInfo());
 	ret->getEventInfos().insert(std::make_pair(eventInfo_dual_team->getId(), eventInfo_dual_team));
+	ret->setName("一个对抗赛的例子（团队，循环小组赛 + 淘汰晋级赛）");
+
 	std::shared_ptr<EventInfo> eventInfo_single_rank_team(new EventInfo());
 	ret->getEventInfos().insert(std::make_pair(eventInfo_single_rank_team->getId(), eventInfo_single_rank_team));
+	ret->setName("一个名次赛的例子（团队，竞标赛制，单组内算名次）");
+
 	std::shared_ptr<EventInfo> eventInfo_plural_rank_team(new EventInfo());
 	ret->getEventInfos().insert(std::make_pair(eventInfo_plural_rank_team->getId(), eventInfo_plural_rank_team));
+	ret->setName("一个名次赛的例子（团队，名次制，全部组在一起算名次）");
 
 	return ret;
 }

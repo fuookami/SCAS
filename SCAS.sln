@@ -1,18 +1,22 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27130.2003
+VisualStudioVersion = 15.0.27130.2036
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "原型", "原型", "{00AB0659-B092-41FD-AA45-FD3E3FEEDFE4}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SettingParserPrototype", "Prototypes\SettingParserPrototype\SettingParserPrototype.vcxproj", "{51B2EE80-E9AC-4D33-93C5-A2E318CD51C7}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Public", "Public\Public.vcxitems", "{08C99FA0-A760-4215-831A-6788C8A92CE8}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PublicModule", "PublicModule\PublicModule.vcxitems", "{A38F60FE-2AE0-4543-B0D4-D9E2173B74A0}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PublicModuleGUI", "PublicModuleGUI\PublicModuleGUI.vcxitems", "{0F14E02B-6FE7-4510-B827-610EBE37F8F7}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		Public\Public.vcxitems*{08c99fa0-a760-4215-831a-6788c8a92ce8}*SharedItemsImports = 9
-		Public\Public.vcxitems*{51b2ee80-e9ac-4d33-93c5-a2e318cd51c7}*SharedItemsImports = 4
+		PublicModuleGUI\PublicModuleGUI.vcxitems*{0f14e02b-6fe7-4510-b827-610ebe37f8f7}*SharedItemsImports = 9
+		PublicModuleGUI\PublicModuleGUI.vcxitems*{51b2ee80-e9ac-4d33-93c5-a2e318cd51c7}*SharedItemsImports = 4
+		PublicModule\PublicModule.vcxitems*{51b2ee80-e9ac-4d33-93c5-a2e318cd51c7}*SharedItemsImports = 4
+		PublicModule\PublicModule.vcxitems*{a38f60fe-2ae0-4543-b0d4-d9e2173b74a0}*SharedItemsImports = 9
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64

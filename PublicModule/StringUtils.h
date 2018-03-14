@@ -25,6 +25,8 @@ namespace StringUtils
 
 	const std::string &getSpaceChars(void);
 
+	std::string getVersion(const int major, const int sub, const int modify);
+
 	inline std::string to_string(const bool val) { return val ? True : False; }
 	inline const bool to_bool(const std::string &src) { return src == True ? true : false; }
 

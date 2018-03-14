@@ -3,9 +3,7 @@
   <PropertyGroup Label="Globals">
     <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
     <HasSharedItems>true</HasSharedItems>
-    <ItemsProjectGuid>{08c99fa0-a760-4215-831a-6788c8a92ce8}</ItemsProjectGuid>
-    <ItemsRootNamespace>
-    </ItemsRootNamespace>
+    <ItemsProjectGuid>{a38f60fe-2ae0-4543-b0d4-d9e2173b74a0}</ItemsProjectGuid>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
@@ -14,6 +12,17 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ProjectCapability Include="SourceItemsFromImports" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)ChineseNumberUtils.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)DataUtils.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)EndianUtils.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)FileUtils.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)NumberVariant.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)RandomUtils.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)StringConvertUtils.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)UuidUtils.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)XMLUtils.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)ChineseNumberUtils.cpp" />
@@ -25,20 +34,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)RandomUtils.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)StringConvertUtils.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)StringUtils.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)UUIDUtils.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)UuidUtils.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)XMLUtils.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="$(MSBuildThisFileDirectory)ChineseNumberUtils.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)DataUtils.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)DateTimeUtils.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)EndianUtils.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)FileUtils.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)NumberVariant.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)RandomUtils.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)StringConvertUtils.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)StringUtils.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)UUIDUtils.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)XMLUtils.h" />
   </ItemGroup>
 </Project>

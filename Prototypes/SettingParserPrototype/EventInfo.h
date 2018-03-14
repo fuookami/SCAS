@@ -116,7 +116,7 @@ namespace SCAS
 			inline const bool getBreakRecordRateEnable(void) const { return m_breakRecordRateEnabled; }
 			void setBreakRecordRateEnable(const bool enabled);
 
-			inline const float getBreakRecordRate(void) const { return m_breakRecordRate; }
+			inline const float getBreakRecordRate(void) const  { return m_breakRecordRate; }
 			void setBreakRecordRate(const float breakRecordScoreRate);
 
 		private:
