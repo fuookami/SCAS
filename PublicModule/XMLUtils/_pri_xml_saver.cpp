@@ -22,7 +22,7 @@ namespace SSUtils
 			auto pt(saveToPTree(roots));
 			if (pt == EmptyPTree)
 			{
-				return false;
+				return String::EmptyString;
 			}
 			else
 			{

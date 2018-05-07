@@ -62,12 +62,12 @@ namespace SSUtils
 			return saver.toString();
 		}
 
-		const std::vector<std::shared_ptr<Node>> Document::getRoots(void) const
+		const std::vector<std::shared_ptr<Node>> &Document::getRoots(void) const
 		{
 			return m_roots;
 		}
 
-		std::vector<std::shared_ptr<Node>> Document::getRoots(void)
+		std::vector<std::shared_ptr<Node>> &Document::getRoots(void)
 		{
 			return m_roots;
 		}

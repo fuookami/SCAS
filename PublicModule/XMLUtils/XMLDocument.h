@@ -28,8 +28,8 @@ namespace SSUtils
 			std::string toString(const CharType charType = String::LocalCharType);
 
 		public:
-			const std::vector<std::shared_ptr<Node>> getRoots(void) const;
-			std::vector<std::shared_ptr<Node>> getRoots(void);
+			const std::vector<std::shared_ptr<Node>> &getRoots(void) const;
+			std::vector<std::shared_ptr<Node>> &getRoots(void);
 			void setRoots(const std::vector<std::shared_ptr<Node>> &roots);
 			void setRoots(std::vector<std::shared_ptr<Node>> &&roots);
 

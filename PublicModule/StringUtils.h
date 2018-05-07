@@ -4,6 +4,7 @@
 #include "StringUtils/StringConverter.h"
 #include "StringUtils/StringRegexChecker.h"
 #include "StringUtils/StringTranslator.h"
+#include <numeric>
 
 namespace SSUtils
 {
@@ -18,30 +19,29 @@ namespace SSUtils
 		std::vector<std::wstring> split(const std::wstring &source, const std::wstring &tokens, const bool removeSpace = true);
 
 		template<typename iter, typename translator_t = StringTranslator>
-		std::string join(const iter bgIt, const iter edIt, const std::string &seperator = std::string(""),
+		typename std::enable_if_t<std::is_same_v<typename iter::value_type, std::string>, std::string> join(const iter bgIt, const iter edIt, const std::string &seperator = std::string(""),
 			const translator_t &translator = translator_t())
 		{
-			static const bool isStringType = std::is_same_v<iter::value_type, std::string>;
-			if (bgIt >= edIt)
+			return bgIt >= edIt ? EmptyString
+				: std::accumulate(std::next(bgIt), edIt,
+					*bgIt, [&seperator]
+					(const std::string &lhs, const typename iter::value_type &rhs) -> std::string
 			{
-				return EmptyString;
-			}
-			else
+				return lhs + seperator + rhs;
+			});
+		}
+
+		template<typename iter, typename translator_t = StringTranslator>
+		typename std::enable_if_t<!std::is_same_v<typename iter::value_type, std::string>, std::string> join(const iter bgIt, const iter edIt, const std::string &seperator = std::string(""),
+			const translator_t &translator = translator_t())
+		{
+			return bgIt >= edIt ? EmptyString
+				: std::accumulate(std::next(bgIt), edIt,
+					translator(*bgIt), [&seperator, &translator]
+					(const std::string &lhs, const typename iter::value_type &rhs) -> std::string
 			{
-				return isStringType 
-					? std::accumulate(std::next(bgIt), edIt,
-						*bgIt, [&seperator]
-						(const std::string &lhs, const iter::value_type &rhs) -> std::string
-				{
-					return lhs + seperator + rhs;
-				}) 
-					: std::accumulate(std::next(bgIt), edIt,
-						translator(*bgIt), [&seperator, &translator]
-						(const std::string &lhs, const valT &rhs) -> std::string
-				{
-					return lhs + seperator + translator(rhs);
-				});
-			}
+				return lhs + seperator + translator(rhs);
+			});
 		}
 
 		template<typename container, typename translator_t = StringTranslator>
