@@ -98,7 +98,7 @@ namespace SCAS
 			static const int NoPos = -1;
 
 		public:
-			GameInfo(const std::string &eventInfoId, const std::string &id = DataUtils::toBase64String(DataUtils::fromArray(UUIDUtil::generateUUIDV1())));
+			GameInfo(const std::string &eventInfoId, const std::string &id = SSUtils::Data::toBase64String(SSUtils::Data::fromArray(SSUtils::UUID::generateUUIDV1())));
 			GameInfo(const std::string &eventInfoId, std::string &&id);
 			GameInfo(const GameInfo &ano) = default;
 			GameInfo(GameInfo &&ano) = default;
@@ -115,22 +115,22 @@ namespace SCAS
 			inline const uint32 getAthleteNumber(void) const { return m_athleteNumber; }
 			inline void setAthleteNumber(const uint32 athleteNumber) { m_athleteNumber = athleteNumber; }
 
-			inline const DatetimeUtils::Date getDate(void) const { return m_date; };
-			inline void setDate(const DatetimeUtils::Date &date) { m_date = date; }
-			inline void setDate(DatetimeUtils::Date &&date) { m_date = std::move(date); }
+			inline const SSUtils::Datetime::Date getDate(void) const { return m_date; };
+			inline void setDate(const SSUtils::Datetime::Date &date) { m_date = date; }
+			inline void setDate(SSUtils::Datetime::Date &&date) { m_date = std::move(date); }
 
 			inline const uint32 getOrderInDay(void) const { return m_orderInDay; }
 			inline void setOrderInDay(const uint32 orderInDay) { m_orderInDay = orderInDay; }
 
-			inline DatetimeUtils::Time &getPlanIntervalTime(void) { return m_planIntervalTime; }
-			inline const DatetimeUtils::Time &getPlanIntervalTime(void) const { return m_planIntervalTime; }
-			inline void setPlanIntervalTime(const DatetimeUtils::Time &planIntervalTime) { m_planIntervalTime = planIntervalTime; }
-			inline void setPlanIntervalTime(DatetimeUtils::Time &&planIntervalTime) { m_planIntervalTime = std::move(planIntervalTime); }
+			inline SSUtils::Datetime::Time &getPlanIntervalTime(void) { return m_planIntervalTime; }
+			inline const SSUtils::Datetime::Time &getPlanIntervalTime(void) const { return m_planIntervalTime; }
+			inline void setPlanIntervalTime(const SSUtils::Datetime::Time &planIntervalTime) { m_planIntervalTime = planIntervalTime; }
+			inline void setPlanIntervalTime(SSUtils::Datetime::Time &&planIntervalTime) { m_planIntervalTime = std::move(planIntervalTime); }
 
-			inline DatetimeUtils::Time &getPlanTimePerGroup(void) { return m_planTimePerGroup; }
-			inline const DatetimeUtils::Time &getPlanTimePerGroup(void) const { return m_planTimePerGroup; }
-			inline void setPlanTimePerGroup(const DatetimeUtils::Time &planTimePerGroup) { m_planTimePerGroup = planTimePerGroup; }
-			inline void setPlanTimePerGroup(DatetimeUtils::Time &&planTimePerGroup) { m_planTimePerGroup = std::move(planTimePerGroup); }
+			inline SSUtils::Datetime::Time &getPlanTimePerGroup(void) { return m_planTimePerGroup; }
+			inline const SSUtils::Datetime::Time &getPlanTimePerGroup(void) const { return m_planTimePerGroup; }
+			inline void setPlanTimePerGroup(const SSUtils::Datetime::Time &planTimePerGroup) { m_planTimePerGroup = planTimePerGroup; }
+			inline void setPlanTimePerGroup(SSUtils::Datetime::Time &&planTimePerGroup) { m_planTimePerGroup = std::move(planTimePerGroup); }
 
 			inline GameTypeInfo &getGameTypeInfo(void) { return m_gameTypeInfo; }
 			inline const GameTypeInfo &getGameTypeInfo(void) const { return m_gameTypeInfo; }
@@ -147,11 +147,11 @@ namespace SCAS
 			std::string m_name;
 
 			uint32 m_athleteNumber;
-			DatetimeUtils::Date m_date;
+			SSUtils::Datetime::Date m_date;
 			int m_orderInDay;
 
-			DatetimeUtils::Time m_planIntervalTime;
-			DatetimeUtils::Time m_planTimePerGroup;
+			SSUtils::Datetime::Time m_planIntervalTime;
+			SSUtils::Datetime::Time m_planTimePerGroup;
 
 			GameTypeInfo m_gameTypeInfo;
 			GroupInfo m_groupInfo;

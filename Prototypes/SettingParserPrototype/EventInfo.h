@@ -138,7 +138,7 @@ namespace SCAS
 			};
 
 		public:
-			EventInfo(const std::string &id = DataUtils::toBase64String(DataUtils::fromArray(UUIDUtil::generateUUIDV1())));
+			EventInfo(const std::string &id = SSUtils::Data::toBase64String(SSUtils::Data::fromArray(SSUtils::UUID::generateUUIDV1())));
 			EventInfo(std::string &&id);
 			EventInfo(const EventInfo &ano) = default;
 			EventInfo(EventInfo &&ano) = default;

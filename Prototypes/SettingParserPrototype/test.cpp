@@ -27,8 +27,8 @@ const std::shared_ptr<SCAS::CompCfg::CompetitionInfo> generateTestCompetitionInf
 	ret->setPrincipalInfo(std::move(principalInfo));
 
 	DateInfo dateinfo;
-	dateinfo.getDates().push_back(DatetimeUtils::getLocalDate());
-	dateinfo.getDates().push_back(DatetimeUtils::getDateAfterLocalDate(1));
+	dateinfo.getDates().push_back(SSUtils::Datetime::getLocalDate());
+	dateinfo.getDates().push_back(SSUtils::Datetime::getDateAfterLocalDate(1));
 	ret->setDateInfo(std::move(dateinfo));
 
 	TypeInfo typeInfo;

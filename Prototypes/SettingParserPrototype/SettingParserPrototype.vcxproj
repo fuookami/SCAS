@@ -56,7 +56,6 @@
   </ImportGroup>
   <ImportGroup Label="Shared">
     <Import Project="..\..\PublicModule\PublicModule.vcxitems" Label="Shared" />
-    <Import Project="..\..\PublicModuleGUI\PublicModuleGUI.vcxitems" Label="Shared" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -72,7 +71,10 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>D:\SDK_API\C_C++\Boost\boost\include;$(IncludePath)</IncludePath>
+    <IncludePath>D:\SDK_API\C_C++\jwsmtp\include;D:\SDK_API\C_C++\CryptoPP\cryptopp5.6.5\win32\include;D:\SDK_API\C_C++\Boost\boost\include;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IncludePath>D:\SDK_API\C_C++\jwsmtp\include;D:\SDK_API\C_C++\Boost\boost\include;D:\SDK_API\C_C++\CryptoPP\cryptopp5.6.5\x64\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -81,9 +83,11 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalOptions>-D_SCL_SECURE_NO_WARNINGS %(AdditionalOptions)</AdditionalOptions>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>D:\SDK_API\C_C++\Boost\boost\lib\msvc2017_x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>D:\SDK_API\C_C++\jwsmtp\lib\msvc2017_x86;D:\SDK_API\C_C++\CryptoPP\cryptopp5.6.5\win32\lib;D:\SDK_API\C_C++\Boost\boost\lib\msvc2017_x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -92,7 +96,12 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <AdditionalOptions>-D_SCL_SECURE_NO_WARNINGS %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>D:\SDK_API\C_C++\CryptoPP\cryptopp5.6.5\x64\lib;D:\SDK_API\C_C++\jwsmtp\lib\msvc2017_x64;D:\SDK_API\C_C++\Boost\boost\lib\msvc2017_x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>

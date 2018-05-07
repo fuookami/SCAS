@@ -14,7 +14,6 @@ EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		PublicModuleGUI\PublicModuleGUI.vcxitems*{0f14e02b-6fe7-4510-b827-610ebe37f8f7}*SharedItemsImports = 9
-		PublicModuleGUI\PublicModuleGUI.vcxitems*{51b2ee80-e9ac-4d33-93c5-a2e318cd51c7}*SharedItemsImports = 4
 		PublicModule\PublicModule.vcxitems*{51b2ee80-e9ac-4d33-93c5-a2e318cd51c7}*SharedItemsImports = 4
 		PublicModule\PublicModule.vcxitems*{a38f60fe-2ae0-4543-b0d4-d9e2173b74a0}*SharedItemsImports = 9
 	EndGlobalSection

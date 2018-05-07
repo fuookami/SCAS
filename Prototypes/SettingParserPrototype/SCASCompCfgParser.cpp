@@ -8,149 +8,151 @@ namespace SCAS
 	{
 		const bool saveToXML(const std::shared_ptr<CompetitionInfo> info, const std::string & outUrl)
 		{
-			XMLUtils::XMLNode root(CompetitionInfo::RootTag);
+			std::shared_ptr<SSUtils::XML::Node> root(SSUtils::XML::Node::generate(CompetitionInfo::RootTag));
 
-			XMLUtils::XMLNode nameNode(CompetitionInfo::NameTag);
-			nameNode.setContent(info->getName());
-			root.addChild(std::move(nameNode));
+			std::shared_ptr<SSUtils::XML::Node> nameNode(SSUtils::XML::Node::generate(CompetitionInfo::NameTag));
+			nameNode->setContent(info->getName());
+			root->addChild(std::move(nameNode));
 
-			XMLUtils::XMLNode subNameNode(CompetitionInfo::SubNameTag);
-			subNameNode.setContent(info->getSubName());
-			root.addChild(std::move(subNameNode));
+			std::shared_ptr<SSUtils::XML::Node> subNameNode(SSUtils::XML::Node::generate(CompetitionInfo::SubNameTag));
+			subNameNode->setContent(info->getSubName());
+			root->addChild(std::move(subNameNode));
 
-			XMLUtils::XMLNode versionNode(CompetitionInfo::VersionTag);
-			versionNode.setContent(info->getVersion());
-			root.addChild(std::move(versionNode));
+			std::shared_ptr<SSUtils::XML::Node> versionNode(SSUtils::XML::Node::generate(CompetitionInfo::VersionTag));
+			versionNode->setContent(info->getVersion());
+			root->addChild(std::move(versionNode));
 
-			XMLUtils::XMLNode identifierNode(CompetitionInfo::IdentifierTag);
-			identifierNode.setContent(info->getIdentifier());
-			root.addChild(std::move(identifierNode));
+			std::shared_ptr<SSUtils::XML::Node> identifierNode(SSUtils::XML::Node::generate(CompetitionInfo::IdentifierTag));
+			identifierNode->setContent(info->getIdentifier());
+			root->addChild(std::move(identifierNode));
 
 			{
-				XMLUtils::XMLNode applyValidatorNode(ApplyValidator::Tag);
+				std::shared_ptr<SSUtils::XML::Node> applyValidatorNode(SSUtils::XML::Node::generate(ApplyValidator::Tag));
 				const auto &applyValidator(info->getApplyValidator());
-				applyValidatorNode.addAttr(std::make_pair(ApplyValidator::Attributes::Enabled, StringUtils::to_string(applyValidator.getEnabled())));
+				applyValidatorNode->addAttr(std::make_pair(ApplyValidator::Attributes::Enabled, SSUtils::String::toString(applyValidator.getEnabled())));
 				if (applyValidator.getEnabled())
 				{
-					applyValidatorNode.addAttr(std::make_pair(ApplyValidator::Attributes::EnabledInTeamwork, StringUtils::to_string(applyValidator.getEnabledInTeamwork())));
-					applyValidatorNode.addAttr(std::make_pair(ApplyValidator::Attributes::MaxApply, std::to_string(applyValidator.getMaxApply())));
+					applyValidatorNode->addAttr(std::make_pair(ApplyValidator::Attributes::EnabledInTeamwork, SSUtils::String::toString(applyValidator.getEnabledInTeamwork())));
+					applyValidatorNode->addAttr(std::make_pair(ApplyValidator::Attributes::MaxApply, std::to_string(applyValidator.getMaxApply())));
 				}
-				root.addChild(std::move(applyValidatorNode));
+				root->addChild(std::move(applyValidatorNode));
 			}
 
 			{
-				XMLUtils::XMLNode principalInfoNode(PrincipalInfo::Tag);
+				std::shared_ptr<SSUtils::XML::Node> principalInfoNode(SSUtils::XML::Node::generate(PrincipalInfo::Tag));
 				const auto &principalInfo(info->getPrincipalInfo());
 
-				XMLUtils::XMLNode nameNode(PrincipalInfo::NameTag);
-				nameNode.setContent(principalInfo.getName());
-				principalInfoNode.addChild(std::move(nameNode));
+				std::shared_ptr<SSUtils::XML::Node> nameNode(SSUtils::XML::Node::generate(PrincipalInfo::NameTag));
+				nameNode->setContent(principalInfo.getName());
+				principalInfoNode->addChild(std::move(nameNode));
 
-				XMLUtils::XMLNode telephoneNode(PrincipalInfo::TelephoneTag);
-				telephoneNode.setContent(principalInfo.getTelephone());
-				principalInfoNode.addChild(std::move(telephoneNode));
+				std::shared_ptr<SSUtils::XML::Node> telephoneNode(SSUtils::XML::Node::generate(PrincipalInfo::TelephoneTag));
+				telephoneNode->setContent(principalInfo.getTelephone());
+				principalInfoNode->addChild(std::move(telephoneNode));
 
-				XMLUtils::XMLNode emailNode(PrincipalInfo::EMailTag);
-				emailNode.setContent(principalInfo.getEmmail());
-				principalInfoNode.addChild(std::move(emailNode));
+				std::shared_ptr<SSUtils::XML::Node> emailNode(SSUtils::XML::Node::generate(PrincipalInfo::EMailTag));
+				emailNode->setContent(principalInfo.getEmmail());
+				principalInfoNode->addChild(std::move(emailNode));
 
-				root.addChild(std::move(principalInfoNode));
+				root->addChild(std::move(principalInfoNode));
 			}
 
 			{
-				XMLUtils::XMLNode dateInfoNode(DateInfo::Tag);
+				std::shared_ptr<SSUtils::XML::Node> dateInfoNode(SSUtils::XML::Node::generate(DateInfo::Tag));
 				const auto &dateInfo(info->getDateInfo());
 
 				for (const auto &date : dateInfo.getDates())
 				{
-					XMLUtils::XMLNode dateNode(DateInfo::DateTag);
-					dateNode.setContent(date.toString());
-					dateInfoNode.addChild(std::move(dateNode));
+					std::shared_ptr<SSUtils::XML::Node> dateNode(SSUtils::XML::Node::generate(DateInfo::DateTag));
+					dateNode->setContent(date.toString());
+					dateInfoNode->addChild(std::move(dateNode));
 				}
-				root.addChild(std::move(dateInfoNode));
+				root->addChild(std::move(dateInfoNode));
 			}
 
 			{
-				XMLUtils::XMLNode typeInfoNode(TypeInfo::Tag);
+				std::shared_ptr<SSUtils::XML::Node> typeInfoNode(SSUtils::XML::Node::generate(TypeInfo::Tag));
 				const auto &typeInfo(info->getTypeInfo());
 
 				for (const auto &type : typeInfo.getTypes())
 				{
-					XMLUtils::XMLNode typeNode(TypeInfo::TypeTag);
-					typeNode.addAttr(std::make_pair(TypeInfo::Attributes::Id, type.first));
-					typeNode.setContent(type.second);
-					typeInfoNode.addChild(std::move(typeNode));
+					std::shared_ptr<SSUtils::XML::Node> typeNode(SSUtils::XML::Node::generate(TypeInfo::TypeTag));
+					typeNode->addAttr(std::make_pair(TypeInfo::Attributes::Id, type.first));
+					typeNode->setContent(type.second);
+					typeInfoNode->addChild(std::move(typeNode));
 				}
 
-				root.addChild(std::move(typeInfoNode));
+				root->addChild(std::move(typeInfoNode));
 			}
 
 			{
-				XMLUtils::XMLNode rankInfoNode(RankInfo::Tag);
+				std::shared_ptr<SSUtils::XML::Node> rankInfoNode(SSUtils::XML::Node::generate(RankInfo::Tag));
 				const auto &rankInfo(info->getRankInfo());
 
-				rankInfoNode.addAttr(std::make_pair(RankInfo::Attributes::Enabled, StringUtils::to_string(rankInfo.getEnabled())));
+				rankInfoNode->addAttr(std::make_pair(RankInfo::Attributes::Enabled, SSUtils::String::toString(rankInfo.getEnabled())));
 				if (rankInfo.getEnabled())
 				{
-					rankInfoNode.addAttr(std::make_pair(RankInfo::Attributes::Forced, StringUtils::to_string(rankInfo.getForced())));
+					rankInfoNode->addAttr(std::make_pair(RankInfo::Attributes::Forced, SSUtils::String::toString(rankInfo.getForced())));
 
 					for (const auto &rank : rankInfo.getRanks())
 					{
-						XMLUtils::XMLNode rankNode(RankInfo::RankTag);
-						rankNode.addAttr(std::make_pair(RankInfo::Attributes::Id, rank.first));
-						rankNode.setContent(rank.second);
-						rankInfoNode.addChild(std::move(rankNode));
+						std::shared_ptr<SSUtils::XML::Node> rankNode(SSUtils::XML::Node::generate(RankInfo::RankTag));
+						rankNode->addAttr(std::make_pair(RankInfo::Attributes::Id, rank.first));
+						rankNode->setContent(rank.second);
+						rankInfoNode->addChild(std::move(rankNode));
 					}
 
-					XMLUtils::XMLNode defaultRankNode(RankInfo::DefaultRankTag);
-					defaultRankNode.addAttr(std::make_pair(RankInfo::Attributes::DefaultRankType, RankInfo::DefaultRankTypes::Id));
-					defaultRankNode.setContent(rankInfo.getDefaultRank().first);
-					rankInfoNode.addChild(std::move(defaultRankNode));
+					std::shared_ptr<SSUtils::XML::Node> defaultRankNode(SSUtils::XML::Node::generate(RankInfo::DefaultRankTag));
+					defaultRankNode->addAttr(std::make_pair(RankInfo::Attributes::DefaultRankType, RankInfo::DefaultRankTypes::Id));
+					defaultRankNode->setContent(rankInfo.getDefaultRank().first);
+					rankInfoNode->addChild(std::move(defaultRankNode));
 				}
 
-				root.addChild(std::move(rankInfoNode));
+				root->addChild(std::move(rankInfoNode));
 			}
 
 			{
-				XMLUtils::XMLNode teamInfoNode(TeamInfo::Tag);
+				std::shared_ptr<SSUtils::XML::Node> teamInfoNode(SSUtils::XML::Node::generate(TeamInfo::Tag));
 				const auto &teamInfo(info->getTeamInfo());
 
 				for (const auto &team : teamInfo.getTeams())
 				{
-					XMLUtils::XMLNode teamNode(TeamInfo::TeamTag);
-					teamNode.addAttr(std::make_pair(TeamInfo::Attributes::Id, team.id));
-					teamNode.addAttr(std::make_pair(TeamInfo::Attributes::ShortName, team.shortName));
-					teamNode.setContent(team.name);
-					teamInfoNode.addChild(std::move(teamNode));
+					std::shared_ptr<SSUtils::XML::Node> teamNode(SSUtils::XML::Node::generate(TeamInfo::TeamTag));
+					teamNode->addAttr(std::make_pair(TeamInfo::Attributes::Id, team.id));
+					teamNode->addAttr(std::make_pair(TeamInfo::Attributes::ShortName, team.shortName));
+					teamNode->setContent(team.name);
+					teamInfoNode->addChild(std::move(teamNode));
 				}
 
-				root.addChild(std::move(teamInfoNode));
+				root->addChild(std::move(teamInfoNode));
 			}
 
 			{
-				XMLUtils::XMLNode publicScoreInfoNode(CompetitionInfo::PublicScoreInfoTag);
+				std::shared_ptr<SSUtils::XML::Node> publicScoreInfoNode(SSUtils::XML::Node::generate(CompetitionInfo::PublicScoreInfoTag));
 				const auto &publicScoreInfo(info->getPublicScoreInfo());
 
-				XMLUtils::XMLNode scoresNode(ScoreInfo::ScoresTag);
-				scoresNode.setContent(StringUtils::join(publicScoreInfo.getScores()));
-				publicScoreInfoNode.addChild(std::move(scoresNode));
+				std::shared_ptr<SSUtils::XML::Node> scoresNode(SSUtils::XML::Node::generate(ScoreInfo::ScoresTag));
+				scoresNode->setContent(SSUtils::String::join(publicScoreInfo.getScores()));
+				publicScoreInfoNode->addChild(std::move(scoresNode));
 
-				XMLUtils::XMLNode scoreRateNode(ScoreInfo::ScoreRateTag);
-				scoreRateNode.setContent(std::to_string(publicScoreInfo.getScoreRate()));
-				publicScoreInfoNode.addChild(std::move(scoreRateNode));
+				std::shared_ptr<SSUtils::XML::Node> scoreRateNode(SSUtils::XML::Node::generate(ScoreInfo::ScoreRateTag));
+				scoreRateNode->setContent(std::to_string(publicScoreInfo.getScoreRate()));
+				publicScoreInfoNode->addChild(std::move(scoreRateNode));
 
-				XMLUtils::XMLNode breakRecordRateNode(ScoreInfo::BreakRecordRateTag);
-				breakRecordRateNode.addAttr(std::make_pair(ScoreInfo::Attributes::Enabled, StringUtils::to_string(publicScoreInfo.getBreakRecordRateEnable())));
+				std::shared_ptr<SSUtils::XML::Node> breakRecordRateNode(SSUtils::XML::Node::generate(ScoreInfo::BreakRecordRateTag));
+				breakRecordRateNode->addAttr(std::make_pair(ScoreInfo::Attributes::Enabled, SSUtils::String::toString(publicScoreInfo.getBreakRecordRateEnable())));
 				if (publicScoreInfo.getBreakRecordRateEnable())
 				{
-					breakRecordRateNode.setContent(std::to_string(publicScoreInfo.getBreakRecordRate()));
+					breakRecordRateNode->setContent(std::to_string(publicScoreInfo.getBreakRecordRate()));
 				}
-				publicScoreInfoNode.addChild(breakRecordRateNode);
+				publicScoreInfoNode->addChild(breakRecordRateNode);
 
-				root.addChild(publicScoreInfoNode);
+				root->addChild(publicScoreInfoNode);
 			}
 
-			return XMLUtils::saveToFile(outUrl, root);
+			SSUtils::XML::Document doc;
+			doc.getRoots().push_back(root);
+			return doc.toFile(outUrl);
 		}
 
 		const std::shared_ptr<CompetitionInfo> readFromXML(const std::string & inUrl)

@@ -67,7 +67,7 @@ namespace SCAS
 			TypeInfo &operator=(TypeInfo &&rhs) = default;
 			~TypeInfo(void) = default;
 
-			inline static TypeDataType generate(const std::string &typeName) { return std::make_pair(DataUtils::toBase64String(DataUtils::fromArray(UUIDUtil::generateUUIDV1())), typeName); }
+			inline static TypeDataType generate(const std::string &typeName) { return std::make_pair(SSUtils::Data::toBase64String(SSUtils::Data::fromArray(SSUtils::UUID::generateUUIDV1())), typeName); }
 
 			inline std::vector<TypeDataType> &getTypes(void) { return m_types; }
 			inline const std::vector<TypeDataType> &getTypes(void) const { return m_types; }
@@ -118,7 +118,7 @@ namespace SCAS
 			inline const bool getForced(void) const { return m_forced; }
 			inline void setForced(const bool forced) { if (m_enabled) { m_forced = forced; } }
 
-			inline static RankDataType generate(const std::string &rankName) { return std::make_pair(DataUtils::toBase64String(DataUtils::fromArray(UUIDUtil::generateUUIDV1())), rankName); }
+			inline static RankDataType generate(const std::string &rankName) { return std::make_pair(SSUtils::Data::toBase64String(SSUtils::Data::fromArray(SSUtils::UUID::generateUUIDV1())), rankName); }
 
 			inline std::vector<RankDataType> &getRanks(void) { return m_ranks; }
 			inline const std::vector<RankDataType> &getRanks(void) const { return m_ranks; }
@@ -186,13 +186,13 @@ namespace SCAS
 			DateInfo &operator=(DateInfo &&rhs) = default;
 			~DateInfo(void) = default;
 
-			inline std::vector<DatetimeUtils::Date> &getDates(void) { return m_dates; }
-			inline const std::vector<DatetimeUtils::Date> &getDates(void) const { return m_dates; }
-			inline void setDates(const std::vector<DatetimeUtils::Date> &dates) { m_dates = dates; }
-			inline void setDates(std::vector<DatetimeUtils::Date> &dates) { m_dates = dates; }
+			inline std::vector<SSUtils::Datetime::Date> &getDates(void) { return m_dates; }
+			inline const std::vector<SSUtils::Datetime::Date> &getDates(void) const { return m_dates; }
+			inline void setDates(const std::vector<SSUtils::Datetime::Date> &dates) { m_dates = dates; }
+			inline void setDates(std::vector<SSUtils::Datetime::Date> &dates) { m_dates = dates; }
 
 		private:
-			std::vector<DatetimeUtils::Date> m_dates;
+			std::vector<SSUtils::Datetime::Date> m_dates;
 		};
 
 		class TeamInfo
@@ -231,7 +231,7 @@ namespace SCAS
 			TeamInfo &operator=(TeamInfo &&rhs) = default;
 			~TeamInfo(void) = default;
 
-			inline static Team generate(const std::string &shortName, const std::string &name) { return Team{ DataUtils::toBase64String(DataUtils::fromArray(UUIDUtil::generateUUIDV1())), shortName, name }; }
+			inline static Team generate(const std::string &shortName, const std::string &name) { return Team{ SSUtils::Data::toBase64String(SSUtils::Data::fromArray(SSUtils::UUID::generateUUIDV1())), shortName, name }; }
 
 			inline std::vector<Team> &getTeams(void) { return m_teams; }
 			inline const std::vector<Team> &getTeams(void) const { return m_teams; }
@@ -253,7 +253,7 @@ namespace SCAS
 			static const std::string PublicScoreInfoTag;
 
 		public:
-			CompetitionInfo(const std::string &id = DataUtils::toBase64String(DataUtils::fromArray(UUIDUtil::generateUUIDV1())));
+			CompetitionInfo(const std::string &id = SSUtils::Data::toBase64String(SSUtils::Data::fromArray(SSUtils::UUID::generateUUIDV1())));
 			CompetitionInfo(std::string &&id);
 			CompetitionInfo(const CompetitionInfo &ano) = default;
 			CompetitionInfo(CompetitionInfo &&ano) = default;
@@ -317,8 +317,8 @@ namespace SCAS
 			inline std::map<std::string, std::shared_ptr<EventInfo>> &getEventInfos(void) { return m_eventInfos; }
 			inline const std::map<std::string, std::shared_ptr<EventInfo>> &getEventInfos(void) const { return m_eventInfos; }
 
-			inline std::map<DatetimeUtils::Date, std::vector<std::shared_ptr<GameInfo>>> &getGameInfos(void) { m_gameInfos; }
-			inline const std::map<DatetimeUtils::Date, std::vector<std::shared_ptr<GameInfo>>> &getGameInfos(void) const { return m_gameInfos; }
+			inline std::map<SSUtils::Datetime::Date, std::vector<std::shared_ptr<GameInfo>>> &getGameInfos(void) { m_gameInfos; }
+			inline const std::map<SSUtils::Datetime::Date, std::vector<std::shared_ptr<GameInfo>>> &getGameInfos(void) const { return m_gameInfos; }
 
 		private:
 			const std::string m_id;
@@ -337,7 +337,7 @@ namespace SCAS
 			TeamInfo m_teamInfo;
 
 			std::map<std::string, std::shared_ptr<EventInfo>> m_eventInfos;
-			std::map<DatetimeUtils::Date, std::vector<std::shared_ptr<GameInfo>>> m_gameInfos;
+			std::map<SSUtils::Datetime::Date, std::vector<std::shared_ptr<GameInfo>>> m_gameInfos;
 		};
 	};
 };
