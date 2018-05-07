@@ -100,6 +100,7 @@ namespace SSUtils
 					m_denominator.assign(denominator);
 				}
 				value_type::assign(value_type(m_numerator, m_denominator));
+				refresh();
 			}
 			RationalWrapper(const char *numerator, const char *denominator)
 				: RationalWrapper(std::string(numerator), std::string(denominator))
@@ -107,7 +108,7 @@ namespace SSUtils
 
 			}
 			RationalWrapper(const Block &numerator, const Block &denominator)
-				: RationalWrapper(String::HexStringPrefix + Data::toHexString(numerator), String::HexStringPrefix + Data::toHexString(denominator))
+				: RationalWrapper(Data::toString(numerator), Data::toString(denominator))
 			{
 			}
 			template<typename T, typename U>
@@ -344,7 +345,7 @@ namespace SSUtils
 			template<>
 			self_type &assign<Block>(const Block &numerator, const Block &denominator)
 			{
-				assign(String::HexStringPrefix + Data::toHexString(numerator), String::HexStringPrefix + Data::toHexString(denominator));
+				assign(Data::toString(numerator), Data::toString(denominator));
 			}
 			template<bool Signed1, bool Signed2>
 			self_type &assign(const IntegerWrapper<Signed1> &numerator, const IntegerWrapper<Signed2> &denominator)

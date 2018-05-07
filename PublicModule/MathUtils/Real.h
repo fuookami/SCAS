@@ -326,6 +326,30 @@ namespace SSUtils
 				}
 			};
 
+			struct to_block_visitor : public boost::static_visitor<Block>
+			{
+				template<typename T>
+				Block operator()(const T &value) const
+				{
+					return value.toBlock();
+				}
+
+				Block operator()(const bool value) const
+				{
+					return Data::fromString(to_string_visitor()(value));
+				}
+
+				Block operator()(const TranscendentalValue value) const
+				{
+					return Data::fromString(to_string_visitor()(value));
+				}
+
+				Block operator()(const SpecialValue value) const
+				{
+					return Data::fromString(to_string_visitor()(value));
+				}
+			};
+
 			struct to_boolean_visitor : public boost::static_visitor<bool>
 			{
 				template<typename T>
@@ -1106,9 +1130,7 @@ namespace SSUtils
 			}
 			self_type &assign(const Block &block)
 			{
-				std::string str = Data::toString(block);
-				std::string temp = String::HexStringPrefix + Data::toHexString(block);
-				return assign(String::isHexInteger(temp) ? temp : str);
+				return assign(Data::toString(block));
 			}
 			self_type &assign(const TranscendentalValue value)
 			{
@@ -1321,9 +1343,7 @@ namespace SSUtils
 			}
 			Block toBlock(void) const
 			{
-				Type _type = type();
-				return _type == Type::Integer || _type == Type::UInteger
-					? Data::fromHexString(toString()) : Data::fromString(toString());
+				return visit<to_block_visitor>();
 			}
 
 			std::pair<bool, bool> toBoolean(void) const

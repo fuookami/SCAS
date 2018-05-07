@@ -45,7 +45,7 @@ namespace SSUtils
 			{
 			}
 			IntegerWrapper(const Block &block, const uint32 digits = 0)
-				: IntegerWrapper(String::HexStringPrefix + Data::toHexString(block), digits)
+				: IntegerWrapper(Data::toString(block), digits)
 			{
 			}
 
@@ -129,7 +129,7 @@ namespace SSUtils
 			template<>
 			self_type &assign<Block>(const Block &ano, const uint32 digits)
 			{
-				assign(String::HexStringPrefix + Data::toHexString(ano), digits);
+				assign(Data::toString(ano), digits);
 				return *this;
 			}
 			self_type &swap(value_type &ano)
@@ -183,7 +183,7 @@ namespace SSUtils
 			template<>
 			self_type &operator=<Block>(const Block &rhs)
 			{
-				operator=(String::HexStringPrefix + Data::toHexString(rhs));
+				operator=(Data::toString(rhs));
 				return *this;
 			}
 
@@ -226,7 +226,7 @@ namespace SSUtils
 			template<>
 			self_type &operator+=<Block>(const Block &rhs)
 			{
-				operator+=(String::HexStringPrefix + Data::toHexString(rhs));
+				operator+=(String::HexStringPrefix + Data::toString(rhs));
 				return *this;
 			}
 
@@ -268,7 +268,7 @@ namespace SSUtils
 			template<>
 			self_type &operator-=<Block>(const Block &rhs)
 			{
-				operator+=(String::HexStringPrefix + Data::toHexString(rhs));
+				operator+=(Data::toString(rhs));
 				return *this;
 			}
 
@@ -310,7 +310,7 @@ namespace SSUtils
 			template<>
 			self_type &operator*=<Block>(const Block &rhs)
 			{
-				operator*=(String::HexStringPrefix + Data::toHexString(rhs));
+				operator*=(Data::toString(rhs));
 				return *this;
 			}
 
@@ -352,7 +352,7 @@ namespace SSUtils
 			template<>
 			self_type &operator/=<Block>(const Block &rhs)
 			{
-				operator/=(String::HexStringPrefix + Data::toHexString(rhs));
+				operator/=(Data::toString(rhs));
 				return *this;
 			}
 
@@ -419,7 +419,7 @@ namespace SSUtils
 			template<>
 			self_type &operator%=<Block>(const Block &rhs)
 			{
-				operator%=(String::HexStringPrefix + Data::toHexString(rhs));
+				operator%=(Data::toString(rhs));
 				return *this;
 			}
 
@@ -461,7 +461,7 @@ namespace SSUtils
 			template<>
 			self_type &operator|=<Block>(const Block &rhs)
 			{
-				operator|=(String::HexStringPrefix + Data::toHexString(rhs));
+				operator|=(Data::toString(rhs));
 				return *this;
 			}
 
@@ -503,7 +503,7 @@ namespace SSUtils
 			template<>
 			self_type &operator^=<Block>(const Block &rhs)
 			{
-				operator^=(String::HexStringPrefix + Data::toHexString(rhs));
+				operator^=(Data::toString(rhs));
 				return *this;
 			}
 
@@ -545,7 +545,7 @@ namespace SSUtils
 			template<>
 			self_type &operator<<=<Block>(const Block &rhs)
 			{
-				operator<<=(String::HexStringPrefix + Data::toHexString(rhs));
+				operator<<=(Data::toString(rhs));
 				return *this;
 			}
 
@@ -587,7 +587,7 @@ namespace SSUtils
 			template<>
 			self_type &operator>>=<Block>(const Block &rhs)
 			{
-				operator>>=(String::HexStringPrefix + Data::toHexString(rhs));
+				operator>>=(Data::toString(rhs));
 				return *this;
 			}
 
@@ -606,8 +606,8 @@ namespace SSUtils
 			const value_type &value(void) const { return *this; }
 
 			// translators
-			std::string toString(const std::ios_base::fmtflags flags = std::ios_base::hex) const { return str(m_digits, flags); }
-			Block toBlock(void) const { return Data::fromHexString(toString(std::ios_base::hex)); }
+			std::string toString(const std::ios_base::fmtflags flags = 0) const { return str(m_digits, flags); }
+			Block toBlock(void) const { return Data::fromString(toString()); }
 
 			int8 toInt8(void) const { return convert_to<int8>(); }
 			uint8 toUInt8(void) const { return convert_to<uint8>(); }
