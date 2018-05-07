@@ -1,17 +1,18 @@
 #pragma once
 
-#include <vector>
+#include "MailUtils/MailSender.h"
+#include "StringUtils.h"
 #include <string>
 #include <utility>
-#include <jwsmtp/jwsmtp.h>
 
-namespace MailUtils
+namespace SSUtils
 {
-	std::pair<bool, std::string> sendMail(const std::string & senderMail, const std::string & senderPassword, const std::string & senderServer, const std::string & receiverMail, const std::string &title, const std::string &content);
-	std::pair<bool, std::string> sendMail(const std::string & senderMail, const std::string & senderPassword, const std::string & senderServer, const std::vector<std::string> & receiverMails, const std::string &title, const std::string &content);
+	namespace Mail
+	{
+		std::pair<bool, std::string> sendMail(const std::string & senderMail, const std::string & senderPassword, const std::string & senderServer, const std::string & receiverMail, const std::string &title, const std::string &content, const CharType charType = String::LocalCharType);
+		std::pair<bool, std::string> sendMail(const std::string & senderMail, const std::string & senderPassword, const std::string & senderServer, const std::vector<std::string> & receiverMails, const std::string &title, const std::string &content, const CharType charType = String::LocalCharType);
 
-	std::pair<bool, std::string> sendHTMLMail(const std::string & senderMail, const std::string & senderPassword, const std::string & senderServer, const std::string & receiverMail, const std::string &title, const std::string &content);
-	std::pair<bool, std::string> sendHTMLMail(const std::string & senderMail, const std::string & senderPassword, const std::string & senderServer, const std::vector<std::string> & receiverMails, const std::string &title, const std::string &content);
-
-	std::pair<bool, std::string> __sendMail(const std::string & senderMail, const std::string & senderPassword, jwsmtp::mailer &mail);
+		std::pair<bool, std::string> sendHTMLMail(const std::string & senderMail, const std::string & senderPassword, const std::string & senderServer, const std::string & receiverMail, const std::string &title, const std::string &content, const CharType charType = String::LocalCharType);
+		std::pair<bool, std::string> sendHTMLMail(const std::string & senderMail, const std::string & senderPassword, const std::string & senderServer, const std::vector<std::string> & receiverMails, const std::string &title, const std::string &content, const CharType charType = String::LocalCharType);
+	};
 };

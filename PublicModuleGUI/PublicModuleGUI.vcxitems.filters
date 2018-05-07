@@ -12,10 +12,16 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)QWebEngineWidget.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)DraggableFlatteningDialog.h">
+    <ClInclude Include="$(MSBuildThisFileDirectory)QDraggableFlatteningDialog.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)DraggableFlatteningWidget.h">
+    <ClInclude Include="$(MSBuildThisFileDirectory)QDraggableFlatteningWidget.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)QMessageBoxUtils.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)IWebEngineDialogWidget.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
@@ -23,10 +29,10 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)QWebEngineWidget.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)DraggableFlatteningDialog.cpp">
+    <ClCompile Include="$(MSBuildThisFileDirectory)QMessageBoxUtils.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)DraggableFlatteningWidget.cpp">
+    <ClCompile Include="$(MSBuildThisFileDirectory)IWebEngineDialogWidget.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

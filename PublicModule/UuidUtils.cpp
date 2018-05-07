@@ -11,34 +11,37 @@
 
 #include "RandomUtils.h"
 
-namespace UUIDUtil
+namespace SSUtils
 {
-	std::array<byte, UUIDLength> generateUUIDV1(void)
+	namespace UUID
 	{
-		std::array<byte, UUIDLength> ret;
-		GUID uuid;
+		std::array<byte, UUIDLength> generateUUIDV1(void)
+		{
+			std::array<byte, UUIDLength> ret;
+			GUID uuid;
 
 #ifdef _WIN32
-		CoCreateGuid(&uuid);
+			CoCreateGuid(&uuid);
 #else
-		uuid_generate(reinterpret_cast<byte *>(&guid));
+			uuid_generate(reinterpret_cast<byte *>(&guid));
 #endif
-		std::copy(reinterpret_cast<const byte *>(&uuid), reinterpret_cast<const byte *>(&uuid) + UUIDLength, ret.begin());
+			std::copy(reinterpret_cast<const byte *>(&uuid), reinterpret_cast<const byte *>(&uuid) + UUIDLength, ret.begin());
 
-		return ret;
-	}
+			return ret;
+		}
 
-	std::array<byte, UUIDLength> generateUUIDV4(void)
-	{
-		using namespace boost::uuids;
+		std::array<byte, UUIDLength> generateUUIDV4(void)
+		{
+			using namespace boost::uuids;
 
-		static std::mt19937_64 randomGen(RandomUtils::generateNewRandomGenerator_64());
-		static basic_random_generator<std::mt19937_64> uuidGen(randomGen);
+			static auto randomGen(Random::generateNewRandomGenerator_64<int32>());
+			static basic_random_generator<decltype(randomGen)> uuidGen(randomGen);
 
-		uuid u(uuidGen());
-		std::array<byte, UUIDLength> ret;
-		std::copy(u.begin(), u.end(), ret.begin());
+			uuid u(uuidGen());
+			std::array<byte, UUIDLength> ret;
+			std::copy(u.begin(), u.end(), ret.begin());
 
-		return ret;
-	}
+			return ret;
+		}
+	};
 };

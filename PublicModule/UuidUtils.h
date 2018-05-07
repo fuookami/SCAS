@@ -1,12 +1,15 @@
 #pragma once
 
+#include "Global.h"
 #include <array>
 
-namespace UUIDUtil
+namespace SSUtils
 {
-	using byte = unsigned char;
 	static const unsigned char UUIDLength = 16;
 
-	std::array<byte, UUIDLength> generateUUIDV1(void);
-	std::array<byte, UUIDLength> generateUUIDV4(void);
+	namespace UUID
+	{
+		std::array<byte, UUIDLength> generateUUIDV1(void);
+		std::array<byte, UUIDLength> generateUUIDV4(void);
+	};
 };

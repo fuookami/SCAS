@@ -1,11 +1,13 @@
 ﻿#pragma once
 
+#include "Global.h"
 #include <string>
-#include <vector>
 
-namespace ChineseNumberUtils
+namespace SSUtils
 {
-	extern const std::vector<std::string> SingleDigitChineseNumber;
-
-	std::string getChineseNumberUnderHundred(const unsigned char number);
+	namespace ChineseNumber
+	{
+		std::wstring toChineseNumber(uint32 num);
+		uint32 fromChineseNumber(const std::wstring &str);
+	};
 };

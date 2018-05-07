@@ -14,13 +14,15 @@
     <ProjectCapability Include="SourceItemsFromImports" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="$(MSBuildThisFileDirectory)DraggableFlatteningDialog.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)DraggableFlatteningWidget.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)IWebEngineDialogWidget.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)QDraggableFlatteningDialog.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)QDraggableFlatteningWidget.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)QMessageBoxUtils.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)QWebEngineWidget.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="$(MSBuildThisFileDirectory)DraggableFlatteningDialog.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)DraggableFlatteningWidget.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)IWebEngineDialogWidget.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)QMessageBoxUtils.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)QWebEngineWidget.cpp" />
   </ItemGroup>
 </Project>

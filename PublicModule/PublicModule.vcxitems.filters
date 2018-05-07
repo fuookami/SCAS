@@ -9,69 +9,357 @@
       <UniqueIdentifier>{42260899-baec-47f8-b427-ca87a52aae23}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
+    <Filter Include="头文件\SystemUtils">
+      <UniqueIdentifier>{9fbf2fb6-59f6-4647-bcc1-60654270b556}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\SystemUtils">
+      <UniqueIdentifier>{bc0115d9-6def-4a82-9a18-eb281db3b2b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\EncryptionUtils">
+      <UniqueIdentifier>{2896bb55-8537-4449-9fdc-9d2a2b7c825a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\EncryptionUtils">
+      <UniqueIdentifier>{54d4b9d3-c530-40e6-95b0-bf6f905549d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\ChineseNumberUtils">
+      <UniqueIdentifier>{0927cae7-f863-4ba7-81ec-5e1af81bce83}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\ChineseNumberUtils">
+      <UniqueIdentifier>{2061dffd-49aa-4323-9e65-7173326e20b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\DataUtils">
+      <UniqueIdentifier>{90bdefec-4a3f-4da9-9057-b86d9a039cc4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\DataUtils">
+      <UniqueIdentifier>{f3e53788-af05-4dec-b280-f9a471af74b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\DatetimeUtils">
+      <UniqueIdentifier>{d31c4214-e1d6-41ee-8ed6-f675902e1b1e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\DatetimeUtils">
+      <UniqueIdentifier>{b5e11a6b-5851-48fc-b882-2dd63a900801}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\MailUtils">
+      <UniqueIdentifier>{040bde88-daed-4e01-ac4e-bec57498c524}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\MailUtils">
+      <UniqueIdentifier>{9bb1d4ee-0063-4904-9e94-d90bec60ee26}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\XMLUtils">
+      <UniqueIdentifier>{ed7502fc-e53e-4943-81d1-33d2a835bc0e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\XMLUtils">
+      <UniqueIdentifier>{61ff013e-c49f-4c15-8a20-cf2ee307fb8a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\ThreadUtils">
+      <UniqueIdentifier>{0a0130f6-3c60-4339-89ca-c58c16949358}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\ThreadUtils">
+      <UniqueIdentifier>{cb016fa6-09a7-4b97-a5fe-8a0ff062e734}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\FunctionUtils">
+      <UniqueIdentifier>{cedba0ba-c26d-4b08-bd37-823cf78eefdf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\FunctionUtils">
+      <UniqueIdentifier>{94b894e0-c4b6-40d6-9962-a793860a7594}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\MathUtils">
+      <UniqueIdentifier>{93a17e02-1f2a-4bc8-aec4-f14c03dcb2c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\MathUtils">
+      <UniqueIdentifier>{a878a395-9950-46d0-9ac5-761911dac0ca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\StringUtils">
+      <UniqueIdentifier>{21567405-375d-44fb-8d8c-388a7b2978c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\StringUtils">
+      <UniqueIdentifier>{49e41ecb-15a0-4d87-9618-42c6b66c7c4e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="$(MSBuildThisFileDirectory)ChineseNumberUtils.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)DataUtils.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)EndianUtils.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)FileUtils.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)NumberVariant.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)RandomUtils.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)StringConvertUtils.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)UuidUtils.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)XMLUtils.h">
+    <ClInclude Include="$(MSBuildThisFileDirectory)SystemUtils\_pri_cpu_id.h">
+      <Filter>头文件\SystemUtils</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)SystemUtils.h">
+      <Filter>头文件\SystemUtils</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)EncryptionUtils.h">
+      <Filter>头文件\EncryptionUtils</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)ChineseNumberUtils.h">
+      <Filter>头文件\ChineseNumberUtils</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)ChineseNumberUntils\_pri_chinese_number.h">
+      <Filter>头文件\ChineseNumberUtils</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Global.h">
       <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)EncryptionUtils\RSA.h">
+      <Filter>头文件\EncryptionUtils</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)DataUtils.h">
+      <Filter>头文件\DataUtils</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)SystemUtils\EndianTranslator.h">
+      <Filter>头文件\SystemUtils</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)DataUtils\_pri_data.h">
+      <Filter>头文件\DataUtils</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)FileUtils.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)EncryptionUtils\_pri_encryption_global.h">
+      <Filter>头文件\EncryptionUtils</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)SystemUtils\_pri_system_global.h">
+      <Filter>头文件\SystemUtils</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)StringUtils.h">
+      <Filter>头文件\StringUtils</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)StringUtils\_pri_string_global.h">
+      <Filter>头文件\StringUtils</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)DatetimeUtils\_pri_datetime_global.h">
+      <Filter>头文件\DatetimeUtils</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)DatetimeUtils\Date.h">
+      <Filter>头文件\DatetimeUtils</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)DatetimeUtils\Time.h">
+      <Filter>头文件\DatetimeUtils</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)DatetimeUtils\Datetime.h">
+      <Filter>头文件\DatetimeUtils</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)DateTimeUtils.h">
+      <Filter>头文件\DatetimeUtils</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)StringUtils\_pri_string_convert.h">
+      <Filter>头文件\StringUtils</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)StringUtils\StringTranslator.h">
+      <Filter>头文件\StringUtils</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)StringUtils\StringRegexChecker.h">
+      <Filter>头文件\StringUtils</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)StringUtils\StringConverter.h">
+      <Filter>头文件\StringUtils</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)MailUtils\_pri_mail.h">
+      <Filter>头文件\MailUtils</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)MailUtils\MailSender.h">
+      <Filter>头文件\MailUtils</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)MailUtils.h">
+      <Filter>头文件\MailUtils</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)MailUtils\_pri_mail_global.h">
+      <Filter>头文件\MailUtils</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)XMLUtils\XMLDocument.h">
+      <Filter>头文件\XMLUtils</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)XMLUtils\XMLLoader.h">
+      <Filter>头文件\XMLUtils</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)XMLUtils\XMLNode.h">
+      <Filter>头文件\XMLUtils</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)XMLUtils\XMLSaver.h">
+      <Filter>头文件\XMLUtils</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)XMLUtils.h">
+      <Filter>头文件\XMLUtils</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)XMLUtils\_pri_xml_saver.h">
+      <Filter>头文件\XMLUtils</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)XMLUtils\_pri_xml_loader.h">
+      <Filter>头文件\XMLUtils</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)XMLUtils\_pri_xml_global.h">
+      <Filter>头文件\XMLUtils</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)ThreadUtils.h">
+      <Filter>头文件\ThreadUtils</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)ThreadUtils\ThreadPool.h">
+      <Filter>头文件\ThreadUtils</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)ThreadUtils\_pri_thread_global.h">
+      <Filter>头文件\ThreadUtils</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)FunctionUtils.h">
+      <Filter>头文件\FunctionUtils</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)FunctionUtils\Task.h">
+      <Filter>头文件\FunctionUtils</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)DataUtils\DataTranslator.h">
+      <Filter>头文件\DataUtils</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)MathUtils.h">
+      <Filter>头文件\MathUtils</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)MathUtils\_pri_math_global.h">
+      <Filter>头文件\MathUtils</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)MathUtils\Decimal.h">
+      <Filter>头文件\MathUtils</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)MathUtils\Integer.h">
+      <Filter>头文件\MathUtils</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)MathUtils\Power.h">
+      <Filter>头文件\MathUtils</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)MathUtils\Rational.h">
+      <Filter>头文件\MathUtils</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)MathUtils\Logarithm.h">
+      <Filter>头文件\MathUtils</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)MathUtils\Real.h">
+      <Filter>头文件\MathUtils</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)MathUtils\_pri_real_global.h">
+      <Filter>头文件\MathUtils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="$(MSBuildThisFileDirectory)ChineseNumberUtils.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)DataUtils.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)DateTimeUtils.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)EndianUtils.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)FileUtils.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)NumberVariant.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)RandomUtils.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)StringConvertUtils.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)StringUtils.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)UuidUtils.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)XMLUtils.cpp">
+    <ClCompile Include="$(MSBuildThisFileDirectory)SystemUtils.cpp">
+      <Filter>源文件\SystemUtils</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)SystemUtils\_pri_cpu_id.cpp">
+      <Filter>源文件\SystemUtils</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)ChineseNumberUtils.cpp">
+      <Filter>源文件\ChineseNumberUtils</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)ChineseNumberUntils\_pri_chinese_number.cpp">
+      <Filter>源文件\ChineseNumberUtils</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)EncryptionUtils\RSA.cpp">
+      <Filter>源文件\EncryptionUtils</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)DataUtils.cpp">
+      <Filter>源文件\DataUtils</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)SystemUtils\EndianTranslator.cpp">
+      <Filter>源文件\SystemUtils</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)FileUtils.cpp">
       <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)EncryptionUtils\_pri_encryption_global.cpp">
+      <Filter>源文件\EncryptionUtils</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)SystemUtils\_pri_system_global.cpp">
+      <Filter>源文件\SystemUtils</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)StringUtils.cpp">
+      <Filter>源文件\StringUtils</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)DatetimeUtils\_pri_datetime_global.cpp">
+      <Filter>源文件\DatetimeUtils</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)DateTimeUtils.cpp">
+      <Filter>源文件\DatetimeUtils</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)DatetimeUtils\Time.cpp">
+      <Filter>源文件\DatetimeUtils</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)DatetimeUtils\Datetime.cpp">
+      <Filter>源文件\DatetimeUtils</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)DatetimeUtils\Date.cpp">
+      <Filter>源文件\DatetimeUtils</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)StringUtils\_pri_string_global.cpp">
+      <Filter>源文件\StringUtils</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)StringUtils\StringConverter.cpp">
+      <Filter>源文件\StringUtils</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)StringUtils\_pri_string_convert.cpp">
+      <Filter>源文件\StringUtils</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)StringUtils\StringTranslator.cpp">
+      <Filter>源文件\StringUtils</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)StringUtils\StringRegexChecker.cpp">
+      <Filter>源文件\StringUtils</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)MailUtils\_pri_mail.cpp">
+      <Filter>源文件\MailUtils</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)MailUtils\MailSender.cpp">
+      <Filter>源文件\MailUtils</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)MailUtils.cpp">
+      <Filter>源文件\MailUtils</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)XMLUtils\_pri_xml_global.cpp">
+      <Filter>源文件\XMLUtils</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)XMLUtils\_pri_xml_saver.cpp">
+      <Filter>源文件\XMLUtils</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)XMLUtils\_pri_xml_loader.cpp">
+      <Filter>源文件\XMLUtils</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)XMLUtils\XMLDocument.cpp">
+      <Filter>源文件\XMLUtils</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)XMLUtils\XMLLoader.cpp">
+      <Filter>源文件\XMLUtils</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)XMLUtils\XMLNode.cpp">
+      <Filter>源文件\XMLUtils</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)XMLUtils\XMLSaver.cpp">
+      <Filter>源文件\XMLUtils</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)ThreadUtils.cpp">
+      <Filter>源文件\ThreadUtils</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)ThreadUtils\ThreadPool.cpp">
+      <Filter>源文件\ThreadUtils</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)FunctionUtils\Task.cpp">
+      <Filter>源文件\FunctionUtils</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)DataUtils\DataTranslator.cpp">
+      <Filter>源文件\DataUtils</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)MathUtils.cpp">
+      <Filter>源文件\MathUtils</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)MathUtils\_pri_math_global.cpp">
+      <Filter>源文件\MathUtils</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Global.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)MathUtils\Rational.cpp">
+      <Filter>源文件\MathUtils</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
