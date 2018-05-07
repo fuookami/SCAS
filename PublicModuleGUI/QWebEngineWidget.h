@@ -32,31 +32,31 @@ namespace SSUtils
 				return obj;
 			}
 
-			template <typename T, typename std::enable_if_t<std::is_base_of<QObject, T>>>
-			inline T *registerObject(T *obj)
+			template <typename T>
+			inline typename std::enable_if_t<std::is_base_of_v<QObject, T>, T> *registerObject(T *obj)
 			{
 				QString typeName(typeid(T).name());
 				registerObject(typeName.right(typeName.size() - typeName.lastIndexOf("::") - 2), reinterpret_cast<QObject *>(obj));
 				return obj;
 			}
 
-			template <typename T, typename std::enable_if_t<std::is_base_of<QObject, T>>>
-			inline std::shared_ptr<T> registerObject(std::shared_ptr<T> &obj)
+			template <typename T>
+			inline typename std::enable_if_t<std::is_base_of_v<QObject, T>, typename std::shared_ptr<T>> registerObject(std::shared_ptr<T> &obj)
 			{
 				registerObject(obj.get());
 				return obj;
 			}
 
-			template <typename T, typename... Args, typename std::enable_if_t<std::is_base_of<QObject, T>>>
-			inline std::shared_ptr<T> registerObject(const QString &name, Args&&... args)
+			template <typename T, typename... Args>
+			inline typename std::enable_if_t<std::is_base_of_v<QObject, T>, typename std::shared_ptr<T>> registerObject(const QString &name, Args&&... args)
 			{
 				std::shared_ptr<T> obj(std::make_shared<T>(std::forward<Args>(args)...));
 				registerObject(obj.get());
 				return obj;
 			}
 
-			template <typename T, typename ...Args, typename std::enable_if_t<std::is_base_of<QObject, T>>>
-			inline std::shared_ptr<T> registerObject(Args&&... args)
+			template <typename T, typename ...Args>
+			inline typename std::enable_if_t<std::is_base_of_v<QObject, T>, typename std::shared_ptr<T>> registerObject(Args&&... args)
 			{
 				std::shared_ptr<T> obj(std::make_shared<T>(std::forward<Args>(args)...));
 				registerObject(obj.get());
@@ -68,7 +68,7 @@ namespace SSUtils
 
 		protected:
 			QWebEngineView * m_view;
-			QWebChannel *m_channal;
+			QWebChannel * m_channal;
 		};
 	};
 };
