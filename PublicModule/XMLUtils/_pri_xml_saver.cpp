@@ -63,9 +63,8 @@ namespace SSUtils
 
 			if (node->hasAnyChild())
 			{
-				for (const auto &childNode : node->getChildren())
+				for (const auto child : node->getChildren())
 				{
-					auto child(childNode.lock());
 					if (child != nullptr)
 					{
 						ret.second.push_back(saveToPTreeNode(child));
