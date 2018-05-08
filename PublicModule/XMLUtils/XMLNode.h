@@ -69,17 +69,48 @@ namespace SSUtils
 
 		public:
 			void addChild(const std::weak_ptr<Node> child);
+
 			void removeChild(const std::weak_ptr<Node> child);
-			template<typename fun_t>
-			void removeChildren(const fun_t fun);
+			template<typename fun_t, typename U = std::enable_if_t<std::is_function_v<fun_t>>>
+			void removeChildren(const fun_t fun)
+			{
+				std::remove_if(m_children.cbegin(), m_children.cend(), [fun](const std::weak_ptr<Node> child)
+				{
+					auto sp_child(child.lock());
+					return sp_child == nullptr ? true : fun(*sp_child);
+				});
+			}
+
 			void clearChild(void);
+
 			const bool hasChild(const std::string &tag) const;
-			template<typename fun_t>
-			const bool hasChild(const fun_t fun);
+			template<typename fun_t, typename U = std::enable_if_t<std::is_function_v<fun_t>>>
+			const bool hasChild(const fun_t fun) const
+			{
+				auto it(std::find_if(m_children.cbegin(), m_children.cend(), [fun](const std::weak_ptr<Node> child)
+				{
+					auto sp_child(child.lock());
+					return sp_child == nullptr ? false : fun(*sp_child);
+				}));
+				return it != m_children.cend();
+			}
 			const bool hasAnyChild(void) const;
+
 			const int findChild(const std::string &tag, const int pos = 0) const;
-			template<typename fun_t>
-			const int findChild(const fun_t fun, const int pos = 0) const;
+			template<typename fun_t, typename U = std::enable_if_t<std::is_function_v<fun_t>>>
+			const int findChild(const fun_t fun, const int pos = 0) const
+			{
+				for (int i(pos), j(m_children.size()); i != j; ++i)
+				{
+					auto child(m_children[i].lock());
+					if (child != nullptr && fun(*child))
+					{
+						return i;
+					}
+				}
+				return npos;
+			}
+
 			const std::vector<std::weak_ptr<Node>> &getChildren(void) const;
 			std::vector<std::weak_ptr<Node>> &getChildren(void);
 
@@ -97,40 +128,5 @@ namespace SSUtils
 			std::weak_ptr<Node> m_parent;
 			std::vector<std::weak_ptr<Node>> m_children;
 		};
-
-		template<typename fun_t>
-		void Node::removeChildren(const fun_t fun)
-		{
-			std::remove_if(m_children.cbegin(), m_children.cend(), [fun](const std::weak_ptr<Node> child)
-			{
-				auto sp_child(child.lock());
-				return sp_child == nullptr ? true : fun(*sp_child);
-			});
-		}
-
-		template<typename fun_t>
-		const bool Node::hasChild(const fun_t fun)
-		{
-			auto it(std::find_if(m_children.cbegin(), m_children.cend(), [fun](const std::weak_ptr<Node> child)
-			{
-				auto sp_child(child.lock());
-				return sp_child == nullptr ? false : fun(*sp_child);
-			}));
-			return it != m_children.cend();
-		}
-
-		template<typename fun_t>
-		const int Node::findChild(const fun_t fun, const int pos) const
-		{
-			for (int i(pos), j(m_children.size()); i != j; ++i)
-			{
-				auto child(m_children[i].lock());
-				if (child != nullptr && fun(*child))
-				{
-					return i;
-				}
-			}
-			return npos;
-		}
 	};
 };

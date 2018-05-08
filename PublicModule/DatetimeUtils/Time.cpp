@@ -262,8 +262,8 @@ namespace SSUtils
 
 			std::ostringstream timeSout;
 			timeSout << std::setfill('0') << hour() << Seperator
-				<< std::setw(2) << static_cast<uint8>(minute()) << Seperator
-				<< std::setw(2) << static_cast<uint8>(second());
+				<< std::setw(2) << static_cast<uint16>(minute()) << Seperator
+				<< std::setw(2) << static_cast<uint16>(second());
 			if (precision() == Precision::MilliSecond || precision() == Precision::MicroSecond)
 			{
 				timeSout << FractionSeperator << std::setfill('0') << std::setw(3) << millisecond();
@@ -479,6 +479,64 @@ namespace SSUtils
 			return hour() / HoursPerDay;
 		}
 
+		TimeDuration TimeDuration::fromString(const std::string & str)
+		{
+			static const std::string Tokens(":.");
+			auto numbers(String::split(str, Tokens));
+
+			if (numbers.size() != 3 || numbers.size() != 4 ||
+				std::find_if(numbers.cbegin(), numbers.cend(), [](const std::string &str)
+			{
+				return !String::isInteger(str);
+			}) != numbers.cend())
+			{
+				return TimeDuration();
+			}
+
+			TimeDuration ret(std::stoi(numbers[0]) * SecondsPerHour + std::stoi(numbers[1]) * SecondsPerMinute + std::stoi(numbers[2]));
+			if (numbers.size() == 4)
+			{
+				if (numbers[3].size() > 3)
+				{
+					for (uint32 i(0), j(FractionSecondDigits - static_cast<uint32>(numbers[3].size())); i != j; ++i)
+					{
+						numbers[3].push_back('0');
+					}
+				}
+				uint32 fraction(std::stoul(numbers[3]));
+				if (fraction > 1000)
+				{
+					ret.m_millisecond = fraction / MicrosecondsPerMillisecond;
+					ret.m_microsecond = Math::mod(fraction, MicrosecondsPerMillisecond);
+					ret.m_precision = Precision::MicroSecond;
+				}
+				else
+				{
+					ret.m_millisecond = fraction;
+					ret.m_precision = Precision::MilliSecond;
+				}
+			}
+			return ret;
+		}
+
+		std::string TimeDuration::toString(void) const
+		{
+			static const std::string Seperator(":");
+			static const std::string FractionSeperator(".");
+
+			std::ostringstream timeSout;
+			timeSout << hour() << Seperator << minute() << Seperator << second();
+			if (precision() == Precision::MilliSecond || precision() == Precision::MicroSecond)
+			{
+				timeSout << FractionSeperator << millisecond();
+			}
+			if (precision() == Precision::MicroSecond)
+			{
+				timeSout << microsecond();
+			}
+			return timeSout.str();
+		}
+
 		void TimeDuration::tidy(void)
 		{
 			m_precision = m_microsecond != 0 ? Precision::MicroSecond
@@ -619,5 +677,11 @@ const SSUtils::Datetime::TimeDuration operator-(const SSUtils::Datetime::TimeDur
 std::ostream & operator<<(std::ostream & os, const SSUtils::Datetime::Time & time)
 {
 	os << time.toString();
+	return os;
+}
+
+std::ostream & operator<<(std::ostream & os, const SSUtils::Datetime::TimeDuration & timeDuration)
+{
+	os << timeDuration.toString();
 	return os;
 }

@@ -109,6 +109,9 @@ namespace SSUtils
 			void setPrecision(const Precision precision);
 			const int32 fractionsecond(void) const;
 
+			static DatetimeDuration fromString(const std::string &str);
+			std::string toString(void) const;
+
 			void tidy(void);
 
 		private:
@@ -148,3 +151,4 @@ const SSUtils::Datetime::DatetimeDuration operator+(const SSUtils::Datetime::Dat
 const SSUtils::Datetime::DatetimeDuration operator-(const SSUtils::Datetime::DatetimeDuration &lhs, const SSUtils::Datetime::DatetimeDuration &rhs);
 
 std::ostream &operator<<(std::ostream &os, const SSUtils::Datetime::Datetime &datetime);
+std::ostream &operator<<(std::ostream &os, const SSUtils::Datetime::DatetimeDuration &datetimeDuration);

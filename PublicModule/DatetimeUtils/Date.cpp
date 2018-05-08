@@ -10,6 +10,7 @@ namespace SSUtils
 	namespace Datetime
 	{
 		const Date Date::EmptyDate;
+		const DateDuration DateDuration::EmptyDateDuration;
 
 		Date::Date(void)
 			: Date(static_cast<int16>(0), static_cast<uint8>(0), static_cast<uint8>(0))
@@ -214,9 +215,36 @@ namespace SSUtils
 			return m_day; 
 		}
 
-			void DateDuration::setDay(const int32 day)
+		void DateDuration::setDay(const int32 day)
 		{ 
 			m_day = day; 
+		}
+
+		DateDuration DateDuration::fromString(const std::string & str)
+		{
+			static const std::string Tokens("-");
+			const auto numbers(String::split(str, Tokens));
+
+			if (numbers.size() != 3 ||
+				std::find_if(numbers.cbegin(), numbers.cend(), [](const std::string &str)
+			{
+				return !String::isInteger(str);
+			}) != numbers.cend())
+			{
+				return EmptyDateDuration;
+			}
+
+			return DateDuration(std::stoi(numbers[0]), std::stoul(numbers[1]), std::stoul(numbers[2]));
+		}
+
+		std::string DateDuration::toString(void) const
+		{
+			static const std::string Seperator("-");
+
+			std::ostringstream dataSout;
+			dataSout << year() << Seperator << month() << Seperator << day() << std::setfill(' ');
+
+			return dataSout.str();
 		}
 
 		Date getLocalDate(void)
@@ -395,5 +423,11 @@ const SSUtils::Datetime::DateDuration operator-(const SSUtils::Datetime::DateDur
 std::ostream & operator<<(std::ostream & os, const SSUtils::Datetime::Date & date)
 {
 	os << date.toString();
+	return os;
+}
+
+std::ostream & operator<<(std::ostream & os, const SSUtils::Datetime::DateDuration & dateDuration)
+{
+	os << dateDuration.toString();
 	return os;
 }

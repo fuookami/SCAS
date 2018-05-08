@@ -50,6 +50,8 @@ namespace SSUtils
 		class DateDuration
 		{
 		public:
+			static const DateDuration EmptyDateDuration;
+
 			DateDuration(void);
 			DateDuration(const int32 day);
 			DateDuration(const int32 month, const int32 day);
@@ -72,6 +74,9 @@ namespace SSUtils
 			void setMonth(const int32 month);
 			int32 day(void) const;
 			void setDay(const int32 day);
+
+			static DateDuration fromString(const std::string &str);
+			std::string toString(void) const;
 
 		private:
 			int32 m_year;
@@ -116,3 +121,4 @@ const SSUtils::Datetime::DateDuration operator+(const SSUtils::Datetime::DateDur
 const SSUtils::Datetime::DateDuration operator-(const SSUtils::Datetime::DateDuration &lhs, const SSUtils::Datetime::DateDuration &rhs);
 
 std::ostream &operator<<(std::ostream &os, const SSUtils::Datetime::Date &date);
+std::ostream &operator<<(std::ostream &os, const SSUtils::Datetime::DateDuration &dateDuration);

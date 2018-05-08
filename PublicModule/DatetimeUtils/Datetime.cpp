@@ -431,7 +431,41 @@ namespace SSUtils
 			return (millisecond() * MicrosecondsPerMillisecond + microsecond()) * MicrosecondPerFractionSecond;
 		}
 
-			void DatetimeDuration::tidy(void)
+		DatetimeDuration DatetimeDuration::fromString(const std::string & str)
+		{
+			static const std::string Tokens(" ");
+			const auto parts(String::split(str, Tokens));
+
+			if (parts.size() != 2)
+			{
+				return DatetimeDuration();
+			}
+			else
+			{
+				return DatetimeDuration(DateDuration::fromString(parts[0]), TimeDuration::fromString(parts[1]));
+			}
+		}
+
+		std::string DatetimeDuration::toString(void) const
+		{
+			static const std::string Seperator(":");
+			static const std::string FractionSeperator(".");
+
+			std::ostringstream datatimeSout;
+			datatimeSout << DateDuration::toString()
+				<< hour() << Seperator << minute() << Seperator << second();
+			if (precision() == Precision::MilliSecond || precision() == Precision::MicroSecond)
+			{
+				datatimeSout << FractionSeperator << millisecond();
+			}
+			if (precision() == Precision::MicroSecond)
+			{
+				datatimeSout << microsecond();
+			}
+			return datatimeSout.str();
+		}
+
+		void DatetimeDuration::tidy(void)
 		{
 			m_precision = m_microsecond != 0 ? Precision::MicroSecond
 				: m_millisecond != 0 ? Precision::MilliSecond : Precision::Second;
@@ -636,5 +670,11 @@ const SSUtils::Datetime::DatetimeDuration operator-(const SSUtils::Datetime::Dat
 std::ostream & operator<<(std::ostream & os, const SSUtils::Datetime::Datetime & datetime)
 {
 	os << datetime.toString();
+	return os;
+}
+
+std::ostream & operator<<(std::ostream & os, const SSUtils::Datetime::DatetimeDuration & datetimeDuration)
+{
+	os << datetimeDuration.toString();
 	return os;
 }

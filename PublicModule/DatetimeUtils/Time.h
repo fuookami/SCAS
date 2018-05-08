@@ -114,6 +114,9 @@ namespace SSUtils
 			const int32 totalHours(void) const;
 			const int32 totalDays(void) const;
 
+			static TimeDuration fromString(const std::string &str);;
+			std::string toString(void) const;
+
 			void tidy(void);
 
 		private:
@@ -153,3 +156,4 @@ const SSUtils::Datetime::TimeDuration operator+(const SSUtils::Datetime::TimeDur
 const SSUtils::Datetime::TimeDuration operator-(const SSUtils::Datetime::TimeDuration &lhs, const SSUtils::Datetime::TimeDuration &rhs);
 
 std::ostream &operator<<(std::ostream &os, const SSUtils::Datetime::Time &time);
+std::ostream &operator<<(std::ostream &os, const SSUtils::Datetime::TimeDuration &timeDuration);
