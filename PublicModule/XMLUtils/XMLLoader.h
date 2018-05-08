@@ -29,7 +29,7 @@ namespace SSUtils
 			const bool isOpened(void) const;
 			std::shared_ptr<std::reference_wrapper<const boost::property_tree::ptree>> open(void);
 			std::shared_ptr<std::reference_wrapper<const boost::property_tree::ptree>> open(const std::string &_url);
-			std::vector<std::shared_ptr<Node>> operator()();
+			std::vector<std::shared_ptr<Node>> operator()(void);
 			std::vector<std::shared_ptr<Node>> operator()(const boost::property_tree::ptree &_pt, const CharType _charType = String::LocalCharType);
 		};
 

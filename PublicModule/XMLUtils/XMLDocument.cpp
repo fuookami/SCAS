@@ -12,9 +12,20 @@ namespace SSUtils
 			setRoots(ano.m_roots);
 		}
 
+		Document::Document(Document && ano)
+		{
+			setRoots(std::move(ano.m_roots));
+		}
+
 		Document & Document::operator=(const Document & rhs)
 		{
 			setRoots(rhs.m_roots);
+			return *this;
+		}
+
+		Document &Document::operator=(Document &&rhs)
+		{
+			setRoots(std::move(rhs.m_roots));
 			return *this;
 		}
 

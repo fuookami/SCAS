@@ -193,12 +193,12 @@ namespace SSUtils
 			auto ori_parent(m_parent.lock());
 			if (ori_parent != nullptr)
 			{
-				ori_parent->removeChild(m_self);
+				ori_parent->removeChild(m_self.lock());
 			}
 			auto new_parent(parent.lock());
 			if (new_parent != nullptr)
 			{
-				new_parent->addChild(m_self);
+				new_parent->addChild(m_self.lock());
 				m_parent = new_parent;
 			}
 		}
@@ -208,7 +208,7 @@ namespace SSUtils
 			auto parent(m_parent.lock());
 			if (parent != nullptr)
 			{
-				parent->removeChild(m_self);
+				parent->removeChild(m_self.lock());
 			}
 			m_parent.reset();
 		}
@@ -223,28 +223,25 @@ namespace SSUtils
 			return m_parent;
 		}
 
-		void Node::addChild(const std::weak_ptr<Node> child)
+		void Node::addChild(const std::shared_ptr<Node> child)
 		{
 			m_children.push_back(child);
 		}
 
-		void Node::removeChild(const std::weak_ptr<Node> child)
+		void Node::removeChild(const std::shared_ptr<Node> child)
 		{
-			auto it(std::find_if(m_children.cbegin(), m_children.cend(), [child](const std::weak_ptr<Node> childNode) 
+			if (child != nullptr)
 			{
-				auto target(child.lock());
-				auto src(childNode.lock());
-				return target != nullptr && src != nullptr && target == src;
-			}));
-			if (it != m_children.cend())
-			{
-				m_children.erase(it);
-				auto target(child.lock());
-				if (target != nullptr)
+				auto it(std::find_if(m_children.cbegin(), m_children.cend(), [child](const std::shared_ptr<Node> childNode)
 				{
-					target->removeParent();
+					return child == childNode;
+				}));
+				if (it != m_children.cend())
+				{
+					m_children.erase(it);
+					child->removeParent();
 				}
-			};
+			}
 		}
 
 		void Node::clearChild(void)
@@ -254,14 +251,9 @@ namespace SSUtils
 
 		const bool Node::hasChild(const std::string & tag) const
 		{
-			auto it(std::find_if(m_children.cbegin(), m_children.cend(), [&tag](const std::weak_ptr<Node> child) 
+			auto it(std::find_if(m_children.cbegin(), m_children.cend(), [&tag](const std::shared_ptr<Node> child)
 			{
-				auto sp_child(child.lock());
-				if (sp_child != nullptr && sp_child->getTag() == tag)
-				{
-					return true;
-				}
-				return false;
+				return child->getTag() == tag;
 			}));
 			return it != m_children.cend();
 		}
@@ -275,8 +267,7 @@ namespace SSUtils
 		{
 			for (uint32 i(pos), j(static_cast<uint32>(m_children.size())); i != j; ++i)
 			{
-				auto child(m_children[i].lock());
-				if (child != nullptr && child->getTag() == tag)
+				if (m_children[i]->getTag() == tag)
 				{
 					return i;
 				}
@@ -284,12 +275,12 @@ namespace SSUtils
 			return npos;
 		}
 
-		const std::vector<std::weak_ptr<Node>>& Node::getChildren(void) const
+		const std::vector<std::shared_ptr<Node>>& Node::getChildren(void) const
 		{
 			return m_children;
 		}
 
-		std::vector<std::weak_ptr<Node>>& Node::getChildren(void)
+		std::vector<std::shared_ptr<Node>>& Node::getChildren(void)
 		{
 			return m_children;
 		}
@@ -301,11 +292,8 @@ namespace SSUtils
 			m_attrs = ano.m_attrs;
 			for (auto child : ano.m_children)
 			{
-				auto sp_child(child.lock());
-				if (sp_child != nullptr)
-				{
-					m_children.push_back(deepCopy(*sp_child));
-				}
+				m_children.push_back(deepCopy(*child));
+				
 			}
 		}
 

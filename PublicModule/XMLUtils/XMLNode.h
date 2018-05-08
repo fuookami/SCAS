@@ -68,16 +68,15 @@ namespace SSUtils
 			const std::weak_ptr<Node> getParent(void) const;
 
 		public:
-			void addChild(const std::weak_ptr<Node> child);
+			void addChild(const std::shared_ptr<Node> child);
 
-			void removeChild(const std::weak_ptr<Node> child);
+			void removeChild(const std::shared_ptr<Node> child);
 			template<typename fun_t, typename U = std::enable_if_t<std::is_function_v<fun_t>>>
 			void removeChildren(const fun_t fun)
 			{
-				std::remove_if(m_children.cbegin(), m_children.cend(), [fun](const std::weak_ptr<Node> child)
+				std::remove_if(m_children.cbegin(), m_children.cend(), [fun](const std::shared_ptr<Node> child)
 				{
-					auto sp_child(child.lock());
-					return sp_child == nullptr ? true : fun(*sp_child);
+					return child == nullptr ? false : fun(*child);
 				});
 			}
 
@@ -87,10 +86,9 @@ namespace SSUtils
 			template<typename fun_t, typename U = std::enable_if_t<std::is_function_v<fun_t>>>
 			const bool hasChild(const fun_t fun) const
 			{
-				auto it(std::find_if(m_children.cbegin(), m_children.cend(), [fun](const std::weak_ptr<Node> child)
+				auto it(std::find_if(m_children.cbegin(), m_children.cend(), [fun](const std::shared_ptr<Node> child)
 				{
-					auto sp_child(child.lock());
-					return sp_child == nullptr ? false : fun(*sp_child);
+					return child == nullptr ? false : fun(*child);
 				}));
 				return it != m_children.cend();
 			}
@@ -111,8 +109,8 @@ namespace SSUtils
 				return npos;
 			}
 
-			const std::vector<std::weak_ptr<Node>> &getChildren(void) const;
-			std::vector<std::weak_ptr<Node>> &getChildren(void);
+			const std::vector<std::shared_ptr<Node>> &getChildren(void) const;
+			std::vector<std::shared_ptr<Node>> &getChildren(void);
 
 		private:
 			void deepCopyFrom(const Node &ano);
@@ -126,7 +124,7 @@ namespace SSUtils
 			
 			std::weak_ptr<Node> m_self;
 			std::weak_ptr<Node> m_parent;
-			std::vector<std::weak_ptr<Node>> m_children;
+			std::vector<std::shared_ptr<Node>> m_children;
 		};
 	};
 };

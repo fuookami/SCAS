@@ -13,9 +13,9 @@ namespace SSUtils
 		public:
 			Document(void) = default;
 			Document(const Document &ano);
-			Document(Document &&ano) = default;
+			Document(Document &&ano);
 			Document &operator=(const Document &rhs);
-			Document &operator=(Document &&rhs) = default;
+			Document &operator=(Document &&rhs);
 			~Document(void) = default;
 
 		public:

@@ -49,7 +49,7 @@ namespace SSUtils
 			return pt;
 		}
 
-		std::vector<std::shared_ptr<Node>> Loader::operator()()
+		std::vector<std::shared_ptr<Node>> Loader::operator()(void)
 		{
 			if (!isOpened())
 			{
