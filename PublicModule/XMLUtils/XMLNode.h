@@ -100,8 +100,7 @@ namespace SSUtils
 			{
 				for (int i(pos), j(m_children.size()); i != j; ++i)
 				{
-					auto child(m_children[i].lock());
-					if (child != nullptr && fun(*child))
+					if (m_children[i] != nullptr && fun(*m_children[i]))
 					{
 						return i;
 					}
