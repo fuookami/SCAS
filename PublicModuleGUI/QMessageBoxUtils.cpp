@@ -4,7 +4,7 @@
 
 namespace SSUtils
 {
-	namespace Gui
+	namespace GUI
 	{
 		namespace QMessageBoxUtils
 		{

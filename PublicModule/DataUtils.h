@@ -38,3 +38,10 @@ namespace SSUtils
 		Block generateRandomBlock(const uint32 length = 8);
 	};
 };
+
+const bool operator==(const SSUtils::Block &lhs, const SSUtils::Block &rhs);
+const bool operator!=(const SSUtils::Block &lhs, const SSUtils::Block &rhs);
+const bool operator<(const SSUtils::Block &lhs, const SSUtils::Block &rhs);
+const bool operator<=(const SSUtils::Block &lhs, const SSUtils::Block &rhs);
+const bool operator>(const SSUtils::Block &lhs, const SSUtils::Block &rhs);
+const bool operator>=(const SSUtils::Block &lhs, const SSUtils::Block &rhs);

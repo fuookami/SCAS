@@ -109,3 +109,72 @@ namespace SSUtils
 		}
 	};
 };
+
+const bool operator==(const SSUtils::Block & lhs, const SSUtils::Block & rhs)
+{
+	if (lhs.size() != rhs.size())
+	{
+		return false;
+	}
+	for (SSUtils::uint32 i(0), j(lhs.size()); i != j; ++i)
+	{
+		if (lhs[i] != rhs[i])
+		{
+			return false;
+		}
+	}
+	return true;
+}
+
+const bool operator!=(const SSUtils::Block & lhs, const SSUtils::Block & rhs)
+{
+	return !(lhs == rhs);
+}
+
+const bool operator<(const SSUtils::Block & lhs, const SSUtils::Block & rhs)
+{
+	for (SSUtils::uint32 i(0), j(std::min(lhs.size(), rhs.size())); i != j; ++i)
+	{
+		if (lhs[i] < rhs[i])
+		{
+			return true;
+		}
+	}
+	return lhs.size() < rhs.size();
+}
+
+const bool operator<=(const SSUtils::Block & lhs, const SSUtils::Block & rhs)
+{
+	for (SSUtils::uint32 i(0), j(std::min(lhs.size(), rhs.size())); i != j; ++i)
+	{
+		if (lhs[i] < rhs[i])
+		{
+			return true;
+		}
+	}
+	return lhs.size() <= rhs.size();
+}
+
+const bool operator>(const SSUtils::Block & lhs, const SSUtils::Block & rhs)
+{
+	for (SSUtils::uint32 i(0), j(std::min(lhs.size(), rhs.size())); i != j; ++i)
+	{
+		if (lhs[i] > rhs[i])
+		{
+			return true;
+		}
+	}
+	return lhs.size() > rhs.size();
+}
+
+const bool operator>=(const SSUtils::Block & lhs, const SSUtils::Block & rhs)
+{
+	for (SSUtils::uint32 i(0), j(std::min(lhs.size(), rhs.size())); i != j; ++i)
+	{
+		if (lhs[i] > rhs[i])
+		{
+			return true;
+		}
+	}
+	return lhs.size() >= rhs.size();
+}

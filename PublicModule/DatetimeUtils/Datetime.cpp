@@ -227,8 +227,8 @@ namespace SSUtils
 			std::ostringstream datatimeSout;
 			datatimeSout << Date::toString()
 				<< hour() << Seperator
-				<< std::setw(2) << static_cast<uint8>(minute()) << Seperator
-				<< std::setw(2) << static_cast<uint8>(second());
+				<< std::setw(2) << static_cast<uint16>(minute()) << Seperator
+				<< std::setw(2) << static_cast<uint16>(second());
 			if (precision() == Precision::MilliSecond || precision() == Precision::MicroSecond)
 			{
 				datatimeSout << FractionSeperator << std::setfill('0') << std::setw(3) << millisecond();

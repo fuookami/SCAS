@@ -14,7 +14,6 @@ namespace SSUtils
 
 		void QWebEngineWidget::resizeEvent(QResizeEvent * e)
 		{
-			qDebug() << m_view->geometry();
 			m_view->resize(this->size());
 		}
 	};

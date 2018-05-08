@@ -10,9 +10,9 @@ namespace SSUtils
 		Datetime getBuildDatetime(const std::string & BuildOriginalDateString, const std::string & BuildTimeString)
 		{
 			static const auto fromShortMonthName(
-				[](const std::string &shortName) -> uint32
+				[](const std::string &shortName) -> uint8
 			{
-				return static_cast<uint32>(std::find(MonthShortName.cbegin(), MonthShortName.cend(), shortName) - MonthShortName.cbegin()) + 1;
+				return static_cast<uint8>(std::find(MonthShortName.cbegin(), MonthShortName.cend(), shortName) - MonthShortName.cbegin()) + 1;
 			});
 
 			using namespace boost::gregorian;
@@ -26,8 +26,8 @@ namespace SSUtils
 			std::string BuildMinute(BuildTimeString.cbegin() + 3, BuildTimeString.cbegin() + 5);
 			std::string BuildSecond(BuildTimeString.cbegin() + 6, BuildTimeString.cbegin() + 8);
 
-			return Datetime(static_cast<short>(std::stoi(BuildYear)), fromShortMonthName(BuileMonth), static_cast<unsigned char>(std::stoi(BuildDay)),
-				static_cast<unsigned char>(std::stoi(BuildHour)), static_cast<unsigned char>(std::stoi(BuildMinute)), static_cast<unsigned char>(std::stoi(BuildSecond)));
+			return Datetime(static_cast<int16>(std::stoi(BuildYear)), fromShortMonthName(BuileMonth), static_cast<uint8>(std::stoi(BuildDay)),
+				std::stoi(BuildHour), static_cast<uint8>(std::stoi(BuildMinute)), static_cast<uint8>(std::stoi(BuildSecond)));
 		}
 	};
 };
