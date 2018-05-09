@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Global.h"
 #include <string>
 #include <regex>
 
@@ -21,6 +22,22 @@ namespace SSUtils
 			~RegexChecker(void) = default;
 
 			const bool operator()(const std::string &src) const;
+		};
+
+		struct RegexCatcher
+		{
+			const std::string pattern;
+			const std::regex reg;
+
+			RegexCatcher(const std::string &_pattern);
+			RegexCatcher(std::string &&_pattern);
+			RegexCatcher(const RegexCatcher &ano) = delete;
+			RegexCatcher(RegexCatcher &&ano) = delete;
+			RegexCatcher &operator=(const RegexCatcher &ano) = delete;
+			RegexCatcher &operator=(RegexCatcher &&ano) = delete;
+			~RegexCatcher(void) = default;
+
+			std::vector<std::string> operator()(const std::string &src) const;
 		};
 
 		struct RegexMatcher

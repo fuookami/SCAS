@@ -10,7 +10,7 @@ namespace SSUtils
 		{
 		public:
 			Time(void);
-			Time(const int32 second);
+			explicit Time(const int32 second);
 			Time(const int32 hour, const uint8 minute, const uint8 second, const uint16 millisecond = 0, const uint16 microsecond = 0);
 			Time(const Time &ano) = default;
 			Time(Time &&ano) = default;
@@ -74,7 +74,7 @@ namespace SSUtils
 		{
 		public:
 			TimeDuration(void);
-			TimeDuration(const int32 _second);
+			explicit TimeDuration(const int32 _second);
 			TimeDuration(const int32 _hour, const int32 _minute, const int32 _second, const int32 _millisecond = 0, const int32 _microsecond = 0);
 			TimeDuration(const DatetimeDuration &datetimeDuration);
 			TimeDuration(const TimeDuration &ano) = default;

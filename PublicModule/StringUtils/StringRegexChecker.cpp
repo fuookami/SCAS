@@ -20,6 +20,33 @@ namespace SSUtils
 			return std::regex_match(src, result, reg);
 		}
 
+
+		RegexCatcher::RegexCatcher(const std::string & _pattern)
+			: pattern(_pattern), reg(pattern)
+		{
+		}
+
+		RegexCatcher::RegexCatcher(std::string && _pattern)
+			: pattern(std::move(_pattern)), reg(pattern)
+		{
+		}
+
+		std::vector<std::string> RegexCatcher::operator()(const std::string & src) const
+		{
+			std::smatch result;
+			if (!std::regex_match(src, result, reg))
+			{
+				return std::vector<std::string>();
+			}
+			
+			std::vector<std::string> ret;
+			for (uint32 i(1), j(result.size()); i != j; ++i)
+			{
+				ret.push_back(result.str(i));
+			}
+			return ret;
+		}
+
 		RegexMatcher::RegexMatcher(const std::string & _pattern)
 			: pattern(_pattern), reg(pattern)
 		{

@@ -11,8 +11,8 @@ namespace SSUtils
 		{
 			std::ostringstream sout;
 			boost::property_tree::xml_parser::write_xml(sout, pt,
-				boost::property_tree::xml_writer_settings<std::string>('\t', 1, String::CharTypeCode.find(charType)->second));
-			return sout.str();
+				boost::property_tree::xml_writer_settings<std::string>('\t', 1));
+			return String::fromLocal(charType, sout.str());
 		}
 
 		std::string saveToString(const std::vector<std::shared_ptr<Node>>& roots, const CharType charType)
