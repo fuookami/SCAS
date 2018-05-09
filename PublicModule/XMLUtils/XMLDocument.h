@@ -24,8 +24,8 @@ namespace SSUtils
 			static Document fromString(const std::string &data, const CharType charType = String::LocalCharType);
 			static Document fromString(std::string &&data, const CharType charType = String::LocalCharType);
 
-			const bool toFile(const std::string &url, const CharType charType = String::LocalCharType);
-			std::string toString(const CharType charType = String::LocalCharType);
+			const bool toFile(const std::string &url, const CharType charType = String::LocalCharType) const;
+			std::string toString(const CharType charType = String::LocalCharType) const;
 
 		public:
 			const std::vector<std::shared_ptr<Node>> &getRoots(void) const;

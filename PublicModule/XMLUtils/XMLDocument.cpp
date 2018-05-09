@@ -61,13 +61,13 @@ namespace SSUtils
 			return doc;
 		}
 
-		const bool Document::toFile(const std::string & url, const CharType charType)
+		const bool Document::toFile(const std::string & url, const CharType charType) const
 		{
 			Saver saver(url, m_roots, charType);
 			return saver.toFile();
 		}
 
-			std::string Document::toString(const CharType charType)
+			std::string Document::toString(const CharType charType) const
 		{
 			Saver saver(m_roots, charType);
 			return saver.toString();
