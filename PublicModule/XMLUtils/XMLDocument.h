@@ -33,6 +33,9 @@ namespace SSUtils
 			void setRoots(const std::vector<std::shared_ptr<Node>> &roots);
 			void setRoots(std::vector<std::shared_ptr<Node>> &&roots);
 
+			inline void push_back(const std::shared_ptr<Node> root) { m_roots.push_back(root); }
+			inline void clear(void) { m_roots.clear(); }
+
 		private:
 			std::vector<std::shared_ptr<Node>> m_roots;
 		};

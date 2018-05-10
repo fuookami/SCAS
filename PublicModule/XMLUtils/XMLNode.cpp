@@ -223,9 +223,16 @@ namespace SSUtils
 			return m_parent;
 		}
 
-		void Node::addChild(const std::shared_ptr<Node> child)
+		void Node::addChild(const std::shared_ptr<Node> child, const int32 pos)
 		{
-			m_children.push_back(child);
+			if (pos <= npos || pos >= m_children.size())
+			{
+				m_children.push_back(child);
+			}
+			else
+			{
+				m_children.insert(m_children.begin() + pos, child);
+			}
 		}
 
 		void Node::removeChild(const std::shared_ptr<Node> child)

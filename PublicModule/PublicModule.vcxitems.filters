@@ -236,6 +236,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)MathUtils\_pri_real_global.h">
       <Filter>头文件\MathUtils</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)MathUtils\Sort.h">
+      <Filter>头文件\MathUtils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)RandomUtils.cpp">
@@ -359,6 +362,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)MathUtils\Rational.cpp">
+      <Filter>源文件\MathUtils</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)MathUtils\Sort.cpp">
       <Filter>源文件\MathUtils</Filter>
     </ClCompile>
   </ItemGroup>
