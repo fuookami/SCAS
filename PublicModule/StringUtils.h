@@ -22,26 +22,38 @@ namespace SSUtils
 		typename std::enable_if_t<std::is_same_v<typename iter::value_type, std::string>, std::string> join(const iter bgIt, const iter edIt, const std::string &seperator = std::string(""),
 			const translator_t &translator = translator_t())
 		{
-			return bgIt >= edIt ? EmptyString
-				: std::accumulate(std::next(bgIt), edIt,
+			try {
+				return std::accumulate(std::next(bgIt), edIt,
 					*bgIt, [&seperator]
 					(const std::string &lhs, const typename iter::value_type &rhs) -> std::string
+				{
+					return lhs + seperator + rhs;
+				});
+			}
+			catch (std::exception &e)
 			{
-				return lhs + seperator + rhs;
-			});
+				std::cerr << e.what() << std::endl;
+				return EmptyString;
+			}
 		}
 
 		template<typename iter, typename translator_t = StringTranslator>
 		typename std::enable_if_t<!std::is_same_v<typename iter::value_type, std::string>, std::string> join(const iter bgIt, const iter edIt, const std::string &seperator = std::string(""),
 			const translator_t &translator = translator_t())
 		{
-			return bgIt >= edIt ? EmptyString
-				: std::accumulate(std::next(bgIt), edIt,
+			try {
+				return std::accumulate(std::next(bgIt), edIt,
 					translator(*bgIt), [&seperator, &translator]
 					(const std::string &lhs, const typename iter::value_type &rhs) -> std::string
+				{
+					return lhs + seperator + translator(rhs);
+				});
+			}
+			catch (std::exception &e)
 			{
-				return lhs + seperator + translator(rhs);
-			});
+				std::cerr << e.what() << std::endl;
+				return EmptyString;
+			}
 		}
 
 		template<typename container, typename translator_t = StringTranslator>

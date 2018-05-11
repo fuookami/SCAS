@@ -140,6 +140,11 @@ namespace SSUtils
 
 		void ThreadPool::insertTask(const std::shared_ptr<Function::Task> task)
 		{
+			m_blockedTasks.insert(std::find_if(m_blockedTasks.begin(), m_blockedTasks.end(), 
+				[task](const std::shared_ptr<Function::Task> &value)->bool
+			{
+				return task->priority < value->priority;
+			}), task);
 		}
 
 		void ThreadPool::WorkerMain(ThreadPool * pool, Worker * self)
