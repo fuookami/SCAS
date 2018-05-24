@@ -1,6 +1,6 @@
 #include "SCASCompCfgParser.h"
-#include "XMLUtils.h"
-#include "StringUtils.h"
+#include "SSUtils\XMLUtils.h"
+#include "SSUtils\StringUtils.h"
 
 namespace SCAS
 {

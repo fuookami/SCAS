@@ -1,6 +1,6 @@
 #include "test.h"
-#include "XMLUtils.h"
-#include "StringUtils.h"
+#include "SSUtils\XMLUtils.h"
+#include "SSUtils\StringUtils.h"
 #include "SCASCompCfgParser.h"
 
 const std::shared_ptr<SCAS::CompCfg::CompetitionInfo> generateTestCompetitionInfo(void)

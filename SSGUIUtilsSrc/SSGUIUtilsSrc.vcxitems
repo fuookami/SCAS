@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="Globals">
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <ItemsProjectGuid>{0f14e02b-6fe7-4510-b827-610ebe37f8f7}</ItemsProjectGuid>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(MSBuildThisFileDirectory)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ProjectCapability Include="SourceItemsFromImports" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)SSUtils\GUI\IWebEngineDialogWidget.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)SSUtils\GUI\QDraggableFlatteningDialog.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)SSUtils\GUI\QDraggableFlatteningWidget.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)SSUtils\GUI\QMessageBoxUtils.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)SSUtils\GUI\QWebEngineWidget.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)SSUtils\GUI\IWebEngineDialogWidget.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)SSUtils\GUI\QMessageBoxUtils.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)SSUtils\GUI\QWebEngineWidget.cpp" />
+  </ItemGroup>
+</Project>

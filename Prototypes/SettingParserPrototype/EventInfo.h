@@ -1,9 +1,9 @@
 #pragma once
 
 #include "GradeInfo.h"
-#include "UUIDUtils.h"
-#include "DataUtils.h"
-#include "DateTimeUtils.h"
+#include "SSUtils\UUIDUtils.h"
+#include "SSUtils\DataUtils.h"
+#include "SSUtils\DateTimeUtils.h"
 
 #include <string>
 #include <vector>

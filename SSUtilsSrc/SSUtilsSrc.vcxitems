@@ -1,0 +1,116 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="Globals">
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <ItemsProjectGuid>{a38f60fe-2ae0-4543-b0d4-d9e2173b74a0}</ItemsProjectGuid>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(MSBuildThisFileDirectory)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ProjectCapability Include="SourceItemsFromImports" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)SSUtils\ChineseNumberUntils\_pri_chinese_number.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)SSUtils\ChineseNumberUtils.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)SSUtils\DataUtils.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)SSUtils\DataUtils\DataTranslator.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)SSUtils\DataUtils\_pri_data.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)SSUtils\DateTimeUtils.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)SSUtils\DatetimeUtils\Date.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)SSUtils\DatetimeUtils\Datetime.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)SSUtils\DatetimeUtils\Time.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)SSUtils\DatetimeUtils\_pri_datetime_global.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)SSUtils\EncryptionUtils.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)SSUtils\EncryptionUtils\_pri_encryption_global.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)SSUtils\EncryptionUtils\RSA.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)SSUtils\FileUtils.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)SSUtils\FunctionUtils.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)SSUtils\FunctionUtils\Task.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)SSUtils\MailUtils.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)SSUtils\MailUtils\MailSender.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)SSUtils\MailUtils\_pri_mail.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)SSUtils\MailUtils\_pri_mail_global.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)SSUtils\MathUtils.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)SSUtils\MathUtils\Decimal.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)SSUtils\MathUtils\Integer.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)SSUtils\MathUtils\Logarithm.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)SSUtils\MathUtils\Power.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)SSUtils\MathUtils\Rational.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)SSUtils\MathUtils\Real.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)SSUtils\MathUtils\Sort.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)SSUtils\MathUtils\_pri_math_global.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)SSUtils\MathUtils\_pri_real_global.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)SSUtils\RandomUtils.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)SSUtils\StringUtils.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)SSUtils\StringUtils\StringConverter.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)SSUtils\StringUtils\StringRegexChecker.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)SSUtils\StringUtils\StringTranslator.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)SSUtils\StringUtils\_pri_string_convert.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)SSUtils\StringUtils\_pri_string_global.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)SSUtils\SystemUtils.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)SSUtils\SystemUtils\EndianTranslator.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)SSUtils\SystemUtils\_pri_cpu_id.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)SSUtils\SystemUtils\_pri_system_global.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)SSUtils\ThreadUtils.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)SSUtils\ThreadUtils\ThreadPool.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)SSUtils\ThreadUtils\_pri_thread_global.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)SSUtils\UuidUtils.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)SSUtils\Global.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)SSUtils\XMLUtils.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)SSUtils\XMLUtils\XMLDocument.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)SSUtils\XMLUtils\XMLNode.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)SSUtils\XMLUtils\XMLLoader.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)SSUtils\XMLUtils\XMLSaver.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)SSUtils\XMLUtils\_pri_xml_global.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)SSUtils\XMLUtils\_pri_xml_loader.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)SSUtils\XMLUtils\_pri_xml_saver.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)SSUtils\ChineseNumberUntils\_pri_chinese_number.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)SSUtils\ChineseNumberUtils.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)SSUtils\DataUtils.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)SSUtils\DataUtils\DataTranslator.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)SSUtils\DateTimeUtils.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)SSUtils\DatetimeUtils\Date.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)SSUtils\DatetimeUtils\Datetime.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)SSUtils\DatetimeUtils\Time.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)SSUtils\DatetimeUtils\_pri_datetime_global.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)SSUtils\EncryptionUtils\_pri_encryption_global.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)SSUtils\EncryptionUtils\RSA.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)SSUtils\FileUtils.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)SSUtils\FunctionUtils\Task.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)SSUtils\Global.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)SSUtils\MailUtils.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)SSUtils\MailUtils\MailSender.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)SSUtils\MailUtils\_pri_mail.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)SSUtils\MathUtils.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)SSUtils\MathUtils\Rational.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)SSUtils\MathUtils\Sort.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)SSUtils\MathUtils\_pri_math_global.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)SSUtils\RandomUtils.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)SSUtils\StringUtils.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)SSUtils\StringUtils\StringConverter.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)SSUtils\StringUtils\StringRegexChecker.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)SSUtils\StringUtils\StringTranslator.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)SSUtils\StringUtils\_pri_string_convert.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)SSUtils\StringUtils\_pri_string_global.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)SSUtils\SystemUtils.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)SSUtils\SystemUtils\EndianTranslator.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)SSUtils\SystemUtils\_pri_cpu_id.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)SSUtils\SystemUtils\_pri_system_global.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)SSUtils\ThreadUtils.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)SSUtils\ThreadUtils\ThreadPool.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)SSUtils\UuidUtils.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)SSUtils\XMLUtils\XMLDocument.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)SSUtils\XMLUtils\XMLLoader.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)SSUtils\XMLUtils\XMLNode.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)SSUtils\XMLUtils\XMLSaver.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)SSUtils\XMLUtils\_pri_xml_global.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)SSUtils\XMLUtils\_pri_xml_loader.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)SSUtils\XMLUtils\_pri_xml_saver.cpp" />
+  </ItemGroup>
+</Project>
