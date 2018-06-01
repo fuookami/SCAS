@@ -15,7 +15,7 @@ namespace SSUtils
 			*	\函数名:   	generateKey
 			*	\参数: 		unsigned int keyLength						密钥长度
 			*	\参数: 		const std::string & seed					种子，用于构造随机数池（生成引擎），生成随机数
-			*	\返回值:   	std::pair<std::string, std::string>	RSA公钥和私钥对
+			*	\返回值:   	std::pair<std::string, std::string>			RSA私钥和公钥对
 			*	\说明: 		生成RSA公钥和私钥对，用于验证器、激活码生成器生成请求码、激活
 			*/
 			SSUtils_API_DECLSPEC std::pair<std::string, std::string> generateKey(const uint32 keyLength, const std::string &seed = Data::toString(Data::generateRandomBlock()));

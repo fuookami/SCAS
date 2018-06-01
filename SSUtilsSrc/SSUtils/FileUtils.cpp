@@ -12,9 +12,21 @@ namespace SSUtils
 {
 	namespace File
 	{
+		const std::string & WindowsPathSeperator(void)
+		{
+			static const std::string ret("\\");
+			return ret;
+		}
+
+		const std::string & LinuxPathSeperator(void)
+		{
+			static const std::string ret("/");
+			return ret;
+		}
+
 		const std::string &PathSeperator(void)
 		{
-			static const std::string ret = System::LocalSystemType == OperationSystemType::Windows ? std::string("\\") : std::string("/");
+			static const std::string ret = System::LocalSystemType == OperationSystemType::Windows ? WindowsPathSeperator() : LinuxPathSeperator();
 			return ret;
 		}
 		const std::string &ExtensionSeperator(void)
@@ -24,7 +36,7 @@ namespace SSUtils
 		}
 		const std::string &InitailPath(void)
 		{
-			static const std::string ret = boost::filesystem::initial_path().string() + PathSeperator();
+			static const std::string ret = getSystemNativePath(boost::filesystem::initial_path().string() + PathSeperator());
 			return ret;
 		}
 
@@ -67,6 +79,17 @@ namespace SSUtils
 			}
 		}
 
+		std::string getLinuxUrl(const std::string & url)
+		{
+			std::string ret;
+			std::transform(url.cbegin(), url.cend(), std::back_inserter(ret),
+				[](const char ch)
+			{
+				return ch == '\\' ? '/' : ch;
+			});
+			return ret;
+		}
+
 		std::string getPathOfUrl(const std::string & targetUrl)
 		{
 			if (targetUrl.find_last_of("\\/") == -1)
@@ -75,7 +98,7 @@ namespace SSUtils
 			}
 			else
 			{
-				return std::string(targetUrl.cbegin(), targetUrl.cbegin() + targetUrl.find_last_of("\\/"));
+				return getSystemNativePath(std::string(targetUrl.cbegin(), targetUrl.cbegin() + targetUrl.find_last_of("\\/")) + PathSeperator());
 			}
 		}
 
@@ -94,7 +117,7 @@ namespace SSUtils
 			}
 			else
 			{
-				return std::string(targetUrl.cbegin() + fileNameBgIndex + 1, targetUrl.cbegin() + fileExtensionBgIndex);
+				return std::string(targetUrl.cbegin() + (fileNameBgIndex + 1), targetUrl.cbegin() + fileExtensionBgIndex);
 			}
 		}
 
@@ -143,7 +166,7 @@ namespace SSUtils
 				{
 					if (is_directory(bgIt->status()))
 					{
-						pathNames.push_back(bgIt->path().string());
+						pathNames.push_back(getSystemNativePath(bgIt->path().string()));
 					}
 				}
 			}
@@ -155,18 +178,24 @@ namespace SSUtils
 			using namespace boost::filesystem;
 
 			path fullBasePath(system_complete(path(targetPath, native)));
-			return fullBasePath.parent_path().string();
+			return getSystemNativePath(fullBasePath.parent_path().string() + PathSeperator());
 		}
 
 		std::string getRelativeUrlOfPath(const std::string & basePath, const std::string & targetUrl)
 		{
-			 return getRelativePathOfPath(basePath, getPathOfUrl(targetUrl)) + PathSeperator() + getFileNameOfUrl(targetUrl);
+			 return getRelativePathOfPath(basePath, getPathOfUrl(targetUrl)) + getFileNameOfUrl(targetUrl);
 		}
 
 		std::string getRelativePathOfPath(const std::string & basePath, const std::string & targetPath)
 		{
 			using namespace boost::filesystem;
+			static const std::string CurrPath(".");
 			static const std::string ParentPath("..");
+
+			if (basePath == targetPath)
+			{
+				return CurrPath + PathSeperator();
+			}
 
 			path fullBasePath(system_complete(path(basePath, native)));
 			path fullTargetPath(system_complete(path(targetPath, native)));
@@ -185,7 +214,7 @@ namespace SSUtils
 			{
 				ret += *targetCurrIt + PathSeperator();
 			}
-			return ret;
+			return CurrPath + PathSeperator() + ret;
 		}
 
 		Block loadFile(const std::string & targetUrl)

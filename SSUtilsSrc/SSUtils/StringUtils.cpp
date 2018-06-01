@@ -60,6 +60,10 @@ namespace SSUtils
 			if (removeSpace)
 			{
 				boost::split(ret, source, boost::is_any_of(tokens));
+				if (!ret.empty() && ret.back().empty())
+				{
+					ret.pop_back();
+				}
 			}
 			else
 			{
@@ -75,6 +79,10 @@ namespace SSUtils
 			if (removeSpace)
 			{
 				boost::split(ret, source, boost::is_any_of(tokens));
+				if (!ret.empty() && ret.back().empty())
+				{
+					ret.pop_back();
+				}
 			}
 			else
 			{

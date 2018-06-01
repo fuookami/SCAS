@@ -13,6 +13,8 @@ namespace SSUtils
 {
 	namespace File
 	{
+		SSUtils_API_DECLSPEC const std::string &WindowsPathSeperator(void);
+		SSUtils_API_DECLSPEC const std::string &LinuxPathSeperator(void);
 		SSUtils_API_DECLSPEC const std::string &PathSeperator(void);
 		SSUtils_API_DECLSPEC const std::string &ExtensionSeperator(void);
 		SSUtils_API_DECLSPEC const std::string &InitailPath(void);
@@ -21,6 +23,8 @@ namespace SSUtils
 		SSUtils_API_DECLSPEC const bool checkFileExist(const std::string &targetUrl);
 		SSUtils_API_DECLSPEC void createFile(const std::string &targetUrl);
 		SSUtils_API_DECLSPEC const bool removeFile(const std::string &targetUrl);
+
+		SSUtils_API_DECLSPEC std::string getLinuxUrl(const std::string &url);
 
 		SSUtils_API_DECLSPEC std::string getPathOfUrl(const std::string &targetUrl);
 		SSUtils_API_DECLSPEC std::string getFileNameOfUrl(const std::string &targetUrl);
