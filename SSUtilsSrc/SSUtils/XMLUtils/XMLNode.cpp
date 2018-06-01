@@ -261,6 +261,14 @@ namespace SSUtils
 			return it != m_children.cend();
 		}
 
+		const uint32 Node::countChild(const std::string &tag) const
+		{
+			return std::count_if(m_children.cbegin(), m_children.cend(), [&tag](const std::shared_ptr<Node> child)
+			{
+				return child->getTag() == tag;
+			});
+		}
+
 		const bool Node::hasAnyChild(void) const
 		{
 			return !m_children.empty();

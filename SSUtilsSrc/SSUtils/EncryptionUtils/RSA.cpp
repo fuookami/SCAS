@@ -133,7 +133,7 @@ namespace SSUtils
 			{
 			}
 
-			std::string encrypter::operator()(const std::string & origin)
+			std::string encrypter::operator()(const std::string & origin) const
 			{
 				return publicKey.empty() ? String::EmptyString() : encrypt(publicKey, origin, seed);
 			}
@@ -143,7 +143,7 @@ namespace SSUtils
 			{
 			}
 
-			std::string decrypter::operator()(const std::string & cipher)
+			std::string decrypter::operator()(const std::string & cipher) const
 			{
 				return privateKey.empty() ? String::EmptyString() : decrypt(privateKey, cipher);
 			}
@@ -153,7 +153,7 @@ namespace SSUtils
 			{
 			}
 
-			std::string signer::operator()(const std::string & msg)
+			std::string signer::operator()(const std::string & msg) const
 			{
 				return privateKey.empty() ? String::EmptyString() : sign(privateKey, msg);
 			}
@@ -163,7 +163,7 @@ namespace SSUtils
 			{
 			}
 
-			const bool verifier::operator()(const std::string & msg, const std::string & signature)
+			const bool verifier::operator()(const std::string & msg, const std::string & signature) const
 			{
 				return publicKey.empty() ? false : verify(publicKey, msg, signature);
 			}

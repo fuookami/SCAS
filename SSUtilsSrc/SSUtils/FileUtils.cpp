@@ -24,7 +24,13 @@ namespace SSUtils
 		}
 		const std::string &InitailPath(void)
 		{
-			static const std::string ret = boost::filesystem::initial_path().string();
+			static const std::string ret = boost::filesystem::initial_path().string() + PathSeperator();
+			return ret;
+		}
+
+		const std::string & SharedLibraryExtension(void)
+		{
+			static const std::string ret = System::LocalSystemType == OperationSystemType::Windows ? std::string("dll") : std::string("so");
 			return ret;
 		}
 
@@ -144,6 +150,44 @@ namespace SSUtils
 			return pathNames;
 		}
 
+		std::string getParentPathOfPath(const std::string & targetPath)
+		{
+			using namespace boost::filesystem;
+
+			path fullBasePath(system_complete(path(targetPath, native)));
+			return fullBasePath.parent_path().string();
+		}
+
+		std::string getRelativeUrlOfPath(const std::string & basePath, const std::string & targetUrl)
+		{
+			 return getRelativePathOfPath(basePath, getPathOfUrl(targetUrl)) + PathSeperator() + getFileNameOfUrl(targetUrl);
+		}
+
+		std::string getRelativePathOfPath(const std::string & basePath, const std::string & targetPath)
+		{
+			using namespace boost::filesystem;
+			static const std::string ParentPath("..");
+
+			path fullBasePath(system_complete(path(basePath, native)));
+			path fullTargetPath(system_complete(path(targetPath, native)));
+			std::vector<std::string> base(String::split(fullBasePath.string(), PathSeperator())), target(String::split(fullTargetPath.string(), PathSeperator()));
+			auto baseCurrIt(base.cbegin()), baseEdIt(base.cend());
+			auto targetCurrIt(target.cbegin()), targetEdIt(target.cend());
+			for (; baseCurrIt != baseEdIt && targetCurrIt != targetEdIt && *baseCurrIt == *targetCurrIt;
+				++baseCurrIt, ++targetCurrIt);
+
+			std::string ret;
+			for (; baseCurrIt != baseEdIt; ++baseCurrIt)
+			{
+				ret += ParentPath + PathSeperator();
+			}
+			for (; targetCurrIt != targetEdIt; ++targetCurrIt)
+			{
+				ret += *targetCurrIt + PathSeperator();
+			}
+			return ret;
+		}
+
 		Block loadFile(const std::string & targetUrl)
 		{
 			static const FileLoader<byte> loader;
@@ -206,12 +250,6 @@ namespace SSUtils
 					bool ret = create_directories(fullPath);
 					if (ret == false)
 					{
-						/*
-						std::ostringstream sout;
-						sout << "无法创建目录: " << fullPath << std::endl;
-						throw std::runtime_error(sout.str().c_str());
-						*/
-
 						return false;
 					}
 				}

@@ -17,12 +17,14 @@ namespace SSUtils
 			using DialogType = T;
 
 		protected:
-			IWebEngineDialogInterface(T *dialog)
+			explicit IWebEngineDialogInterface(T *dialog)
 				: QObject(nullptr), m_dialog(dialog) {};
 
 		public:
 			IWebEngineDialogInterface(const IWebEngineDialogInterface &ano) = delete;
 			IWebEngineDialogInterface(IWebEngineDialogInterface &&ano) = delete;
+			IWebEngineDialogInterface &operator=(const IWebEngineDialogInterface &rhs) = delete;
+			IWebEngineDialogInterface &operator=(IWebEngineDialogInterface &&rhs) = delete;
 			virtual ~IWebEngineDialogInterface(void) = default;
 
 		protected:
@@ -33,6 +35,10 @@ namespace SSUtils
 		{
 		public:
 			explicit IWebEngineDialogWidget(const QString &guiEntrance, QWidget *parent = nullptr);
+			IWebEngineDialogWidget(const IWebEngineDialogWidget &ano) = delete;
+			IWebEngineDialogWidget(IWebEngineDialogWidget &&ano) = delete;
+			IWebEngineDialogWidget &operator=(const IWebEngineDialogWidget &rhs) = delete;
+			IWebEngineDialogWidget &operator=(IWebEngineDialogWidget &&rhs) = delete;
 			virtual ~IWebEngineDialogWidget(void) = default;
 
 		protected:

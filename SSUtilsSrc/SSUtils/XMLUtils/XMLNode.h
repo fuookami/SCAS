@@ -94,6 +94,16 @@ namespace SSUtils
 			}
 			const bool hasAnyChild(void) const;
 
+			const uint32 countChild(const std::string &tag) const;
+			template<typename fun_t, typename U = std::enable_if_t<std::is_function_v<fun_t>>>
+			const uint32 countChild(const fun_t fun) const
+			{
+				return std::count_if(m_children.cbegin(), m_children.cend(), [fun](const std::shared_ptr<Node> child)
+				{
+					return child == nullptr ? false : fun(*child);
+				});
+			}
+
 			const int findChild(const std::string &tag, const int pos = 0) const;
 			template<typename fun_t, typename U = std::enable_if_t<std::is_function_v<fun_t>>>
 			const int findChild(const fun_t fun, const int pos = 0) const

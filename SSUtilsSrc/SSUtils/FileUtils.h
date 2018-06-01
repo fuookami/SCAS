@@ -16,6 +16,7 @@ namespace SSUtils
 		SSUtils_API_DECLSPEC const std::string &PathSeperator(void);
 		SSUtils_API_DECLSPEC const std::string &ExtensionSeperator(void);
 		SSUtils_API_DECLSPEC const std::string &InitailPath(void);
+		SSUtils_API_DECLSPEC const std::string &SharedLibraryExtension(void);
 
 		SSUtils_API_DECLSPEC const bool checkFileExist(const std::string &targetUrl);
 		SSUtils_API_DECLSPEC void createFile(const std::string &targetUrl);
@@ -27,6 +28,10 @@ namespace SSUtils
 		SSUtils_API_DECLSPEC std::string getFileExtensionOfUrl(const std::string &targetUrl);
 		SSUtils_API_DECLSPEC std::vector<std::string> getAllFilesUrlsOfPath(const std::string &targetPath);
 		SSUtils_API_DECLSPEC std::vector<std::string> getAllDirectoryPathsOfPath(const std::string &targetPath);
+
+		SSUtils_API_DECLSPEC std::string getParentPathOfPath(const std::string &targetPath);
+		SSUtils_API_DECLSPEC std::string getRelativeUrlOfPath(const std::string &basePath, const std::string &targetUrl);
+		SSUtils_API_DECLSPEC std::string getRelativePathOfPath(const std::string &basePath, const std::string &targetPath);
 
 		template<typename T, uint32 DataLength = sizeof(T)>
 		struct FileLoader

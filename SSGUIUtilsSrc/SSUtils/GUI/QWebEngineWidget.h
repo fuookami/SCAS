@@ -1,5 +1,6 @@
 #pragma once
 
+#include <QtWidgets/QWidget>
 #include <QtWebEngineWidgets/QWebEngineView>
 #include <QtWebChannel/QWebChannel>
 #include <QtCore/QDebug>
@@ -12,13 +13,19 @@ namespace SSUtils
 	{
 		class QWebEngineWidget : public QWidget
 		{
+			Q_OBJECT;
+
 		public:
 			explicit QWebEngineWidget(QWidget *parent = nullptr);
+			QWebEngineWidget(const QWebEngineWidget &ano) = delete;
+			QWebEngineWidget(QWebEngineWidget &&ano) = delete;
+			QWebEngineWidget &operator=(const QWebEngineWidget &rhs) = delete;
+			QWebEngineWidget &operator=(QWebEngineWidget &&rhs) = delete;
 			~QWebEngineWidget(void) = default;
 
 			inline QWebEngineView *view() { return m_view; }
 			inline QWebChannel *channal() { return m_channal; }
-			inline void load(const QString &url) { m_view->load(url); }
+			inline void load(const QString &url) { m_url = url; m_view->load(url); }
 			inline void registerObject(const QString &name, QObject *obj) { m_channal->registerObject(name, obj); }
 			template <typename T>
 			inline T *registerObject(const QString &name, T *obj)
@@ -63,12 +70,40 @@ namespace SSUtils
 				return obj;
 			}
 
+		signals:
+			void loadFinished(bool, QString);
+
 		protected:
 			void resizeEvent(QResizeEvent *e);
+
+		private:
+			void onLoadFinished(bool);
 
 		protected:
 			QWebEngineView * m_view;
 			QWebChannel * m_channal;
+			QString m_url;
+		};
+
+		template <typename T, typename U = std::enable_if_t<std::is_base_of_v<QWebEngineWidget, T>>>
+		class IWebEngineWidgetInterface : public QObject
+		{
+		public:
+			using WidgetType = T;
+
+		protected:
+			explicit IWebEngineWidgetInterface(T *widget)
+				: QObject(nullptr), m_widget(widget) {};
+
+		public:
+			IWebEngineWidgetInterface(const IWebEngineWidgetInterface &ano) = delete;
+			IWebEngineWidgetInterface(IWebEngineWidgetInterface &&ano) = delete;
+			IWebEngineWidgetInterface &operator=(const IWebEngineWidgetInterface &rhs) = delete;
+			IWebEngineWidgetInterface &operator=(IWebEngineWidgetInterface &&rhs) = delete;
+			virtual ~IWebEngineWidgetInterface(void) = default;
+
+		protected:
+			T * m_widget;
 		};
 	};
 };

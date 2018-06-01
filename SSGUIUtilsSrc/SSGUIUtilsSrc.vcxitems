@@ -13,16 +13,4 @@
   <ItemGroup>
     <ProjectCapability Include="SourceItemsFromImports" />
   </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="$(MSBuildThisFileDirectory)SSUtils\GUI\IWebEngineDialogWidget.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)SSUtils\GUI\QDraggableFlatteningDialog.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)SSUtils\GUI\QDraggableFlatteningWidget.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)SSUtils\GUI\QMessageBoxUtils.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)SSUtils\GUI\QWebEngineWidget.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="$(MSBuildThisFileDirectory)SSUtils\GUI\IWebEngineDialogWidget.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)SSUtils\GUI\QMessageBoxUtils.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)SSUtils\GUI\QWebEngineWidget.cpp" />
-  </ItemGroup>
 </Project>

@@ -60,7 +60,7 @@ namespace SSUtils
 		template<unsigned int MaxPositionY>
 		void QDraggableFlatteningDialog::mousePressEvent(QMouseEvent * event)
 		{
-			mousePosition = ;
+			mousePosition = event->pos();
 			if (mousePosition.x() >= width()
 				|| mousePosition.x() <= 0
 				|| mousePosition.y() >= MaxPositionY
