@@ -19,6 +19,8 @@ namespace CompetitionConfigurationModule
         private AthleteValidator athleteValidator;
         private PointInfo pointInfo;
 
+        private GameInfoPool gameInfos;
+
         public String Id
         {
             get { return id; }
@@ -60,6 +62,19 @@ namespace CompetitionConfigurationModule
             set { pointInfo = value; }
         }
 
+        public GameInfoPool GameInfos
+        {
+            get { return gameInfos; }
+            set
+            {
+                if (value.Count == 0)
+                {
+                    throw new Exception("不能将比赛列表设置为空列表");
+                }
+                gameInfos = value;
+            }
+        }
+
         public EventInfo()
             : this(Guid.NewGuid().ToString("N")) { }
 
@@ -70,6 +85,7 @@ namespace CompetitionConfigurationModule
             teamworkInfo = new TeamworkInfo();
             athleteValidator = new AthleteValidator();
             pointInfo = new PointInfo();
+            gameInfos = new GameInfoPool(this);
         }
     }
 }

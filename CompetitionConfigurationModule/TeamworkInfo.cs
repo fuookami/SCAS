@@ -94,6 +94,10 @@ namespace CompetitionConfigurationModule
                 {
                     throw new Exception("最少需要的人数不能大于最大需要的人数");
                 }
+                if (maxNumber < NotNeedEveryPerson || minNumber < NotNeedEveryPerson)
+                {
+                    throw new Exception("最少需要的人数或最大需要的人数是个无效值");
+                }
                 minMumberOfPeople = minNumber;
                 maxNumberOfPeople = maxNumber;
             }

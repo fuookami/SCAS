@@ -30,6 +30,7 @@ namespace CompetitionConfigurationModule
 
         public AthleteRank(String existedId, UInt32 distributiveOrder = 0)
         {
+            id = existedId;
             order = distributiveOrder;
         }
     }
