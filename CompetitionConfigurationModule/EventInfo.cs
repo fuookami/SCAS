@@ -19,6 +19,7 @@ namespace CompetitionConfigurationModule
         private AthleteValidator athleteValidator;
         private PointInfo pointInfo;
 
+        private CompetitionInfo competitionInfo;
         private GameInfoPool gameInfos;
 
         public String Id
@@ -62,6 +63,11 @@ namespace CompetitionConfigurationModule
             set { pointInfo = value; }
         }
 
+        public CompetitionInfo Competition
+        {
+            get { return competitionInfo; }
+        }
+
         public GameInfoPool GameInfos
         {
             get { return gameInfos; }
@@ -75,16 +81,18 @@ namespace CompetitionConfigurationModule
             }
         }
 
-        public EventInfo()
-            : this(Guid.NewGuid().ToString("N")) { }
+        public EventInfo(CompetitionInfo competition)
+            : this(competition, Guid.NewGuid().ToString("N")) { }
 
-        public EventInfo(String existedId)
+        public EventInfo(CompetitionInfo competition, String existedId)
         {
             id = existedId;
             gradeInfo = new GradeInfo();
             teamworkInfo = new TeamworkInfo();
             athleteValidator = new AthleteValidator();
             pointInfo = new PointInfo();
+
+            competitionInfo = competition;
             gameInfos = new GameInfoPool(this);
         }
     }

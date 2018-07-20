@@ -47,7 +47,6 @@
     <Compile Include="Date.cs" />
     <Compile Include="EventInfo.cs" />
     <Compile Include="GameInfo.cs" />
-    <Compile Include="GameTypeInfo.cs" />
     <Compile Include="GradeInfo.cs" />
     <Compile Include="GroupInfo.cs" />
     <Compile Include="PointInfo.cs" />
