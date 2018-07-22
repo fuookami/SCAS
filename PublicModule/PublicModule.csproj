@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{5916D323-17A8-4326-8FB1-EE97F070DB86}</ProjectGuid>
+    <ProjectGuid>{87712E07-279A-4539-8DF6-E9E5BAFA0840}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CompetitionConfigurationModule</RootNamespace>
-    <AssemblyName>CompetitionConfigurationModule</AssemblyName>
+    <RootNamespace>PublicModule</RootNamespace>
+    <AssemblyName>PublicModule</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -40,27 +40,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ApplyValidator.cs" />
-    <Compile Include="AthleteCategory.cs" />
-    <Compile Include="AthleteRank.cs" />
-    <Compile Include="AthleteValidator.cs" />
-    <Compile Include="CompetitionInfo.cs" />
-    <Compile Include="DateInfo.cs" />
-    <Compile Include="EventInfo.cs" />
-    <Compile Include="GameInfo.cs" />
-    <Compile Include="GradeInfo.cs" />
-    <Compile Include="GroupInfo.cs" />
-    <Compile Include="PointInfo.cs" />
-    <Compile Include="PrincipalInfo.cs" />
+    <Compile Include="Date.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TeamInfo.cs" />
-    <Compile Include="TeamworkInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\PublicModule\PublicModule.csproj">
-      <Project>{87712e07-279a-4539-8df6-e9e5bafa0840}</Project>
-      <Name>PublicModule</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

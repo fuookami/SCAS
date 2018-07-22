@@ -75,42 +75,37 @@ namespace CompetitionConfigurationModule
 
         public void SetIsNotTeamwork()
         {
-            if (isTeamwork)
-            {
-                isTeamwork = false;
-                needEveryPerson = false;
-                minMumberOfPeople = NoTeamwork;
-                maxNumberOfPeople = NoTeamwork;
-            }
+            isTeamwork = false;
+            needEveryPerson = false;
+            minMumberOfPeople = NoTeamwork;
+            maxNumberOfPeople = NoTeamwork;
         }
 
         public void SetNeedEveryPerson(Int32 minNumber = NoLimit, Int32 maxNumber = NoLimit)
         {
-            if (!needEveryPerson || (minMumberOfPeople != minNumber || maxNumberOfPeople != maxNumber))
+            if (maxNumber != NoLimit && maxNumber < minNumber)
             {
-                isTeamwork = true;
-                needEveryPerson = true;
-                if (maxNumber != NoLimit && maxNumber < minNumber)
-                {
-                    throw new Exception("最少需要的人数不能大于最大需要的人数");
-                }
-                if (maxNumber < NotNeedEveryPerson || minNumber < NotNeedEveryPerson)
-                {
-                    throw new Exception("最少需要的人数或最大需要的人数是个无效值");
-                }
-                minMumberOfPeople = minNumber;
-                maxNumberOfPeople = maxNumber;
+                throw new Exception("最少需要的人数不能大于最大需要的人数");
             }
+            if (maxNumber < NotNeedEveryPerson || minNumber < NotNeedEveryPerson)
+            {
+                throw new Exception("最少需要的人数或最大需要的人数是个无效值");
+            }
+
+            if (!isTeamwork)
+            {
+                SetIsTeamwork();
+            }
+            needEveryPerson = true;
+            minMumberOfPeople = minNumber;
+            maxNumberOfPeople = maxNumber;
         }
 
         public void SetNotNeedEveryPerson()
         {
-            if (needEveryPerson)
-            {
-                needEveryPerson = false;
-                minMumberOfPeople = NotNeedEveryPerson;
-                maxNumberOfPeople = NotNeedEveryPerson;
-            }
+            needEveryPerson = false;
+            minMumberOfPeople = NotNeedEveryPerson;
+            maxNumberOfPeople = NotNeedEveryPerson;
         }
     }
 }

@@ -70,20 +70,18 @@ namespace CompetitionConfigurationModule
 
         public void SetBreakRecordPointRateEnabled(Double rate = NoPointRate)
         {
-            if (!breakRecordPointRateEnabled)
+            breakRecordPointRateEnabled = true;
+            if (rate < .0)
             {
-                breakRecordPointRateEnabled = true;
-                breakRecordPointRate = rate;
+                throw new Exception("打破记录的积分比例不能小于0");
             }
+            breakRecordPointRate = rate;
         }
 
         public void SetBreakRecordPointRateDisabled()
         {
-            if (breakRecordPointRateEnabled)
-            {
-                breakRecordPointRateEnabled = false;
-                breakRecordPointRate = PointRateDisabled;
-            }
+            breakRecordPointRateEnabled = false;
+            breakRecordPointRate = PointRateDisabled;
         }
     }
 }

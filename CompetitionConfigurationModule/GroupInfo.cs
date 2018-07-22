@@ -43,11 +43,11 @@ namespace CompetitionConfigurationModule
         public void SetEnabled(Int32 number = NoLimit)
         {
             enabled = true;
-            if (number < NoGroup)
+            if (number <= NoGroup)
             {
                 throw new Exception("分组的数量是个无效值");
             }
-            numberPerGroup = NoLimit;
+            numberPerGroup = number;
         }
 
         public void SetDisbaled()
