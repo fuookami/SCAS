@@ -18,6 +18,7 @@ namespace CompetitionConfigurationModule
         private TeamworkInfo teamworkInfo;
         private AthleteValidator athleteValidator;
         private PointInfo pointInfo;
+        private TeamInfoList enabledTeams;
 
         private CompetitionInfo competitionInfo;
         private GameInfoPool gameInfos;
@@ -42,25 +43,30 @@ namespace CompetitionConfigurationModule
         public GradeInfo EventGradeInfo
         {
             get { return gradeInfo; }
-            set { gradeInfo = value; }
+            set { gradeInfo = value ?? throw new Exception("设置的积分类型是个无效值"); ; }
         }
 
         public TeamworkInfo EventTeamworkInfo
         {
             get { return teamworkInfo; }
-            set { teamworkInfo = value; }
+            set { teamworkInfo = value ?? throw new Exception("设置的团体项目信息是个无效值"); ; }
         }
 
         public AthleteValidator EvenetAthleteValidator
         {
             get { return athleteValidator; }
-            set { athleteValidator = value; }
+            set { athleteValidator = value ?? throw new Exception("设置的运动员报名限制信息是个无效值"); ; }
         }
 
         public PointInfo EventPointInfo
         {
             get { return pointInfo; }
-            set { pointInfo = value; }
+            set { pointInfo = value ?? throw new Exception("设置的积分信息是个无效值"); ; }
+        }
+
+        public TeamInfoList EnabledTeams
+        {
+            get { return enabledTeams; }
         }
 
         public CompetitionInfo Competition
@@ -86,11 +92,17 @@ namespace CompetitionConfigurationModule
 
         public EventInfo(CompetitionInfo competition, String existedId)
         {
+            if (competition == null)
+            {
+                throw new Exception("设置的父竞赛是个无效值");
+            }
+
             id = existedId;
             gradeInfo = new GradeInfo();
             teamworkInfo = new TeamworkInfo();
             athleteValidator = new AthleteValidator();
             pointInfo = new PointInfo();
+            enabledTeams = new TeamInfoList();
 
             competitionInfo = competition;
             gameInfos = new GameInfoPool(this);

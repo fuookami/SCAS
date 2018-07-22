@@ -8,14 +8,14 @@ namespace CompetitionConfigurationModule
 
         private AthleteCategoryList categories;
         private AthleteRankList ranks;
-        private UInt32 maxNumberPerTeam;
+        private UInt32 maxNumberPerAthlete;
 
         public AthleteCategoryList Categories
         {
             get { return categories; }
             set
             {
-                if (value.Count == 0)
+                if (value == null || value.Count == 0)
                 {
                     throw new Exception("不能将运动员类别列表设置为空列表");
                 }
@@ -28,7 +28,7 @@ namespace CompetitionConfigurationModule
             get { return ranks; }
             set
             {
-                if (value.Count == 0)
+                if (value == null || value.Count == 0)
                 {
                     throw new Exception("不能将运动员级别列表设置为空列表");
                 }
@@ -36,15 +36,15 @@ namespace CompetitionConfigurationModule
             }
         }
 
-        public UInt32 MaxNumberOfPeoplePerTeam
+        public UInt32 MaxNumberOfPeoplePerAthlete
         {
-            get { return maxNumberPerTeam; }
-            set { maxNumberPerTeam = value; }
+            get { return maxNumberPerAthlete; }
+            set { maxNumberPerAthlete = value; }
         }
 
         public AthleteValidator()
         {
-            maxNumberPerTeam = NoLimit;
+            maxNumberPerAthlete = NoLimit;
         }
     }
 }

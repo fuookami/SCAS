@@ -10,7 +10,7 @@ namespace CompetitionConfigurationModule
         private String id;
         private String name;
 
-        private UInt32 numberOfAthlete;
+        private UInt32 numberOfTeam;
         private Date date;
 
         private Int32 orderInEvent;
@@ -34,10 +34,10 @@ namespace CompetitionConfigurationModule
             set { name = value; }
         }
 
-        public UInt32 NumberOfAthlete
+        public UInt32 NumberOfTeam
         {
-            get { return NumberOfAthlete; }
-            set { numberOfAthlete = value; }
+            get { return NumberOfTeam; }
+            set { numberOfTeam = value; }
         }
 
         public Date GameDate
@@ -96,6 +96,12 @@ namespace CompetitionConfigurationModule
                 }
                 planTimePerGroup = value;
             }
+        }
+
+        public GroupInfo EventGroupInfo
+        {
+            get { return groupInfo; }
+            set { groupInfo = value ?? throw new Exception("设置的比赛分组信息是个无效值"); }
         }
 
         public EventInfo Event
@@ -279,17 +285,17 @@ namespace CompetitionConfigurationModule
                 : -1;
         }
 
-        public bool CheckNumberOfAthleteIsDecreaseProgressively()
+        public bool CheckNumberOfTeamIsDecreaseProgressively()
         {
             if (this.Count == 0)
             {
                 return true;
             }
 
-            for (Int32 i = this[0].NumberOfAthlete == GameInfo.NoLimit ? 1 : 0, 
+            for (Int32 i = this[0].NumberOfTeam == GameInfo.NoLimit ? 1 : 0, 
                 j = this.Count - 1; i != j; ++i)
             {
-                if (this[i].NumberOfAthlete >= this[i + 1].NumberOfAthlete)
+                if (this[i].NumberOfTeam >= this[i + 1].NumberOfTeam)
                 {
                     return false;
                 }
