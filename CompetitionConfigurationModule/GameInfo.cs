@@ -114,6 +114,7 @@ namespace CompetitionConfigurationModule
 
         protected GameInfo(EventInfo _event, String existedId)
         {
+            id = existedId;
             groupInfo = new GroupInfo();
             eventInfo = _event;
         }
@@ -196,7 +197,7 @@ namespace CompetitionConfigurationModule
             : base(_event, existedId) { }
     }
 
-    class GameInfoList : List<GameInfo>
+    public class GameInfoList : List<GameInfo>
     {
         public new void Sort()
         {
@@ -250,7 +251,7 @@ namespace CompetitionConfigurationModule
         }
     }
 
-    class GameInfoPool : GameInfoList
+    public class GameInfoPool : GameInfoList
     {
         private EventInfo eventInfo;
 

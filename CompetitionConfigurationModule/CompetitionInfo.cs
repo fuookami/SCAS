@@ -18,7 +18,7 @@ namespace CompetitionConfigurationModule
         private List<Date> dates;
 
         private AthleteCategoryPool athleteCategories;
-        private AthleteRankPool athleteRanks;
+        private RankInfo rankInfo;
         private TeamCategoryPool teamCategories;
         private TeamInfoPool teamInfos;
 
@@ -98,9 +98,9 @@ namespace CompetitionConfigurationModule
             get { return athleteCategories; }
         }
 
-        public AthleteRankPool AthleteRanks
+        public RankInfo CompetitionRankInfo
         {
-            get { return athleteRanks; }
+            get { return rankInfo; }
         }
 
         public TeamCategoryPool TeamCategories
@@ -137,7 +137,7 @@ namespace CompetitionConfigurationModule
             dates = new List<Date>();
 
             athleteCategories = new AthleteCategoryPool();
-            athleteRanks = new AthleteRankPool();
+            rankInfo = new RankInfo();
             teamCategories = new TeamCategoryPool();
             teamInfos = new TeamInfoPool();
 
