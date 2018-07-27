@@ -44,6 +44,8 @@
     <Compile Include="AthleteCategory.cs" />
     <Compile Include="AthleteRank.cs" />
     <Compile Include="AthleteValidator.cs" />
+    <Compile Include="CompetitionConfigurationAnalyzer.cs" />
+    <Compile Include="CompetitionConfigurationNormalizer.cs" />
     <Compile Include="CompetitionInfo.cs" />
     <Compile Include="EventInfo.cs" />
     <Compile Include="GameInfo.cs" />
