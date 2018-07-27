@@ -2,7 +2,7 @@
 
 namespace CompetitionConfigurationModule
 {
-    class CompetitionConfigurationAnalyzer
+    public class CompetitionConfigurationAnalyzer
     {
         public enum InputType
         {
@@ -34,6 +34,11 @@ namespace CompetitionConfigurationModule
         public String LastError
         {
             get { return lastError; }
+        }
+        
+        public CompetitionInfo Result
+        {
+            get { return result; }
         }
 
         public CompetitionConfigurationAnalyzer(InputType dataInputType = InputType.File)

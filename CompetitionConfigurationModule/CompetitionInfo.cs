@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace CompetitionConfigurationModule
 {
-    class CompetitionInfo
+    public class CompetitionInfo
     {
         private String id;
         private String name;

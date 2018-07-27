@@ -2,7 +2,7 @@
 
 namespace CompetitionConfigurationModule
 {
-    class EventInfo
+    public class EventInfo
     {
         public enum EventType
         {

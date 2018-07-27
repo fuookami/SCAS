@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace CompetitionConfigurationModule
 {
-    class GameInfo
+    public class GameInfo
     {
         public const UInt32 NoLimit = 0;
 

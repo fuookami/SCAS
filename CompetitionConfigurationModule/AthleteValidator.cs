@@ -2,7 +2,7 @@
 
 namespace CompetitionConfigurationModule
 {
-    class AthleteValidator
+    public class AthleteValidator
     {
         public const UInt32 NoLimit = 0;
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace CompetitionConfigurationModule
 {
-    class TeamInfo
+    public class TeamInfo
     {
         private String id;
         private UInt32 order;
@@ -49,7 +49,7 @@ namespace CompetitionConfigurationModule
         }
     }
 
-    class TeamInfoList : List<TeamInfo>
+    public class TeamInfoList : List<TeamInfo>
     {
         new public void Sort()
         {
@@ -75,7 +75,7 @@ namespace CompetitionConfigurationModule
         }
     }
 
-    class TeamInfoPool : TeamInfoList
+    public class TeamInfoPool : TeamInfoList
     {
         public TeamInfo GenerateNewInfo(String existedId = null)
         {

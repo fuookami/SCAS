@@ -2,7 +2,7 @@
 
 namespace CompetitionConfigurationModule
 {
-    class GroupInfo
+    public class GroupInfo
     {
         public const Int32 NoGroup = -1;
         public const Int32 NoLimit = 0;

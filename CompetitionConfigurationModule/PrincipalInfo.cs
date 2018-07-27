@@ -2,7 +2,7 @@
 
 namespace CompetitionConfigurationModule
 {
-    class PrincipalInfo
+    public class PrincipalInfo
     {
         private String name;
         private String telephone;

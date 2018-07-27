@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace CompetitionConfigurationModule
 {
-    class PointInfo
+    public class PointInfo
     {
         public const Double NoPointRate = 1.0;
         public const Double PointRateDisabled = .0;

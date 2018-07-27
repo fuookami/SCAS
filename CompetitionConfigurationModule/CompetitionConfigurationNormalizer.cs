@@ -2,7 +2,7 @@
 
 namespace CompetitionConfigurationModule
 {
-    class CompetitionConfigurationNormalizer
+    public class CompetitionConfigurationNormalizer
     {
         public enum ErrorCode
         {

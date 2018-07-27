@@ -2,7 +2,7 @@
 
 namespace CompetitionConfigurationModule
 {
-    class TeamworkInfo
+    public class TeamworkInfo
     {
         public const Int32 NoTeamwork = -2;
         public const Int32 NotNeedEveryPerson = -1;

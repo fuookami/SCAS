@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace CompetitionConfigurationModule
 {
-    class AthleteRank
+    public class AthleteRank
     {
         private String id;
         private UInt32 order;
@@ -35,7 +35,7 @@ namespace CompetitionConfigurationModule
         }
     }
 
-    class AthleteRankList : List<AthleteRank>
+    public class AthleteRankList : List<AthleteRank>
     {
         new public void Sort()
         {
@@ -43,7 +43,7 @@ namespace CompetitionConfigurationModule
         }
     }
 
-    class AthleteRankPool : AthleteRankList
+    public class AthleteRankPool : AthleteRankList
     {
         public AthleteRank GenerateNewRank()
         {

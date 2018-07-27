@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace CompetitionConfigurationModule
 {
-    class ApplicationValidator
+    public class ApplicationValidator
     {
         public const Int32 NotEnabled = -1;
         public const Int32 NoLimit = 0;
