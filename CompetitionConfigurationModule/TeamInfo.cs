@@ -39,13 +39,14 @@ namespace CompetitionConfigurationModule
             set { category = value ?? throw new Exception("设置的队伍类型是个无效值"); }
         }
 
-        public TeamInfo(UInt32 distributiveOrder = 0)
-            : this(Guid.NewGuid().ToString("N"), distributiveOrder) { }
+        public TeamInfo(TeamCategory teamCategory, UInt32 distributiveOrder = 0)
+            : this(teamCategory, Guid.NewGuid().ToString("N"), distributiveOrder) { }
 
-        public TeamInfo(String existedId, UInt32 distributiveOrder = 0)
+        public TeamInfo(TeamCategory teamCategory, String existedId, UInt32 distributiveOrder = 0)
         {
             id = existedId;
             order = distributiveOrder;
+            category = teamCategory;
         }
     }
 
@@ -77,7 +78,7 @@ namespace CompetitionConfigurationModule
 
     public class TeamInfoPool : TeamInfoList
     {
-        public TeamInfo GenerateNewInfo(String existedId = null)
+        public TeamInfo GenerateNewInfo(TeamCategory teamCategory, String existedId = null)
         {
             UInt32 order = 0;
             for (; order != UInt32.MaxValue; ++order)
@@ -91,7 +92,7 @@ namespace CompetitionConfigurationModule
             {
                 throw new Exception("队伍信息的序号已经满额，无法再分配");
             }
-            var element = new TeamInfo(existedId ?? Guid.NewGuid().ToString("N"), order);
+            var element = new TeamInfo(teamCategory, existedId ?? Guid.NewGuid().ToString("N"), order);
             Add(element);
             return element;
         }

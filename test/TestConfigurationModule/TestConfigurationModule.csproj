@@ -53,6 +53,10 @@
       <Project>{5916d323-17a8-4326-8fb1-ee97f070db86}</Project>
       <Name>CompetitionConfigurationModule</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\PublicModule\PublicModule.csproj">
+      <Project>{87712e07-279a-4539-8df6-e9e5bafa0840}</Project>
+      <Name>PublicModule</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

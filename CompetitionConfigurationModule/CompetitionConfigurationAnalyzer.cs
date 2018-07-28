@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Xml;
 
 namespace CompetitionConfigurationModule
 {
@@ -63,15 +64,34 @@ namespace CompetitionConfigurationModule
 
         private bool AnalyzeFromFile(String url)
         {
-            // load from the file
-            String data = "1";
-            return AnalyzeFromBinary(data);
+            XmlDocument doc = new XmlDocument();
+            doc.Load(url);
+
+            return AnalyzeFromDocument(doc);
         }
 
-        private bool AnalyzeFromBinary(String json)
+        private bool AnalyzeFromBinary(String binary)
         {
-            // to do
-            result = new CompetitionInfo();
+            XmlDocument doc = new XmlDocument();
+            doc.Load(new System.IO.StringReader(binary));
+            
+            return AnalyzeFromDocument(doc);
+        }
+
+        private bool AnalyzeFromDocument(XmlDocument doc)
+        {
+            XmlElement root = doc.DocumentElement;
+            CompetitionInfo temp = null;
+
+            {
+                XmlElement idNode = (XmlElement)root.GetElementsByTagName("Id")[0];
+                temp = new CompetitionInfo(idNode.InnerText);
+
+                XmlElement nameNode = (XmlElement)root.GetElementsByTagName("Name")[0];
+                temp.Name = nameNode.InnerText;
+            }
+
+            result = temp;
             return true;
         }
 

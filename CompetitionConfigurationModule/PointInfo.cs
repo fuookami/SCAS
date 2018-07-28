@@ -58,6 +58,19 @@ namespace CompetitionConfigurationModule
             }
         }
 
+        public Double BreakRecordPointRate
+        {
+            get { return breakRecordPointRate; }
+            set
+            {
+                if (value < .0)
+                {
+                    throw new Exception("打破纪录时的积分比例不能小于0");
+                }
+                SetBreakRecordPointRateEnabled(value);
+            }
+        }
+
         public PointInfo()
         {
             points = DefaultPoints;

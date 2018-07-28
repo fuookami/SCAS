@@ -65,6 +65,7 @@ namespace CompetitionConfigurationModule
 
         public RankInfo()
         {
+            athleteRanks = new AthleteRankPool();
             SetDisabled();
         }
 

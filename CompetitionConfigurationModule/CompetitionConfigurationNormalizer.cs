@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Xml;
 
 namespace CompetitionConfigurationModule
 {
@@ -12,6 +13,7 @@ namespace CompetitionConfigurationModule
         private ErrorCode lastErrorCode;
         private String lastError;
         private CompetitionInfo outputData;
+        private XmlDocument docData;
         private String binaryData;
 
         public ErrorCode LastErrorCode
@@ -30,13 +32,21 @@ namespace CompetitionConfigurationModule
             set
             {
                 outputData = value;
-                binaryData = "";
+                docData = null;
+                binaryData = null;
             }
         }
 
         public String Binary
         {
-            get { return binaryData; }
+            get
+            {
+                if (binaryData == null && docData!= null)
+                {
+                    binaryData = docData.ToString();
+                }
+                return binaryData;
+            }
         }
 
         public CompetitionConfigurationNormalizer(CompetitionInfo data)
@@ -46,29 +56,38 @@ namespace CompetitionConfigurationModule
             binaryData = "";
         }
 
-        private bool NormalizeToBinary()
-        {
-            // to do
-            binaryData = "test";
-            return true;
-        }
-
         public bool Normalize()
         {
-            if (binaryData.Length != 0)
+            if (docData != null)
             {
                 return true;
             }
-            return NormalizeToBinary();
+
+            XmlDocument doc = new XmlDocument();
+            XmlElement root = doc.CreateElement("SCAS_CompCfg");
+
+            {
+                XmlElement idNode = doc.CreateElement("Id");
+                idNode.AppendChild(doc.CreateTextNode(outputData.Id));
+                root.AppendChild(idNode);
+
+                XmlElement nameNode = doc.CreateElement("Name");
+                nameNode.AppendChild(doc.CreateTextNode(outputData.Name));
+                root.AppendChild(nameNode);
+            }
+
+            doc.AppendChild(root);
+            docData = doc;
+            return true;
         }
 
         public bool NormalizeToFile(String url)
         {
-            if (binaryData.Length == 0 && !NormalizeToBinary())
+            if (docData == null && !Normalize())
             {
                 return false;
             }
-            // save to file
+            docData.Save(url);
             return true;
         }
 
