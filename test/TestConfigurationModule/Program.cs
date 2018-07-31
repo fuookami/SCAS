@@ -27,7 +27,7 @@ namespace TestConfigurationModule
             {
                 Enabled = true,
                 EnabledInTeamwork = false,
-                MaxApplicationNumberPerTeam = 2
+                MaxApplicationNumberPerAthlete = 2
             };
 
             ret.CompetitionPrincipalInfo = new PrincipalInfo()

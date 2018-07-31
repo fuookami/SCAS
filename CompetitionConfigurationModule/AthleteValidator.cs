@@ -8,7 +8,7 @@ namespace CompetitionConfigurationModule
 
         private AthleteCategoryList categories;
         private AthleteRankList ranks;
-        private UInt32 maxNumberPerAthlete;
+        private UInt32 maxNumberPerTeam;
 
         public AthleteCategoryList Categories
         {
@@ -36,15 +36,15 @@ namespace CompetitionConfigurationModule
             }
         }
 
-        public UInt32 MaxNumberOfPeoplePerAthlete
+        public UInt32 MaxNumberOfPeoplePerTeam
         {
-            get { return maxNumberPerAthlete; }
-            set { maxNumberPerAthlete = value; }
+            get { return maxNumberPerTeam; }
+            set { maxNumberPerTeam = value; }
         }
 
         public AthleteValidator()
         {
-            maxNumberPerAthlete = NoLimit;
+            maxNumberPerTeam = NoLimit;
         }
     }
 }

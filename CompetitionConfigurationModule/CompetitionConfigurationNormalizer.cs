@@ -92,6 +92,13 @@ namespace CompetitionConfigurationModule
                 root.AppendChild(isTemplateNode);
             }
 
+            XmlElement applicationValidatorNode = NormalizeApplicationValidator(doc, outputData.CompetitionApplicationValidator);
+            if (applicationValidatorNode == null)
+            {
+                return false;
+            }
+            root.AppendChild(applicationValidatorNode);
+
             doc.AppendChild(root);
             docData = doc;
             return true;
@@ -105,6 +112,28 @@ namespace CompetitionConfigurationModule
             }
             docData.Save(url);
             return true;
+        }
+
+        private static XmlElement NormalizeApplicationValidator(XmlDocument doc, ApplicationValidator data)
+        {
+            XmlElement applicationValidatorNode = doc.CreateElement("ApplicationValidator");
+
+            XmlElement enabledNode = doc.CreateElement("Enabled");
+            enabledNode.AppendChild(doc.CreateTextNode(data.Enabled.ToString()));
+            applicationValidatorNode.AppendChild(enabledNode);
+
+            if (data.Enabled)
+            {
+                XmlElement enabledInTeamworkNode = doc.CreateElement("EnabledInTeamwork");
+                enabledInTeamworkNode.AppendChild(doc.CreateTextNode(data.EnabledInTeamwork.ToString()));
+                applicationValidatorNode.AppendChild(enabledInTeamworkNode);
+
+                XmlElement maxApplicationNumberPerAthleteNode = doc.CreateElement("MaxApplicationNumberPerAthlete");
+                maxApplicationNumberPerAthleteNode.AppendChild(doc.CreateTextNode(data.MaxApplicationNumberPerAthlete.ToString()));
+                applicationValidatorNode.AppendChild(maxApplicationNumberPerAthleteNode);
+            }
+
+            return applicationValidatorNode;
         }
 
         private void RefreshError(ErrorCode code, String text)

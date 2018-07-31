@@ -103,8 +103,30 @@ namespace CompetitionConfigurationModule
                 temp.IsTemplate = Boolean.Parse(isTemplateNode.InnerText);
             }
 
+            temp.CompetitionApplicationValidator = AnalyzeApplicationValidatorNode(
+                (XmlElement)root.GetElementsByTagName("ApplicationValidator")[0]);
+
             result = temp;
             return true;
+        }
+
+        private ApplicationValidator AnalyzeApplicationValidatorNode(XmlElement node)
+        {
+            ApplicationValidator ret = new ApplicationValidator();
+
+            XmlElement enabledNode = (XmlElement)node.GetElementsByTagName("Enabled")[0];
+            ret.Enabled = Boolean.Parse(enabledNode.InnerText);
+
+            if (ret.Enabled)
+            {
+                XmlElement enabledInTeamworkNode = (XmlElement)node.GetElementsByTagName("EnabledInTeamwork")[0];
+                ret.EnabledInTeamwork = Boolean.Parse(enabledInTeamworkNode.InnerText);
+
+                XmlElement maxApplicationNumberPerAthleteNode = (XmlElement)node.GetElementsByTagName("MaxApplicationNumberPerAthlete")[0];
+                ret.MaxApplicationNumberPerAthlete = Int32.Parse(maxApplicationNumberPerAthleteNode.InnerText);
+            }
+
+            return ret;
         }
 
         private void RefreshError(ErrorCode code, String text)

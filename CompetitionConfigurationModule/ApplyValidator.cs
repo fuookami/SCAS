@@ -10,7 +10,7 @@ namespace CompetitionConfigurationModule
 
         private bool enabled;
         private bool enabledInTeamwork;
-        private Int32 maxApplicationNumberPerTeam;
+        private Int32 maxApplicationNumberPerAthlete;
 
         public bool Enabled
         {
@@ -44,9 +44,9 @@ namespace CompetitionConfigurationModule
             }
         }
 
-        public Int32 MaxApplicationNumberPerTeam
+        public Int32 MaxApplicationNumberPerAthlete
         {
-            get { return maxApplicationNumberPerTeam; }
+            get { return maxApplicationNumberPerAthlete; }
             set { SetEnabled(value); }
         }
 
@@ -66,14 +66,14 @@ namespace CompetitionConfigurationModule
             {
                 enabled = true;
             }
-            maxApplicationNumberPerTeam = maxApplicationNumber;
+            maxApplicationNumberPerAthlete = maxApplicationNumber;
         }
 
         public void SetDisabled()
         {
             enabled = false;
             SetDisabledInTeamwork();
-            maxApplicationNumberPerTeam = NotEnabled;
+            maxApplicationNumberPerAthlete = NotEnabled;
         }
 
         public void SetEnabledInTeamwork()
