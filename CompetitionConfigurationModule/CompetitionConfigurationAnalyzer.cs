@@ -89,6 +89,18 @@ namespace CompetitionConfigurationModule
 
                 XmlElement nameNode = (XmlElement)root.GetElementsByTagName("Name")[0];
                 temp.Name = nameNode.InnerText;
+
+                XmlElement subNameNode = (XmlElement)root.GetElementsByTagName("SubName")[0];
+                temp.SubName = subNameNode.InnerText;
+
+                XmlElement versionNode = (XmlElement)root.GetElementsByTagName("Version")[0];
+                temp.Version = versionNode.InnerText;
+
+                XmlElement identifierNode = (XmlElement)root.GetElementsByTagName("Identifier")[0];
+                temp.Identifier = identifierNode.InnerText;
+
+                XmlElement isTemplateNode = (XmlElement)root.GetElementsByTagName("Template")[0];
+                temp.IsTemplate = Boolean.Parse(isTemplateNode.InnerText);
             }
 
             result = temp;

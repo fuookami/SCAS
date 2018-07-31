@@ -74,6 +74,22 @@ namespace CompetitionConfigurationModule
                 XmlElement nameNode = doc.CreateElement("Name");
                 nameNode.AppendChild(doc.CreateTextNode(outputData.Name));
                 root.AppendChild(nameNode);
+
+                XmlElement subNameNode = doc.CreateElement("SubName");
+                subNameNode.AppendChild(doc.CreateTextNode(outputData.SubName));
+                root.AppendChild(subNameNode);
+
+                XmlElement versionNode = doc.CreateElement("Version");
+                versionNode.AppendChild(doc.CreateTextNode(outputData.Version));
+                root.AppendChild(versionNode);
+
+                XmlElement identifierNode = doc.CreateElement("Identifier");
+                identifierNode.AppendChild(doc.CreateTextNode(outputData.Identifier));
+                root.AppendChild(identifierNode);
+
+                XmlElement isTemplateNode = doc.CreateElement("Template");
+                isTemplateNode.AppendChild(doc.CreateTextNode(outputData.IsTemplate.ToString()));
+                root.AppendChild(isTemplateNode);
             }
 
             doc.AppendChild(root);
