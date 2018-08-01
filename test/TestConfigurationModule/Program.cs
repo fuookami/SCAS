@@ -34,7 +34,13 @@ namespace TestConfigurationModule
             {
                 Name = "负责人的姓名",
                 Telephone = "负责人的手机",
-                Email = "负责人的邮箱@xxx.xx"
+                Email = "负责人的邮箱@xxx.xx",
+                Others = new Dictionary<string, string>
+                {
+                    { "QQ", "假装是个QQ号" },
+                    { "微信", "假装是个微信号" },
+                    { "备注", "随便写点什么" }
+                }
             };
 
             ret.Dates = new List<Date> { Date.Today, Date.Today.Tomorrow };

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Xml;
 
 namespace CompetitionConfigurationModule
@@ -16,10 +17,13 @@ namespace CompetitionConfigurationModule
             NoError
         }
 
+        private delegate bool AnalyzeNodeFunctionType<T>(XmlElement parent, T data);
+        
         private InputType inputType;
         private ErrorCode lastErrorCode;
         private String lastError;
         private CompetitionInfo result;
+        private readonly List<AnalyzeNodeFunctionType<CompetitionInfo>> AnalyzeCompetitionInfoFunctions;
 
         public InputType DataInputType
         {
@@ -47,6 +51,13 @@ namespace CompetitionConfigurationModule
             inputType = dataInputType;
             lastErrorCode = ErrorCode.NoError;
             result = null;
+
+            AnalyzeCompetitionInfoFunctions = new List<AnalyzeNodeFunctionType<CompetitionInfo>>
+            {
+                AnalyzeApplicationValidatorNode, 
+                AnalyzePrincipleNode, 
+                AnalyzePublicPointInfoNode
+            };
         }
 
         public bool Analyze(String data)
@@ -103,15 +114,21 @@ namespace CompetitionConfigurationModule
                 temp.IsTemplate = Boolean.Parse(isTemplateNode.InnerText);
             }
 
-            temp.CompetitionApplicationValidator = AnalyzeApplicationValidatorNode(
-                (XmlElement)root.GetElementsByTagName("ApplicationValidator")[0]);
+            foreach (var analyzezeFunction in AnalyzeCompetitionInfoFunctions)
+            {
+                if (!analyzezeFunction(root, temp))
+                {
+                    return false;
+                }
+            }
 
             result = temp;
             return true;
         }
 
-        private ApplicationValidator AnalyzeApplicationValidatorNode(XmlElement node)
+        private bool AnalyzeApplicationValidatorNode(XmlElement parent, CompetitionInfo data)
         {
+            XmlElement node = (XmlElement)parent.GetElementsByTagName("ApplicationValidator")[0];
             ApplicationValidator ret = new ApplicationValidator();
 
             XmlElement enabledNode = (XmlElement)node.GetElementsByTagName("Enabled")[0];
@@ -126,7 +143,63 @@ namespace CompetitionConfigurationModule
                 ret.MaxApplicationNumberPerAthlete = Int32.Parse(maxApplicationNumberPerAthleteNode.InnerText);
             }
 
-            return ret;
+            data.CompetitionApplicationValidator = ret;
+            return true;
+        }
+
+        private bool AnalyzePrincipleNode(XmlElement parent, CompetitionInfo data)
+        {
+            XmlElement node = (XmlElement)parent.GetElementsByTagName("Principle")[0];
+            PrincipalInfo ret = new PrincipalInfo();
+
+            XmlElement nameNode = (XmlElement)node.GetElementsByTagName("Name")[0];
+            ret.Name = nameNode.InnerText;
+
+            XmlElement telephoneNode = (XmlElement)node.GetElementsByTagName("Telephone")[0];
+            ret.Telephone = telephoneNode.InnerText;
+
+            XmlElement emailNode = (XmlElement)node.GetElementsByTagName("Email")[0];
+            ret.Email = emailNode.InnerText;
+
+            XmlNodeList otherNodes = node.GetElementsByTagName("Other");
+            foreach (XmlElement otherNode in otherNodes)
+            {
+                ret.Others.Add(otherNode.GetAttribute("key"), otherNode.InnerText);
+            }
+
+            data.CompetitionPrincipalInfo = ret;
+            return true;
+        }
+
+        private bool AnalyzePublicPointInfoNode(XmlElement parent, CompetitionInfo data)
+        {
+            XmlElement node = (XmlElement)parent.GetElementsByTagName("PublicPointInfo")[0];
+            PointInfo ret = new PointInfo();
+
+            XmlElement pointsNode = (XmlElement)node.GetElementsByTagName("Points")[0];
+            var pointStrings = pointsNode.InnerText.Split(new char[]{',', ' '}, StringSplitOptions.RemoveEmptyEntries);
+            ret.Points.Clear();
+            foreach (var pointString in pointStrings)
+            {
+                ret.Points.Add(UInt32.Parse(pointString));
+            }
+
+            XmlElement pointRateNode = (XmlElement)node.GetElementsByTagName("PointRate")[0];
+            ret.PointRate = Double.Parse(pointRateNode.InnerText);
+
+            XmlElement breakRecordPointRateNode = (XmlElement)node.GetElementsByTagName("BreakRecordPointRate")[0];
+            var breakRecordPointRate = Double.Parse(breakRecordPointRateNode.InnerText);
+            if (breakRecordPointRate == PointInfo.PointRateDisabled)
+            {
+                ret.SetBreakRecordPointRateDisabled();
+            }
+            else
+            {
+                ret.SetBreakRecordPointRateEnabled(breakRecordPointRate);
+            }
+
+            data.PublicPointInfo = ret;
+            return true;
         }
 
         private void RefreshError(ErrorCode code, String text)

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Xml;
 
 namespace CompetitionConfigurationModule
@@ -10,11 +11,14 @@ namespace CompetitionConfigurationModule
             NoError
         }
 
+        private delegate XmlElement NormalizeInfoFunctionType<T>(XmlDocument doc, T outputData);
+
         private ErrorCode lastErrorCode;
         private String lastError;
         private CompetitionInfo outputData;
         private XmlDocument docData;
         private String binaryData;
+        private readonly List<NormalizeInfoFunctionType<CompetitionInfo>> NormalizeCompetitionInfoFunctions;
 
         public ErrorCode LastErrorCode
         {
@@ -54,6 +58,13 @@ namespace CompetitionConfigurationModule
             lastErrorCode = ErrorCode.NoError;
             outputData = data;
             binaryData = "";
+
+            NormalizeCompetitionInfoFunctions = new List<NormalizeInfoFunctionType<CompetitionInfo>>
+            {
+                NormalizeApplicationValidator, 
+                NormalizePrincipalInfo, 
+                NormalizePublicPointInfo
+            };
         }
 
         public bool Normalize()
@@ -92,12 +103,15 @@ namespace CompetitionConfigurationModule
                 root.AppendChild(isTemplateNode);
             }
 
-            XmlElement applicationValidatorNode = NormalizeApplicationValidator(doc, outputData.CompetitionApplicationValidator);
-            if (applicationValidatorNode == null)
+            foreach (var normalizeFunction in NormalizeCompetitionInfoFunctions)
             {
-                return false;
+                XmlElement node = normalizeFunction(doc, outputData);
+                if (node == null)
+                {
+                    return false;
+                }
+                root.AppendChild(node);
             }
-            root.AppendChild(applicationValidatorNode);
 
             doc.AppendChild(root);
             docData = doc;
@@ -114,8 +128,9 @@ namespace CompetitionConfigurationModule
             return true;
         }
 
-        private static XmlElement NormalizeApplicationValidator(XmlDocument doc, ApplicationValidator data)
+        private XmlElement NormalizeApplicationValidator(XmlDocument doc, CompetitionInfo outputData)
         {
+            ApplicationValidator data = outputData.CompetitionApplicationValidator;
             XmlElement applicationValidatorNode = doc.CreateElement("ApplicationValidator");
 
             XmlElement enabledNode = doc.CreateElement("Enabled");
@@ -134,6 +149,54 @@ namespace CompetitionConfigurationModule
             }
 
             return applicationValidatorNode;
+        }
+
+        private XmlElement NormalizePrincipalInfo(XmlDocument doc, CompetitionInfo outputData)
+        {
+            PrincipalInfo data = outputData.CompetitionPrincipalInfo;
+            XmlElement principalNode = doc.CreateElement("Principle");
+
+            XmlElement nameNode = doc.CreateElement("Name");
+            nameNode.AppendChild(doc.CreateTextNode(data.Name));
+            principalNode.AppendChild(nameNode);
+
+            XmlElement telephoneNode = doc.CreateElement("Telephone");
+            telephoneNode.AppendChild(doc.CreateTextNode(data.Telephone));
+            principalNode.AppendChild(telephoneNode);
+
+            XmlElement emailNode = doc.CreateElement("Email");
+            emailNode.AppendChild(doc.CreateTextNode(data.Email));
+            principalNode.AppendChild(emailNode);
+
+            foreach (var other in data.Others)
+            {
+                XmlElement otherNode = doc.CreateElement("Other");
+                otherNode.SetAttribute("key", other.Key);
+                otherNode.AppendChild(doc.CreateTextNode(other.Value));
+                principalNode.AppendChild(otherNode);
+            }
+
+            return principalNode;
+        }
+
+        private XmlElement NormalizePublicPointInfo(XmlDocument doc, CompetitionInfo outputData)
+        {
+            PointInfo data = outputData.PublicPointInfo;
+            XmlElement pointNode = doc.CreateElement("PublicPointInfo");
+
+            XmlElement pointsNode = doc.CreateElement("Points");
+            pointsNode.AppendChild(doc.CreateTextNode(String.Join(", ", data.Points)));
+            pointNode.AppendChild(pointsNode);
+
+            XmlElement pointRateNode = doc.CreateElement("PointRate");
+            pointRateNode.AppendChild(doc.CreateTextNode(data.PointRate.ToString()));
+            pointNode.AppendChild(pointRateNode);
+
+            XmlElement breakRecordPointNode = doc.CreateElement("BreakRecordPointRate");
+            breakRecordPointNode.AppendChild(doc.CreateTextNode((data.BreakRecordPointRateEnabled ? data.BreakRecordPointRate : PointInfo.PointRateDisabled).ToString()));
+            pointNode.AppendChild(breakRecordPointNode);
+
+            return pointNode;
         }
 
         private void RefreshError(ErrorCode code, String text)

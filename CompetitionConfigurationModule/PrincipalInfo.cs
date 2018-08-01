@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace CompetitionConfigurationModule
 {
@@ -7,6 +8,7 @@ namespace CompetitionConfigurationModule
         private String name;
         private String telephone;
         private String email;
+        private Dictionary<String, String> others;
 
         public String Name
         {
@@ -24,6 +26,17 @@ namespace CompetitionConfigurationModule
         {
             get { return email; }
             set { email = value; }
+        }
+
+        public Dictionary<String, String> Others
+        {
+            get { return others; }
+            set { others = value; }
+        }
+
+        public PrincipalInfo()
+        {
+            others = new Dictionary<string, string>();
         }
     }
 }
