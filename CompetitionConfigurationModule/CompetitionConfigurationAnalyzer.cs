@@ -56,7 +56,8 @@ namespace CompetitionConfigurationModule
             {
                 AnalyzeApplicationValidatorNode, 
                 AnalyzePrincipleNode, 
-                AnalyzePublicPointInfoNode
+                AnalyzePublicPointInfoNode, 
+                AnalyzeAthleteCategoriesNode
             };
         }
 
@@ -199,6 +200,21 @@ namespace CompetitionConfigurationModule
             }
 
             data.PublicPointInfo = ret;
+            return true;
+        }
+
+        private bool AnalyzeAthleteCategoriesNode(XmlElement parent, CompetitionInfo data)
+        {
+            XmlElement node = (XmlElement)parent.GetElementsByTagName("AthleteCategories")[0];
+            AthleteCategoryPool athleteCategories = data.AthleteCategories;
+            var categoryNodes = node.GetElementsByTagName("AthleteCategory");
+
+            foreach (XmlElement categoryNode in categoryNodes)
+            {
+                AthleteCategory newCategory = athleteCategories.GenerateNewCategory(categoryNode.GetAttribute("id"));
+                newCategory.Name = categoryNode.InnerText;
+            }
+
             return true;
         }
 

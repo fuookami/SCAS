@@ -45,7 +45,7 @@ namespace CompetitionConfigurationModule
 
     public class AthleteCategoryPool : AthleteCategoryList
     {
-        public AthleteCategory GenerateNewCategory()
+        public AthleteCategory GenerateNewCategory(String existedId = null)
         {
             UInt32 order = 0;
             for (; order != UInt32.MaxValue; ++order)
@@ -59,7 +59,7 @@ namespace CompetitionConfigurationModule
             {
                 throw new Exception("运动员类别的序号已经满额，无法再分配");
             }
-            var element = new AthleteCategory(order);
+            var element = new AthleteCategory(existedId ?? Guid.NewGuid().ToString("N"), order);
             this.Add(element);
             return element;
         }

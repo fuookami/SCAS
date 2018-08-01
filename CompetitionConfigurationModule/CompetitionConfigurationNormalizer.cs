@@ -63,7 +63,8 @@ namespace CompetitionConfigurationModule
             {
                 NormalizeApplicationValidator, 
                 NormalizePrincipalInfo, 
-                NormalizePublicPointInfo
+                NormalizePublicPointInfo, 
+                NormalizeAthleteCategories
             };
         }
 
@@ -197,6 +198,22 @@ namespace CompetitionConfigurationModule
             pointNode.AppendChild(breakRecordPointNode);
 
             return pointNode;
+        }
+
+        private XmlElement NormalizeAthleteCategories(XmlDocument doc, CompetitionInfo outputData)
+        {
+            AthleteCategoryPool data = outputData.AthleteCategories;
+            XmlElement athleteCategoriesNode = doc.CreateElement("AthleteCategories");
+
+            foreach (var category in data)
+            {
+                XmlElement categoryNode = doc.CreateElement("AthleteCategory");
+                categoryNode.SetAttribute("id", category.Id);
+                categoryNode.AppendChild(doc.CreateTextNode(category.Name));
+                athleteCategoriesNode.AppendChild(categoryNode);
+            }
+
+            return athleteCategoriesNode;
         }
 
         private void RefreshError(ErrorCode code, String text)

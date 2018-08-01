@@ -45,7 +45,7 @@ namespace CompetitionConfigurationModule
 
     public class TeamCategoryPool : TeamCategoryList
     {
-        public TeamCategory GenerateNewCategory()
+        public TeamCategory GenerateNewCategory(String existedId = null)
         {
             UInt32 order = 0;
             for (; order != UInt32.MaxValue; ++order)
@@ -59,7 +59,7 @@ namespace CompetitionConfigurationModule
             {
                 throw new Exception("队伍类别的序号已经满额，无法再分配");
             }
-            var element = new TeamCategory(order);
+            var element = new TeamCategory(existedId ?? Guid.NewGuid().ToString("N"), order);
             Add(element);
             return element;
         }

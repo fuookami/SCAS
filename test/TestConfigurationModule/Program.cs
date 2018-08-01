@@ -43,6 +43,11 @@ namespace TestConfigurationModule
                 }
             };
 
+            ret.PublicPointInfo.Points = new List<UInt32> { 9, 7, 6, 5, 4, 3, 2, 1 };
+            ret.PublicPointInfo.PointRate = 1.0;
+            ret.PublicPointInfo.BreakRecordPointRateEnabled = true;
+            ret.PublicPointInfo.BreakRecordPointRate = 2.0;
+
             ret.Dates = new List<Date> { Date.Today, Date.Today.Tomorrow };
 
             ret.AthleteCategories.GenerateNewCategory().Name = "学生男子";
@@ -55,11 +60,6 @@ namespace TestConfigurationModule
             ret.CompetitionRankInfo.AthleteRanks.GenerateNewRank().Name = "乙组";
             ret.CompetitionRankInfo.AthleteRanks.GenerateNewRank().Name = "丙组";
             ret.CompetitionRankInfo.Forced = true;
-
-            ret.PublicPointInfo.Points = new List<UInt32> { 9, 7, 6, 5, 4, 3, 2, 1 };
-            ret.PublicPointInfo.PointRate = 1.0;
-            ret.PublicPointInfo.BreakRecordPointRateEnabled = true;
-            ret.PublicPointInfo.BreakRecordPointRate = 2.0;
 
             ret.TeamCategories.GenerateNewCategory().Name = "普通队";
 
