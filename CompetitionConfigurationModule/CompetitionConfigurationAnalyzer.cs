@@ -57,6 +57,7 @@ namespace CompetitionConfigurationModule
                 AnalyzeApplicationValidatorNode, 
                 AnalyzePrincipleNode, 
                 AnalyzePublicPointInfoNode, 
+                AnalyzeDatesNode, 
                 AnalyzeAthleteCategoriesNode
             };
         }
@@ -200,6 +201,18 @@ namespace CompetitionConfigurationModule
             }
 
             data.PublicPointInfo = ret;
+            return true;
+        }
+
+        private bool AnalyzeDatesNode(XmlElement parent, CompetitionInfo data)
+        {
+            XmlElement node = (XmlElement)parent.GetElementsByTagName("Dates")[0];
+            var dateNodes = node.GetElementsByTagName("Date");
+            foreach (XmlElement dateNode in dateNodes)
+            {
+                data.Dates.Add(Date.Parse(dateNode.InnerText));
+            }
+
             return true;
         }
 

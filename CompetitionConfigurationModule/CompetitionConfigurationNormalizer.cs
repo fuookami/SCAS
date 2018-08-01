@@ -64,6 +64,7 @@ namespace CompetitionConfigurationModule
                 NormalizeApplicationValidator, 
                 NormalizePrincipalInfo, 
                 NormalizePublicPointInfo, 
+                NormalizeDates, 
                 NormalizeAthleteCategories
             };
         }
@@ -198,6 +199,21 @@ namespace CompetitionConfigurationModule
             pointNode.AppendChild(breakRecordPointNode);
 
             return pointNode;
+        }
+
+        private XmlElement NormalizeDates(XmlDocument doc, CompetitionInfo outputData)
+        {
+            List<Date> data = outputData.Dates;
+            XmlElement datesNode = doc.CreateElement("Dates");
+
+            foreach (var date in data)
+            {
+                XmlElement dateNode = doc.CreateElement("Date");
+                dateNode.AppendChild(doc.CreateTextNode(date.ToString()));
+                datesNode.AppendChild(dateNode);
+            }
+
+            return datesNode;
         }
 
         private XmlElement NormalizeAthleteCategories(XmlDocument doc, CompetitionInfo outputData)
