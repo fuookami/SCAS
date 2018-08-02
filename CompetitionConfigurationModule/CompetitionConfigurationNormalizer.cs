@@ -66,7 +66,8 @@ namespace CompetitionConfigurationModule
                 NormalizePublicPointInfo, 
                 NormalizeDates, 
                 NormalizeAthleteCategories, 
-                NormalizeRankInfo
+                NormalizeRankInfo, 
+                NormalizeTeamCategories
             };
         }
 
@@ -104,6 +105,10 @@ namespace CompetitionConfigurationModule
                 XmlElement isTemplateNode = doc.CreateElement("Template");
                 isTemplateNode.AppendChild(doc.CreateTextNode(outputData.IsTemplate.ToString()));
                 root.AppendChild(isTemplateNode);
+
+                XmlElement applicationTypeNode = doc.CreateElement("ApplicationType");
+                applicationTypeNode.AppendChild(doc.CreateTextNode(outputData.CompetitionApplicationType.ToString()));
+                root.AppendChild(applicationTypeNode);
             }
 
             foreach (var normalizeFunction in NormalizeCompetitionInfoFunctions)
@@ -264,6 +269,35 @@ namespace CompetitionConfigurationModule
             }
 
             return rankInfoNode;
+        }
+
+        private XmlElement NormalizeTeamCategories(XmlDocument doc, CompetitionInfo outputData)
+        {
+            TeamCategoryPool data = outputData.TeamCategories;
+            XmlElement teamCategoriesNode = doc.CreateElement("TeamCategories");
+
+            foreach (var category in data)
+            {
+                XmlElement categoryNode = doc.CreateElement("TeamCategory");
+                categoryNode.SetAttribute("id", category.Id);
+                categoryNode.AppendChild(doc.CreateTextNode(category.Name));
+                teamCategoriesNode.AppendChild(categoryNode);
+            }
+
+            return teamCategoriesNode;
+        }
+
+        private XmlElement NormalizeTeamInfo(XmlDocument doc, CompetitionInfo outputData)
+        {
+            TeamInfoPool data = outputData.TeamInfos;
+            XmlElement teamsNode = doc.CreateElement("Teams");
+
+            foreach (var team in data)
+            {
+                XmlElement teamNodes = doc.CreateElement("Team");
+            }
+
+            return teamsNode;
         }
 
         private void RefreshError(ErrorCode code, String text)

@@ -59,7 +59,8 @@ namespace CompetitionConfigurationModule
                 AnalyzePublicPointInfoNode, 
                 AnalyzeDatesNode, 
                 AnalyzeAthleteCategoriesNode, 
-                AnalyzeRankInfoNode
+                AnalyzeRankInfoNode, 
+                AnalyzeTeamCategoriesNode
             };
         }
 
@@ -115,6 +116,9 @@ namespace CompetitionConfigurationModule
 
                 XmlElement isTemplateNode = (XmlElement)root.GetElementsByTagName("Template")[0];
                 temp.IsTemplate = Boolean.Parse(isTemplateNode.InnerText);
+
+                XmlElement applicationTypeNode = (XmlElement)root.GetElementsByTagName("ApplicationType")[0];
+                temp.CompetitionApplicationType = (CompetitionInfo.ApplicationType)Enum.Parse(typeof(CompetitionInfo.ApplicationType), applicationTypeNode.InnerText);
             }
 
             foreach (var analyzezeFunction in AnalyzeCompetitionInfoFunctions)
@@ -266,6 +270,21 @@ namespace CompetitionConfigurationModule
                     }
                     rankInfo.DefaultRank = defaultRank;
                 }
+            }
+
+            return true;
+        }
+
+        private bool AnalyzeTeamCategoriesNode(XmlElement parent, CompetitionInfo data)
+        {
+            XmlElement node = (XmlElement)parent.GetElementsByTagName("TeamCategories")[0];
+            TeamCategoryPool teamCategories = data.TeamCategories;
+            var categoryNodes = node.GetElementsByTagName("TeamCategory");
+
+            foreach (XmlElement categoryNode in categoryNodes)
+            {
+                TeamCategory newCategory = teamCategories.GenerateNewCategory(categoryNode.GetAttribute("id"));
+                newCategory.Name = categoryNode.InnerText;
             }
 
             return true;

@@ -5,12 +5,19 @@ namespace CompetitionConfigurationModule
 {
     public class CompetitionInfo
     {
+        public enum ApplicationType
+        {
+            Personage,
+            Team
+        }
+
         private String id;
         private String name;
         private String subName;
         private String version;
         private String identifier;
         private bool isTemplate;
+        private ApplicationType applicationType;
 
         private ApplicationValidator applicationValidator;
         private PrincipalInfo principalInfo;
@@ -58,6 +65,12 @@ namespace CompetitionConfigurationModule
         {
             get { return isTemplate; }
             set { isTemplate = value; }
+        }
+
+        public ApplicationType CompetitionApplicationType
+        {
+            get { return applicationType; }
+            set { applicationType = value; }
         }
 
         public ApplicationValidator CompetitionApplicationValidator
