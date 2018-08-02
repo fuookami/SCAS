@@ -58,7 +58,8 @@ namespace CompetitionConfigurationModule
                 AnalyzePrincipleNode, 
                 AnalyzePublicPointInfoNode, 
                 AnalyzeDatesNode, 
-                AnalyzeAthleteCategoriesNode
+                AnalyzeAthleteCategoriesNode, 
+                AnalyzeRankInfoNode
             };
         }
 
@@ -226,6 +227,45 @@ namespace CompetitionConfigurationModule
             {
                 AthleteCategory newCategory = athleteCategories.GenerateNewCategory(categoryNode.GetAttribute("id"));
                 newCategory.Name = categoryNode.InnerText;
+            }
+
+            return true;
+        }
+
+        private bool AnalyzeRankInfoNode(XmlElement parent, CompetitionInfo data)
+        {
+            XmlElement node = (XmlElement)parent.GetElementsByTagName("RankInfo")[0];
+            RankInfo rankInfo = data.CompetitionRankInfo;
+
+            XmlElement enabledNode = (XmlElement)node.GetElementsByTagName("Enabled")[0];
+            rankInfo.Enabled = Boolean.Parse(enabledNode.InnerText);
+
+            if (rankInfo.Enabled)
+            {
+                XmlElement ranksNode = (XmlElement)node.GetElementsByTagName("AthleteRanks")[0];
+                AthleteRankPool athleteRanks = rankInfo.AthleteRanks;
+                var rankNodes = ranksNode.GetElementsByTagName("AthleteRank");
+
+                foreach (XmlElement rankNode in rankNodes)
+                {
+                    AthleteRank newRank = athleteRanks.GenerateNewRank(rankNode.GetAttribute("id"));
+                    newRank.Name = rankNode.InnerText;
+                }
+
+                XmlElement forcedNode = (XmlElement)node.GetElementsByTagName("Forced")[0];
+                rankInfo.Forced = Boolean.Parse(forcedNode.InnerText);
+                
+                if (rankInfo.Forced)
+                {
+                    String defaultRankName = ranksNode.GetAttribute("default");
+                    AthleteRank defaultRank = athleteRanks.Find((element) => element.Name == defaultRankName);
+                    
+                    if (defaultRank == null)
+                    {
+                        return false;
+                    }
+                    rankInfo.DefaultRank = defaultRank;
+                }
             }
 
             return true;

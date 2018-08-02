@@ -65,7 +65,8 @@ namespace CompetitionConfigurationModule
                 NormalizePrincipalInfo, 
                 NormalizePublicPointInfo, 
                 NormalizeDates, 
-                NormalizeAthleteCategories
+                NormalizeAthleteCategories, 
+                NormalizeRankInfo
             };
         }
 
@@ -77,7 +78,7 @@ namespace CompetitionConfigurationModule
             }
 
             XmlDocument doc = new XmlDocument();
-            XmlElement root = doc.CreateElement("SCAS_CompCfg");
+            XmlElement root = doc.CreateElement("SCASCompetitionConfiguration");
 
             {
                 XmlElement idNode = doc.CreateElement("Id");
@@ -230,6 +231,39 @@ namespace CompetitionConfigurationModule
             }
 
             return athleteCategoriesNode;
+        }
+
+        private XmlElement NormalizeRankInfo(XmlDocument doc, CompetitionInfo outputData)
+        {
+            RankInfo data = outputData.CompetitionRankInfo;
+            XmlElement rankInfoNode = doc.CreateElement("RankInfo");
+
+            XmlElement enabledNode = doc.CreateElement("Enabled");
+            enabledNode.AppendChild(doc.CreateTextNode(data.Enabled.ToString()));
+            rankInfoNode.AppendChild(enabledNode);
+
+            if (data.Enabled)
+            {
+                XmlElement forcedNode = doc.CreateElement("Forced");
+                forcedNode.AppendChild(doc.CreateTextNode(data.Forced.ToString()));
+                rankInfoNode.AppendChild(forcedNode);
+
+                XmlElement ranksNode = doc.CreateElement("AthleteRanks");
+                if (data.Forced)
+                {
+                    ranksNode.SetAttribute("default", data.DefaultRank.Name);
+                }
+                foreach (var rank in data.AthleteRanks)
+                {
+                    XmlElement rankNode = doc.CreateElement("AthleteRank");
+                    rankNode.SetAttribute("id", rank.Id);
+                    rankNode.AppendChild(doc.CreateTextNode(rank.Name));
+                    ranksNode.AppendChild(rankNode);
+                }
+                rankInfoNode.AppendChild(ranksNode);
+            }
+
+            return rankInfoNode;
         }
 
         private void RefreshError(ErrorCode code, String text)
