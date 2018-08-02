@@ -60,7 +60,8 @@ namespace CompetitionConfigurationModule
                 AnalyzeDatesNode, 
                 AnalyzeAthleteCategoriesNode, 
                 AnalyzeRankInfoNode, 
-                AnalyzeTeamCategoriesNode
+                AnalyzeTeamCategoriesNode, 
+                AnalyzeTeamsNode
             };
         }
 
@@ -285,6 +286,33 @@ namespace CompetitionConfigurationModule
             {
                 TeamCategory newCategory = teamCategories.GenerateNewCategory(categoryNode.GetAttribute("id"));
                 newCategory.Name = categoryNode.InnerText;
+            }
+
+            return true;
+        }
+
+        private bool AnalyzeTeamsNode(XmlElement parent, CompetitionInfo data)
+        {
+            XmlElement node = (XmlElement)parent.GetElementsByTagName("Teams")[0];
+            TeamCategoryPool teamCategories = data.TeamCategories;
+            TeamInfoPool teams = data.TeamInfos;
+            var teamNodes = node.GetElementsByTagName("Team");
+
+            foreach (XmlElement teamNode in teamNodes)
+            {
+                XmlElement categoryNode = (XmlElement)teamNode.GetElementsByTagName("Category")[0];
+                TeamCategory category = teamCategories.Find((element) => element.Name == categoryNode.InnerText);
+
+                if (category == null)
+                {
+                    return false;
+                }
+
+                TeamInfo newTeam = teams.GenerateNewInfo(category, teamNode.GetAttribute("id"));
+                XmlElement nameNode = (XmlElement)teamNode.GetElementsByTagName("Name")[0];
+                XmlElement shortNameNode = (XmlElement)teamNode.GetElementsByTagName("ShortName")[0];
+                newTeam.Name = nameNode.InnerText;
+                newTeam.ShortName = shortNameNode.InnerText;
             }
 
             return true;

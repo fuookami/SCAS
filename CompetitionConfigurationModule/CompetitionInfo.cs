@@ -29,8 +29,8 @@ namespace CompetitionConfigurationModule
         private TeamCategoryPool teamCategories;
         private TeamInfoPool teamInfos;
 
-        private Dictionary<Date, GameInfoList> gameInfos;
         private Dictionary<String, EventInfo> eventInfos;
+        private Dictionary<Date, GameInfoList> gameInfos;
 
         public String Id
         {
@@ -125,15 +125,14 @@ namespace CompetitionConfigurationModule
         {
             get { return teamInfos; }
         }
+        public Dictionary<String, EventInfo> EventInfos
+        {
+            get { return eventInfos; }
+        }
 
         public Dictionary<Date, GameInfoList> GameInfos
         {
             get { return gameInfos; }
-        }
-
-        public Dictionary<String, EventInfo> EventInfos
-        {
-            get { return eventInfos; }
         }
 
         public CompetitionInfo()

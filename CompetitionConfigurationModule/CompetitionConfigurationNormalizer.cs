@@ -67,7 +67,8 @@ namespace CompetitionConfigurationModule
                 NormalizeDates, 
                 NormalizeAthleteCategories, 
                 NormalizeRankInfo, 
-                NormalizeTeamCategories
+                NormalizeTeamCategories, 
+                NormalizeTeamInfo
             };
         }
 
@@ -294,7 +295,22 @@ namespace CompetitionConfigurationModule
 
             foreach (var team in data)
             {
-                XmlElement teamNodes = doc.CreateElement("Team");
+                XmlElement teamNode = doc.CreateElement("Team");
+                teamNode.SetAttribute("id", team.Id);
+
+                XmlElement nameNode = doc.CreateElement("Name");
+                nameNode.AppendChild(doc.CreateTextNode(team.Name));
+                teamNode.AppendChild(nameNode);
+
+                XmlElement shortNameNode = doc.CreateElement("ShortName");
+                shortNameNode.AppendChild(doc.CreateTextNode(team.ShortName));
+                teamNode.AppendChild(shortNameNode);
+
+                XmlElement categoryNode = doc.CreateElement("Category");
+                categoryNode.AppendChild(doc.CreateTextNode(team.Category.Name));
+                teamNode.AppendChild(categoryNode);
+
+                teamsNode.AppendChild(teamNode);
             }
 
             return teamsNode;
