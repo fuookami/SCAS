@@ -49,6 +49,23 @@ namespace TestConfigurationModule
             ret.PublicPointInfo.BreakRecordPointRateEnabled = true;
             ret.PublicPointInfo.BreakRecordPointRate = 2.0;
 
+            SessionPool sessions = new SessionPool();
+            sessions.AddDate(Date.Today);
+            var todaySession1 = sessions.GenerateNewSession(Date.Today);
+            todaySession1.Name = "上半场";
+            todaySession1.FullName = String.Format("{0}月{1}日 上半场", Date.Today.Month, Date.Today.Day);
+            var todaySession2 = sessions.GenerateNewSession(Date.Today);
+            todaySession2.Name = "下半场";
+            todaySession2.FullName = String.Format("{0}月{1}日 下半场", Date.Today.Month, Date.Today.Day);
+            sessions.AddDate(Date.Today.Tomorrow);
+            var tomorrowSession1 = sessions.GenerateNewSession(Date.Today.Tomorrow);
+            tomorrowSession1.Name = "上半场";
+            tomorrowSession1.FullName = String.Format("{0}月{1}日 上半场", Date.Today.Tomorrow.Month, Date.Today.Tomorrow.Day);
+            var tomorrowSession2 = sessions.GenerateNewSession(Date.Today.Tomorrow);
+            tomorrowSession2.Name = "上半场";
+            tomorrowSession2.FullName = String.Format("{0}月{1}日 上半场", Date.Today.Tomorrow.Month, Date.Today.Tomorrow.Day);
+            ret.Sessions = sessions;
+
             ret.AthleteCategories.GenerateNewCategory().Name = "学生男子";
             ret.AthleteCategories.GenerateNewCategory().Name = "学生女子";
             ret.AthleteCategories.GenerateNewCategory().Name = "教师男子";

@@ -98,9 +98,12 @@ namespace CompetitionConfigurationModule
             {
                 sessions = value;
                 var newGameInfos = new Dictionary<Session, GameInfoList>();
-                foreach (var session in sessions)
+                foreach (var date in sessions)
                 {
-                    newGameInfos[session.Value] = gameInfos.ContainsKey(session.Value) ? gameInfos[session.Value] : new GameInfoList();
+                    foreach (var session in date.Value)
+                    {
+                        newGameInfos[session] = gameInfos.ContainsKey(session) ? gameInfos[session] : new GameInfoList();
+                    }
                 }
                 gameInfos = newGameInfos;
             }
