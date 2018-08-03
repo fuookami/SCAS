@@ -11,10 +11,10 @@ namespace CompetitionConfigurationModule
         private String name;
 
         private UInt32 numberOfTeam;
-        private Date date;
+        private Session session;
 
         private Int32 orderInEvent;
-        private Int32 orderInDate;
+        private Int32 orderInSession;
 
         private TimeSpan planIntervalTime;
         private TimeSpan planTimePerGroup;
@@ -40,22 +40,22 @@ namespace CompetitionConfigurationModule
             set { numberOfTeam = value; }
         }
 
-        public Date GameDate
+        public Session GameSession
         {
-            get { return date; }
-            set { date = value; }
+            get { return session; }
+            set { session = value; }
         }
 
-        public Int32 OrderInDate
+        public Int32 OrderInSession
         {
-            get { return orderInDate; }
+            get { return orderInSession; }
             set
             {
                 if (value < 0)
                 {
                     throw new Exception("不能把比赛在当天的所有比赛中的序号设置为负数");
                 }
-                orderInDate = value;
+                orderInSession = value;
             }
         }
 
@@ -201,21 +201,21 @@ namespace CompetitionConfigurationModule
     {
         public new void Sort()
         {
-            this.Sort((lhs, rhs) => lhs.OrderInDate.CompareTo(rhs.OrderInDate));
+            this.Sort((lhs, rhs) => lhs.OrderInSession.CompareTo(rhs.OrderInSession));
         }
 
         public virtual bool CheckOrderIsContinuous(Int32 order = -1)
         {
             for (Int32 i = 0, j = this.Count; i != j; ++i)
             {
-                if (this[i].OrderInDate != i)
+                if (this[i].OrderInSession != i)
                 {
                     return false;
                 }
             }
             return order == -1 
                 || (this.Count == 0 && order == 0) 
-                || this[this.Count - 1].OrderInDate + 1 == order;
+                || this[this.Count - 1].OrderInSession + 1 == order;
         }
 
         public bool CheckDateIsSame()
@@ -224,10 +224,10 @@ namespace CompetitionConfigurationModule
             {
                 return true;
             }
-            return CheckDateIsSame(this[0].GameDate);
+            return CheckSessionIsSame(this[0].GameSession);
         }
 
-        public bool CheckDateIsSame(Date date)
+        public bool CheckSessionIsSame(Session session)
         {
             if (this.Count == 0)
             {
@@ -235,7 +235,7 @@ namespace CompetitionConfigurationModule
             }
             for (Int32 i = 0, j = this.Count; i != j; ++i)
             {
-                if (this[i].GameDate != date)
+                if (this[i].GameSession != session)
                 {
                     return false;
                 }
@@ -246,7 +246,7 @@ namespace CompetitionConfigurationModule
         public virtual Int32 GetNextOrder()
         {
             return this.Count == 0 ? 0 
-                : CheckOrderIsContinuous() ? this[this.Count - 1].OrderInDate + 1 
+                : CheckOrderIsContinuous() ? this[this.Count - 1].OrderInSession + 1 
                 : -1;
         }
     }

@@ -49,8 +49,6 @@ namespace TestConfigurationModule
             ret.PublicPointInfo.BreakRecordPointRateEnabled = true;
             ret.PublicPointInfo.BreakRecordPointRate = 2.0;
 
-            ret.Dates = new List<Date> { Date.Today, Date.Today.Tomorrow };
-
             ret.AthleteCategories.GenerateNewCategory().Name = "学生男子";
             ret.AthleteCategories.GenerateNewCategory().Name = "学生女子";
             ret.AthleteCategories.GenerateNewCategory().Name = "教师男子";

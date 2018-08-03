@@ -55,6 +55,7 @@
     <Compile Include="PrincipalInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RankInfo.cs" />
+    <Compile Include="Session.cs" />
     <Compile Include="TeamCategory.cs" />
     <Compile Include="TeamInfo.cs" />
     <Compile Include="TeamworkInfo.cs" />

@@ -22,7 +22,7 @@ namespace CompetitionConfigurationModule
         private ApplicationValidator applicationValidator;
         private PrincipalInfo principalInfo;
         private PointInfo publicPointInfo;
-        private List<Date> dates;
+        private SessionPool sessions;
 
         private AthleteCategoryPool athleteCategories;
         private RankInfo rankInfo;
@@ -30,7 +30,7 @@ namespace CompetitionConfigurationModule
         private TeamInfoPool teamInfos;
 
         private Dictionary<String, EventInfo> eventInfos;
-        private Dictionary<Date, GameInfoList> gameInfos;
+        private Dictionary<Session, GameInfoList> gameInfos;
 
         public String Id
         {
@@ -91,16 +91,16 @@ namespace CompetitionConfigurationModule
             set { publicPointInfo = value ?? throw new Exception("传入的默认积分信息无效"); }
         }
 
-        public List<Date> Dates
+        public SessionPool Sessions
         {
-            get { return dates; }
+            get { return sessions; }
             set
             {
-                dates = value;
-                var newGameInfos = new Dictionary<Date, GameInfoList>();
-                foreach (var date in dates)
+                sessions = value;
+                var newGameInfos = new Dictionary<Session, GameInfoList>();
+                foreach (var session in sessions)
                 {
-                    newGameInfos[date] = gameInfos.ContainsKey(date) ? gameInfos[date] : new GameInfoList();
+                    newGameInfos[session.Value] = gameInfos.ContainsKey(session.Value) ? gameInfos[session.Value] : new GameInfoList();
                 }
                 gameInfos = newGameInfos;
             }
@@ -130,7 +130,7 @@ namespace CompetitionConfigurationModule
             get { return eventInfos; }
         }
 
-        public Dictionary<Date, GameInfoList> GameInfos
+        public Dictionary<Session, GameInfoList> GameInfos
         {
             get { return gameInfos; }
         }
@@ -146,14 +146,14 @@ namespace CompetitionConfigurationModule
             applicationValidator = new ApplicationValidator();
             principalInfo = new PrincipalInfo();
             publicPointInfo = new PointInfo();
-            dates = new List<Date>();
+            sessions = new SessionPool();
 
             athleteCategories = new AthleteCategoryPool();
             rankInfo = new RankInfo();
             teamCategories = new TeamCategoryPool();
             teamInfos = new TeamInfoPool();
 
-            gameInfos = new Dictionary<Date, GameInfoList>();
+            gameInfos = new Dictionary<Session, GameInfoList>();
             eventInfos = new Dictionary<String, EventInfo>();
         }
     }
