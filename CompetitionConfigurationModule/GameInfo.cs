@@ -10,7 +10,7 @@ namespace CompetitionConfigurationModule
         private String id;
         private String name;
 
-        private UInt32 numberOfTeam;
+        private UInt32 numberOfParticipants;
         private Session session;
 
         private Int32 orderInEvent;
@@ -34,10 +34,10 @@ namespace CompetitionConfigurationModule
             set { name = value; }
         }
 
-        public UInt32 NumberOfTeam
+        public UInt32 NumberOfParticipants
         {
-            get { return NumberOfTeam; }
-            set { numberOfTeam = value; }
+            get { return numberOfParticipants; }
+            set { numberOfParticipants = value; }
         }
 
         public Session GameSession
@@ -284,10 +284,10 @@ namespace CompetitionConfigurationModule
                 return true;
             }
 
-            for (Int32 i = this[0].NumberOfTeam == GameInfo.NoLimit ? 1 : 0, 
+            for (Int32 i = this[0].NumberOfParticipants == GameInfo.NoLimit ? 1 : 0, 
                 j = this.Count - 1; i != j; ++i)
             {
-                if (this[i].NumberOfTeam >= this[i + 1].NumberOfTeam)
+                if (this[i].NumberOfParticipants >= this[i + 1].NumberOfParticipants)
                 {
                     return false;
                 }
@@ -311,19 +311,19 @@ namespace CompetitionConfigurationModule
             return true;
         }
 
-        public GameInfo GenerateNewGameInfo()
+        public GameInfo GenerateNewGameInfo(String existedId = null)
         {
             GameInfo ret = null;
             if (eventInfo.Type == EventInfo.EventType.Dual)
             {
-                ret = new DuelGameInfo(eventInfo)
+                ret = new DuelGameInfo(eventInfo, existedId ?? Guid.NewGuid().ToString("N"))
                 {
                     OrderInEvent = GetNextOrder()
                 };
             }
             else if (eventInfo.Type == EventInfo.EventType.Ranking)
             {
-                ret = new RankingGameInfo(eventInfo)
+                ret = new RankingGameInfo(eventInfo, existedId ?? Guid.NewGuid().ToString("N"))
                 {
                     OrderInEvent = GetNextOrder()
                 };

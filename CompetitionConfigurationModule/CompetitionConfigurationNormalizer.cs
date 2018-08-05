@@ -206,6 +206,39 @@ namespace CompetitionConfigurationModule
         private XmlElement NormalizeGameInfo(XmlDocument doc, GameInfo gameInfo)
         {
             XmlElement root = doc.CreateElement("GameInfo");
+            root.SetAttribute("id", gameInfo.Id);
+
+            XmlElement nameNode = doc.CreateElement("Name");
+            nameNode.AppendChild(doc.CreateTextNode(gameInfo.Name));
+            root.AppendChild(nameNode);
+
+            if (gameInfo.NumberOfParticipants != GameInfo.NoLimit)
+            {
+                XmlElement numberNode = doc.CreateElement("NumberOfParticipants");
+                numberNode.AppendChild(doc.CreateTextNode(gameInfo.NumberOfParticipants.ToString()));
+                root.AppendChild(numberNode);
+            }
+
+            XmlElement sessionNode = doc.CreateElement("Session");
+            sessionNode.SetAttribute("date", gameInfo.GameSession.SessionDate.ToString());
+            sessionNode.SetAttribute("order", gameInfo.GameSession.OrderInDate.ToString());
+            root.AppendChild(sessionNode);
+
+            XmlElement orderInEventNode = doc.CreateElement("OrderInEvent");
+            orderInEventNode.AppendChild(doc.CreateTextNode(gameInfo.OrderInEvent.ToString()));
+            root.AppendChild(orderInEventNode);
+
+            XmlElement orderInSessionNode = doc.CreateElement("OrderInSession");
+            orderInSessionNode.AppendChild(doc.CreateTextNode(gameInfo.OrderInSession.ToString()));
+            root.AppendChild(orderInSessionNode);
+
+            XmlElement planIntervalTimeNode = doc.CreateElement("PlanIntervalTime");
+            planIntervalTimeNode.AppendChild(doc.CreateTextNode(gameInfo.PlanIntervalTime.ToString()));
+            root.AppendChild(planIntervalTimeNode);
+
+            XmlElement planTimePerGroupNode = doc.CreateElement("PlanTimePerGroup");
+            planTimePerGroupNode.AppendChild(doc.CreateTextNode(gameInfo.PlanTimePerGroup.ToString()));
+            root.AppendChild(planTimePerGroupNode);
 
             foreach (var normalizeFunction in NormalizeGameInfoFunctions)
             {
