@@ -57,6 +57,7 @@ namespace CompetitionConfigurationModule
                 AnalyzeApplicationValidatorNode, 
                 AnalyzePrincipleNode, 
                 AnalyzePublicPointInfoNode, 
+                AnalyzeSessionsNode, 
                 AnalyzeAthleteCategoriesNode, 
                 AnalyzeRankInfoNode, 
                 AnalyzeTeamCategoriesNode, 
@@ -206,6 +207,11 @@ namespace CompetitionConfigurationModule
             }
 
             data.PublicPointInfo = ret;
+            return true;
+        }
+
+        private bool AnalyzeSessionsNode(XmlElement parent, CompetitionInfo data)
+        {
             return true;
         }
 

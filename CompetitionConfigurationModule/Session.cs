@@ -29,8 +29,8 @@ namespace CompetitionConfigurationModule
 
         public UInt32 OrderInDate
         {
-            get { return OrderInDate; }
-            set { OrderInDate = value; }
+            get { return orderInDate; }
+            set { orderInDate = value; }
         }
 
         public Session(Date sessionDate, UInt32 order)

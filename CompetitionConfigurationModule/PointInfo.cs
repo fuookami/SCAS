@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace CompetitionConfigurationModule
 {
-    public class PointInfo
+    public class PointInfo : ICloneable
     {
         public const Double NoPointRate = 1.0;
         public const Double PointRateDisabled = .0;
@@ -76,6 +76,14 @@ namespace CompetitionConfigurationModule
             points = DefaultPoints;
             pointRate = NoPointRate;
             SetBreakRecordPointRateDisabled();
+        }
+
+        public Object Clone()
+        {
+            PointInfo ret = new PointInfo
+            {
+
+            };
         }
 
         public void SetBreakRecordPointRateEnabled(Double rate = NoPointRate)

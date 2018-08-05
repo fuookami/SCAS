@@ -64,6 +64,7 @@ namespace CompetitionConfigurationModule
                 NormalizeApplicationValidator, 
                 NormalizePrincipalInfo, 
                 NormalizePublicPointInfo, 
+                NormalizeSessions, 
                 NormalizeAthleteCategories, 
                 NormalizeRankInfo, 
                 NormalizeTeamCategories, 
@@ -205,6 +206,34 @@ namespace CompetitionConfigurationModule
             pointNode.AppendChild(breakRecordPointNode);
 
             return pointNode;
+        }
+
+        private XmlElement NormalizeSessions(XmlDocument doc, CompetitionInfo outputData)
+        {
+            SessionPool data = outputData.Sessions;
+            XmlElement sessionsNode = doc.CreateElement("Sessions");
+
+            foreach (var date in data)
+            {
+                foreach (var session in date.Value)
+                {
+                    XmlElement sessionNode = doc.CreateElement("Session");
+                    sessionNode.SetAttribute("date", date.Key.ToString());
+                    sessionNode.SetAttribute("order", session.OrderInDate.ToString());
+
+                    XmlElement nameNode = doc.CreateElement("Name");
+                    nameNode.AppendChild(doc.CreateTextNode(session.Name));
+                    sessionNode.AppendChild(nameNode);
+
+                    XmlElement fullNameNode = doc.CreateElement("FullName");
+                    fullNameNode.AppendChild(doc.CreateTextNode(session.FullName));
+                    sessionNode.AppendChild(fullNameNode);
+
+                    sessionsNode.AppendChild(sessionNode);
+                }
+            }
+
+            return sessionsNode;
         }
 
         private XmlElement NormalizeAthleteCategories(XmlDocument doc, CompetitionInfo outputData)
