@@ -75,12 +75,16 @@ namespace CompetitionConfigurationModule
 
             NormalizeEventInfoFunctions = new List<NormalizeInfoFunctionType<EventInfo>>
             {
-                NormalizeGradeInfo
+                NormalizeGradeInfo, 
+                NormalizeTeamworkInfo, 
+                NormalizeAthleteValidator, 
+                NormalizePointInfo, 
+                NormalizeEnabledTeams
             };
 
             NormalizeGameInfoFunctions = new List<NormalizeInfoFunctionType<GameInfo>>
             {
-
+                NormalizeGroupInfo, 
             };
         }
 
@@ -410,7 +414,72 @@ namespace CompetitionConfigurationModule
 
         private XmlElement NormalizeGradeInfo(XmlDocument doc, EventInfo outputData)
         {
+            GradeInfo data = outputData.EventGradeInfo;
+            XmlElement gradeNode = doc.CreateElement("GradeInfo");
 
+            // to do
+
+            return gradeNode;
+        }
+
+        private XmlElement NormalizeTeamworkInfo(XmlDocument doc, EventInfo outputData)
+        {
+            TeamworkInfo data = outputData.EventTeamworkInfo;
+            XmlElement teamworkNode = doc.CreateElement("TeamworkInfo");
+
+            // to do
+
+            return teamworkNode;
+        }
+
+        private XmlElement NormalizeAthleteValidator(XmlDocument doc, EventInfo outputData)
+        {
+            AthleteValidator data = outputData.EvenetAthleteValidator;
+            XmlElement athleteValidatorNode = doc.CreateElement("AthleteValidator");
+
+            // to do
+
+            return athleteValidatorNode;
+        }
+
+        private XmlElement NormalizePointInfo(XmlDocument doc, EventInfo outputData)
+        {
+            PointInfo data = outputData.EventPointInfo;
+            XmlElement pointNode = doc.CreateElement("PointInfo");
+
+            XmlElement pointsNode = doc.CreateElement("Points");
+            pointsNode.AppendChild(doc.CreateTextNode(String.Join(", ", data.Points)));
+            pointNode.AppendChild(pointsNode);
+
+            XmlElement pointRateNode = doc.CreateElement("PointRate");
+            pointRateNode.AppendChild(doc.CreateTextNode(data.PointRate.ToString()));
+            pointNode.AppendChild(pointRateNode);
+
+            XmlElement breakRecordPointNode = doc.CreateElement("BreakRecordPointRate");
+            breakRecordPointNode.AppendChild(doc.CreateTextNode((data.BreakRecordPointRateEnabled ? data.BreakRecordPointRate : PointInfo.PointRateDisabled).ToString()));
+            pointNode.AppendChild(breakRecordPointNode);
+
+            return pointNode;
+        }
+
+        private XmlElement NormalizeEnabledTeams(XmlDocument doc, EventInfo outputData)
+        {
+            TeamInfoList data = outputData.EnabledTeams;
+            XmlElement enabledTeamsNode = doc.CreateElement("EnabledTeams");
+
+            // to do
+
+            return enabledTeamsNode;
+        }
+
+        private XmlElement NormalizeGroupInfo(XmlDocument doc, GameInfo outputData)
+        {
+            GroupInfo data = outputData.EventGroupInfo;
+            XmlElement groupNode = doc.CreateElement("GroupInfo");
+
+            // to do
+
+            return groupNode;
         }
 
         private void RefreshError(ErrorCode code, String text)
