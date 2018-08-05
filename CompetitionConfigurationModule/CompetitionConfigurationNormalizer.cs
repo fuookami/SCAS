@@ -417,7 +417,17 @@ namespace CompetitionConfigurationModule
             GradeInfo data = outputData.EventGradeInfo;
             XmlElement gradeNode = doc.CreateElement("GradeInfo");
 
-            // to do
+            XmlElement betterTypeNode = doc.CreateElement("BetterType");
+            betterTypeNode.AppendChild(doc.CreateTextNode(data.GradeBetterType.ToString()));
+            gradeNode.AppendChild(betterTypeNode);
+
+            if (data.GradePatternType != GradeInfo.PatternType.None)
+            {
+                XmlElement patternNode = doc.CreateElement("Pattern");
+                patternNode.SetAttribute("type", data.GradePatternType.ToString());
+                patternNode.AppendChild(doc.CreateTextNode(data.GradePattern));
+                gradeNode.AppendChild(patternNode);
+            }
 
             return gradeNode;
         }
@@ -426,8 +436,26 @@ namespace CompetitionConfigurationModule
         {
             TeamworkInfo data = outputData.EventTeamworkInfo;
             XmlElement teamworkNode = doc.CreateElement("TeamworkInfo");
+            teamworkNode.SetAttribute("isTeamwork", data.BeTeamwork.ToString());
+            
+            if (data.BeTeamwork)
+            {
+                teamworkNode.SetAttribute("needEveryPerson", data.NeedEveryPerson.ToString());
 
-            // to do
+                if (data.NeedEveryPerson)
+                {
+                    XmlElement numberNode = doc.CreateElement("NumberOfPeople");
+                    
+                    if (data.MinNumberOfPeople != TeamworkInfo.NoLimit)
+                    {
+                        numberNode.SetAttribute("min", data.MinNumberOfPeople.ToString());
+                    }
+                    if (data.MaxNumberOfPeople != TeamworkInfo.NoLimit)
+                    {
+                        numberNode.SetAttribute("max", data.MaxNumberOfPeople.ToString());
+                    }
+                }
+            }
 
             return teamworkNode;
         }
@@ -437,7 +465,30 @@ namespace CompetitionConfigurationModule
             AthleteValidator data = outputData.EvenetAthleteValidator;
             XmlElement athleteValidatorNode = doc.CreateElement("AthleteValidator");
 
-            // to do
+            XmlElement categoriesNode = doc.CreateElement("EnabledCategories");
+            List<String> categoriesNames = new List<String>();
+            foreach (var category in data.Categories)
+            {
+                categoriesNames.Add(category.Name);
+            }
+            categoriesNode.AppendChild(doc.CreateTextNode(String.Join(", ", categoriesNames)));
+            athleteValidatorNode.AppendChild(categoriesNode);
+
+            XmlElement ranksNode = doc.CreateElement("EnabledRanks");
+            List<String> ranksNames = new List<string>();
+            foreach (var rank in data.Ranks)
+            {
+                ranksNames.Add(rank.Name);
+            }
+            ranksNode.AppendChild(doc.CreateTextNode(String.Join(", ", ranksNames)));
+            athleteValidatorNode.AppendChild(ranksNode);
+
+            if (data.MaxNumberOfPeoplePerTeam != AthleteValidator.NoLimit)
+            {
+                XmlElement maxNumberPerTeamNode = doc.CreateElement("MaxNumberPerTeam");
+                maxNumberPerTeamNode.AppendChild(doc.CreateTextNode(data.MaxNumberOfPeoplePerTeam.ToString()));
+                athleteValidatorNode.AppendChild(maxNumberPerTeamNode);
+            }
 
             return athleteValidatorNode;
         }
@@ -466,8 +517,12 @@ namespace CompetitionConfigurationModule
         {
             TeamInfoList data = outputData.EnabledTeams;
             XmlElement enabledTeamsNode = doc.CreateElement("EnabledTeams");
-
-            // to do
+            List<String> teamNames = new List<String>();
+            foreach (var team in data)
+            {
+                teamNames.Add(team.Name);
+            }
+            enabledTeamsNode.AppendChild(doc.CreateTextNode(String.Join(", ", teamNames)));
 
             return enabledTeamsNode;
         }

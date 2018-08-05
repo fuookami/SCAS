@@ -44,6 +44,8 @@ namespace CompetitionConfigurationModule
 
         public AthleteValidator()
         {
+            categories = new AthleteCategoryList();
+            ranks = new AthleteRankList();
             maxNumberPerTeam = NoLimit;
         }
     }

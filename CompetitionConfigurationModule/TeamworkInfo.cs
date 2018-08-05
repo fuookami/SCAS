@@ -8,14 +8,14 @@ namespace CompetitionConfigurationModule
         public const Int32 NotNeedEveryPerson = -1;
         public const Int32 NoLimit = 0;
 
-        private bool isTeamwork;
+        private bool beTeamwork;
         private bool needEveryPerson;
         private Int32 minMumberOfPeople;
         private Int32 maxNumberOfPeople;
 
         public bool BeTeamwork
         {
-            get { return isTeamwork; }
+            get { return beTeamwork; }
             set
             {
                 if (value)
@@ -64,9 +64,9 @@ namespace CompetitionConfigurationModule
 
         public void SetIsTeamwork()
         {
-            if (!isTeamwork)
+            if (!beTeamwork)
             {
-                isTeamwork = true;
+                beTeamwork = true;
                 needEveryPerson = false;
                 minMumberOfPeople = NotNeedEveryPerson;
                 maxNumberOfPeople = NotNeedEveryPerson;
@@ -75,7 +75,7 @@ namespace CompetitionConfigurationModule
 
         public void SetIsNotTeamwork()
         {
-            isTeamwork = false;
+            beTeamwork = false;
             needEveryPerson = false;
             minMumberOfPeople = NoTeamwork;
             maxNumberOfPeople = NoTeamwork;
@@ -92,7 +92,7 @@ namespace CompetitionConfigurationModule
                 throw new Exception("最少需要的人数或最大需要的人数是个无效值");
             }
 
-            if (!isTeamwork)
+            if (!beTeamwork)
             {
                 SetIsTeamwork();
             }

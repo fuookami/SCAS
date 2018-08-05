@@ -218,15 +218,6 @@ namespace CompetitionConfigurationModule
                 || this[this.Count - 1].OrderInSession + 1 == order;
         }
 
-        public bool CheckDateIsSame()
-        {
-            if (this.Count == 0)
-            {
-                return true;
-            }
-            return CheckSessionIsSame(this[0].GameSession);
-        }
-
         public bool CheckSessionIsSame(Session session)
         {
             if (this.Count == 0)

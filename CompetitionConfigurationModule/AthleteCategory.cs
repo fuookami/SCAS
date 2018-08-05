@@ -45,6 +45,43 @@ namespace CompetitionConfigurationModule
 
     public class AthleteCategoryPool : AthleteCategoryList
     {
+        public bool Check()
+        {
+            return CheckOrderIsNotSame() && CheckNameIsNotSame();
+        }
+
+        public bool CheckOrderIsNotSame()
+        {
+            HashSet<UInt32> orders = new HashSet<UInt32>();
+
+            foreach (var data in this)
+            {
+                if (orders.Contains(data.Order))
+                {
+                    return false;
+                }
+                orders.Add(data.Order);
+            }
+
+            return true;
+        }
+
+        public bool CheckNameIsNotSame()
+        {
+            HashSet<String> names = new HashSet<String>();
+
+            foreach (var data in this)
+            {
+                if (names.Contains(data.Name))
+                {
+                    return false;
+                }
+                names.Add(data.Name);
+            }
+
+            return true;
+        }
+
         public AthleteCategory GenerateNewCategory(String existedId = null)
         {
             UInt32 order = 0;
