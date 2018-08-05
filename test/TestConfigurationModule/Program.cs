@@ -62,8 +62,8 @@ namespace TestConfigurationModule
             tomorrowSession1.Name = "上半场";
             tomorrowSession1.FullName = String.Format("{0}月{1}日 上半场", Date.Today.Tomorrow.Month, Date.Today.Tomorrow.Day);
             var tomorrowSession2 = sessions.GenerateNewSession(Date.Today.Tomorrow);
-            tomorrowSession2.Name = "上半场";
-            tomorrowSession2.FullName = String.Format("{0}月{1}日 上半场", Date.Today.Tomorrow.Month, Date.Today.Tomorrow.Day);
+            tomorrowSession2.Name = "下半场";
+            tomorrowSession2.FullName = String.Format("{0}月{1}日 下半场", Date.Today.Tomorrow.Month, Date.Today.Tomorrow.Day);
             ret.Sessions = sessions;
 
             ret.AthleteCategories.GenerateNewCategory().Name = "学生男子";
@@ -91,7 +91,14 @@ namespace TestConfigurationModule
                 teamInfo.ShortName = info.Item1;
                 teamInfo.Name = info.Item2;
             }
-            
+
+            GenerateEvent1(ret);
+            GenerateEvent2(ret);
+            GenerateEvent3(ret);
+            GenerateEvent4(ret);
+            GenerateEvent5(ret);
+            GenerateEvent6(ret);
+
             return ret;
         }
 
@@ -121,6 +128,48 @@ namespace TestConfigurationModule
                 Console.WriteLine("False to read. {0}", analyzer.LastError);
                 return null;
             }
+        }
+
+        static void GenerateEvent1(CompetitionInfo parent)
+        {
+            EventInfo ret = parent.GenerateNewEventInfo();
+
+            ret.Name = "一个名次赛的例子（团队，名次制，全部组在一起算名次）";
+        }
+
+        static void GenerateEvent2(CompetitionInfo parent)
+        {
+            EventInfo ret = parent.GenerateNewEventInfo();
+
+            ret.Name = "一个名次赛的例子（团队，竞标赛制，单组内算名次）";
+        }
+
+        static void GenerateEvent3(CompetitionInfo parent)
+        {
+            EventInfo ret = parent.GenerateNewEventInfo();
+
+            ret.Name = "一个对抗赛的例子（团队，循环小组赛 + 淘汰晋级赛）";
+        }
+
+        static void GenerateEvent4(CompetitionInfo parent)
+        {
+            EventInfo ret = parent.GenerateNewEventInfo();
+
+            ret.Name = "一个名次赛的例子（名次制，全部组在一起算名次）";
+        }
+
+        static void GenerateEvent5(CompetitionInfo parent)
+        {
+            EventInfo ret = parent.GenerateNewEventInfo();
+
+            ret.Name = "一个名次赛的例子（竞标赛制，单组内算名次）";
+        }
+
+        static void GenerateEvent6(CompetitionInfo parent)
+        {
+            EventInfo ret = parent.GenerateNewEventInfo();
+
+            ret.Name = "一个对抗赛的例子（循环小组赛 + 淘汰晋级赛）";
         }
     }
 }

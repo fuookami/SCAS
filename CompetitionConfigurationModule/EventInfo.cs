@@ -19,7 +19,7 @@ namespace CompetitionConfigurationModule
         private AthleteValidator athleteValidator;
         private PointInfo pointInfo;
         private TeamInfoList enabledTeams;
-
+        
         private CompetitionInfo competitionInfo;
         private GameInfoPool gameInfos;
 
@@ -87,25 +87,29 @@ namespace CompetitionConfigurationModule
             }
         }
 
-        public EventInfo(CompetitionInfo competition)
-            : this(competition, Guid.NewGuid().ToString("N")) { }
+        public EventInfo(CompetitionInfo competition = null)
+            : this(Guid.NewGuid().ToString("N"), competition) { }
 
-        public EventInfo(CompetitionInfo competition, String existedId)
+        public EventInfo(String existedId, CompetitionInfo competition = null)
         {
-            if (competition == null)
-            {
-                throw new Exception("设置的父竞赛是个无效值");
-            }
-
             id = existedId;
             gradeInfo = new GradeInfo();
             teamworkInfo = new TeamworkInfo();
             athleteValidator = new AthleteValidator();
-            pointInfo = new PointInfo();
+            pointInfo = competition == null ? competition.PublicPointInfo : new PointInfo();
             enabledTeams = new TeamInfoList();
 
             competitionInfo = competition;
+            if (competition != null)
+            {
+                competition.EventInfos.Add(this);
+            }
             gameInfos = new GameInfoPool(this);
+        }
+
+        public bool IsTemplate()
+        {
+            return competitionInfo == null;
         }
     }
 }

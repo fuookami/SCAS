@@ -19,6 +19,8 @@ namespace CompetitionConfigurationModule
         private XmlDocument docData;
         private String binaryData;
         private readonly List<NormalizeInfoFunctionType<CompetitionInfo>> NormalizeCompetitionInfoFunctions;
+        private readonly List<NormalizeInfoFunctionType<EventInfo>> NormalizeEventInfoFunctions;
+        private readonly List<NormalizeInfoFunctionType<GameInfo>> NormalizeGameInfoFunctions;
 
         public ErrorCode LastErrorCode
         {
@@ -61,14 +63,24 @@ namespace CompetitionConfigurationModule
 
             NormalizeCompetitionInfoFunctions = new List<NormalizeInfoFunctionType<CompetitionInfo>>
             {
-                NormalizeApplicationValidator, 
-                NormalizePrincipalInfo, 
-                NormalizePublicPointInfo, 
-                NormalizeSessions, 
-                NormalizeAthleteCategories, 
-                NormalizeRankInfo, 
-                NormalizeTeamCategories, 
+                NormalizeApplicationValidator,
+                NormalizePrincipalInfo,
+                NormalizePublicPointInfo,
+                NormalizeSessions,
+                NormalizeAthleteCategories,
+                NormalizeRankInfo,
+                NormalizeTeamCategories,
                 NormalizeTeamInfo
+            };
+
+            NormalizeEventInfoFunctions = new List<NormalizeInfoFunctionType<EventInfo>>
+            {
+                NormalizeGradeInfo
+            };
+
+            NormalizeGameInfoFunctions = new List<NormalizeInfoFunctionType<GameInfo>>
+            {
+
             };
         }
 
@@ -122,6 +134,18 @@ namespace CompetitionConfigurationModule
                 root.AppendChild(node);
             }
 
+            XmlElement eventInfosNode = doc.CreateElement("EventInfos");
+            foreach (var eventInfo in outputData.EventInfos)
+            {
+                XmlElement node = NormalizeEventInfo(doc, eventInfo);
+                if (node == null)
+                {
+                    return false;
+                }
+                eventInfosNode.AppendChild(node);
+            }
+            root.AppendChild(eventInfosNode);
+
             doc.AppendChild(root);
             docData = doc;
             return true;
@@ -135,6 +159,61 @@ namespace CompetitionConfigurationModule
             }
             docData.Save(url);
             return true;
+        }
+
+        public XmlElement NormalizeEventInfo(XmlDocument doc, EventInfo eventInfo)
+        {
+            XmlElement root = doc.CreateElement("EventInfo");
+            root.SetAttribute("id", eventInfo.Id);
+
+            XmlElement nameNode = doc.CreateElement("Name");
+            nameNode.AppendChild(doc.CreateTextNode(eventInfo.Name));
+            root.AppendChild(nameNode);
+
+            XmlElement typeNode = doc.CreateElement("Type");
+            typeNode.AppendChild(doc.CreateTextNode(eventInfo.Type.ToString()));
+            root.AppendChild(typeNode);
+
+            foreach (var normalizeFunction in NormalizeEventInfoFunctions)
+            {
+                XmlElement node = normalizeFunction(doc, eventInfo);
+                if (node == null)
+                {
+                    return null;
+                }
+                root.AppendChild(node);
+            }
+
+            XmlElement gameInfosNode = doc.CreateElement("GameInfos");
+            foreach (var gameInfo in eventInfo.GameInfos)
+            {
+                XmlElement node = NormalizeGameInfo(doc, gameInfo);
+                if (node == null)
+                {
+                    return null;
+                }
+                gameInfosNode.AppendChild(node);
+            }
+            root.AppendChild(gameInfosNode);
+
+            return root;
+        }
+
+        private XmlElement NormalizeGameInfo(XmlDocument doc, GameInfo gameInfo)
+        {
+            XmlElement root = doc.CreateElement("GameInfo");
+
+            foreach (var normalizeFunction in NormalizeGameInfoFunctions)
+            {
+                XmlElement node = normalizeFunction(doc, gameInfo);
+                if (node == null)
+                {
+                    return null;
+                }
+                root.AppendChild(node);
+            }
+
+            return root;
         }
 
         private XmlElement NormalizeApplicationValidator(XmlDocument doc, CompetitionInfo outputData)
@@ -327,6 +406,11 @@ namespace CompetitionConfigurationModule
             }
 
             return teamsNode;
+        }
+
+        private XmlElement NormalizeGradeInfo(XmlDocument doc, EventInfo outputData)
+        {
+
         }
 
         private void RefreshError(ErrorCode code, String text)

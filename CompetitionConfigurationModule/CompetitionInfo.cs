@@ -29,7 +29,7 @@ namespace CompetitionConfigurationModule
         private TeamCategoryPool teamCategories;
         private TeamInfoPool teamInfos;
 
-        private Dictionary<String, EventInfo> eventInfos;
+        private List<EventInfo> eventInfos;
         private Dictionary<Session, GameInfoList> gameInfos;
 
         public String Id
@@ -128,7 +128,7 @@ namespace CompetitionConfigurationModule
         {
             get { return teamInfos; }
         }
-        public Dictionary<String, EventInfo> EventInfos
+        public List<EventInfo> EventInfos
         {
             get { return eventInfos; }
         }
@@ -157,7 +157,12 @@ namespace CompetitionConfigurationModule
             teamInfos = new TeamInfoPool();
 
             gameInfos = new Dictionary<Session, GameInfoList>();
-            eventInfos = new Dictionary<String, EventInfo>();
+            eventInfos = new List<EventInfo>();
+        }
+
+        public EventInfo GenerateNewEventInfo()
+        {
+            return new EventInfo(this);
         }
     }
 }

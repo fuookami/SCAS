@@ -82,8 +82,12 @@ namespace CompetitionConfigurationModule
         {
             PointInfo ret = new PointInfo
             {
-
+                points = points, 
+                pointRate = pointRate, 
+                breakRecordPointRateEnabled = breakRecordPointRateEnabled, 
+                breakRecordPointRate = breakRecordPointRate
             };
+            return ret;
         }
 
         public void SetBreakRecordPointRateEnabled(Double rate = NoPointRate)
