@@ -116,7 +116,7 @@ namespace CompetitionConfigurationModule
                 temp.Identifier = identifierNode.InnerText;
 
                 XmlElement isTemplateNode = (XmlElement)root.GetElementsByTagName("Template")[0];
-                temp.IsTemplate = Boolean.Parse(isTemplateNode.InnerText);
+                temp.BeTemplate = Boolean.Parse(isTemplateNode.InnerText);
 
                 XmlElement applicationTypeNode = (XmlElement)root.GetElementsByTagName("ApplicationType")[0];
                 temp.CompetitionApplicationType = (CompetitionInfo.ApplicationType)Enum.Parse(typeof(CompetitionInfo.ApplicationType), applicationTypeNode.InnerText);
@@ -138,9 +138,7 @@ namespace CompetitionConfigurationModule
         {
             XmlElement node = (XmlElement)parent.GetElementsByTagName("ApplicationValidator")[0];
             ApplicationValidator ret = new ApplicationValidator();
-
-            XmlElement enabledNode = (XmlElement)node.GetElementsByTagName("Enabled")[0];
-            ret.Enabled = Boolean.Parse(enabledNode.InnerText);
+            ret.Enabled = Boolean.Parse(node.GetAttribute("enabled"));
 
             if (ret.Enabled)
             {
@@ -234,9 +232,7 @@ namespace CompetitionConfigurationModule
         {
             XmlElement node = (XmlElement)parent.GetElementsByTagName("RankInfo")[0];
             RankInfo rankInfo = data.CompetitionRankInfo;
-
-            XmlElement enabledNode = (XmlElement)node.GetElementsByTagName("Enabled")[0];
-            rankInfo.Enabled = Boolean.Parse(enabledNode.InnerText);
+            rankInfo.Enabled = Boolean.Parse(node.GetAttribute("enabled"));
 
             if (rankInfo.Enabled)
             {

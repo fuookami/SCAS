@@ -119,9 +119,9 @@ namespace CompetitionConfigurationModule
                 identifierNode.AppendChild(doc.CreateTextNode(outputData.Identifier));
                 root.AppendChild(identifierNode);
 
-                XmlElement isTemplateNode = doc.CreateElement("Template");
-                isTemplateNode.AppendChild(doc.CreateTextNode(outputData.IsTemplate.ToString()));
-                root.AppendChild(isTemplateNode);
+                XmlElement beTemplateNode = doc.CreateElement("Template");
+                beTemplateNode.AppendChild(doc.CreateTextNode(outputData.BeTemplate.ToString()));
+                root.AppendChild(beTemplateNode);
 
                 XmlElement applicationTypeNode = doc.CreateElement("ApplicationType");
                 applicationTypeNode.AppendChild(doc.CreateTextNode(outputData.CompetitionApplicationType.ToString()));
@@ -257,10 +257,7 @@ namespace CompetitionConfigurationModule
         {
             ApplicationValidator data = outputData.CompetitionApplicationValidator;
             XmlElement applicationValidatorNode = doc.CreateElement("ApplicationValidator");
-
-            XmlElement enabledNode = doc.CreateElement("Enabled");
-            enabledNode.AppendChild(doc.CreateTextNode(data.Enabled.ToString()));
-            applicationValidatorNode.AppendChild(enabledNode);
+            applicationValidatorNode.SetAttribute("enabled", data.Enabled.ToString());
 
             if (data.Enabled)
             {
@@ -372,10 +369,7 @@ namespace CompetitionConfigurationModule
         {
             RankInfo data = outputData.CompetitionRankInfo;
             XmlElement rankInfoNode = doc.CreateElement("RankInfo");
-
-            XmlElement enabledNode = doc.CreateElement("Enabled");
-            enabledNode.AppendChild(doc.CreateTextNode(data.Enabled.ToString()));
-            rankInfoNode.AppendChild(enabledNode);
+            rankInfoNode.SetAttribute("enabled", data.Enabled.ToString());
 
             if (data.Enabled)
             {
@@ -469,7 +463,7 @@ namespace CompetitionConfigurationModule
         {
             TeamworkInfo data = outputData.EventTeamworkInfo;
             XmlElement teamworkNode = doc.CreateElement("TeamworkInfo");
-            teamworkNode.SetAttribute("isTeamwork", data.BeTeamwork.ToString());
+            teamworkNode.SetAttribute("enabled", data.BeTeamwork.ToString());
             
             if (data.BeTeamwork)
             {
@@ -523,6 +517,10 @@ namespace CompetitionConfigurationModule
                 athleteValidatorNode.AppendChild(maxNumberPerTeamNode);
             }
 
+            XmlElement pointForEveryRankNode = doc.CreateElement("PointForEveryRank");
+            pointForEveryRankNode.AppendChild(doc.CreateTextNode(data.BePointForEveryRank.ToString()));
+            athleteValidatorNode.AppendChild(pointForEveryRankNode);
+
             return athleteValidatorNode;
         }
 
@@ -564,8 +562,14 @@ namespace CompetitionConfigurationModule
         {
             GroupInfo data = outputData.EventGroupInfo;
             XmlElement groupNode = doc.CreateElement("GroupInfo");
-
-            // to do
+            groupNode.SetAttribute("enabled", data.Enabled.ToString());
+            
+            if (data.Enabled)
+            {
+                XmlElement numberPerGroupNode = doc.CreateElement("NumberPerGroup");
+                numberPerGroupNode.AppendChild(doc.CreateTextNode(data.NumberPerGroup.ToString()));
+                groupNode.AppendChild(numberPerGroupNode);
+            }
 
             return groupNode;
         }

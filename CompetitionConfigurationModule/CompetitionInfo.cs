@@ -16,7 +16,7 @@ namespace CompetitionConfigurationModule
         private String subName;
         private String version;
         private String identifier;
-        private bool isTemplate;
+        private bool beTemplate;
         private ApplicationType applicationType;
 
         private ApplicationValidator applicationValidator;
@@ -61,10 +61,10 @@ namespace CompetitionConfigurationModule
             set { identifier = value; }
         }
 
-        public bool IsTemplate
+        public bool BeTemplate
         {
-            get { return isTemplate; }
-            set { isTemplate = value; }
+            get { return beTemplate; }
+            set { beTemplate = value; }
         }
 
         public ApplicationType CompetitionApplicationType
@@ -144,7 +144,7 @@ namespace CompetitionConfigurationModule
         public CompetitionInfo(String existedId)
         {
             id = existedId;
-            isTemplate = false;
+            beTemplate = false;
 
             applicationValidator = new ApplicationValidator();
             principalInfo = new PrincipalInfo();

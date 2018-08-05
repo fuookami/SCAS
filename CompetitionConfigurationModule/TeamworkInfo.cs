@@ -10,7 +10,7 @@ namespace CompetitionConfigurationModule
 
         private bool beTeamwork;
         private bool needEveryPerson;
-        private Int32 minMumberOfPeople;
+        private Int32 minNumberOfPeople;
         private Int32 maxNumberOfPeople;
 
         public bool BeTeamwork
@@ -47,14 +47,14 @@ namespace CompetitionConfigurationModule
 
         public Int32 MinNumberOfPeople
         {
-            get { return MinNumberOfPeople; }
+            get { return minNumberOfPeople; }
             set { SetNeedEveryPerson(value, maxNumberOfPeople); }
         }
 
         public Int32 MaxNumberOfPeople
         {
             get { return maxNumberOfPeople; }
-            set { SetNeedEveryPerson(minMumberOfPeople, value); }
+            set { SetNeedEveryPerson(minNumberOfPeople, value); }
         }
 
         public TeamworkInfo()
@@ -68,7 +68,7 @@ namespace CompetitionConfigurationModule
             {
                 beTeamwork = true;
                 needEveryPerson = false;
-                minMumberOfPeople = NotNeedEveryPerson;
+                minNumberOfPeople = NotNeedEveryPerson;
                 maxNumberOfPeople = NotNeedEveryPerson;
             }
         }
@@ -77,7 +77,7 @@ namespace CompetitionConfigurationModule
         {
             beTeamwork = false;
             needEveryPerson = false;
-            minMumberOfPeople = NoTeamwork;
+            minNumberOfPeople = NoTeamwork;
             maxNumberOfPeople = NoTeamwork;
         }
 
@@ -97,14 +97,14 @@ namespace CompetitionConfigurationModule
                 SetIsTeamwork();
             }
             needEveryPerson = true;
-            minMumberOfPeople = minNumber;
+            minNumberOfPeople = minNumber;
             maxNumberOfPeople = maxNumber;
         }
 
         public void SetNotNeedEveryPerson()
         {
             needEveryPerson = false;
-            minMumberOfPeople = NotNeedEveryPerson;
+            minNumberOfPeople = NotNeedEveryPerson;
             maxNumberOfPeople = NotNeedEveryPerson;
         }
     }

@@ -20,9 +20,10 @@ namespace CompetitionConfigurationModule
 
         public enum PatternType
         {
-            None,
-            XSD,
-            JSON
+            None, 
+            XSD, 
+            JSON, 
+            Other
         };
 
         public delegate CompareResult GradeComparer(String lhs, String rhs);

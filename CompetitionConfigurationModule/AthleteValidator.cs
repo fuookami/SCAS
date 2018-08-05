@@ -9,6 +9,7 @@ namespace CompetitionConfigurationModule
         private AthleteCategoryList categories;
         private AthleteRankList ranks;
         private UInt32 maxNumberPerTeam;
+        private bool bePointForEveryRank;
 
         public AthleteCategoryList Categories
         {
@@ -42,11 +43,18 @@ namespace CompetitionConfigurationModule
             set { maxNumberPerTeam = value; }
         }
 
+        public bool BePointForEveryRank
+        {
+            get { return bePointForEveryRank; }
+            set { bePointForEveryRank = value; }
+        }
+
         public AthleteValidator()
         {
             categories = new AthleteCategoryList();
             ranks = new AthleteRankList();
             maxNumberPerTeam = NoLimit;
+            bePointForEveryRank = false;
         }
     }
 }
