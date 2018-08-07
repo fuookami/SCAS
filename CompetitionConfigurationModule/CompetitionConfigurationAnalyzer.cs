@@ -118,8 +118,8 @@ namespace CompetitionConfigurationModule
                 XmlElement isTemplateNode = (XmlElement)root.GetElementsByTagName("Template")[0];
                 temp.BeTemplate = Boolean.Parse(isTemplateNode.InnerText);
 
-                XmlElement applicationTypeNode = (XmlElement)root.GetElementsByTagName("ApplicationType")[0];
-                temp.CompetitionApplicationType = (CompetitionInfo.ApplicationType)Enum.Parse(typeof(CompetitionInfo.ApplicationType), applicationTypeNode.InnerText);
+                XmlElement fieldNode = (XmlElement)root.GetElementsByTagName("Field")[0];
+                temp.Field = fieldNode.InnerText;
             }
 
             foreach (var analyzezeFunction in AnalyzeCompetitionInfoFunctions)

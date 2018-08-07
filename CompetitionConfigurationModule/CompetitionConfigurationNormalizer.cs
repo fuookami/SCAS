@@ -123,9 +123,9 @@ namespace CompetitionConfigurationModule
                 beTemplateNode.AppendChild(doc.CreateTextNode(outputData.BeTemplate.ToString()));
                 root.AppendChild(beTemplateNode);
 
-                XmlElement applicationTypeNode = doc.CreateElement("ApplicationType");
-                applicationTypeNode.AppendChild(doc.CreateTextNode(outputData.CompetitionApplicationType.ToString()));
-                root.AppendChild(applicationTypeNode);
+                XmlElement fieldNode = doc.CreateElement("Field");
+                fieldNode.AppendChild(doc.CreateTextNode(outputData.Field.ToString()));
+                root.AppendChild(fieldNode);
             }
 
             foreach (var normalizeFunction in NormalizeCompetitionInfoFunctions)

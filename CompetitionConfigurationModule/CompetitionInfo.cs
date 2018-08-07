@@ -5,24 +5,18 @@ namespace CompetitionConfigurationModule
 {
     public class CompetitionInfo
     {
-        public enum ApplicationType
-        {
-            Personage,
-            Team
-        }
-
         private String id;
         private String name;
         private String subName;
         private String version;
         private String identifier;
         private bool beTemplate;
-        private ApplicationType applicationType;
 
         private ApplicationValidator applicationValidator;
         private PrincipalInfo principalInfo;
         private PointInfo publicPointInfo;
         private SessionPool sessions;
+        private String field;
 
         private AthleteCategoryPool athleteCategories;
         private RankInfo rankInfo;
@@ -67,12 +61,6 @@ namespace CompetitionConfigurationModule
             set { beTemplate = value; }
         }
 
-        public ApplicationType CompetitionApplicationType
-        {
-            get { return applicationType; }
-            set { applicationType = value; }
-        }
-
         public ApplicationValidator CompetitionApplicationValidator
         {
             get { return applicationValidator; }
@@ -107,6 +95,12 @@ namespace CompetitionConfigurationModule
                 }
                 gameInfos = newGameInfos;
             }
+        }
+
+        public String Field
+        {
+            get { return field; }
+            set { field = value; }
         }
 
         public AthleteCategoryPool AthleteCategories
