@@ -37,7 +37,7 @@ namespace CompetitionConfigurationModule
             }
         }
 
-        public UInt32 MaxNumberOfPeoplePerTeam
+        public UInt32 MaxNumberPerTeam
         {
             get { return maxNumberPerTeam; }
             set { maxNumberPerTeam = value; }

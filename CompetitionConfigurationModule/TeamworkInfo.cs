@@ -9,6 +9,7 @@ namespace CompetitionConfigurationModule
         public const Int32 NoLimit = 0;
 
         private bool beTeamwork;
+        private bool beMultiRank;
         private bool needEveryPerson;
         private Int32 minNumberOfPeople;
         private Int32 maxNumberOfPeople;
@@ -25,6 +26,18 @@ namespace CompetitionConfigurationModule
                 else
                 {
                     SetIsNotTeamwork();
+                }
+            }
+        }
+
+        public bool BeMultiRank
+        {
+            get { return beMultiRank; }
+            set
+            {
+                if (BeTeamwork)
+                {
+                    beMultiRank = value;
                 }
             }
         }
@@ -67,6 +80,7 @@ namespace CompetitionConfigurationModule
             if (!beTeamwork)
             {
                 beTeamwork = true;
+                beMultiRank = false;
                 needEveryPerson = false;
                 minNumberOfPeople = NotNeedEveryPerson;
                 maxNumberOfPeople = NotNeedEveryPerson;
@@ -76,6 +90,7 @@ namespace CompetitionConfigurationModule
         public void SetIsNotTeamwork()
         {
             beTeamwork = false;
+            beMultiRank = false;
             needEveryPerson = false;
             minNumberOfPeople = NoTeamwork;
             maxNumberOfPeople = NoTeamwork;

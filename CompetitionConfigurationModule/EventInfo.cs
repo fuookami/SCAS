@@ -4,15 +4,8 @@ namespace CompetitionConfigurationModule
 {
     public class EventInfo
     {
-        public enum EventType
-        {
-            Dual,
-            Ranking
-        }
-
         private String id;
         private String name;
-        private EventType type;
 
         private GradeInfo gradeInfo;
         private TeamworkInfo teamworkInfo;
@@ -34,12 +27,6 @@ namespace CompetitionConfigurationModule
             set { name = value; }
         }
 
-        public EventType Type
-        {
-            get { return type; }
-            set { type = value; }
-        }
-
         public GradeInfo EventGradeInfo
         {
             get { return gradeInfo; }
@@ -52,7 +39,7 @@ namespace CompetitionConfigurationModule
             set { teamworkInfo = value ?? throw new Exception("设置的团体项目信息是个无效值"); ; }
         }
 
-        public AthleteValidator EvenetAthleteValidator
+        public AthleteValidator EventAthleteValidator
         {
             get { return athleteValidator; }
             set { athleteValidator = value ?? throw new Exception("设置的运动员报名限制信息是个无效值"); ; }

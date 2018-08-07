@@ -174,10 +174,6 @@ namespace CompetitionConfigurationModule
             nameNode.AppendChild(doc.CreateTextNode(eventInfo.Name));
             root.AppendChild(nameNode);
 
-            XmlElement typeNode = doc.CreateElement("Type");
-            typeNode.AppendChild(doc.CreateTextNode(eventInfo.Type.ToString()));
-            root.AppendChild(typeNode);
-
             foreach (var normalizeFunction in NormalizeEventInfoFunctions)
             {
                 XmlElement node = normalizeFunction(doc, eventInfo);
@@ -467,7 +463,13 @@ namespace CompetitionConfigurationModule
             
             if (data.BeTeamwork)
             {
-                teamworkNode.SetAttribute("needEveryPerson", data.NeedEveryPerson.ToString());
+                XmlElement beMultiRankNode = doc.CreateElement("BeMultiRank");
+                beMultiRankNode.AppendChild(doc.CreateTextNode(data.BeMultiRank.ToString()));
+                teamworkNode.AppendChild(beMultiRankNode);
+
+                XmlElement needEveryPersonNode = doc.CreateElement("NeedEveryPerson");
+                needEveryPersonNode.AppendChild(doc.CreateTextNode(data.NeedEveryPerson.ToString()));
+                teamworkNode.AppendChild(needEveryPersonNode);
 
                 if (data.NeedEveryPerson)
                 {
@@ -481,6 +483,8 @@ namespace CompetitionConfigurationModule
                     {
                         numberNode.SetAttribute("max", data.MaxNumberOfPeople.ToString());
                     }
+
+                    teamworkNode.AppendChild(numberNode);
                 }
             }
 
@@ -489,7 +493,7 @@ namespace CompetitionConfigurationModule
 
         private XmlElement NormalizeAthleteValidator(XmlDocument doc, EventInfo outputData)
         {
-            AthleteValidator data = outputData.EvenetAthleteValidator;
+            AthleteValidator data = outputData.EventAthleteValidator;
             XmlElement athleteValidatorNode = doc.CreateElement("AthleteValidator");
 
             XmlElement categoriesNode = doc.CreateElement("EnabledCategories");
@@ -501,19 +505,22 @@ namespace CompetitionConfigurationModule
             categoriesNode.AppendChild(doc.CreateTextNode(String.Join(", ", categoriesNames)));
             athleteValidatorNode.AppendChild(categoriesNode);
 
-            XmlElement ranksNode = doc.CreateElement("EnabledRanks");
-            List<String> ranksNames = new List<string>();
-            foreach (var rank in data.Ranks)
+            if (outputData.Competition.CompetitionRankInfo.Enabled)
             {
-                ranksNames.Add(rank.Name);
+                XmlElement ranksNode = doc.CreateElement("EnabledRanks");
+                List<String> ranksNames = new List<string>();
+                foreach (var rank in data.Ranks)
+                {
+                    ranksNames.Add(rank.Name);
+                }
+                ranksNode.AppendChild(doc.CreateTextNode(String.Join(", ", ranksNames)));
+                athleteValidatorNode.AppendChild(ranksNode);
             }
-            ranksNode.AppendChild(doc.CreateTextNode(String.Join(", ", ranksNames)));
-            athleteValidatorNode.AppendChild(ranksNode);
 
-            if (data.MaxNumberOfPeoplePerTeam != AthleteValidator.NoLimit)
+            if (data.MaxNumberPerTeam != AthleteValidator.NoLimit)
             {
                 XmlElement maxNumberPerTeamNode = doc.CreateElement("MaxNumberPerTeam");
-                maxNumberPerTeamNode.AppendChild(doc.CreateTextNode(data.MaxNumberOfPeoplePerTeam.ToString()));
+                maxNumberPerTeamNode.AppendChild(doc.CreateTextNode(data.MaxNumberPerTeam.ToString()));
                 athleteValidatorNode.AppendChild(maxNumberPerTeamNode);
             }
 

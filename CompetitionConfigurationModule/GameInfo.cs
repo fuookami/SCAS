@@ -5,10 +5,27 @@ namespace CompetitionConfigurationModule
 {
     public class GameInfo
     {
+        public enum RankingGameType
+        {
+            Group,              // 小组赛
+            QuarterFinal,       // 复赛
+            SemiFinal,          // 半决赛
+            Fianls				// 决赛
+        };
+
+        public enum RankingGamePattern
+        {
+            Elimination,        // 淘汰制 / 竞标赛制
+            Ranking,			// 名次制
+        };
+
         public const UInt32 NoLimit = 0;
 
         private String id;
         private String name;
+
+        private RankingGameType type;
+        private RankingGamePattern pattern;
 
         private UInt32 numberOfParticipants;
         private Session session;
@@ -32,6 +49,18 @@ namespace CompetitionConfigurationModule
         {
             get { return name; }
             set { name = value; }
+        }
+
+        public RankingGameType Type
+        {
+            get { return type; }
+            set { type = value; }
+        }
+
+        public RankingGamePattern Pattern
+        {
+            get { return pattern; }
+            set { pattern = value; }
         }
 
         public UInt32 NumberOfParticipants
@@ -109,92 +138,15 @@ namespace CompetitionConfigurationModule
             get { return eventInfo; }
         }
 
-        protected GameInfo(EventInfo _event)
+        public GameInfo(EventInfo _event)
             : this(_event, Guid.NewGuid().ToString("N")) { }
 
-        protected GameInfo(EventInfo _event, String existedId)
+        public GameInfo(EventInfo _event, String existedId)
         {
             id = existedId;
             groupInfo = new GroupInfo();
             eventInfo = _event;
         }
-    }
-
-    class DuelGameInfo : GameInfo
-    {
-        public enum DuelGameType
-        {
-            Group,              // 小组赛
-            QuarterFinal,       // 复赛
-            SemiFinal,          // 半决赛
-            ThridPlaceMatch,    // 三四名决赛（仅在对抗性运动中出现）
-            Fianls				// 决赛
-        };
-
-        public enum DuelGamePattern
-        {
-            Elimination,        // 淘汰制 / 竞标赛制
-            Circulation			// 循环制（仅在对抗性运动中出现）
-        };
-
-        private DuelGameType type;
-        private DuelGamePattern pattern;
-
-        public DuelGameType Type
-        {
-            get { return type; }
-            set { type = value; }
-        }
-
-        public DuelGamePattern Pattern
-        {
-            get { return pattern; }
-            set { pattern = value; }
-        }
-
-        public DuelGameInfo(EventInfo _event)
-            : base(_event) { }
-
-        public DuelGameInfo(EventInfo _event, String existedId)
-            : base(_event, existedId) { }
-    }
-
-    class RankingGameInfo : GameInfo
-    {
-        public enum RankingGameType
-        {
-            Group,              // 小组赛
-            QuarterFinal,       // 复赛
-            SemiFinal,          // 半决赛
-            Fianls				// 决赛
-        };
-
-        public enum RankingGamePattern
-        {
-            Elimination,        // 淘汰制 / 竞标赛制
-            Ranking,			// 名次制（仅在非对抗性运动中出现）
-        };
-
-        private RankingGameType type;
-        private RankingGamePattern pattern;
-
-        public RankingGameType Type
-        {
-            get { return type; }
-            set { type = value; }
-        }
-
-        public RankingGamePattern Pattern
-        {
-            get { return pattern; }
-            set { pattern = value; }
-        }
-
-        public RankingGameInfo(EventInfo _event)
-            : base(_event) { }
-
-        public RankingGameInfo(EventInfo _event, String existedId)
-            : base(_event, existedId) { }
     }
 
     public class GameInfoList : List<GameInfo>
@@ -226,7 +178,7 @@ namespace CompetitionConfigurationModule
             }
             for (Int32 i = 0, j = this.Count; i != j; ++i)
             {
-                if (this[i].GameSession != session)
+                if (this[i].GameSession == session)
                 {
                     return false;
                 }
@@ -314,24 +266,10 @@ namespace CompetitionConfigurationModule
         public GameInfo GenerateNewGameInfo(String existedId = null)
         {
             GameInfo ret = null;
-            if (eventInfo.Type == EventInfo.EventType.Dual)
+            ret = new GameInfo(eventInfo, existedId ?? Guid.NewGuid().ToString("N"))
             {
-                ret = new DuelGameInfo(eventInfo, existedId ?? Guid.NewGuid().ToString("N"))
-                {
-                    OrderInEvent = GetNextOrder()
-                };
-            }
-            else if (eventInfo.Type == EventInfo.EventType.Ranking)
-            {
-                ret = new RankingGameInfo(eventInfo, existedId ?? Guid.NewGuid().ToString("N"))
-                {
-                    OrderInEvent = GetNextOrder()
-                };
-            }
-            else
-            {
-                throw new Exception("不存在的项目类型");
-            }
+                OrderInEvent = GetNextOrder()
+            };
             this.Add(ret);
             return ret;
         }
