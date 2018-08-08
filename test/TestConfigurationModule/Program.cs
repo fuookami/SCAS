@@ -22,7 +22,6 @@ namespace TestConfigurationModule
             ret.SubName = "暨某游泳比赛";
             ret.Version = "某年某比赛第某版本（测试）";
             ret.Identifier = "给自己看的标识符/标签之类的";
-            ret.CompetitionApplicationType = CompetitionInfo.ApplicationType.Team;
 
             ret.CompetitionApplicationValidator = new ApplicationValidator
             {
@@ -66,6 +65,8 @@ namespace TestConfigurationModule
             tomorrowSession2.FullName = String.Format("{0}月{1}日 下半场", Date.Today.Tomorrow.Month, Date.Today.Tomorrow.Day);
             ret.Sessions = sessions;
 
+            ret.Field = "某游泳馆";
+
             ret.AthleteCategories.GenerateNewCategory().Name = "学生男子";
             ret.AthleteCategories.GenerateNewCategory().Name = "学生女子";
             ret.AthleteCategories.GenerateNewCategory().Name = "教师男子";
@@ -96,8 +97,6 @@ namespace TestConfigurationModule
             GenerateEvent2(ret);
             GenerateEvent3(ret);
             GenerateEvent4(ret);
-            GenerateEvent5(ret);
-            GenerateEvent6(ret);
 
             return ret;
         }
@@ -134,42 +133,122 @@ namespace TestConfigurationModule
         {
             EventInfo ret = parent.GenerateNewEventInfo();
 
-            ret.Name = "一个名次赛的例子（团队，名次制，全部组在一起算名次）";
+            ret.Name = "一个名次赛的例子（团队，名次制，全部组在一起算名次，成绩越小越好）";
+            ret.EventGradeInfo.GradeBetterType = GradeInfo.BetterType.Smaller;
+
+            ret.EventTeamworkInfo.SetNeedEveryPerson();
+            ret.EventTeamworkInfo.BeMultiRank = true;
+            ret.EventTeamworkInfo.RangesOfCategories = new Dictionary<AthleteCategory, UInt32Range>
+            {
+                { parent.AthleteCategories.Find((element) => element.Name == "学生男子"), new UInt32Range(4, 4) }
+            };
+
+            ret.EventAthleteValidator.Categories.Add(parent.AthleteCategories.Find((element) => element.Name == "学生男子"));
+            foreach (var rank in parent.CompetitionRankInfo.AthleteRanks)
+            {
+                ret.EventAthleteValidator.Ranks.Add(rank);
+            }
+            ret.EventAthleteValidator.Ranks.Sort();
+            ret.EventAthleteValidator.MaxNumberPerTeam = 1;
+            ret.EventAthleteValidator.BePointForEveryRank = true;
+
+            ret.EventPointInfo.PointRate = 2;
+
+            foreach (var team in parent.TeamInfos)
+            {
+                ret.EnabledTeams.Add(team);
+            }
+            ret.EnabledTeams.Sort();
         }
 
         static void GenerateEvent2(CompetitionInfo parent)
         {
             EventInfo ret = parent.GenerateNewEventInfo();
 
-            ret.Name = "一个名次赛的例子（团队，竞标赛制，单组内算名次）";
+            ret.Name = "一个名次赛的例子（团队，竞标赛制，单组内算名次，成绩越大越好）";
+            ret.EventGradeInfo.GradeBetterType = GradeInfo.BetterType.Bigger;
+
+            ret.EventTeamworkInfo.SetNeedEveryPerson();
+            ret.EventTeamworkInfo.RangesOfCategories = new Dictionary<AthleteCategory, UInt32Range>
+            {
+                { parent.AthleteCategories.Find((element) => element.Name == "学生男子"), new UInt32Range(4, 8) }, 
+                { parent.AthleteCategories.Find((element) => element.Name == "教师男子"), new UInt32Range(4, 8) }
+            };
+            ret.EventTeamworkInfo.RangesOfTeam = new UInt32Range(10, 12);
+
+            ret.EventAthleteValidator.Categories.AddRange(parent.AthleteCategories.FindAll((element) =>
+            {
+                return element.Name == "学生男子" || element.Name == "教师男子";
+            }));
+            foreach (var rank in parent.CompetitionRankInfo.AthleteRanks)
+            {
+                ret.EventAthleteValidator.Ranks.Add(rank);
+            }
+            ret.EventAthleteValidator.Ranks.Sort();
+            ret.EventAthleteValidator.MaxNumberPerTeam = 1;
+            ret.EventAthleteValidator.BePointForEveryRank = false;
+
+            ret.EventPointInfo.PointRate = 2;
+
+            foreach (var team in parent.TeamInfos)
+            {
+                ret.EnabledTeams.Add(team);
+            }
+            ret.EnabledTeams.Sort();
         }
 
         static void GenerateEvent3(CompetitionInfo parent)
         {
             EventInfo ret = parent.GenerateNewEventInfo();
 
-            ret.Name = "一个对抗赛的例子（团队，循环小组赛 + 淘汰晋级赛）";
+            ret.Name = "一个名次赛的例子（个人，名次制，全部组在一起算名次）";
+            ret.EventGradeInfo.GradeBetterType = GradeInfo.BetterType.Smaller;
+
+            ret.EventTeamworkInfo.SetIsNotTeamwork();
+
+            ret.EventAthleteValidator.Categories.Add(parent.AthleteCategories.Find((element) => element.Name == "学生女子"));
+
+            foreach (var rank in parent.CompetitionRankInfo.AthleteRanks)
+            {
+                ret.EventAthleteValidator.Ranks.Add(rank);
+            }
+            ret.EventAthleteValidator.Ranks.Sort();
+            ret.EventAthleteValidator.MaxNumberPerTeam = 1;
+            ret.EventAthleteValidator.BePointForEveryRank = true;
+
+            foreach (var team in parent.TeamInfos)
+            {
+                ret.EnabledTeams.Add(team);
+            }
+            ret.EnabledTeams.Sort();
         }
 
         static void GenerateEvent4(CompetitionInfo parent)
         {
             EventInfo ret = parent.GenerateNewEventInfo();
 
-            ret.Name = "一个名次赛的例子（名次制，全部组在一起算名次）";
-        }
+            ret.Name = "一个名次赛的例子（个人，三轮比赛，竞标赛制 + 名次制，单组内算名次）";
+            ret.EventGradeInfo.GradeBetterType = GradeInfo.BetterType.Smaller;
 
-        static void GenerateEvent5(CompetitionInfo parent)
-        {
-            EventInfo ret = parent.GenerateNewEventInfo();
+            ret.EventTeamworkInfo.SetIsNotTeamwork();
 
-            ret.Name = "一个名次赛的例子（竞标赛制，单组内算名次）";
-        }
+            ret.EventAthleteValidator.Categories.AddRange(parent.AthleteCategories.FindAll((element) =>
+            {
+                return element.Name == "学生女子" || element.Name == "教师女子";
+            }));
+            foreach (var rank in parent.CompetitionRankInfo.AthleteRanks)
+            {
+                ret.EventAthleteValidator.Ranks.Add(rank);
+            }
+            ret.EventAthleteValidator.Ranks.Sort();
+            ret.EventAthleteValidator.MaxNumberPerTeam = 1;
+            ret.EventAthleteValidator.BePointForEveryRank = false;
 
-        static void GenerateEvent6(CompetitionInfo parent)
-        {
-            EventInfo ret = parent.GenerateNewEventInfo();
-
-            ret.Name = "一个对抗赛的例子（循环小组赛 + 淘汰晋级赛）";
+            foreach (var team in parent.TeamInfos)
+            {
+                ret.EnabledTeams.Add(team);
+            }
+            ret.EnabledTeams.Sort();
         }
     }
 }
