@@ -475,15 +475,44 @@ namespace CompetitionConfigurationModule
                 {
                     XmlElement numberNode = doc.CreateElement("NumberOfPeople");
                     
-                    if (data.MinNumberOfPeople != TeamworkInfo.NoLimit)
+                    foreach (var range in data.RangesOfCategories)
                     {
-                        numberNode.SetAttribute("min", data.MinNumberOfPeople.ToString());
-                    }
-                    if (data.MaxNumberOfPeople != TeamworkInfo.NoLimit)
-                    {
-                        numberNode.SetAttribute("max", data.MaxNumberOfPeople.ToString());
+                        if (range.Value.Minimun != UInt32Range.NoLimit
+                            && range.Value.Maximun != UInt32Range.NoLimit)
+                        {
+                            XmlElement rangeNode = doc.CreateElement("Range");
+
+                            rangeNode.SetAttribute("category", range.Key.Name);
+                            if (range.Value.Minimun != UInt32Range.NoLimit)
+                            {
+                                rangeNode.SetAttribute("min", range.Value.Minimun.ToString());
+                            }
+                            if (range.Value.Maximun != UInt32Range.NoLimit)
+                            {
+                                rangeNode.SetAttribute("max", range.Value.Maximun.ToString());
+                            }
+
+                            numberNode.AppendChild(rangeNode);
+                        }
                     }
 
+                    if (data.RangesOfTeam.Minimun != UInt32Range.NoLimit
+                        && data.RangesOfTeam.Maximun != UInt32Range.NoLimit)
+                    {
+                        XmlElement rangeNode = doc.CreateElement("TeamRange");
+
+                        if (data.RangesOfTeam.Minimun != UInt32Range.NoLimit)
+                        {
+                            rangeNode.SetAttribute("min", data.RangesOfTeam.Minimun.ToString());
+                        }
+                        if (data.RangesOfTeam.Maximun != UInt32Range.NoLimit)
+                        {
+                            rangeNode.SetAttribute("max", data.RangesOfTeam.Maximun.ToString());
+                        }
+
+                        numberNode.AppendChild(rangeNode);
+                    }
+                    
                     teamworkNode.AppendChild(numberNode);
                 }
             }

@@ -1,18 +1,35 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace CompetitionConfigurationModule
 {
+    public class UInt32Range
+    {
+        public const UInt32 NoLimit = 0;
+
+        public UInt32 Minimun;
+        public UInt32 Maximun;
+
+        public UInt32Range(UInt32 min = 0, UInt32 max = 0)
+        {
+            Minimun = min;
+            Maximun = max;
+        }
+
+        public bool Valid()
+        {
+            return Maximun == 0
+                || Minimun <= Maximun;
+        }
+    }
+
     public class TeamworkInfo
     {
-        public const Int32 NoTeamwork = -2;
-        public const Int32 NotNeedEveryPerson = -1;
-        public const Int32 NoLimit = 0;
-
         private bool beTeamwork;
         private bool beMultiRank;
         private bool needEveryPerson;
-        private Int32 minNumberOfPeople;
-        private Int32 maxNumberOfPeople;
+        private Dictionary<AthleteCategory, UInt32Range> rangesOfCategories;
+        private UInt32Range rangesOfTeam;
 
         public bool BeTeamwork
         {
@@ -58,16 +75,28 @@ namespace CompetitionConfigurationModule
             }
         }
 
-        public Int32 MinNumberOfPeople
+        public Dictionary<AthleteCategory, UInt32Range> RangesOfCategories
         {
-            get { return minNumberOfPeople; }
-            set { SetNeedEveryPerson(value, maxNumberOfPeople); }
+            get { return rangesOfCategories; }
+            set
+            {
+                if (NeedEveryPerson)
+                {
+                    rangesOfCategories = (value ?? new Dictionary<AthleteCategory, UInt32Range>());
+                }
+            }
         }
 
-        public Int32 MaxNumberOfPeople
+        public UInt32Range RangesOfTeam
         {
-            get { return maxNumberOfPeople; }
-            set { SetNeedEveryPerson(minNumberOfPeople, value); }
+            get { return rangesOfTeam; }
+            set
+            {
+                if (NeedEveryPerson)
+                {
+                    rangesOfTeam = (value ?? new UInt32Range());
+                }
+            }
         }
 
         public TeamworkInfo()
@@ -80,47 +109,35 @@ namespace CompetitionConfigurationModule
             if (!beTeamwork)
             {
                 beTeamwork = true;
-                beMultiRank = false;
-                needEveryPerson = false;
-                minNumberOfPeople = NotNeedEveryPerson;
-                maxNumberOfPeople = NotNeedEveryPerson;
             }
         }
 
         public void SetIsNotTeamwork()
         {
+            SetNotNeedEveryPerson();
+
             beTeamwork = false;
             beMultiRank = false;
-            needEveryPerson = false;
-            minNumberOfPeople = NoTeamwork;
-            maxNumberOfPeople = NoTeamwork;
         }
 
-        public void SetNeedEveryPerson(Int32 minNumber = NoLimit, Int32 maxNumber = NoLimit)
+        public void SetNeedEveryPerson()
         {
-            if (maxNumber != NoLimit && maxNumber < minNumber)
-            {
-                throw new Exception("最少需要的人数不能大于最大需要的人数");
-            }
-            if (maxNumber < NotNeedEveryPerson || minNumber < NotNeedEveryPerson)
-            {
-                throw new Exception("最少需要的人数或最大需要的人数是个无效值");
-            }
-
-            if (!beTeamwork)
+            if (!needEveryPerson)
             {
                 SetIsTeamwork();
+                needEveryPerson = true;
+
+                rangesOfCategories = new Dictionary<AthleteCategory, UInt32Range>();
+                rangesOfTeam = new UInt32Range();
             }
-            needEveryPerson = true;
-            minNumberOfPeople = minNumber;
-            maxNumberOfPeople = maxNumber;
         }
 
         public void SetNotNeedEveryPerson()
         {
             needEveryPerson = false;
-            minNumberOfPeople = NotNeedEveryPerson;
-            maxNumberOfPeople = NotNeedEveryPerson;
+
+            rangesOfCategories = null;
+            rangesOfTeam = null;
         }
     }
 }
