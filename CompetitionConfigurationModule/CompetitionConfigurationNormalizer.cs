@@ -208,6 +208,14 @@ namespace CompetitionConfigurationModule
             nameNode.AppendChild(doc.CreateTextNode(gameInfo.Name));
             root.AppendChild(nameNode);
 
+            XmlElement typeNode = doc.CreateElement("Type");
+            typeNode.AppendChild(doc.CreateTextNode(gameInfo.Type.ToString()));
+            root.AppendChild(typeNode);
+
+            XmlElement patternNode = doc.CreateElement("Pattern");
+            patternNode.AppendChild(doc.CreateTextNode(gameInfo.Pattern.ToString()));
+            root.AppendChild(patternNode);
+
             if (gameInfo.NumberOfParticipants != GameInfo.NoLimit)
             {
                 XmlElement numberNode = doc.CreateElement("NumberOfParticipants");

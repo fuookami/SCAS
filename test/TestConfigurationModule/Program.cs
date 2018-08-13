@@ -60,9 +60,6 @@ namespace TestConfigurationModule
             var tomorrowSession1 = sessions.GenerateNewSession(Date.Today.Tomorrow);
             tomorrowSession1.Name = "上半场";
             tomorrowSession1.FullName = String.Format("{0}月{1}日 上半场", Date.Today.Tomorrow.Month, Date.Today.Tomorrow.Day);
-            var tomorrowSession2 = sessions.GenerateNewSession(Date.Today.Tomorrow);
-            tomorrowSession2.Name = "下半场";
-            tomorrowSession2.FullName = String.Format("{0}月{1}日 下半场", Date.Today.Tomorrow.Month, Date.Today.Tomorrow.Day);
             ret.Sessions = sessions;
 
             ret.Field = "某游泳馆";
@@ -133,7 +130,7 @@ namespace TestConfigurationModule
         {
             EventInfo ret = parent.GenerateNewEventInfo();
 
-            ret.Name = "一个名次赛的例子（团队，名次制，全部组在一起算名次，成绩越小越好）";
+            ret.Name = "一个名次赛的例子（团队，名次制预决赛，成绩越小越好）";
             ret.EventGradeInfo.GradeBetterType = GradeInfo.BetterType.Smaller;
 
             ret.EventTeamworkInfo.SetNeedEveryPerson();
@@ -159,13 +156,31 @@ namespace TestConfigurationModule
                 ret.EnabledTeams.Add(team);
             }
             ret.EnabledTeams.Sort();
+
+            {
+                GameInfo game = ret.GameInfos.GenerateNewGameInfo();
+                game.Name = "XX项目预决赛";
+
+                game.Type = GameInfo.GameType.Finals;
+                game.Pattern = GameInfo.GamePattern.Ranking;
+
+                game.GameSession = parent.Sessions[Date.Today][0];
+                game.OrderInEvent = 0;
+                game.OrderInSession = 0;
+
+                game.PlanIntervalTime = new TimeSpan(0, 2, 0);
+                game.PlanTimePerGroup = new TimeSpan(0, 3, 0);
+
+                game.EventGroupInfo.Enabled = true;
+                game.EventGroupInfo.NumberPerGroup = 8;
+            }
         }
 
         static void GenerateEvent2(CompetitionInfo parent)
         {
             EventInfo ret = parent.GenerateNewEventInfo();
 
-            ret.Name = "一个名次赛的例子（团队，竞标赛制，单组内算名次，成绩越大越好）";
+            ret.Name = "一个名次赛的例子（团队，竞标赛制小组赛+名次制决赛，成绩越大越好）";
             ret.EventGradeInfo.GradeBetterType = GradeInfo.BetterType.Bigger;
 
             ret.EventTeamworkInfo.SetNeedEveryPerson();
@@ -195,6 +210,41 @@ namespace TestConfigurationModule
                 ret.EnabledTeams.Add(team);
             }
             ret.EnabledTeams.Sort();
+
+            {
+                GameInfo game1 = ret.GameInfos.GenerateNewGameInfo();
+                game1.Name = "XX项目预赛";
+
+                game1.Type = GameInfo.GameType.Preliminary;
+                game1.Pattern = GameInfo.GamePattern.Elimination;
+
+                game1.GameSession = parent.Sessions[Date.Today][1];
+                game1.OrderInEvent = 0;
+                game1.OrderInSession = 0;
+
+                game1.PlanIntervalTime = new TimeSpan(0, 2, 0);
+                game1.PlanTimePerGroup = new TimeSpan(0, 3, 0);
+
+                game1.EventGroupInfo.Enabled = true;
+                game1.EventGroupInfo.NumberPerGroup = 8;
+
+                GameInfo game2 = ret.GameInfos.GenerateNewGameInfo();
+                game2.Name = "XX项目决赛";
+
+                game2.Type = GameInfo.GameType.Finals;
+                game2.Pattern = GameInfo.GamePattern.Ranking;
+
+                game2.NumberOfParticipants = 8;
+                game2.GameSession = parent.Sessions[Date.Today.Tomorrow][0];
+                game2.OrderInEvent = 1;
+                game2.OrderInSession = 0;
+
+                game2.PlanIntervalTime = new TimeSpan(0, 2, 0);
+                game2.PlanTimePerGroup = new TimeSpan(0, 3, 0);
+
+                game2.EventGroupInfo.Enabled = true;
+                game2.EventGroupInfo.NumberPerGroup = 8;
+            }
         }
 
         static void GenerateEvent3(CompetitionInfo parent)
@@ -221,6 +271,24 @@ namespace TestConfigurationModule
                 ret.EnabledTeams.Add(team);
             }
             ret.EnabledTeams.Sort();
+
+            {
+                GameInfo game = ret.GameInfos.GenerateNewGameInfo();
+                game.Name = "XX项目预决赛";
+
+                game.Type = GameInfo.GameType.Finals;
+                game.Pattern = GameInfo.GamePattern.Ranking;
+
+                game.GameSession = parent.Sessions[Date.Today][1];
+                game.OrderInEvent = 0;
+                game.OrderInSession = 1;
+
+                game.PlanIntervalTime = new TimeSpan(0, 2, 0);
+                game.PlanTimePerGroup = new TimeSpan(0, 3, 0);
+
+                game.EventGroupInfo.Enabled = true;
+                game.EventGroupInfo.NumberPerGroup = 8;
+            }
         }
 
         static void GenerateEvent4(CompetitionInfo parent)
@@ -249,6 +317,58 @@ namespace TestConfigurationModule
                 ret.EnabledTeams.Add(team);
             }
             ret.EnabledTeams.Sort();
+
+            {
+                GameInfo game1 = ret.GameInfos.GenerateNewGameInfo();
+                game1.Name = "XX项目预赛";
+
+                game1.Type = GameInfo.GameType.Preliminary;
+                game1.Pattern = GameInfo.GamePattern.Elimination;
+
+                game1.GameSession = parent.Sessions[Date.Today][0];
+                game1.OrderInEvent = 0;
+                game1.OrderInSession = 1;
+
+                game1.PlanIntervalTime = new TimeSpan(0, 2, 0);
+                game1.PlanTimePerGroup = new TimeSpan(0, 3, 0);
+
+                game1.EventGroupInfo.Enabled = true;
+                game1.EventGroupInfo.NumberPerGroup = 8;
+
+                GameInfo game2 = ret.GameInfos.GenerateNewGameInfo();
+                game2.Name = "XX项目复赛";
+
+                game2.Type = GameInfo.GameType.Preliminary;
+                game2.Pattern = GameInfo.GamePattern.Elimination;
+
+                game2.NumberOfParticipants = 16;
+                game2.GameSession = parent.Sessions[Date.Today][1];
+                game2.OrderInEvent = 1;
+                game2.OrderInSession = 2;
+
+                game2.PlanIntervalTime = new TimeSpan(0, 2, 0);
+                game2.PlanTimePerGroup = new TimeSpan(0, 3, 0);
+
+                game2.EventGroupInfo.Enabled = true;
+                game2.EventGroupInfo.NumberPerGroup = 8;
+
+                GameInfo game3 = ret.GameInfos.GenerateNewGameInfo();
+                game3.Name = "XX项目决赛";
+
+                game3.Type = GameInfo.GameType.Preliminary;
+                game3.Pattern = GameInfo.GamePattern.Elimination;
+
+                game3.NumberOfParticipants = 8;
+                game3.GameSession = parent.Sessions[Date.Today.Tomorrow][0];
+                game3.OrderInEvent = 2;
+                game3.OrderInSession = 1;
+
+                game3.PlanIntervalTime = new TimeSpan(0, 2, 0);
+                game3.PlanTimePerGroup = new TimeSpan(0, 3, 0);
+
+                game3.EventGroupInfo.Enabled = true;
+                game3.EventGroupInfo.NumberPerGroup = 8;
+            }
         }
     }
 }

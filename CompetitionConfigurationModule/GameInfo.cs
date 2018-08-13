@@ -5,18 +5,18 @@ namespace CompetitionConfigurationModule
 {
     public class GameInfo
     {
-        public enum RankingGameType
+        public enum GameType
         {
-            Group,              // 小组赛
+            Preliminary,        // 小组赛/预赛
             QuarterFinal,       // 复赛
             SemiFinal,          // 半决赛
-            Fianls				// 决赛
+            Finals				// 决赛
         };
 
-        public enum RankingGamePattern
+        public enum GamePattern
         {
-            Elimination,        // 淘汰制 / 竞标赛制
-            Ranking,			// 名次制
+            Elimination,        // 淘汰制 / 竞标赛制（单组内算名次）
+            Ranking,			// 名次制（所有组放在一起算名次）
         };
 
         public const UInt32 NoLimit = 0;
@@ -24,8 +24,8 @@ namespace CompetitionConfigurationModule
         private String id;
         private String name;
 
-        private RankingGameType type;
-        private RankingGamePattern pattern;
+        private GameType type;
+        private GamePattern pattern;
 
         private UInt32 numberOfParticipants;
         private Session session;
@@ -51,13 +51,13 @@ namespace CompetitionConfigurationModule
             set { name = value; }
         }
 
-        public RankingGameType Type
+        public GameType Type
         {
             get { return type; }
             set { type = value; }
         }
 
-        public RankingGamePattern Pattern
+        public GamePattern Pattern
         {
             get { return pattern; }
             set { pattern = value; }
@@ -106,7 +106,7 @@ namespace CompetitionConfigurationModule
             get { return planIntervalTime; }
             set
             {
-                if (value.Seconds <= 0)
+                if (value.TotalSeconds <= 0)
                 {
                     throw new Exception("不能将比赛间计划间隔时间设置为负数");
                 }
@@ -119,7 +119,7 @@ namespace CompetitionConfigurationModule
             get { return planTimePerGroup; }
             set
             {
-                if (value.Seconds <= 0)
+                if (value.TotalSeconds <= 0)
                 {
                     throw new Exception("不能将每组比赛计划时间设置为负数");
                 }
