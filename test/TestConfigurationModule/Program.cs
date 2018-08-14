@@ -338,7 +338,7 @@ namespace TestConfigurationModule
                 GameInfo game2 = ret.GameInfos.GenerateNewGameInfo();
                 game2.Name = "XX项目复赛";
 
-                game2.Type = GameInfo.GameType.Preliminary;
+                game2.Type = GameInfo.GameType.SemiFinal;
                 game2.Pattern = GameInfo.GamePattern.Elimination;
 
                 game2.NumberOfParticipants = 16;
@@ -355,8 +355,8 @@ namespace TestConfigurationModule
                 GameInfo game3 = ret.GameInfos.GenerateNewGameInfo();
                 game3.Name = "XX项目决赛";
 
-                game3.Type = GameInfo.GameType.Preliminary;
-                game3.Pattern = GameInfo.GamePattern.Elimination;
+                game3.Type = GameInfo.GameType.Finals;
+                game3.Pattern = GameInfo.GamePattern.Ranking;
 
                 game3.NumberOfParticipants = 8;
                 game3.GameSession = parent.Sessions[Date.Today.Tomorrow][0];

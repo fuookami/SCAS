@@ -24,6 +24,8 @@ namespace CompetitionConfigurationModule
         private String lastError;
         private CompetitionInfo result;
         private readonly List<AnalyzeNodeFunctionType<CompetitionInfo>> AnalyzeCompetitionInfoFunctions;
+        private readonly List<AnalyzeNodeFunctionType<EventInfo>> AnalyzeEventInfoFunctions;
+        private readonly List<AnalyzeNodeFunctionType<GameInfo>> AnalyzeGameInfoFunctions;
 
         public InputType DataInputType
         {
@@ -62,6 +64,20 @@ namespace CompetitionConfigurationModule
                 AnalyzeRankInfoNode, 
                 AnalyzeTeamCategoriesNode, 
                 AnalyzeTeamsNode
+            };
+
+            AnalyzeEventInfoFunctions = new List<AnalyzeNodeFunctionType<EventInfo>>
+            {
+                AnalyzeGradeInfoNode, 
+                AnalyzeTeamworkInfoNode, 
+                AnalyzeAthleteValidatorNode, 
+                AnalyzePointInfoNode, 
+                AnalyzeEnabledTeamsNode
+            };
+
+            AnalyzeGameInfoFunctions = new List<AnalyzeNodeFunctionType<GameInfo>>
+            {
+                AnalyzeGroupInfoNode
             };
         }
 
@@ -122,6 +138,15 @@ namespace CompetitionConfigurationModule
                 temp.Field = fieldNode.InnerText;
             }
 
+            XmlNodeList eventNodes = root.GetElementsByTagName("EventInfos");
+            foreach (XmlElement eventNode in eventNodes)
+            {
+                if (!AnalyzeEventInfo(eventNode, temp))
+                {
+                    return false;
+                }
+            }
+
             foreach (var analyzezeFunction in AnalyzeCompetitionInfoFunctions)
             {
                 if (!analyzezeFunction(root, temp))
@@ -131,6 +156,27 @@ namespace CompetitionConfigurationModule
             }
 
             result = temp;
+            return true;
+        }
+
+        public bool AnalyzeEventInfo(XmlElement node, CompetitionInfo data)
+        {
+            EventInfo temp = null;
+
+            XmlNodeList gameNodes = node.GetElementsByTagName("GameInfos");
+            foreach (XmlElement gameNode in gameNodes)
+            {
+                if (!AnalyzeGameInfo(gameNode, null))
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        private bool AnalyzeGameInfo(XmlElement node, EventInfo data)
+        {
             return true;
         }
 
@@ -304,6 +350,36 @@ namespace CompetitionConfigurationModule
                 newTeam.ShortName = shortNameNode.InnerText;
             }
 
+            return true;
+        }
+
+        private bool AnalyzeGradeInfoNode(XmlElement parent, EventInfo data)
+        {
+            return true;
+        }
+
+        private bool AnalyzeTeamworkInfoNode(XmlElement parent, EventInfo data)
+        {
+            return true;
+        }
+
+        private bool AnalyzeAthleteValidatorNode(XmlElement parent, EventInfo data)
+        {
+            return true;
+        }
+
+        private bool AnalyzePointInfoNode(XmlElement parent, EventInfo data)
+        {
+            return true;
+        }
+
+        private bool AnalyzeEnabledTeamsNode(XmlElement parent, EventInfo data)
+        {
+            return true;
+        }
+
+        private bool AnalyzeGroupInfoNode(XmlElement parent, GameInfo data)
+        {
             return true;
         }
 
