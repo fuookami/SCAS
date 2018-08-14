@@ -18,7 +18,8 @@ namespace CompetitionConfigurationModule
         }
 
         private delegate bool AnalyzeNodeFunctionType<T>(XmlElement parent, T data);
-        
+
+        private Boolean faultTolerant;
         private InputType inputType;
         private ErrorCode lastErrorCode;
         private String lastError;
@@ -26,6 +27,12 @@ namespace CompetitionConfigurationModule
         private readonly List<AnalyzeNodeFunctionType<CompetitionInfo>> AnalyzeCompetitionInfoFunctions;
         private readonly List<AnalyzeNodeFunctionType<EventInfo>> AnalyzeEventInfoFunctions;
         private readonly List<AnalyzeNodeFunctionType<GameInfo>> AnalyzeGameInfoFunctions;
+
+        public Boolean FaultTolerant
+        {
+            get { return faultTolerant; }
+            set { faultTolerant = value; }
+        }
 
         public InputType DataInputType
         {
@@ -48,8 +55,9 @@ namespace CompetitionConfigurationModule
             get { return result; }
         }
 
-        public CompetitionConfigurationAnalyzer(InputType dataInputType = InputType.File)
+        public CompetitionConfigurationAnalyzer(Boolean beFaultTolerant = false, InputType dataInputType = InputType.File)
         {
+            faultTolerant = beFaultTolerant;
             inputType = dataInputType;
             lastErrorCode = ErrorCode.NoError;
             result = null;
@@ -163,6 +171,14 @@ namespace CompetitionConfigurationModule
         {
             EventInfo temp = null;
 
+            {
+                XmlElement idNode = (XmlElement)node.GetElementsByTagName("Id")[0];
+                temp = new EventInfo(idNode.InnerText);
+
+                XmlElement nameNode = (XmlElement)node.GetElementsByTagName("Name")[0];
+                temp.Name = nameNode.InnerText;
+            }
+
             XmlNodeList gameNodes = node.GetElementsByTagName("GameInfos");
             foreach (XmlElement gameNode in gameNodes)
             {
@@ -172,11 +188,80 @@ namespace CompetitionConfigurationModule
                 }
             }
 
+            foreach (var analyzeFunction in AnalyzeEventInfoFunctions)
+            {
+                if (!analyzeFunction(node, temp))
+                {
+                    return false;
+                }
+            }
+
+            data.EventInfos.Add(temp);
+
             return true;
         }
 
         private bool AnalyzeGameInfo(XmlElement node, EventInfo data)
         {
+            GameInfo temp = null;
+
+            {
+                XmlElement idNode = (XmlElement)node.GetElementsByTagName("Id")[0];
+                temp = data.GameInfos.GenerateNewGameInfo(idNode.InnerText);
+
+                XmlElement nameNode = (XmlElement)node.GetElementsByTagName("Name")[0];
+                temp.Name = nameNode.InnerText;
+
+                XmlElement typeNode = (XmlElement)node.GetElementsByTagName("Type")[0];
+                temp.Type = (GameInfo.GameType)Enum.Parse(typeof(GameInfo.GameType), typeNode.InnerText);
+
+                XmlElement patternNode = (XmlElement)node.GetElementsByTagName("Pattern")[0];
+                temp.Pattern = (GameInfo.GamePattern)Enum.Parse(typeof(GameInfo.GamePattern), typeNode.InnerText);
+
+                XmlNodeList numberNodes = node.GetElementsByTagName("NumberOfParticipants");
+                if (numberNodes.Count != 0)
+                {
+                    XmlElement numberNode = (XmlElement)numberNodes[0];
+                    temp.NumberOfParticipants = UInt32.Parse(numberNode.InnerText);
+                }
+
+                XmlElement sessionNode = (XmlElement)node.GetElementsByTagName("Session")[0];
+                Date date = Date.Parse(sessionNode.GetAttribute("date"));
+                UInt32 orderInDate = UInt32.Parse(sessionNode.GetAttribute("order"));
+                if (!data.Competition.Sessions.ContainsKey(date))
+                {
+                    data.GameInfos.Remove(temp);
+                    return false;
+                }
+                Session session = data.Competition.Sessions[date].Find((element) => element.OrderInDate == orderInDate);
+                if (session == null)
+                {
+                    data.GameInfos.Remove(temp);
+                    return false;
+                }
+                temp.GameSession = session;
+
+                XmlElement orderInEventNode = (XmlElement)node.GetElementsByTagName("OrderInEvent")[0];
+                temp.OrderInEvent = Int32.Parse(orderInEventNode.InnerText);
+
+                XmlElement orderInSessionNode = (XmlElement)node.GetElementsByTagName("OrderInSession")[0];
+                temp.OrderInSession = Int32.Parse(orderInSessionNode.InnerText);
+
+                XmlElement planIntervalTimeNode = (XmlElement)node.GetElementsByTagName("PlanIntervalTime")[0];
+                temp.PlanIntervalTime = TimeSpan.Parse(planIntervalTimeNode.InnerText);
+
+                XmlElement planTimePerGroupNode = (XmlElement)node.GetElementsByTagName("PlanTimePerGroup")[0];
+                temp.PlanTimePerGroup = TimeSpan.Parse(planTimePerGroupNode.InnerText);
+            }
+
+            foreach (var analyzeFunction in AnalyzeGameInfoFunctions)
+            {
+                if (!analyzeFunction(node, temp))
+                {
+                    return false;
+                }
+            }
+
             return true;
         }
 
