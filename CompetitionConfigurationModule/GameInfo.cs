@@ -127,7 +127,7 @@ namespace CompetitionConfigurationModule
             }
         }
 
-        public GroupInfo EventGroupInfo
+        public GroupInfo GameGroupInfo
         {
             get { return groupInfo; }
             set { groupInfo = value ?? throw new Exception("设置的比赛分组信息是个无效值"); }

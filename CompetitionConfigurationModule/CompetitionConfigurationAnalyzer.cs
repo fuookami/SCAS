@@ -124,8 +124,7 @@ namespace CompetitionConfigurationModule
             CompetitionInfo temp = null;
 
             {
-                XmlElement idNode = (XmlElement)root.GetElementsByTagName("Id")[0];
-                temp = new CompetitionInfo(idNode.InnerText);
+                temp = new CompetitionInfo(root.GetAttribute("id"));
 
                 XmlElement nameNode = (XmlElement)root.GetElementsByTagName("Name")[0];
                 temp.Name = nameNode.InnerText;
@@ -146,18 +145,19 @@ namespace CompetitionConfigurationModule
                 temp.Field = fieldNode.InnerText;
             }
 
-            XmlNodeList eventNodes = root.GetElementsByTagName("EventInfos");
-            foreach (XmlElement eventNode in eventNodes)
+            foreach (var analyzezeFunction in AnalyzeCompetitionInfoFunctions)
             {
-                if (!AnalyzeEventInfo(eventNode, temp))
+                if (!analyzezeFunction(root, temp))
                 {
                     return false;
                 }
             }
 
-            foreach (var analyzezeFunction in AnalyzeCompetitionInfoFunctions)
+            XmlElement eventsNode = (XmlElement)root.GetElementsByTagName("EventInfos")[0];
+            XmlNodeList eventNodes = eventsNode.GetElementsByTagName("EventInfo");
+            foreach (XmlElement eventNode in eventNodes)
             {
-                if (!analyzezeFunction(root, temp))
+                if (!AnalyzeEventInfo(eventNode, temp))
                 {
                     return false;
                 }
@@ -172,31 +172,31 @@ namespace CompetitionConfigurationModule
             EventInfo temp = null;
 
             {
-                XmlElement idNode = (XmlElement)node.GetElementsByTagName("Id")[0];
-                temp = new EventInfo(idNode.InnerText);
+                temp = new EventInfo(node.GetAttribute("id"), data);
 
                 XmlElement nameNode = (XmlElement)node.GetElementsByTagName("Name")[0];
                 temp.Name = nameNode.InnerText;
-            }
-
-            XmlNodeList gameNodes = node.GetElementsByTagName("GameInfos");
-            foreach (XmlElement gameNode in gameNodes)
-            {
-                if (!AnalyzeGameInfo(gameNode, null))
-                {
-                    return false;
-                }
             }
 
             foreach (var analyzeFunction in AnalyzeEventInfoFunctions)
             {
                 if (!analyzeFunction(node, temp))
                 {
+                    data.EventInfos.Remove(temp);
                     return false;
                 }
             }
 
-            data.EventInfos.Add(temp);
+            XmlElement gamesNode = (XmlElement)node.GetElementsByTagName("GameInfos")[0];
+            XmlNodeList gameNodes = gamesNode.GetElementsByTagName("GameInfo");
+            foreach (XmlElement gameNode in gameNodes)
+            {
+                if (!AnalyzeGameInfo(gameNode, temp))
+                {
+                    data.EventInfos.Remove(temp);
+                    return false;
+                }
+            }
 
             return true;
         }
@@ -206,8 +206,7 @@ namespace CompetitionConfigurationModule
             GameInfo temp = null;
 
             {
-                XmlElement idNode = (XmlElement)node.GetElementsByTagName("Id")[0];
-                temp = data.GameInfos.GenerateNewGameInfo(idNode.InnerText);
+                temp = data.GameInfos.GenerateNewGameInfo(node.GetAttribute("id"));
 
                 XmlElement nameNode = (XmlElement)node.GetElementsByTagName("Name")[0];
                 temp.Name = nameNode.InnerText;
@@ -216,7 +215,7 @@ namespace CompetitionConfigurationModule
                 temp.Type = (GameInfo.GameType)Enum.Parse(typeof(GameInfo.GameType), typeNode.InnerText);
 
                 XmlElement patternNode = (XmlElement)node.GetElementsByTagName("Pattern")[0];
-                temp.Pattern = (GameInfo.GamePattern)Enum.Parse(typeof(GameInfo.GamePattern), typeNode.InnerText);
+                temp.Pattern = (GameInfo.GamePattern)Enum.Parse(typeof(GameInfo.GamePattern), patternNode.InnerText);
 
                 XmlNodeList numberNodes = node.GetElementsByTagName("NumberOfParticipants");
                 if (numberNodes.Count != 0)
@@ -341,6 +340,26 @@ namespace CompetitionConfigurationModule
 
         private bool AnalyzeSessionsNode(XmlElement parent, CompetitionInfo data)
         {
+            XmlElement sessionsNode = (XmlElement)parent.GetElementsByTagName("Sessions")[0];
+            XmlNodeList sessionNodes = sessionsNode.GetElementsByTagName("Session");
+
+            foreach (XmlElement sessionNode in sessionNodes)
+            {
+                Session session = new Session(Date.Parse(sessionNode.GetAttribute("date")), UInt32.Parse(sessionNode.GetAttribute("order")));
+
+                XmlElement nameNode = (XmlElement)sessionNode.GetElementsByTagName("Name")[0];
+                session.Name = nameNode.InnerText;
+
+                XmlElement fulleNameNode = (XmlElement)sessionNode.GetElementsByTagName("FullName")[0];
+                session.FullName = fulleNameNode.InnerText;
+
+                if (!data.Sessions.ContainsKey(session.SessionDate))
+                {
+                    data.Sessions[session.SessionDate] = new List<Session>();
+                }
+                data.Sessions[session.SessionDate].Add(session);
+            }
+
             return true;
         }
 
@@ -440,31 +459,217 @@ namespace CompetitionConfigurationModule
 
         private bool AnalyzeGradeInfoNode(XmlElement parent, EventInfo data)
         {
+            XmlElement node = (XmlElement)parent.GetElementsByTagName("GradeInfo")[0];
+            GradeInfo gardeInfo = data.EventGradeInfo;
+
+            XmlElement betterTypeNode = (XmlElement)node.GetElementsByTagName("BetterType")[0];
+            gardeInfo.GradeBetterType = (GradeInfo.BetterType)Enum.Parse(typeof(GradeInfo.BetterType), betterTypeNode.InnerText);
+
+            XmlNodeList patternNodes = node.GetElementsByTagName("Pattern");
+            if (patternNodes.Count != 0)
+            {
+                XmlElement patternNode = (XmlElement)patternNodes[0];
+                gardeInfo.SetGradePattern(
+                    (GradeInfo.PatternType)Enum.Parse(typeof(GradeInfo.PatternType), patternNode.GetAttribute("type")), 
+                    patternNode.InnerText
+                );
+            }
+
             return true;
         }
 
         private bool AnalyzeTeamworkInfoNode(XmlElement parent, EventInfo data)
         {
+            XmlElement teamworkNode = (XmlElement)parent.GetElementsByTagName("TeamworkInfo")[0];
+            TeamworkInfo ret = new TeamworkInfo();
+            ret.BeTeamwork = Boolean.Parse(teamworkNode.GetAttribute("enabled"));
+
+            if (ret.BeTeamwork)
+            {
+                XmlElement beMultiRankNode = (XmlElement)teamworkNode.GetElementsByTagName("BeMultiRank")[0];
+                ret.BeMultiRank = Boolean.Parse(beMultiRankNode.InnerText);
+
+                XmlElement needEveryPersonNode = (XmlElement)teamworkNode.GetElementsByTagName("NeedEveryPerson")[0];
+                ret.NeedEveryPerson = Boolean.Parse(needEveryPersonNode.InnerText);
+
+                if (ret.NeedEveryPerson)
+                {
+                    XmlElement numberNode = (XmlElement)teamworkNode.GetElementsByTagName("NumberOfPeople")[0];
+                    XmlNodeList rangeNodes = numberNode.GetElementsByTagName("Range");
+
+                    foreach (XmlElement rangeNode in rangeNodes)
+                    {
+                        if (!rangeNode.HasAttribute("category"))
+                        {
+                            return false;
+                        }
+                        var category = data.Competition.AthleteCategories.Find(element => element.Name == rangeNode.GetAttribute("category"));
+                        if (category == null)
+                        {
+                            return false;
+                        }
+
+                        var range = new UInt32Range();
+                        if (rangeNode.HasAttribute("min"))
+                        {
+                            range.Minimun = UInt32.Parse(rangeNode.GetAttribute("min"));
+                        }
+
+                        if (rangeNode.HasAttribute("max"))
+                        {
+                            range.Maximun = UInt32.Parse(rangeNode.GetAttribute("max"));
+                        }
+
+                        if (!range.Valid())
+                        {
+                            return false;
+                        }
+                        ret.RangesOfCategories.Add(category, range);
+                    }
+
+                    XmlNodeList teamRangeNodes = numberNode.GetElementsByTagName("TeamRange");
+                    if (teamRangeNodes.Count != 0)
+                    {
+                        XmlElement teamRangeNode = (XmlElement)teamRangeNodes[0];
+                        var range = new UInt32Range();
+
+                        if (teamRangeNode.HasAttribute("min"))
+                        {
+                            range.Minimun = UInt32.Parse(teamRangeNode.GetAttribute("min"));
+                        }
+
+                        if (teamRangeNode.HasAttribute("max"))
+                        {
+                            range.Maximun = UInt32.Parse(teamRangeNode.GetAttribute("max"));
+                        }
+
+                        if (!range.Valid())
+                        {
+                            return false;
+                        }
+                        ret.RangesOfTeam = range;
+                    }
+                }
+            }
+
+            data.EventTeamworkInfo = ret;
             return true;
         }
 
         private bool AnalyzeAthleteValidatorNode(XmlElement parent, EventInfo data)
         {
+            XmlElement node = (XmlElement)parent.GetElementsByTagName("AthleteValidator")[0];
+            AthleteValidator ret = new AthleteValidator();
+
+            XmlElement categoriesNode = (XmlElement)node.GetElementsByTagName("EnabledCategories")[0];
+            var enabledCategoriesNames = categoriesNode.InnerText.Split(new char[] { ',', ' ' }, StringSplitOptions.RemoveEmptyEntries);
+            foreach (var enabledCategorieName in enabledCategoriesNames)
+            {
+                var category = data.Competition.AthleteCategories.Find(element => element.Name == enabledCategorieName);
+                if (category == null)
+                {
+                    return false;
+                }
+                ret.Categories.Add(category);
+            }
+
+            if (data.Competition.CompetitionRankInfo.Enabled)
+            {
+                XmlNodeList ranksNodes = node.GetElementsByTagName("EnabledRanks");
+                if (ranksNodes.Count != 0)
+                {
+                    XmlElement ranksNode = (XmlElement)ranksNodes[0];
+                    var enabledRanksNames = ranksNode.InnerText.Split(new char[] { ',', ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                    foreach (var enabledRankName in enabledRanksNames)
+                    {
+                        var rank = data.Competition.CompetitionRankInfo.AthleteRanks.Find(element => element.Name == enabledRankName);
+                        if (rank == null)
+                        {
+                            return false;
+                        }
+                        ret.Ranks.Add(rank);
+                    }
+                }
+            }
+
+            XmlNodeList maxNumberPerTeamNodes = node.GetElementsByTagName("MaxNumberPerTeam");
+            if (maxNumberPerTeamNodes.Count != 0)
+            {
+                XmlElement maxNumberPerTeamNode = (XmlElement)maxNumberPerTeamNodes[0];
+                ret.MaxNumberPerTeam = UInt32.Parse(maxNumberPerTeamNode.InnerText);
+            }
+
+            XmlElement pointForEveryRankNode = (XmlElement)node.GetElementsByTagName("PointForEveryRank")[0];
+            ret.BePointForEveryRank = Boolean.Parse(pointForEveryRankNode.InnerText);
+
+            data.EventAthleteValidator = ret;
             return true;
         }
 
         private bool AnalyzePointInfoNode(XmlElement parent, EventInfo data)
         {
+            XmlElement node = (XmlElement)parent.GetElementsByTagName("PointInfo")[0];
+            PointInfo ret = new PointInfo();
+
+            XmlElement pointsNode = (XmlElement)node.GetElementsByTagName("Points")[0];
+            var pointStrings = pointsNode.InnerText.Split(new char[] { ',', ' ' }, StringSplitOptions.RemoveEmptyEntries);
+            ret.Points.Clear();
+            foreach (var pointString in pointStrings)
+            {
+                ret.Points.Add(UInt32.Parse(pointString));
+            }
+
+            XmlElement pointRateNode = (XmlElement)node.GetElementsByTagName("PointRate")[0];
+            ret.PointRate = Double.Parse(pointRateNode.InnerText);
+
+            XmlElement breakRecordPointRateNode = (XmlElement)node.GetElementsByTagName("BreakRecordPointRate")[0];
+            var breakRecordPointRate = Double.Parse(breakRecordPointRateNode.InnerText);
+            if (breakRecordPointRate == PointInfo.PointRateDisabled)
+            {
+                ret.SetBreakRecordPointRateDisabled();
+            }
+            else
+            {
+                ret.SetBreakRecordPointRateEnabled(breakRecordPointRate);
+            }
+
+            data.EventPointInfo = ret;
             return true;
         }
 
         private bool AnalyzeEnabledTeamsNode(XmlElement parent, EventInfo data)
         {
+            TeamInfoPool teams = data.Competition.TeamInfos;
+
+            XmlElement enabledTeamsNode = (XmlElement)parent.GetElementsByTagName("EnabledTeams")[0];
+            var enabledTeamsNames = enabledTeamsNode.InnerText.Split(new char[] { ',', ' ' }, StringSplitOptions.RemoveEmptyEntries);
+            data.EnabledTeams.Clear();
+            foreach (var enabledTeamName in enabledTeamsNames)
+            {
+                var team = teams.Find(element => element.Name == enabledTeamName);
+                if (team == null)
+                {
+                    return false;
+                }
+                data.EnabledTeams.Add(team);
+            }
+
             return true;
         }
 
         private bool AnalyzeGroupInfoNode(XmlElement parent, GameInfo data)
         {
+            GroupInfo ret = new GroupInfo();
+            XmlElement groupNode = (XmlElement)parent.GetElementsByTagName("GroupInfo")[0];
+            ret.Enabled = Boolean.Parse(groupNode.GetAttribute("enabled"));
+
+            if (ret.Enabled)
+            {
+                XmlElement numberPerGroupNode = (XmlElement)parent.GetElementsByTagName("NumberPerGroup")[0];
+                ret.NumberPerGroup = Int32.Parse(numberPerGroupNode.InnerText);
+            }
+
+            data.GameGroupInfo = ret;
             return true;
         }
 

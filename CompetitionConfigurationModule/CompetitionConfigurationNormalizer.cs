@@ -99,9 +99,7 @@ namespace CompetitionConfigurationModule
             XmlElement root = doc.CreateElement("SCASCompetitionConfiguration");
 
             {
-                XmlElement idNode = doc.CreateElement("Id");
-                idNode.AppendChild(doc.CreateTextNode(outputData.Id));
-                root.AppendChild(idNode);
+                root.SetAttribute("id", outputData.Id);
 
                 XmlElement nameNode = doc.CreateElement("Name");
                 nameNode.AppendChild(doc.CreateTextNode(outputData.Name));
@@ -604,7 +602,7 @@ namespace CompetitionConfigurationModule
 
         private XmlElement NormalizeGroupInfo(XmlDocument doc, GameInfo outputData)
         {
-            GroupInfo data = outputData.EventGroupInfo;
+            GroupInfo data = outputData.GameGroupInfo;
             XmlElement groupNode = doc.CreateElement("GroupInfo");
             groupNode.SetAttribute("enabled", data.Enabled.ToString());
             

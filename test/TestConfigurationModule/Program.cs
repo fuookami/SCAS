@@ -9,8 +9,9 @@ namespace TestConfigurationModule
         static void Main(string[] args)
         {
             var data1 = GenerateTestCompetitionInfo();
-            TestSaveToXML(data1);
+            TestSaveToXML(data1, "test.xml");
             var data2 = TestLoadFromXML();
+            TestSaveToXML(data2, "test2.xml");
             Console.ReadKey();
         }
 
@@ -98,10 +99,10 @@ namespace TestConfigurationModule
             return ret;
         }
 
-        static void TestSaveToXML(CompetitionInfo info)
+        static void TestSaveToXML(CompetitionInfo info, String url)
         {
             CompetitionConfigurationNormalizer normalizer = new CompetitionConfigurationNormalizer(info);
-            if (normalizer.NormalizeToFile("test.xml"))
+            if (normalizer.NormalizeToFile(url))
             {
                 Console.WriteLine("OK to write.");
             }
@@ -171,8 +172,8 @@ namespace TestConfigurationModule
                 game.PlanIntervalTime = new TimeSpan(0, 2, 0);
                 game.PlanTimePerGroup = new TimeSpan(0, 3, 0);
 
-                game.EventGroupInfo.Enabled = true;
-                game.EventGroupInfo.NumberPerGroup = 8;
+                game.GameGroupInfo.Enabled = true;
+                game.GameGroupInfo.NumberPerGroup = 8;
             }
         }
 
@@ -225,8 +226,8 @@ namespace TestConfigurationModule
                 game1.PlanIntervalTime = new TimeSpan(0, 2, 0);
                 game1.PlanTimePerGroup = new TimeSpan(0, 3, 0);
 
-                game1.EventGroupInfo.Enabled = true;
-                game1.EventGroupInfo.NumberPerGroup = 8;
+                game1.GameGroupInfo.Enabled = true;
+                game1.GameGroupInfo.NumberPerGroup = 8;
 
                 GameInfo game2 = ret.GameInfos.GenerateNewGameInfo();
                 game2.Name = "XX项目决赛";
@@ -242,8 +243,8 @@ namespace TestConfigurationModule
                 game2.PlanIntervalTime = new TimeSpan(0, 2, 0);
                 game2.PlanTimePerGroup = new TimeSpan(0, 3, 0);
 
-                game2.EventGroupInfo.Enabled = true;
-                game2.EventGroupInfo.NumberPerGroup = 8;
+                game2.GameGroupInfo.Enabled = true;
+                game2.GameGroupInfo.NumberPerGroup = 8;
             }
         }
 
@@ -286,8 +287,8 @@ namespace TestConfigurationModule
                 game.PlanIntervalTime = new TimeSpan(0, 2, 0);
                 game.PlanTimePerGroup = new TimeSpan(0, 3, 0);
 
-                game.EventGroupInfo.Enabled = true;
-                game.EventGroupInfo.NumberPerGroup = 8;
+                game.GameGroupInfo.Enabled = true;
+                game.GameGroupInfo.NumberPerGroup = 8;
             }
         }
 
@@ -332,8 +333,8 @@ namespace TestConfigurationModule
                 game1.PlanIntervalTime = new TimeSpan(0, 2, 0);
                 game1.PlanTimePerGroup = new TimeSpan(0, 3, 0);
 
-                game1.EventGroupInfo.Enabled = true;
-                game1.EventGroupInfo.NumberPerGroup = 8;
+                game1.GameGroupInfo.Enabled = true;
+                game1.GameGroupInfo.NumberPerGroup = 8;
 
                 GameInfo game2 = ret.GameInfos.GenerateNewGameInfo();
                 game2.Name = "XX项目复赛";
@@ -349,8 +350,8 @@ namespace TestConfigurationModule
                 game2.PlanIntervalTime = new TimeSpan(0, 2, 0);
                 game2.PlanTimePerGroup = new TimeSpan(0, 3, 0);
 
-                game2.EventGroupInfo.Enabled = true;
-                game2.EventGroupInfo.NumberPerGroup = 8;
+                game2.GameGroupInfo.Enabled = true;
+                game2.GameGroupInfo.NumberPerGroup = 8;
 
                 GameInfo game3 = ret.GameInfos.GenerateNewGameInfo();
                 game3.Name = "XX项目决赛";
@@ -366,8 +367,8 @@ namespace TestConfigurationModule
                 game3.PlanIntervalTime = new TimeSpan(0, 2, 0);
                 game3.PlanTimePerGroup = new TimeSpan(0, 3, 0);
 
-                game3.EventGroupInfo.Enabled = true;
-                game3.EventGroupInfo.NumberPerGroup = 8;
+                game3.GameGroupInfo.Enabled = true;
+                game3.GameGroupInfo.NumberPerGroup = 8;
             }
         }
     }

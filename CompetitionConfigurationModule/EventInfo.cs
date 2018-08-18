@@ -83,7 +83,7 @@ namespace CompetitionConfigurationModule
             gradeInfo = new GradeInfo();
             teamworkInfo = new TeamworkInfo();
             athleteValidator = new AthleteValidator();
-            pointInfo = competition == null ? (PointInfo)competition.PublicPointInfo.Clone() : new PointInfo();
+            pointInfo = competition == null ? new PointInfo() : (PointInfo)competition.PublicPointInfo.Clone();
             enabledTeams = new TeamInfoList();
 
             competitionInfo = competition;
