@@ -199,6 +199,7 @@ namespace SCAS
                 teamCategories = new TeamCategoryPool();
                 teamInfos = new TeamInfoPool();
 
+                useLines = new List<UInt32>();
                 SetLineConfiguration();
 
                 gameInfos = new Dictionary<Session, GameInfoList>();
@@ -218,7 +219,7 @@ namespace SCAS
             public bool SetLineConfiguration(UInt32 useBeginLine, UInt32 numberOfUseLines, UInt32 displayBeginLine, UInt32 numberOfDisplayLines)
             {
                 if (numberOfUseLines == 0 || numberOfDisplayLines == 0 || (useBeginLine < displayBeginLine)
-                    || ((useBeginLine + numberOfUseLines) > (displayBeginLine + NumberOfDisplayLines)))
+                    || ((useBeginLine + numberOfUseLines) > (displayBeginLine + numberOfDisplayLines)))
                 {
                     return false;
                 }
@@ -227,9 +228,9 @@ namespace SCAS
                 this.numberOfDisplayLines = numberOfDisplayLines;
 
                 useLines.Clear();
-                for (UInt32 i = useBeginLine; i != numberOfUseLines; ++i)
+                for (UInt32 i = 0; i != numberOfUseLines; ++i)
                 {
-                    useLines.Add(displayBeginLine + i);
+                    useLines.Add(useBeginLine + i);
                 }
 
                 return true;
@@ -237,7 +238,7 @@ namespace SCAS
 
             public bool SetLineConfiguration(List<UInt32> useLines, UInt32 displayBeginLine, UInt32 numberOfDisplayLines)
             {
-                if (numberOfDisplayLines == 0)
+                if (useLines == null || useLines.Count == 0 || numberOfDisplayLines == 0)
                 {
                     return false;
                 }

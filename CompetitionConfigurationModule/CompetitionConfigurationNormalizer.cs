@@ -126,6 +126,18 @@ namespace SCAS
                     XmlElement fieldNode = doc.CreateElement("Field");
                     fieldNode.AppendChild(doc.CreateTextNode(outputData.Field.ToString()));
                     root.AppendChild(fieldNode);
+
+                    XmlElement displayBeginLineNode = doc.CreateElement("DisplayBeginLine");
+                    displayBeginLineNode.AppendChild(doc.CreateTextNode(outputData.DisplayBeginLine.ToString()));
+                    root.AppendChild(displayBeginLineNode);
+
+                    XmlElement numberOfDisplayLinesNode = doc.CreateElement("NumberOfDisplayLines");
+                    numberOfDisplayLinesNode.AppendChild(doc.CreateTextNode(outputData.NumberOfDisplayLines.ToString()));
+                    root.AppendChild(numberOfDisplayLinesNode);
+
+                    XmlElement useLinesNode = doc.CreateElement("UseLines");
+                    useLinesNode.AppendChild(doc.CreateTextNode(String.Join(", ", outputData.UseLines)));
+                    root.AppendChild(useLinesNode);
                 }
 
                 foreach (var normalizeFunction in NormalizeCompetitionInfoFunctions)

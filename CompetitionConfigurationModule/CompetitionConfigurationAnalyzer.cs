@@ -145,6 +145,17 @@ namespace SCAS
 
                     XmlElement fieldNode = (XmlElement)root.GetElementsByTagName("Field")[0];
                     temp.Field = fieldNode.InnerText;
+
+                    XmlElement displayBeginLineNode = (XmlElement)root.GetElementsByTagName("DisplayBeginLine")[0];
+                    XmlElement numberOfDisplayLinesNode = (XmlElement)root.GetElementsByTagName("NumberOfDisplayLines")[0];
+                    XmlElement useLinesNode = (XmlElement)root.GetElementsByTagName("UseLines")[0];
+                    var useLinesStrings = useLinesNode.InnerText.Split(new char[] { ',', ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                    List<UInt32> useLines = new List<UInt32>();
+                    foreach (var useLineString in useLinesStrings)
+                    {
+                        useLines.Add(UInt32.Parse(useLineString));
+                    }
+                    temp.SetLineConfiguration(useLines, UInt32.Parse(displayBeginLineNode.InnerText), UInt32.Parse(numberOfDisplayLinesNode.InnerText));
                 }
 
                 foreach (var analyzezeFunction in AnalyzeCompetitionInfoFunctions)
