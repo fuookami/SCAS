@@ -1,59 +1,62 @@
 ﻿using System;
 
-namespace CompetitionConfigurationModule
+namespace SCAS
 {
-    public class GroupInfo
+    namespace CompetitionConfiguration
     {
-        public const Int32 NoGroup = -1;
-        public const Int32 NoLimit = 0;
-
-        private bool enabled;
-        private Int32 numberPerGroup;
-
-        public bool Enabled
+        public class GroupInfo
         {
-            get { return enabled; }
-            set
+            public const Int32 NoGroup = -1;
+            public const Int32 NoLimit = 0;
+
+            private bool enabled;
+            private Int32 numberPerGroup;
+
+            public bool Enabled
             {
-                if (value)
+                get { return enabled; }
+                set
                 {
-                    SetEnabled();
+                    if (value)
+                    {
+                        SetEnabled();
+                    }
+                    else
+                    {
+                        SetDisbaled();
+                    }
                 }
-                else
+            }
+
+            public Int32 NumberPerGroup
+            {
+                get { return numberPerGroup; }
+                set
                 {
-                    SetDisbaled();
+                    SetEnabled(value);
                 }
             }
-        }
 
-        public Int32 NumberPerGroup
-        {
-            get { return numberPerGroup; }
-            set
+            public GroupInfo()
             {
-                SetEnabled(value);
+                SetDisbaled();
+            }
+
+            public void SetEnabled(Int32 number = NoLimit)
+            {
+                enabled = true;
+                if (number <= NoGroup)
+                {
+                    throw new Exception("分组的数量是个无效值");
+                }
+                numberPerGroup = number;
+            }
+
+            public void SetDisbaled()
+            {
+                enabled = false;
+                numberPerGroup = NoGroup;
             }
         }
-
-        public GroupInfo()
-        {
-            SetDisbaled();
-        }
-
-        public void SetEnabled(Int32 number = NoLimit)
-        {
-            enabled = true;
-            if (number <= NoGroup)
-            {
-                throw new Exception("分组的数量是个无效值");
-            }
-            numberPerGroup = number;
-        }
-
-        public void SetDisbaled()
-        {
-            enabled = false;
-            numberPerGroup = NoGroup;
-        }
-    }
-}
+    };
+};

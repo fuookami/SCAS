@@ -1,6 +1,6 @@
-﻿using CompetitionConfigurationModule;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using SCAS.CompetitionConfiguration;
 
 namespace TestConfigurationModule
 {
@@ -101,7 +101,7 @@ namespace TestConfigurationModule
 
         static void TestSaveToXML(CompetitionInfo info, String url)
         {
-            CompetitionConfigurationNormalizer normalizer = new CompetitionConfigurationNormalizer(info);
+            Normalizer normalizer = new Normalizer(info);
             if (normalizer.NormalizeToFile(url))
             {
                 Console.WriteLine("OK to write.");
@@ -114,7 +114,7 @@ namespace TestConfigurationModule
 
         static CompetitionInfo TestLoadFromXML()
         {
-            CompetitionConfigurationAnalyzer analyzer = new CompetitionConfigurationAnalyzer();
+            Analyzer analyzer = new Analyzer();
             if (analyzer.Analyze("test.xml"))
             {
                 Console.WriteLine("OK to read.");

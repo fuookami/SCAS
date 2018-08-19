@@ -1,42 +1,45 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace CompetitionConfigurationModule
+namespace SCAS
 {
-    public class PrincipalInfo
+    namespace CompetitionConfiguration
     {
-        private String name;
-        private String telephone;
-        private String email;
-        private Dictionary<String, String> others;
-
-        public String Name
+        public class PrincipalInfo
         {
-            get { return name; }
-            set { name = value; }
-        }
+            private String name;
+            private String telephone;
+            private String email;
+            private Dictionary<String, String> others;
 
-        public String Telephone
-        {
-            get { return telephone; }
-            set { telephone = value; }
-        }
+            public String Name
+            {
+                get { return name; }
+                set { name = value; }
+            }
 
-        public String Email
-        {
-            get { return email; }
-            set { email = value; }
-        }
+            public String Telephone
+            {
+                get { return telephone; }
+                set { telephone = value; }
+            }
 
-        public Dictionary<String, String> Others
-        {
-            get { return others; }
-            set { others = value; }
-        }
+            public String Email
+            {
+                get { return email; }
+                set { email = value; }
+            }
 
-        public PrincipalInfo()
-        {
-            others = new Dictionary<string, string>();
+            public Dictionary<String, String> Others
+            {
+                get { return others; }
+                set { others = value; }
+            }
+
+            public PrincipalInfo()
+            {
+                others = new Dictionary<string, string>();
+            }
         }
-    }
-}
+    };
+};

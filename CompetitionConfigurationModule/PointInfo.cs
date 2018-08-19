@@ -1,109 +1,112 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace CompetitionConfigurationModule
+namespace SCAS
 {
-    public class PointInfo : ICloneable
+    namespace CompetitionConfiguration
     {
-        public const Double NoPointRate = 1.0;
-        public const Double PointRateDisabled = .0;
-        public static readonly List<UInt32> DefaultPoints = new List<UInt32> { 9, 7, 6, 5, 4, 3, 2, 1 };
-
-        private List<UInt32> points;
-        private Double pointRate;
-        private bool breakRecordPointRateEnabled;
-        private Double breakRecordPointRate;
-
-        public List<UInt32> Points
+        public class PointInfo : ICloneable
         {
-            get { return points; }
-            set
-            {
-                if (value.Count == 0)
-                {
-                    throw new Exception("不能将积分列表设置为空列表");
-                }
-                points = value;
-                points.Sort();
-                points.Reverse();
-            }
-        }
+            public const Double NoPointRate = 1.0;
+            public const Double PointRateDisabled = .0;
+            public static readonly List<UInt32> DefaultPoints = new List<UInt32> { 9, 7, 6, 5, 4, 3, 2, 1 };
 
-        public Double PointRate
-        {
-            get { return pointRate; }
-            set
-            {
-                if (value < .0)
-                {
-                    throw new Exception("积分比例不能小于0");
-                }
-                pointRate = value;
-            }
-        }
+            private List<UInt32> points;
+            private Double pointRate;
+            private bool breakRecordPointRateEnabled;
+            private Double breakRecordPointRate;
 
-        public bool BreakRecordPointRateEnabled
-        {
-            get { return breakRecordPointRateEnabled; }
-            set
+            public List<UInt32> Points
             {
-                if (value)
+                get { return points; }
+                set
                 {
-                    SetBreakRecordPointRateEnabled();
-                }
-                else
-                {
-                    SetBreakRecordPointRateDisabled();
+                    if (value.Count == 0)
+                    {
+                        throw new Exception("不能将积分列表设置为空列表");
+                    }
+                    points = value;
+                    points.Sort();
+                    points.Reverse();
                 }
             }
-        }
 
-        public Double BreakRecordPointRate
-        {
-            get { return breakRecordPointRate; }
-            set
+            public Double PointRate
             {
-                if (value < .0)
+                get { return pointRate; }
+                set
                 {
-                    throw new Exception("打破纪录时的积分比例不能小于0");
+                    if (value < .0)
+                    {
+                        throw new Exception("积分比例不能小于0");
+                    }
+                    pointRate = value;
                 }
-                SetBreakRecordPointRateEnabled(value);
+            }
+
+            public bool BreakRecordPointRateEnabled
+            {
+                get { return breakRecordPointRateEnabled; }
+                set
+                {
+                    if (value)
+                    {
+                        SetBreakRecordPointRateEnabled();
+                    }
+                    else
+                    {
+                        SetBreakRecordPointRateDisabled();
+                    }
+                }
+            }
+
+            public Double BreakRecordPointRate
+            {
+                get { return breakRecordPointRate; }
+                set
+                {
+                    if (value < .0)
+                    {
+                        throw new Exception("打破纪录时的积分比例不能小于0");
+                    }
+                    SetBreakRecordPointRateEnabled(value);
+                }
+            }
+
+            public PointInfo()
+            {
+                points = DefaultPoints;
+                pointRate = NoPointRate;
+                SetBreakRecordPointRateDisabled();
+            }
+
+            public Object Clone()
+            {
+                PointInfo ret = new PointInfo
+                {
+                    points = points,
+                    pointRate = pointRate,
+                    breakRecordPointRateEnabled = breakRecordPointRateEnabled,
+                    breakRecordPointRate = breakRecordPointRate
+                };
+                return ret;
+            }
+
+            public void SetBreakRecordPointRateEnabled(Double rate = NoPointRate)
+            {
+                breakRecordPointRateEnabled = true;
+                if (rate < .0)
+                {
+                    throw new Exception("打破记录的积分比例不能小于0");
+                }
+                breakRecordPointRate = rate;
+            }
+
+            public void SetBreakRecordPointRateDisabled()
+            {
+                breakRecordPointRateEnabled = false;
+                breakRecordPointRate = PointRateDisabled;
             }
         }
-
-        public PointInfo()
-        {
-            points = DefaultPoints;
-            pointRate = NoPointRate;
-            SetBreakRecordPointRateDisabled();
-        }
-
-        public Object Clone()
-        {
-            PointInfo ret = new PointInfo
-            {
-                points = points, 
-                pointRate = pointRate, 
-                breakRecordPointRateEnabled = breakRecordPointRateEnabled, 
-                breakRecordPointRate = breakRecordPointRate
-            };
-            return ret;
-        }
-
-        public void SetBreakRecordPointRateEnabled(Double rate = NoPointRate)
-        {
-            breakRecordPointRateEnabled = true;
-            if (rate < .0)
-            {
-                throw new Exception("打破记录的积分比例不能小于0");
-            }
-            breakRecordPointRate = rate;
-        }
-
-        public void SetBreakRecordPointRateDisabled()
-        {
-            breakRecordPointRateEnabled = false;
-            breakRecordPointRate = PointRateDisabled;
-        }
-    }
-}
+    };
+};
