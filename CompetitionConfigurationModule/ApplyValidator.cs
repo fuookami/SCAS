@@ -4,7 +4,7 @@ namespace SCAS
 {
     namespace CompetitionConfiguration
     {
-        public class ApplicationValidator
+        public class EntryValidator
         {
             public const Int32 NotEnabled = -1;
             public const Int32 NoLimit = 0;
@@ -51,7 +51,7 @@ namespace SCAS
                 set { SetEnabled(value); }
             }
 
-            public ApplicationValidator()
+            public EntryValidator()
             {
                 SetDisabled();
             }

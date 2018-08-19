@@ -24,7 +24,7 @@ namespace TestConfigurationModule
             ret.Version = "某年某比赛第某版本（测试）";
             ret.Identifier = "给自己看的标识符/标签之类的";
 
-            ret.CompetitionApplicationValidator = new ApplicationValidator
+            ret.CompetitionApplicationValidator = new EntryValidator
             {
                 Enabled = true,
                 EnabledInTeamwork = false,

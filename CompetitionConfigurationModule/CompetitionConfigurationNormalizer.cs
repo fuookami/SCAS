@@ -259,7 +259,7 @@ namespace SCAS
 
             private XmlElement NormalizeApplicationValidator(XmlDocument doc, CompetitionInfo outputData)
             {
-                ApplicationValidator data = outputData.CompetitionApplicationValidator;
+                EntryValidator data = outputData.CompetitionApplicationValidator;
                 XmlElement applicationValidatorNode = doc.CreateElement("ApplicationValidator");
                 applicationValidatorNode.SetAttribute("enabled", data.Enabled.ToString());
 

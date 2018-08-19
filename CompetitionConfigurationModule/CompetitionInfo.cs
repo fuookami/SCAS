@@ -14,7 +14,7 @@ namespace SCAS
             private String identifier;
             private bool beTemplate;
 
-            private ApplicationValidator applicationValidator;
+            private EntryValidator applicationValidator;
             private PrincipalInfo principalInfo;
             private PointInfo publicPointInfo;
             private SessionPool sessions;
@@ -63,7 +63,7 @@ namespace SCAS
                 set { beTemplate = value; }
             }
 
-            public ApplicationValidator CompetitionApplicationValidator
+            public EntryValidator CompetitionApplicationValidator
             {
                 get { return applicationValidator; }
                 set { applicationValidator = value ?? throw new Exception("传入的报名限制信息无效"); }
@@ -142,7 +142,7 @@ namespace SCAS
                 id = existedId;
                 beTemplate = false;
 
-                applicationValidator = new ApplicationValidator();
+                applicationValidator = new EntryValidator();
                 principalInfo = new PrincipalInfo();
                 publicPointInfo = new PointInfo();
                 sessions = new SessionPool();

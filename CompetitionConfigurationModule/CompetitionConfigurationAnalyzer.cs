@@ -269,7 +269,7 @@ namespace SCAS
             private bool AnalyzeApplicationValidatorNode(XmlElement parent, CompetitionInfo data)
             {
                 XmlElement node = (XmlElement)parent.GetElementsByTagName("ApplicationValidator")[0];
-                ApplicationValidator ret = new ApplicationValidator();
+                EntryValidator ret = new EntryValidator();
                 ret.Enabled = Boolean.Parse(node.GetAttribute("enabled"));
 
                 if (ret.Enabled)
