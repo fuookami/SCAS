@@ -11,9 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CompetitionConfigurationMod
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestConfigurationModule", "test\TestConfigurationModule\TestConfigurationModule.csproj", "{9D061731-462B-4D0B-9F18-AC31CCDCB436}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CompetitionDataModule", "CompetitionDataModule\CompetitionDataModule.csproj", "{34FC84BB-BC26-4E1B-A79A-6E41392763A7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CompetitionDataModule", "CompetitionDataModule\CompetitionDataModule.csproj", "{34FC84BB-BC26-4E1B-A79A-6E41392763A7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntryBlankModule", "EntryBlankModule\EntryBlankModule.csproj", "{AD3B48CC-5275-4B9A-8F76-C32D0902D781}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EntryBlankModule", "EntryBlankModule\EntryBlankModule.csproj", "{AD3B48CC-5275-4B9A-8F76-C32D0902D781}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
