@@ -1,16 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using SCAS.CompetitionConfiguration;
+using System.Text;
 
 namespace SCAS
 {
     namespace CompetitionData
     {
-        public class Game
+        class Analyzer
         {
-            GameInfo conf;
-
-            List<Group> groups;
         }
     };
 };

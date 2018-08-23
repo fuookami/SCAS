@@ -6,7 +6,7 @@ namespace SCAS
 {
     namespace CompetitionData
     {
-        public class Point
+        class Normalizer
         {
         }
     };

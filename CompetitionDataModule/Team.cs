@@ -8,6 +8,7 @@ namespace SCAS
     {
         public class Team
         {
+            AthletePool athletes;
         }
     };
 };

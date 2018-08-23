@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using SCAS.CompetitionConfiguration;
 
 namespace SCAS
 {
@@ -8,6 +8,10 @@ namespace SCAS
     {
         public class Event
         {
+            EventInfo conf;
+            Grade matchRecord;
+
+            List<Game> games;
         }
     };
 };
