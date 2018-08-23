@@ -5,7 +5,7 @@ namespace SCAS
 {
     namespace CompetitionConfiguration
     {
-        public class TeamCategory
+        public class TeamCategory : IComparable
         {
             private String id;
             private UInt32 order;
@@ -34,6 +34,11 @@ namespace SCAS
             {
                 id = existedId;
                 order = distributiveOrder;
+            }
+
+            public int CompareTo(object obj)
+            {
+                return (Int32)order - (Int32)((TeamCategory)obj).order;
             }
         }
 
