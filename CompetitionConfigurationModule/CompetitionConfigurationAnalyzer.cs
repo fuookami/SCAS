@@ -6,7 +6,7 @@ namespace SCAS
 {
     namespace CompetitionConfiguration
     {
-        public class Analyzer
+        public class Analyzer : ErrorStorer
         {
             public enum InputType
             {
@@ -14,17 +14,10 @@ namespace SCAS
                 Binary
             }
 
-            public enum ErrorCode
-            {
-                NoError
-            }
-
             private delegate bool AnalyzeNodeFunctionType<T>(XmlElement parent, T data);
 
             private Boolean faultTolerant;
             private InputType inputType;
-            private ErrorCode lastErrorCode;
-            private String lastError;
             private CompetitionInfo result;
             private readonly List<AnalyzeNodeFunctionType<CompetitionInfo>> AnalyzeCompetitionInfoFunctions;
             private readonly List<AnalyzeNodeFunctionType<EventInfo>> AnalyzeEventInfoFunctions;
@@ -42,16 +35,6 @@ namespace SCAS
                 set { inputType = value; }
             }
 
-            public ErrorCode LastErrorCode
-            {
-                get { return lastErrorCode; }
-            }
-
-            public String LastError
-            {
-                get { return lastError; }
-            }
-
             public CompetitionInfo Result
             {
                 get { return result; }
@@ -61,34 +44,33 @@ namespace SCAS
             {
                 faultTolerant = beFaultTolerant;
                 inputType = dataInputType;
-                lastErrorCode = ErrorCode.NoError;
                 result = null;
 
                 AnalyzeCompetitionInfoFunctions = new List<AnalyzeNodeFunctionType<CompetitionInfo>>
-            {
-                AnalyzeApplicationValidatorNode,
-                AnalyzePrincipleNode,
-                AnalyzePublicPointInfoNode,
-                AnalyzeSessionsNode,
-                AnalyzeAthleteCategoriesNode,
-                AnalyzeRankInfoNode,
-                AnalyzeTeamCategoriesNode,
-                AnalyzeTeamsNode
-            };
+                {
+                    AnalyzeApplicationValidatorNode,
+                    AnalyzePrincipleNode,
+                    AnalyzePublicPointInfoNode,
+                    AnalyzeSessionsNode,
+                    AnalyzeAthleteCategoriesNode,
+                    AnalyzeRankInfoNode,
+                    AnalyzeTeamCategoriesNode,
+                    AnalyzeTeamsNode
+                };
 
                 AnalyzeEventInfoFunctions = new List<AnalyzeNodeFunctionType<EventInfo>>
-            {
-                AnalyzeGradeInfoNode,
-                AnalyzeTeamworkInfoNode,
-                AnalyzeAthleteValidatorNode,
-                AnalyzePointInfoNode,
-                AnalyzeEnabledTeamsNode
-            };
+                {
+                    AnalyzeGradeInfoNode,
+                    AnalyzeTeamworkInfoNode,
+                    AnalyzeAthleteValidatorNode,
+                    AnalyzePointInfoNode,
+                    AnalyzeEnabledTeamsNode
+                };
 
                 AnalyzeGameInfoFunctions = new List<AnalyzeNodeFunctionType<GameInfo>>
-            {
-                AnalyzeGroupInfoNode
-            };
+                {
+                    AnalyzeGroupInfoNode
+                };
             }
 
             public bool Analyze(String data)
@@ -139,6 +121,9 @@ namespace SCAS
 
                     XmlElement identifierNode = (XmlElement)root.GetElementsByTagName("Identifier")[0];
                     temp.Identifier = identifierNode.InnerText;
+
+                    XmlElement orderNode = (XmlElement)root.GetElementsByTagName("Order")[0];
+                    temp.Order = UInt32.Parse(orderNode.InnerText);
 
                     XmlElement isTemplateNode = (XmlElement)root.GetElementsByTagName("Template")[0];
                     temp.BeTemplate = Boolean.Parse(isTemplateNode.InnerText);
@@ -684,12 +669,6 @@ namespace SCAS
 
                 data.GameGroupInfo = ret;
                 return true;
-            }
-
-            private void RefreshError(ErrorCode code, String text)
-            {
-                lastErrorCode = code;
-                lastError = String.Format("error {0}({1}): {2}", (int)code, code.ToString(), text);
             }
         }
     };

@@ -6,33 +6,16 @@ namespace SCAS
 {
     namespace CompetitionConfiguration
     {
-        public class Normalizer
+        public class Normalizer : ErrorStorer
         {
-            public enum ErrorCode
-            {
-                NoError
-            }
-
             private delegate XmlElement NormalizeInfoFunctionType<T>(XmlDocument doc, T outputData);
 
-            private ErrorCode lastErrorCode;
-            private String lastError;
             private CompetitionInfo outputData;
             private XmlDocument docData;
             private String binaryData;
             private readonly List<NormalizeInfoFunctionType<CompetitionInfo>> NormalizeCompetitionInfoFunctions;
             private readonly List<NormalizeInfoFunctionType<EventInfo>> NormalizeEventInfoFunctions;
             private readonly List<NormalizeInfoFunctionType<GameInfo>> NormalizeGameInfoFunctions;
-
-            public ErrorCode LastErrorCode
-            {
-                get { return lastErrorCode; }
-            }
-
-            public String LastError
-            {
-                get { return lastError; }
-            }
 
             public CompetitionInfo Data
             {
@@ -59,35 +42,34 @@ namespace SCAS
 
             public Normalizer(CompetitionInfo data)
             {
-                lastErrorCode = ErrorCode.NoError;
                 outputData = data;
                 binaryData = "";
 
                 NormalizeCompetitionInfoFunctions = new List<NormalizeInfoFunctionType<CompetitionInfo>>
-            {
-                NormalizeApplicationValidator,
-                NormalizePrincipalInfo,
-                NormalizePublicPointInfo,
-                NormalizeSessions,
-                NormalizeAthleteCategories,
-                NormalizeRankInfo,
-                NormalizeTeamCategories,
-                NormalizeTeamInfo
-            };
+                {
+                    NormalizeApplicationValidator,
+                    NormalizePrincipalInfo,
+                    NormalizePublicPointInfo,
+                    NormalizeSessions,
+                    NormalizeAthleteCategories,
+                    NormalizeRankInfo,
+                    NormalizeTeamCategories,
+                    NormalizeTeamInfo
+                };
 
                 NormalizeEventInfoFunctions = new List<NormalizeInfoFunctionType<EventInfo>>
-            {
-                NormalizeGradeInfo,
-                NormalizeTeamworkInfo,
-                NormalizeAthleteValidator,
-                NormalizePointInfo,
-                NormalizeEnabledTeams
-            };
+                {
+                    NormalizeGradeInfo,
+                    NormalizeTeamworkInfo,
+                    NormalizeAthleteValidator,
+                    NormalizePointInfo,
+                    NormalizeEnabledTeams
+                };
 
                 NormalizeGameInfoFunctions = new List<NormalizeInfoFunctionType<GameInfo>>
-            {
-                NormalizeGroupInfo,
-            };
+                {
+                    NormalizeGroupInfo,
+                };
             }
 
             public bool Normalize()
@@ -118,6 +100,10 @@ namespace SCAS
                     XmlElement identifierNode = doc.CreateElement("Identifier");
                     identifierNode.AppendChild(doc.CreateTextNode(outputData.Identifier));
                     root.AppendChild(identifierNode);
+
+                    XmlElement orderNode = doc.CreateElement("Order");
+                    orderNode.AppendChild(doc.CreateTextNode(outputData.Order.ToString()));
+                    root.AppendChild(orderNode);
 
                     XmlElement beTemplateNode = doc.CreateElement("Template");
                     beTemplateNode.AppendChild(doc.CreateTextNode(outputData.BeTemplate.ToString()));
@@ -628,12 +614,6 @@ namespace SCAS
                 }
 
                 return groupNode;
-            }
-
-            private void RefreshError(ErrorCode code, String text)
-            {
-                lastErrorCode = code;
-                lastError = String.Format("error {0}({1}): {2}", (int)code, code.ToString(), text);
             }
         };
     };

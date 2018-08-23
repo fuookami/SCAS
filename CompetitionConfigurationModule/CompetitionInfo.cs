@@ -12,6 +12,7 @@ namespace SCAS
             private String subName;
             private String version;
             private String identifier;
+            private UInt32 order;
             private bool beTemplate;
 
             private EntryValidator applicationValidator;
@@ -59,6 +60,12 @@ namespace SCAS
             {
                 get { return identifier; }
                 set { identifier = value; }
+            }
+
+            public UInt32 Order
+            {
+                get { return order; }
+                set { order = value; }
             }
 
             public bool BeTemplate
