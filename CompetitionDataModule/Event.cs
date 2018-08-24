@@ -12,6 +12,7 @@ namespace SCAS
             Grade matchRecord;
 
             List<Game> games;
+            PointPool points;
         }
     };
 };

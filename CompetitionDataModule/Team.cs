@@ -1,6 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
+using SCAS.CompetitionConfiguration;
 
 namespace SCAS
 {
@@ -8,7 +7,10 @@ namespace SCAS
     {
         public class Team
         {
+            TeamInfo conf;
+
             AthletePool athletes;
+            Dictionary<Event, List<Point>> points;
         }
     };
 };

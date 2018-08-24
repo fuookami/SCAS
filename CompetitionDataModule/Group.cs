@@ -8,14 +8,14 @@ namespace SCAS
         public struct Line
         {
             public UInt32 Order;
-            public Athlete LineAthlete;
-            public Grade AthleteGrade;
+            public Participator LineParticipator;
+            public Grade ParticipatorGrade;
 
-            public Line(UInt32 order, Athlete athlete)
+            public Line(UInt32 order, Participator participator)
             {
                 Order = order;
-                LineAthlete = athlete;
-                AthleteGrade = new Grade();
+                LineParticipator = participator;
+                ParticipatorGrade = new Grade(participator);
             }
         }
 

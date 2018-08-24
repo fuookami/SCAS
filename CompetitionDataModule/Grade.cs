@@ -20,6 +20,8 @@ namespace SCAS
             private Code code;
             private TimeSpan time;
 
+            private Participator participator;
+
             public Code GradeCode
             {
                 get { return code; }
@@ -30,10 +32,16 @@ namespace SCAS
                 get { return time; }
             }
 
-            public Grade()
+            public Participator GradeParticipator
+            {
+                get { return participator; }
+            }
+
+            public Grade(Participator participator)
             {
                 code = Code.None;
                 time = new TimeSpan();
+                this.participator = participator;
             }
 
             public void Set(Code code, TimeSpan time = new TimeSpan())
