@@ -10,12 +10,18 @@ namespace SCAS
     {
         public class Athlete : IComparable
         {
-            private String name;
             private String id;
-            private String code;
+            private String name;
             private String sid;
+            private String code;
+
             private AthleteCategory category;
             private AthleteRank rank;
+
+            private Team team;
+
+            Dictionary<Event, Dictionary<Game, Grade>> grades;
+            Dictionary<Event, Point> points;
 
             public String Name
             {
@@ -58,6 +64,23 @@ namespace SCAS
                 }
             }
 
+            public Team BelogingTeam
+            {
+                get { return team; }
+            }
+
+            public Athlete(Team team)
+                : this(team, Guid.NewGuid().ToString("N"))
+            {
+            }
+
+            public Athlete(Team team, String existedId, String code = null)
+            {
+                id = existedId;
+                this.code = code;
+                this.team = team;
+            }
+
             public int CompareTo(object obj)
             {
                 Athlete rhs = (Athlete)obj;
@@ -74,11 +97,23 @@ namespace SCAS
 
         public class AthletePool : Dictionary<String, Athlete>
         {
+            private Team team;
             private String prefixCode;
 
             static AthletePool()
             {
                 Thread.CurrentThread.CurrentCulture = new CultureInfo("zh-cn");
+            }
+
+            public AthletePool(Team team, String prefixCode)
+            {
+                this.team = team;
+                this.prefixCode = prefixCode;
+            }
+
+            public Athlete GenerateNewAthlete(String existedId = null)
+            {
+                return new Athlete(this.team);
             }
 
             public void TidyUpCodes()
@@ -99,7 +134,7 @@ namespace SCAS
                     athleteList.Sort();
                     foreach (var athlete in athleteList)
                     {
-                        athlete.Code = NextCode();
+                        athlete.Code = NextCode() ?? throw new Exception("运动员的序号已经满额，无法再分配");
                         Add(athlete.Code, athlete);
                     }
                 }
