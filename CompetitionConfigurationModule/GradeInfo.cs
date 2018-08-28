@@ -38,30 +38,28 @@ namespace SCAS
                 { { CompareResult.Worse, CompareResult.Better }, { CompareResult.Equal, CompareResult.Equal }, { CompareResult.Better, CompareResult.Worse } } }
                 };
 
-            private BetterType betterType;
-            private PatternType patternType;
-            private String pattern;
-
             public BetterType GradeBetterType
             {
-                get { return betterType; }
-                set { betterType = value; }
+                get;
+                set;
             }
 
             public PatternType GradePatternType
             {
-                get { return patternType; }
+                get;
+                set;
             }
 
             public String GradePattern
             {
-                get { return pattern; }
+                get;
+                set;
             }
 
-            public void SetGradePattern(PatternType _gradePatternType, String _gradePattern)
+            public void SetGradePattern(PatternType gradePatternType, String gradePattern)
             {
-                patternType = _gradePatternType;
-                pattern = _gradePattern;
+                GradePatternType = gradePatternType;
+                GradePattern = gradePattern;
             }
 
             public static CompareResult Compare(String lhs, String rhs, GradeComparer comparer, BetterType betterType)
@@ -71,7 +69,7 @@ namespace SCAS
 
             public CompareResult Compare(String lhs, String rhs, GradeComparer comparer)
             {
-                return Compare(lhs, rhs, comparer, betterType);
+                return Compare(lhs, rhs, comparer, GradeBetterType);
             }
         };
     };

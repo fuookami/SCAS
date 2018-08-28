@@ -274,7 +274,7 @@ namespace SCAS
                     ret.EnabledInTeamwork = Boolean.Parse(enabledInTeamworkNode.InnerText);
 
                     XmlElement maxApplicationNumberPerAthleteNode = (XmlElement)node.GetElementsByTagName("MaxApplicationNumberPerAthlete")[0];
-                    ret.MaxApplicationNumberPerAthlete = Int32.Parse(maxApplicationNumberPerAthleteNode.InnerText);
+                    ret.ApplicationNumberPerAthlete = Int32.Parse(maxApplicationNumberPerAthleteNode.InnerText);
                 }
 
                 data.CompetitionApplicationValidator = ret;
@@ -557,7 +557,7 @@ namespace SCAS
             private bool AnalyzeAthleteValidatorNode(XmlElement parent, EventInfo data)
             {
                 XmlElement node = (XmlElement)parent.GetElementsByTagName("AthleteValidator")[0];
-                AthleteValidator ret = new AthleteValidator();
+                ParticipantValidator ret = new ParticipantValidator();
 
                 XmlElement categoriesNode = (XmlElement)node.GetElementsByTagName("EnabledCategories")[0];
                 var enabledCategoriesNames = categoriesNode.InnerText.Split(new char[] { ',', ' ' }, StringSplitOptions.RemoveEmptyEntries);
@@ -594,7 +594,7 @@ namespace SCAS
                 if (maxNumberPerTeamNodes.Count != 0)
                 {
                     XmlElement maxNumberPerTeamNode = (XmlElement)maxNumberPerTeamNodes[0];
-                    ret.MaxNumberPerTeam = UInt32.Parse(maxNumberPerTeamNode.InnerText);
+                    ret.NumberPerTeam = UInt32.Parse(maxNumberPerTeamNode.InnerText);
                 }
 
                 XmlElement pointForEveryRankNode = (XmlElement)node.GetElementsByTagName("PointForEveryRank")[0];

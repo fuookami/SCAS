@@ -6,56 +6,72 @@ namespace SCAS
     {
         public class GroupInfo
         {
-            public const Int32 NoGroup = -1;
-            public const Int32 NoLimit = 0;
-
-            private bool enabled;
-            private Int32 numberPerGroup;
+            private SSUtils.EnabledNumberRange _numberPerGroup;
 
             public bool Enabled
             {
-                get { return enabled; }
+                get
+                {
+                    return _numberPerGroup.IsEnabled();
+                }
                 set
                 {
-                    if (value)
+                    if (Enabled != value)
                     {
-                        SetEnabled();
-                    }
-                    else
-                    {
-                        SetDisbaled();
+                        if (value)
+                        {
+                            _numberPerGroup.SetEnabled();
+                        }
+                        else
+                        {
+                            _numberPerGroup.SetDisabled();
+                        }
                     }
                 }
             }
 
-            public Int32 NumberPerGroup
+            public SSUtils.NumberRange NumberPerGroup
             {
-                get { return numberPerGroup; }
+                get
+                {
+                    return _numberPerGroup.Range;
+                }
                 set
                 {
-                    SetEnabled(value);
+                    if (value != null)
+                    {
+                        SetEnabled(value);
+                    }
+                    else
+                    {
+                        SetDisabled();
+                    }
                 }
             }
 
             public GroupInfo()
             {
-                SetDisbaled();
+                _numberPerGroup = new SSUtils.EnabledNumberRange();
             }
 
-            public void SetEnabled(Int32 number = NoLimit)
+            public void SetEnabled()
             {
-                enabled = true;
-                if (number <= NoGroup)
-                {
-                    throw new Exception("分组的数量是个无效值");
-                }
-                numberPerGroup = number;
+                SetEnabled(new SSUtils.NumberRange());
             }
 
-            public void SetDisbaled()
+            public void SetEnabled(UInt32 number)
             {
-                enabled = false;
-                numberPerGroup = NoGroup;
+                SetEnabled(new SSUtils.NumberRange(number, number));
+            }
+
+            public void SetEnabled(SSUtils.NumberRange range)
+            {
+                _numberPerGroup.SetEnabled(range ?? throw new Exception("设置的每组运动员数量范围是个无效值"));
+            }
+
+            public void SetDisabled()
+            {
+                _numberPerGroup.SetDisabled();
             }
         }
     };

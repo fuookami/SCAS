@@ -7,161 +7,135 @@ namespace SCAS
     {
         public class CompetitionInfo
         {
-            private String id;
-            private String name;
-            private String subName;
-            private String version;
-            private String identifier;
-            private UInt32 order;
-            private bool beTemplate;
+            private PointInfo _publicPointInfo;
+            private SessionPool _sessions;
 
-            private EntryValidator applicationValidator;
-            private PrincipalInfo principalInfo;
-            private PointInfo publicPointInfo;
-            private SessionPool sessions;
-            private String field;
-
-            private AthleteCategoryPool athleteCategories;
-            private RankInfo rankInfo;
-            private TeamCategoryPool teamCategories;
-            private TeamInfoPool teamInfos;
-
-            private UInt32 displayBeginLine;
-            private UInt32 numberOfDisplayLines;
-            private List<UInt32> useLines;
-
-            private List<EventInfo> eventInfos;
-            private Dictionary<Session, GameInfoList> gameInfos;
+            private List<UInt32> _useLines;
 
             public String Id
             {
-                get { return id; }
+                get;
+                internal set;
             }
 
             public String Name
             {
-                get { return name; }
-                set { name = value; }
+                get;
+                set;
             }
 
             public String SubName
             {
-                get { return subName; }
-                set { subName = value; }
+                get;
+                set;
             }
 
             public String Version
             {
-                get { return version; }
-                set { version = value; }
+                get;
+                set;
             }
 
             public String Identifier
             {
-                get { return identifier; }
-                set { identifier = value; }
+                get;
+                set;
             }
 
             public UInt32 Order
             {
-                get { return order; }
-                set { order = value; }
+                get;
+                set;
             }
 
             public bool BeTemplate
             {
-                get { return beTemplate; }
-                set { beTemplate = value; }
+                get;
+                set;
             }
 
-            public EntryValidator CompetitionApplicationValidator
+            public EntryValidator CompetitionEntryValidator
             {
-                get { return applicationValidator; }
-                set { applicationValidator = value ?? throw new Exception("传入的报名限制信息无效"); }
+                get;
             }
 
             public PrincipalInfo CompetitionPrincipalInfo
             {
-                get { return principalInfo; }
-                set { principalInfo = value ?? throw new Exception("传入的负责人信息无效"); }
+                get;
             }
 
             public PointInfo PublicPointInfo
             {
-                get { return publicPointInfo; }
-                set { publicPointInfo = value ?? throw new Exception("传入的默认积分信息无效"); }
+                get;
             }
 
             public SessionPool Sessions
             {
-                get { return sessions; }
+                get
+                {
+                    return _sessions;
+                }
                 set
                 {
-                    sessions = value;
-                    var newGameInfos = new Dictionary<Session, GameInfoList>();
-                    foreach (var date in sessions)
-                    {
-                        foreach (var session in date.Value)
-                        {
-                            newGameInfos[session] = gameInfos.ContainsKey(session) ? gameInfos[session] : new GameInfoList();
-                        }
-                    }
-                    gameInfos = newGameInfos;
+                    _sessions = value;
+                    RefreshGameInfos();
                 }
             }
 
             public String Field
             {
-                get { return field; }
-                set { field = value; }
+                get;
+                set;
             }
 
             public AthleteCategoryPool AthleteCategories
             {
-                get { return athleteCategories; }
+                get;
             }
 
             public RankInfo CompetitionRankInfo
             {
-                get { return rankInfo; }
+                get;
             }
 
             public TeamCategoryPool TeamCategories
             {
-                get { return teamCategories; }
+                get;
             }
 
             public TeamInfoPool TeamInfos
             {
-                get { return teamInfos; }
+                get;
             }
 
             public UInt32 DisplayBeginLine
             {
-                get { return displayBeginLine; }
+                get;
+                private set;
             }
 
             public UInt32 NumberOfDisplayLines
             {
-                get { return numberOfDisplayLines; }
+                get;
+                private set;
             }
 
             public UInt32 UseBeginLine
             {
-                get { return useLines[0]; }
+                get { return _useLines[0]; }
             }
 
             public UInt32 NumberOfUseLines
             {
-                get { return (UInt32)useLines.Count; }
+                get { return (UInt32)_useLines.Count; }
             }
 
             public List<UInt32> UseLines
             {
-                get { return useLines; }
+                get { return _useLines; }
                 set
                 {
-                    UInt32 maxLine = displayBeginLine + numberOfDisplayLines;
+                    UInt32 maxLine = DisplayBeginLine + NumberOfDisplayLines;
                     if (value == null || value.Count == 0)
                     {
                         throw new Exception("传入的使用道次信息是个非法值");
@@ -174,18 +148,19 @@ namespace SCAS
                             throw new Exception(String.Format("有非法的道次值{0}", line));
                         }
                     }
-                    useLines = value;
+                    _useLines = value;
                 }
             }
 
             public List<EventInfo> EventInfos
             {
-                get { return eventInfos; }
+                get;
             }
 
             public Dictionary<Session, GameInfoList> GameInfos
             {
-                get { return gameInfos; }
+                get;
+                private set;
             }
 
             public CompetitionInfo()
@@ -193,29 +168,42 @@ namespace SCAS
 
             public CompetitionInfo(String existedId)
             {
-                id = existedId;
-                beTemplate = false;
+                Id = existedId;
+                BeTemplate = false;
 
-                applicationValidator = new EntryValidator();
-                principalInfo = new PrincipalInfo();
-                publicPointInfo = new PointInfo();
-                sessions = new SessionPool();
+                CompetitionEntryValidator = new EntryValidator();
+                CompetitionPrincipalInfo = new PrincipalInfo();
+                PublicPointInfo = new PointInfo();
+                _sessions = new SessionPool();
 
-                athleteCategories = new AthleteCategoryPool();
-                rankInfo = new RankInfo();
-                teamCategories = new TeamCategoryPool();
-                teamInfos = new TeamInfoPool();
+                AthleteCategories = new AthleteCategoryPool();
+                CompetitionRankInfo = new RankInfo();
+                TeamCategories = new TeamCategoryPool();
+                TeamInfos = new TeamInfoPool();
 
-                useLines = new List<UInt32>();
+                UseLines = new List<UInt32>();
                 SetLineConfiguration();
 
-                gameInfos = new Dictionary<Session, GameInfoList>();
-                eventInfos = new List<EventInfo>();
+                GameInfos = new Dictionary<Session, GameInfoList>();
+                EventInfos = new List<EventInfo>();
             }
 
             public EventInfo GenerateNewEventInfo()
             {
                 return new EventInfo(this);
+            }
+
+            public void RefreshGameInfos()
+            {
+                var newGameInfos = new Dictionary<Session, GameInfoList>();
+                foreach (var date in _sessions)
+                {
+                    foreach (var session in date.Value)
+                    {
+                        newGameInfos[session] = GameInfos.ContainsKey(session) ? GameInfos[session] : new GameInfoList();
+                    }
+                }
+                GameInfos = newGameInfos;
             }
 
             public bool SetLineConfiguration(UInt32 useBeginLine = 1, UInt32 numberOfUseLines = 8)
@@ -231,13 +219,13 @@ namespace SCAS
                     return false;
                 }
 
-                this.displayBeginLine = displayBeginLine;
-                this.numberOfDisplayLines = numberOfDisplayLines;
+                DisplayBeginLine = displayBeginLine;
+                NumberOfDisplayLines = numberOfDisplayLines;
 
-                useLines.Clear();
+                UseLines.Clear();
                 for (UInt32 i = 0; i != numberOfUseLines; ++i)
                 {
-                    useLines.Add(useBeginLine + i);
+                    UseLines.Add(useBeginLine + i);
                 }
 
                 return true;
@@ -250,9 +238,9 @@ namespace SCAS
                     return false;
                 }
 
-                this.displayBeginLine = displayBeginLine;
-                this.numberOfDisplayLines = numberOfDisplayLines;
-                this.UseLines = useLines;
+                DisplayBeginLine = displayBeginLine;
+                NumberOfDisplayLines = numberOfDisplayLines;
+                UseLines = useLines;
 
                 return true;
             }

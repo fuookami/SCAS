@@ -21,133 +21,118 @@ namespace SCAS
                 Ranking,            // 名次制（所有组放在一起算名次）
             };
 
-            public const UInt32 NoLimit = 0;
-
-            private String id;
-            private String name;
-
-            private GameType type;
-            private GamePattern pattern;
-
-            private UInt32 numberOfParticipants;
-            private Session session;
-
-            private Int32 orderInEvent;
-            private Int32 orderInSession;
-
-            private TimeSpan planIntervalTime;
-            private TimeSpan planTimePerGroup;
-
-            private GroupInfo groupInfo;
-
-            private EventInfo eventInfo;
+            private SSUtils.NumberRange _numberOfParticipants;
+            
+            private TimeSpan _planIntervalTime;
+            private TimeSpan _planTimePerGroup;
 
             public String Id
             {
-                get { return id; }
+                get;
+                internal set;
             }
 
             public String Name
             {
-                get { return name; }
-                set { name = value; }
+                get;
+                set;
             }
 
             public GameType Type
             {
-                get { return type; }
-                set { type = value; }
+                get;
+                set;
             }
 
             public GamePattern Pattern
             {
-                get { return pattern; }
-                set { pattern = value; }
+                get;
+                set;
             }
 
             public UInt32 NumberOfParticipants
             {
-                get { return numberOfParticipants; }
-                set { numberOfParticipants = value; }
+                get
+                {
+                    return _numberOfParticipants.Maximun;
+                }
+                set
+                {
+                    _numberOfParticipants.Set(value, value);
+                }
             }
 
             public Session GameSession
             {
-                get { return session; }
-                set { session = value; }
+                get;
+                set;
             }
 
-            public Int32 OrderInSession
+            public SSUtils.Order OrderInEvent
             {
-                get { return orderInSession; }
-                set
-                {
-                    if (value < 0)
-                    {
-                        throw new Exception("不能把比赛在当天的所有比赛中的序号设置为负数");
-                    }
-                    orderInSession = value;
-                }
+                get;
+                set;
             }
 
-            public Int32 OrderInEvent
+            public SSUtils.Order OrderInSession
             {
-                get { return orderInEvent; }
-                set
-                {
-                    if (value < 0)
-                    {
-                        throw new Exception("不能把比赛在项目中的序号设置为负数");
-                    }
-                    orderInEvent = value;
-                }
+                get;
+                set;
             }
 
             public TimeSpan PlanIntervalTime
             {
-                get { return planIntervalTime; }
+                get
+                {
+                    return _planIntervalTime;
+                }
                 set
                 {
                     if (value.TotalSeconds <= 0)
                     {
                         throw new Exception("不能将比赛间计划间隔时间设置为负数");
                     }
-                    planIntervalTime = value;
+                    _planIntervalTime = value;
                 }
             }
 
             public TimeSpan PlanTimePerGroup
             {
-                get { return planTimePerGroup; }
+                get
+                {
+                    return _planTimePerGroup;
+                }
                 set
                 {
                     if (value.TotalSeconds <= 0)
                     {
                         throw new Exception("不能将每组比赛计划时间设置为负数");
                     }
-                    planTimePerGroup = value;
+                    _planTimePerGroup = value;
                 }
             }
 
             public GroupInfo GameGroupInfo
             {
-                get { return groupInfo; }
-                set { groupInfo = value ?? throw new Exception("设置的比赛分组信息是个无效值"); }
+                get;
             }
 
             public EventInfo Event
             {
-                get { return eventInfo; }
+                get;
             }
 
             public GameInfo(EventInfo _event)
                 : this(_event, Guid.NewGuid().ToString("N")) { }
 
-            public GameInfo(EventInfo _event, String existedId)
+            public GameInfo(EventInfo eventInfo, String existedId)
             {
-                id = existedId;
-                groupInfo = new GroupInfo();
-                eventInfo = _event;
+                Id = existedId;
+                _numberOfParticipants = new SSUtils.NumberRange();
+                OrderInEvent = new SSUtils.Order();
+                OrderInSession = new SSUtils.Order();
+                GameGroupInfo = new GroupInfo();
+                Event = eventInfo;
             }
         }
 
@@ -169,7 +154,7 @@ namespace SCAS
                 }
                 return order == -1
                     || (this.Count == 0 && order == 0)
-                    || this[this.Count - 1].OrderInSession + 1 == order;
+                    || this[this.Count - 1].OrderInSession.Value + 1 == order;
             }
 
             public bool CheckSessionIsSame(Session session)
@@ -191,7 +176,7 @@ namespace SCAS
             public virtual Int32 GetNextOrder()
             {
                 return this.Count == 0 ? 0
-                    : CheckOrderIsContinuous() ? this[this.Count - 1].OrderInSession + 1
+                    : CheckOrderIsContinuous() ? this[this.Count - 1].OrderInSession.Value + 1
                     : -1;
             }
         }
@@ -221,13 +206,13 @@ namespace SCAS
                 }
                 return order == -1
                     || (this.Count == 0 && order == 0)
-                    || (this[this.Count - 1].OrderInEvent + 1 == order);
+                    || (this[this.Count - 1].OrderInEvent.Value + 1 == order);
             }
 
             public override Int32 GetNextOrder()
             {
                 return this.Count == 0 ? 0
-                    : CheckOrderIsContinuous() ? this[this.Count - 1].OrderInEvent + 1
+                    : CheckOrderIsContinuous() ? this[this.Count - 1].OrderInEvent.Value + 1
                     : -1;
             }
 
@@ -238,7 +223,7 @@ namespace SCAS
                     return true;
                 }
 
-                for (Int32 i = this[0].NumberOfParticipants == GameInfo.NoLimit ? 1 : 0,
+                for (Int32 i = this[0].NumberOfParticipants == SSUtils.NumberRange.Nolimit ? 1 : 0,
                     j = this.Count - 1; i != j; ++i)
                 {
                     if (this[i].NumberOfParticipants >= this[i + 1].NumberOfParticipants)
@@ -270,7 +255,7 @@ namespace SCAS
                 GameInfo ret = null;
                 ret = new GameInfo(eventInfo, existedId ?? Guid.NewGuid().ToString("N"))
                 {
-                    OrderInEvent = GetNextOrder()
+                    OrderInEvent = new SSUtils.Order(GetNextOrder())
                 };
                 this.Add(ret);
                 return ret;

@@ -7,48 +7,59 @@ namespace SCAS
     {
         public class TeamInfo
         {
-            private String id;
-            private UInt32 order;
-            private String shortName;
-            private String name;
-            private TeamCategory category;
+            private TeamCategory _category;
 
             public String Id
             {
-                get { return id; }
+                get;
+                internal set;
             }
 
-            public UInt32 Order
+            public SSUtils.Order Order
             {
-                get { return order; }
+                get;
+                internal set;
             }
 
             public String ShortName
             {
-                get { return shortName; }
-                set { shortName = value; }
+                get;
+                set;
             }
 
             public String Name
             {
-                get { return name; }
-                set { name = value; }
+                get;
+                set;
             }
 
             public TeamCategory Category
             {
-                get { return category; }
-                set { category = value ?? throw new Exception("设置的队伍类型是个无效值"); }
+                get
+                {
+                    return _category;
+                }
+                set
+                {
+                    _category = value ?? throw new Exception("设置的队伍类型是个无效值");
+                }
             }
 
-            public TeamInfo(TeamCategory teamCategory, UInt32 distributiveOrder = 0)
-                : this(teamCategory, Guid.NewGuid().ToString("N"), distributiveOrder) { }
-
-            public TeamInfo(TeamCategory teamCategory, String existedId, UInt32 distributiveOrder = 0)
+            public TeamInfo(TeamCategory teamCategory, UInt32 distributiveOrder)
+                : this(teamCategory, new SSUtils.Order((Int32)(distributiveOrder)))
             {
-                id = existedId;
-                order = distributiveOrder;
-                category = teamCategory;
+            }
+
+            public TeamInfo(TeamCategory teamCategory, SSUtils.Order distributiveOrder = new SSUtils.Order())
+                : this(teamCategory, Guid.NewGuid().ToString("N"), distributiveOrder)
+            {
+            }
+
+            public TeamInfo(TeamCategory teamCategory, String existedId, SSUtils.Order distributiveOrder = new SSUtils.Order())
+            {
+                Id = existedId;
+                Order = distributiveOrder;
+                _category = teamCategory;
             }
         }
 
@@ -85,7 +96,7 @@ namespace SCAS
                 UInt32 order = 0;
                 for (; order != UInt32.MaxValue; ++order)
                 {
-                    if (this.Find((ele) => ele.Order == order) == null)
+                    if (this.Find((ele) => ele.Order.Equals(order)) == null)
                     {
                         break;
                     }

@@ -7,38 +7,33 @@ namespace SCAS
     {
         public class PrincipalInfo
         {
-            private String name;
-            private String telephone;
-            private String email;
-            private Dictionary<String, String> others;
-
             public String Name
             {
-                get { return name; }
-                set { name = value; }
+                get;
+                set;
             }
 
             public String Telephone
             {
-                get { return telephone; }
-                set { telephone = value; }
+                get;
+                set;
             }
 
             public String Email
             {
-                get { return email; }
-                set { email = value; }
+                get;
+                set;
             }
 
             public Dictionary<String, String> Others
             {
-                get { return others; }
-                set { others = value; }
+                get;
+                set;
             }
 
             public PrincipalInfo()
             {
-                others = new Dictionary<string, string>();
+                Others = new Dictionary<string, string>();
             }
         }
     };

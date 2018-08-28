@@ -7,38 +7,49 @@ namespace SCAS
     {
         public class TeamCategory : IComparable
         {
-            private String id;
-            private UInt32 order;
-            private String name;
-
             public String Id
             {
-                get { return id; }
+                get;
+                internal set;
             }
 
-            public UInt32 Order
+            public SSUtils.Order Order
             {
-                get { return order; }
+                get;
+                internal set;
             }
 
             public String Name
             {
-                get { return name; }
-                set { name = value; }
+                get;
+                set;
             }
 
-            public TeamCategory(UInt32 distributiveOrder = 0)
-                : this(Guid.NewGuid().ToString("N"), distributiveOrder) { }
-
-            public TeamCategory(String existedId, UInt32 distributiveOrder = 0)
+            public TeamCategory(UInt32 distributiveOrder)
+                : this(new SSUtils.Order((Int32)distributiveOrder))
             {
-                id = existedId;
-                order = distributiveOrder;
+            }
+
+            public TeamCategory(SSUtils.Order distributiveOrder = new SSUtils.Order())
+                : this(Guid.NewGuid().ToString("N"), distributiveOrder)
+            {
+            }
+
+            public TeamCategory(String existedId, UInt32 distributiveOrder)
+                : this(existedId, new SSUtils.Order((Int32)distributiveOrder))
+            {
+            }
+
+            public TeamCategory(String existedId, SSUtils.Order distributiveOrder = new SSUtils.Order())
+            {
+                Id = existedId;
+                Order = distributiveOrder;
             }
 
             public int CompareTo(object obj)
             {
-                return (Int32)order - (Int32)((TeamCategory)obj).order;
+                var rhs = (TeamCategory)obj;
+                return Order.CompareTo(rhs.Order);
             }
         }
 
@@ -57,7 +68,7 @@ namespace SCAS
                 UInt32 order = 0;
                 for (; order != UInt32.MaxValue; ++order)
                 {
-                    if (this.Find((ele) => ele.Order == order) == null)
+                    if (this.Find((ele) => ele.Order.Equals(order)) == null)
                     {
                         break;
                     }

@@ -7,38 +7,44 @@ namespace SCAS
     {
         public class AthleteRank : IComparable
         {
-            private String id;
-            private UInt32 order;
-            private String name;
-
             public String Id
             {
-                get { return id; }
+                get;
+                internal set;
             }
 
-            public UInt32 Order
+            public SSUtils.Order Order
             {
-                get { return order; }
+                get;
+                internal set;
             }
 
             public String Name
             {
-                get { return name; }
-                set { name = value; }
+                get;
+                set;
             }
 
-            public AthleteRank(UInt32 distributiveOrder = 0)
-                : this(Guid.NewGuid().ToString("N"), distributiveOrder) { }
-
-            public AthleteRank(String existedId, UInt32 distributiveOrder = 0)
+            public AthleteRank()
+                : this(Guid.NewGuid().ToString("N"), new SSUtils.Order())
             {
-                id = existedId;
-                order = distributiveOrder;
+            }
+
+            public AthleteRank(String existedId, UInt32 distributiveOrder)
+                : this(existedId, new SSUtils.Order((Int32)distributiveOrder))
+            {
+            }
+
+            public AthleteRank(String existedId, SSUtils.Order distributiveOrder = new SSUtils.Order())
+            {
+                Id = existedId;
+                Order = distributiveOrder;
             }
 
             public int CompareTo(object obj)
             {
-                return (Int32)order - (Int32)((AthleteRank)obj).order;
+                AthleteRank rhs = (AthleteRank)obj;
+                return Order.CompareTo(rhs.Order);
             }
         }
 
@@ -57,7 +63,7 @@ namespace SCAS
                 UInt32 order = 0;
                 for (; order != UInt32.MaxValue; ++order)
                 {
-                    if (this.Find((ele) => ele.Order == order) == null)
+                    if (this.Find((ele) => ele.Order.Equals(order)) == null)
                     {
                         break;
                     }

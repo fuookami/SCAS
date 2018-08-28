@@ -268,7 +268,7 @@ namespace SCAS
                     applicationValidatorNode.AppendChild(enabledInTeamworkNode);
 
                     XmlElement maxApplicationNumberPerAthleteNode = doc.CreateElement("MaxApplicationNumberPerAthlete");
-                    maxApplicationNumberPerAthleteNode.AppendChild(doc.CreateTextNode(data.MaxApplicationNumberPerAthlete.ToString()));
+                    maxApplicationNumberPerAthleteNode.AppendChild(doc.CreateTextNode(data.ApplicationNumberPerAthlete.ToString()));
                     applicationValidatorNode.AppendChild(maxApplicationNumberPerAthleteNode);
                 }
 
@@ -528,7 +528,7 @@ namespace SCAS
 
             private XmlElement NormalizeAthleteValidator(XmlDocument doc, EventInfo outputData)
             {
-                AthleteValidator data = outputData.EventAthleteValidator;
+                ParticipantValidator data = outputData.EventAthleteValidator;
                 XmlElement athleteValidatorNode = doc.CreateElement("AthleteValidator");
 
                 XmlElement categoriesNode = doc.CreateElement("EnabledCategories");
@@ -552,10 +552,10 @@ namespace SCAS
                     athleteValidatorNode.AppendChild(ranksNode);
                 }
 
-                if (data.MaxNumberPerTeam != AthleteValidator.NoLimit)
+                if (data.NumberPerTeam != ParticipantValidator.NoLimit)
                 {
                     XmlElement maxNumberPerTeamNode = doc.CreateElement("MaxNumberPerTeam");
-                    maxNumberPerTeamNode.AppendChild(doc.CreateTextNode(data.MaxNumberPerTeam.ToString()));
+                    maxNumberPerTeamNode.AppendChild(doc.CreateTextNode(data.NumberPerTeam.ToString()));
                     athleteValidatorNode.AppendChild(maxNumberPerTeamNode);
                 }
 

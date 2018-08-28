@@ -6,74 +6,51 @@ namespace SCAS
     {
         public class EventInfo
         {
-            private String id;
-            private String name;
-
-            private GradeInfo gradeInfo;
-            private TeamworkInfo teamworkInfo;
-            private AthleteValidator athleteValidator;
-            private PointInfo pointInfo;
-            private TeamInfoList enabledTeams;
-
-            private CompetitionInfo competitionInfo;
-            private GameInfoPool gameInfos;
-
             public String Id
             {
-                get { return id; }
+                get;
+                internal set;
             }
 
             public String Name
             {
-                get { return name; }
-                set { name = value; }
+                get;
+                set;
             }
 
             public GradeInfo EventGradeInfo
             {
-                get { return gradeInfo; }
-                set { gradeInfo = value ?? throw new Exception("设置的积分类型是个无效值"); ; }
+                get;
             }
 
             public TeamworkInfo EventTeamworkInfo
             {
-                get { return teamworkInfo; }
-                set { teamworkInfo = value ?? throw new Exception("设置的团体项目信息是个无效值"); ; }
+                get;
             }
 
-            public AthleteValidator EventAthleteValidator
+            public ParticipantValidator EventParticipantValidator
             {
-                get { return athleteValidator; }
-                set { athleteValidator = value ?? throw new Exception("设置的运动员报名限制信息是个无效值"); ; }
+                get;
             }
 
             public PointInfo EventPointInfo
             {
-                get { return pointInfo; }
-                set { pointInfo = value ?? throw new Exception("设置的积分信息是个无效值"); ; }
+                get;
             }
 
             public TeamInfoList EnabledTeams
             {
-                get { return enabledTeams; }
+                get;
             }
 
             public CompetitionInfo Competition
             {
-                get { return competitionInfo; }
+                get;
             }
 
             public GameInfoPool GameInfos
             {
-                get { return gameInfos; }
-                set
-                {
-                    if (value.Count == 0)
-                    {
-                        throw new Exception("不能将比赛列表设置为空列表");
-                    }
-                    gameInfos = value;
-                }
+                get;
             }
 
             public EventInfo(CompetitionInfo competition = null)
@@ -81,24 +58,24 @@ namespace SCAS
 
             public EventInfo(String existedId, CompetitionInfo competition = null)
             {
-                id = existedId;
-                gradeInfo = new GradeInfo();
-                teamworkInfo = new TeamworkInfo();
-                athleteValidator = new AthleteValidator();
-                pointInfo = competition == null ? new PointInfo() : (PointInfo)competition.PublicPointInfo.Clone();
-                enabledTeams = new TeamInfoList();
+                Id = existedId;
+                EventGradeInfo = new GradeInfo();
+                EventTeamworkInfo = new TeamworkInfo();
+                EventParticipantValidator = new ParticipantValidator();
+                EventPointInfo = competition == null ? new PointInfo() : (PointInfo)competition.PublicPointInfo.Clone();
+                EnabledTeams = new TeamInfoList();
 
-                competitionInfo = competition;
+                Competition = competition;
                 if (competition != null)
                 {
                     competition.EventInfos.Add(this);
                 }
-                gameInfos = new GameInfoPool(this);
+                GameInfos = new GameInfoPool(this);
             }
 
             public bool IsTemplate()
             {
-                return competitionInfo == null;
+                return Competition == null;
             }
         };
     };

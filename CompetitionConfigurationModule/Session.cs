@@ -7,38 +7,39 @@ namespace SCAS
     {
         public class Session
         {
-            private Date date;
-            private String name;
-            private String fullName;
-            private UInt32 orderInDate;
-
             public Date SessionDate
             {
-                get { return date; }
+                get;
             }
 
             public String Name
             {
-                get { return name; }
-                set { name = value; }
+                get;
+                set;
             }
 
             public String FullName
             {
-                get { return fullName; }
-                set { fullName = value; }
+                get;
+                set;
             }
 
-            public UInt32 OrderInDate
+            public SSUtils.Order OrderInDate
             {
-                get { return orderInDate; }
-                set { orderInDate = value; }
+                get;
+                set;
             }
 
-            public Session(Date sessionDate, UInt32 order)
+            internal Session(Date sessionDate, UInt32 order)
             {
-                date = sessionDate;
-                orderInDate = order;
+                SessionDate = sessionDate;
+                OrderInDate = new SSUtils.Order((Int32)order);
+            }
+
+            internal Session(Date sessionDate, SSUtils.Order order = new SSUtils.Order())
+            {
+                SessionDate = sessionDate;
+                OrderInDate = order;
             }
         }
 

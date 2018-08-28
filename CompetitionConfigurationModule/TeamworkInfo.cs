@@ -1,102 +1,95 @@
 ﻿using System;
 using System.Collections.Generic;
+using SSUtils;
 
 namespace SCAS
 {
     namespace CompetitionConfiguration
     {
-        public class UInt32Range
-        {
-            public const UInt32 NoLimit = 0;
-
-            public UInt32 Minimun;
-            public UInt32 Maximun;
-
-            public UInt32Range(UInt32 min = 0, UInt32 max = 0)
-            {
-                Minimun = min;
-                Maximun = max;
-            }
-
-            public bool Valid()
-            {
-                return Maximun == 0
-                    || Minimun <= Maximun;
-            }
-        }
-
         public class TeamworkInfo
         {
-            private bool beTeamwork;
-            private bool beMultiRank;
-            private bool needEveryPerson;
-            private Dictionary<AthleteCategory, UInt32Range> rangesOfCategories;
-            private UInt32Range rangesOfTeam;
+            private bool _beTeamwork;
+            private bool _beMultiRank;
+            private bool _needEveryPerson;
+
+            private NumberRange _rangesOfTeam
 
             public bool BeTeamwork
             {
-                get { return beTeamwork; }
+                get
+                {
+                    return _beTeamwork;
+                }
                 set
                 {
-                    if (value)
+                    if (_beTeamwork != value)
                     {
-                        SetIsTeamwork();
-                    }
-                    else
-                    {
-                        SetIsNotTeamwork();
+                        if (value)
+                        {
+                            SetIsTeamwork();
+                        }
+                        else
+                        {
+                            SetIsNotTeamwork();
+                        }
                     }
                 }
             }
 
             public bool BeMultiRank
             {
-                get { return beMultiRank; }
+                get
+                {
+                    return _beMultiRank;
+                }
                 set
                 {
                     if (BeTeamwork)
                     {
-                        beMultiRank = value;
+                        _beMultiRank = value;
                     }
                 }
             }
 
             public bool NeedEveryPerson
             {
-                get { return needEveryPerson; }
+                get
+                {
+                    return _needEveryPerson;
+                }
                 set
                 {
-                    if (value)
+                    if (_needEveryPerson != value)
                     {
-                        SetNeedEveryPerson();
-                    }
-                    else
-                    {
-                        SetNotNeedEveryPerson();
+                        if (value)
+                        {
+                            SetNeedEveryPerson();
+                        }
+                        else
+                        {
+                            SetNotNeedEveryPerson();
+                        }
                     }
                 }
             }
 
-            public Dictionary<AthleteCategory, UInt32Range> RangesOfCategories
+            public Dictionary<AthleteCategory, NumberRange> RangesOfCategories
             {
-                get { return rangesOfCategories; }
-                set
-                {
-                    if (NeedEveryPerson)
-                    {
-                        rangesOfCategories = (value ?? new Dictionary<AthleteCategory, UInt32Range>());
-                    }
-                }
+                get;
+                private set;
             }
 
-            public UInt32Range RangesOfTeam
+            public NumberRange RangesOfTeam
             {
-                get { return rangesOfTeam; }
+                get
+                {
+                    return _rangesOfTeam;
+                }
                 set
                 {
-                    if (NeedEveryPerson)
+                    if (_needEveryPerson)
                     {
-                        rangesOfTeam = (value ?? new UInt32Range());
+                        _rangesOfTeam = value ?? throw new Exception("设置的队伍人数是个无效值");
                     }
                 }
             }
@@ -108,9 +101,9 @@ namespace SCAS
 
             public void SetIsTeamwork()
             {
-                if (!beTeamwork)
+                if (!_beTeamwork)
                 {
-                    beTeamwork = true;
+                    _beTeamwork = true;
                 }
             }
 
@@ -118,28 +111,28 @@ namespace SCAS
             {
                 SetNotNeedEveryPerson();
 
-                beTeamwork = false;
-                beMultiRank = false;
+                _beTeamwork = false;
+                _beMultiRank = false;
             }
 
             public void SetNeedEveryPerson()
             {
-                if (!needEveryPerson)
+                if (!_needEveryPerson)
                 {
                     SetIsTeamwork();
-                    needEveryPerson = true;
+                    _needEveryPerson = true;
 
-                    rangesOfCategories = new Dictionary<AthleteCategory, UInt32Range>();
-                    rangesOfTeam = new UInt32Range();
+                    RangesOfCategories = new Dictionary<AthleteCategory, NumberRange>();
+                    RangesOfTeam = new NumberRange();
                 }
             }
 
             public void SetNotNeedEveryPerson()
             {
-                needEveryPerson = false;
+                _needEveryPerson = false;
 
-                rangesOfCategories = null;
-                rangesOfTeam = null;
+                RangesOfCategories = null;
+                RangesOfTeam = null;
             }
         };
     };

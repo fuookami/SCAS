@@ -49,6 +49,16 @@ namespace SSUtils
             SetDisabled();
         }
 
+        public EnabledNumberRange(NumberRange range)
+        {
+            SetEnabled(range);
+        }
+
+        public EnabledNumberRange(UInt32 min, UInt32 max)
+        {
+            SetEnabled(min, max);
+        }
+
         public bool IsEnabled()
         {
             return _range != null;
@@ -57,6 +67,16 @@ namespace SSUtils
         public bool SetEnabled()
         {
             return SetEnabled(new NumberRange());
+        }
+
+        public bool SetEnabled(UInt32 number)
+        {
+            return SetEnabled(new NumberRange(number, number));
+        }
+
+        public bool SetEnabled(UInt32 min, UInt32 max)
+        {
+            return SetEnabled(new NumberRange(min, max));
         }
 
         public bool SetEnabled(NumberRange range)

@@ -6,21 +6,64 @@ namespace SCAS
     {
         public class EntryValidator
         {
-            public const Int32 NotEnabled = -1;
-            public const Int32 NoLimit = 0;
-
-            private bool enabled;
-            private bool enabledInTeamwork;
-            private Int32 maxApplicationNumberPerAthlete;
+            private bool _enabledInTeamwork;
+            private SSUtils.EnabledNumberRange _applicationNumberPerAthlete;
 
             public bool Enabled
             {
-                get { return enabled; }
+                get
+                {
+                    return _applicationNumberPerAthlete.IsEnabled();
+                }
                 set
                 {
-                    if (value)
+                    if (Enabled != value)
                     {
-                        SetEnabled();
+                        if (value)
+                        {
+                            _applicationNumberPerAthlete.SetEnabled();
+                        }
+                        else
+                        {
+                            _applicationNumberPerAthlete.SetDisabled();
+                        }
+                    }
+                }
+            }
+
+            public bool EnabledInTeamwork
+            {
+                get
+                {
+                    return _enabledInTeamwork;
+                }
+                set
+                {
+                    if (_enabledInTeamwork != value)
+                    {
+                        if (value)
+                        {
+                            SetEnabledInTeamwork();
+                        }
+                        else
+                        {
+                            SetDisabledInTeamwork();
+                        }
+                    }
+                }
+            }
+
+            public SSUtils.NumberRange ApplicationNumberPerAthlete
+            {
+                get
+                {
+                    return _applicationNumberPerAthlete.Range;
+                }
+                set
+                {
+                    if (value != null)
+                    {
+                        SetEnabled(value);
                     }
                     else
                     {
@@ -29,66 +72,44 @@ namespace SCAS
                 }
             }
 
-            public bool EnabledInTeamwork
-            {
-                get { return enabledInTeamwork; }
-                set
-                {
-                    if (value)
-                    {
-                        SetEnabledInTeamwork();
-                    }
-                    else
-                    {
-                        SetDisabledInTeamwork();
-                    }
-                }
-            }
-
-            public Int32 MaxApplicationNumberPerAthlete
-            {
-                get { return maxApplicationNumberPerAthlete; }
-                set { SetEnabled(value); }
-            }
-
             public EntryValidator()
             {
                 SetDisabled();
             }
 
-            public void SetEnabled(Int32 maxApplicationNumber = NoLimit)
+            public void SetEnabled()
             {
-                if (maxApplicationNumber <= NotEnabled)
-                {
-                    throw new Exception("每个运动员填报项目的上限数量是个无效值");
-                }
+                SetEnabled(new SSUtils.NumberRange());
+            }
 
-                if (!enabled)
-                {
-                    enabled = true;
-                }
-                maxApplicationNumberPerAthlete = maxApplicationNumber;
+            public void SetEnabled(UInt32 number)
+            {
+                SetEnabled(new SSUtils.NumberRange(0, number));
+            }
+
+            public void SetEnabled(SSUtils.NumberRange range)
+            {
+                _applicationNumberPerAthlete.SetEnabled(range ?? throw new Exception("设置的每个运动员的项目报名数量范围是个无效值"));
             }
 
             public void SetDisabled()
             {
-                enabled = false;
                 SetDisabledInTeamwork();
-                maxApplicationNumberPerAthlete = NotEnabled;
+                _applicationNumberPerAthlete.SetDisabled();
             }
 
             public void SetEnabledInTeamwork()
             {
-                if (!enabled)
+                if (!Enabled)
                 {
                     SetEnabled();
                 }
-                enabledInTeamwork = true;
+                _enabledInTeamwork = true;
             }
 
             public void SetDisabledInTeamwork()
             {
-                enabledInTeamwork = false;
+                _enabledInTeamwork = false;
             }
         };
     };

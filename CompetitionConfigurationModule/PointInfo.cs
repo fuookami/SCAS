@@ -11,58 +11,73 @@ namespace SCAS
             public const Double PointRateDisabled = .0;
             public static readonly List<UInt32> DefaultPoints = new List<UInt32> { 9, 7, 6, 5, 4, 3, 2, 1 };
 
-            private List<UInt32> points;
-            private Double pointRate;
-            private bool breakRecordPointRateEnabled;
-            private Double breakRecordPointRate;
+            private List<UInt32> _points;
+            private Double _pointRate;
+            private bool _breakRecordPointRateEnabled;
+            private Double _breakRecordPointRate;
 
             public List<UInt32> Points
             {
-                get { return points; }
+                get
+                {
+                    return _points;
+                }
                 set
                 {
                     if (value.Count == 0)
                     {
                         throw new Exception("不能将积分列表设置为空列表");
                     }
-                    points = value;
-                    points.Sort();
-                    points.Reverse();
+                    _points = value;
+                    _points.Sort();
+                    _points.Reverse();
                 }
             }
 
             public Double PointRate
             {
-                get { return pointRate; }
+                get
+                {
+                    return _pointRate;
+                }
                 set
                 {
                     if (value < .0)
                     {
                         throw new Exception("积分比例不能小于0");
                     }
-                    pointRate = value;
+                    _pointRate = value;
                 }
             }
 
             public bool BreakRecordPointRateEnabled
             {
-                get { return breakRecordPointRateEnabled; }
+                get
+                {
+                    return _breakRecordPointRateEnabled;
+                }
                 set
                 {
-                    if (value)
+                    if (_breakRecordPointRateEnabled != value)
                     {
-                        SetBreakRecordPointRateEnabled();
-                    }
-                    else
-                    {
-                        SetBreakRecordPointRateDisabled();
+                        if (value)
+                        {
+                            SetBreakRecordPointRateEnabled();
+                        }
+                        else
+                        {
+                            SetBreakRecordPointRateDisabled();
+                        }
                     }
                 }
             }
 
             public Double BreakRecordPointRate
             {
-                get { return breakRecordPointRate; }
+                get
+                {
+                    return _breakRecordPointRate;
+                }
                 set
                 {
                     if (value < .0)
@@ -75,8 +90,8 @@ namespace SCAS
 
             public PointInfo()
             {
-                points = DefaultPoints;
-                pointRate = NoPointRate;
+                _points = DefaultPoints;
+                _pointRate = NoPointRate;
                 SetBreakRecordPointRateDisabled();
             }
 
@@ -84,28 +99,28 @@ namespace SCAS
             {
                 PointInfo ret = new PointInfo
                 {
-                    points = points,
-                    pointRate = pointRate,
-                    breakRecordPointRateEnabled = breakRecordPointRateEnabled,
-                    breakRecordPointRate = breakRecordPointRate
+                    _points = _points,
+                    _pointRate = _pointRate,
+                    _breakRecordPointRateEnabled = _breakRecordPointRateEnabled,
+                    _breakRecordPointRate = _breakRecordPointRate
                 };
                 return ret;
             }
 
             public void SetBreakRecordPointRateEnabled(Double rate = NoPointRate)
             {
-                breakRecordPointRateEnabled = true;
+                _breakRecordPointRateEnabled = true;
                 if (rate < .0)
                 {
                     throw new Exception("打破记录的积分比例不能小于0");
                 }
-                breakRecordPointRate = rate;
+                _breakRecordPointRate = rate;
             }
 
             public void SetBreakRecordPointRateDisabled()
             {
-                breakRecordPointRateEnabled = false;
-                breakRecordPointRate = PointRateDisabled;
+                _breakRecordPointRateEnabled = false;
+                _breakRecordPointRate = PointRateDisabled;
             }
         }
     };
