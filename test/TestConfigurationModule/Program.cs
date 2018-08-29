@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using SCAS.CompetitionConfiguration;
+using SSUtils;
 
 namespace TestConfigurationModule
 {
@@ -24,24 +25,17 @@ namespace TestConfigurationModule
             ret.Version = "某年某比赛第某版本（测试）";
             ret.Identifier = "给自己看的标识符/标签之类的";
 
-            ret.CompetitionApplicationValidator = new EntryValidator
-            {
-                Enabled = true,
-                EnabledInTeamwork = false,
-                MaxApplicationNumberPerAthlete = 2
-            };
+            ret.CompetitionEntryValidator.SetEnabled(2);
+            ret.CompetitionEntryValidator.SetEnabledInTeamwork();
 
-            ret.CompetitionPrincipalInfo = new PrincipalInfo()
+            ret.CompetitionPrincipalInfo.Name = "负责人的姓名";
+            ret.CompetitionPrincipalInfo.Telephone = "负责人的手机";
+            ret.CompetitionPrincipalInfo.Email = "负责人的邮箱@xxx.xx";
+            ret.CompetitionPrincipalInfo.Others = new Dictionary<string, string>
             {
-                Name = "负责人的姓名",
-                Telephone = "负责人的手机",
-                Email = "负责人的邮箱@xxx.xx",
-                Others = new Dictionary<string, string>
-                {
-                    { "QQ", "假装是个QQ号" },
-                    { "微信", "假装是个微信号" },
-                    { "备注", "随便写点什么" }
-                }
+                { "QQ", "假装是个QQ号" },
+                { "微信", "假装是个微信号" },
+                { "备注", "随便写点什么" }
             };
 
             ret.PublicPointInfo.Points = new List<UInt32> { 9, 7, 6, 5, 4, 3, 2, 1 };
@@ -136,19 +130,16 @@ namespace TestConfigurationModule
 
             ret.EventTeamworkInfo.SetNeedEveryPerson();
             ret.EventTeamworkInfo.BeMultiRank = true;
-            ret.EventTeamworkInfo.RangesOfCategories = new Dictionary<AthleteCategory, UInt32Range>
-            {
-                { parent.AthleteCategories.Find((element) => element.Name == "学生男子"), new UInt32Range(4, 4) }
-            };
+            ret.EventTeamworkInfo.RangesOfCategories.Add(parent.AthleteCategories.Find((element) => element.Name == "学生男子"), new NumberRange(4, 4));
 
-            ret.EventAthleteValidator.Categories.Add(parent.AthleteCategories.Find((element) => element.Name == "学生男子"));
+            ret.EventParticipantValidator.Categories.Add(parent.AthleteCategories.Find((element) => element.Name == "学生男子"));
             foreach (var rank in parent.CompetitionRankInfo.AthleteRanks)
             {
-                ret.EventAthleteValidator.Ranks.Add(rank);
+                ret.EventParticipantValidator.Ranks.Add(rank);
             }
-            ret.EventAthleteValidator.Ranks.Sort();
-            ret.EventAthleteValidator.MaxNumberPerTeam = 1;
-            ret.EventAthleteValidator.BePointForEveryRank = true;
+            ret.EventParticipantValidator.Ranks.Sort();
+            ret.EventParticipantValidator.NumberPerTeam.Set(1);
+            ret.EventParticipantValidator.BePointForEveryRank = true;
 
             ret.EventPointInfo.PointRate = 2;
 
@@ -166,14 +157,14 @@ namespace TestConfigurationModule
                 game.Pattern = GameInfo.GamePattern.Ranking;
 
                 game.GameSession = parent.Sessions[Date.Today][0];
-                game.OrderInEvent = 0;
-                game.OrderInSession = 0;
+                game.OrderInEvent = new Order(0);
+                game.OrderInSession = new Order(0);
 
                 game.PlanIntervalTime = new TimeSpan(0, 2, 0);
                 game.PlanTimePerGroup = new TimeSpan(0, 3, 0);
 
                 game.GameGroupInfo.Enabled = true;
-                game.GameGroupInfo.NumberPerGroup = 8;
+                game.GameGroupInfo.NumberPerGroup.Set(8);
             }
         }
 
@@ -185,24 +176,21 @@ namespace TestConfigurationModule
             ret.EventGradeInfo.GradeBetterType = GradeInfo.BetterType.Bigger;
 
             ret.EventTeamworkInfo.SetNeedEveryPerson();
-            ret.EventTeamworkInfo.RangesOfCategories = new Dictionary<AthleteCategory, UInt32Range>
-            {
-                { parent.AthleteCategories.Find((element) => element.Name == "学生男子"), new UInt32Range(4, 8) }, 
-                { parent.AthleteCategories.Find((element) => element.Name == "教师男子"), new UInt32Range(4, 8) }
-            };
-            ret.EventTeamworkInfo.RangesOfTeam = new UInt32Range(10, 12);
+            ret.EventTeamworkInfo.RangesOfCategories.Add(parent.AthleteCategories.Find((element) => element.Name == "学生男子"), new NumberRange(4, 8));
+            ret.EventTeamworkInfo.RangesOfCategories.Add(parent.AthleteCategories.Find((element) => element.Name == "教师男子"), new NumberRange(4, 8));
+            ret.EventTeamworkInfo.RangesOfTeam.Set(10, 12);
 
-            ret.EventAthleteValidator.Categories.AddRange(parent.AthleteCategories.FindAll((element) =>
+            ret.EventParticipantValidator.Categories.AddRange(parent.AthleteCategories.FindAll((element) =>
             {
                 return element.Name == "学生男子" || element.Name == "教师男子";
             }));
             foreach (var rank in parent.CompetitionRankInfo.AthleteRanks)
             {
-                ret.EventAthleteValidator.Ranks.Add(rank);
+                ret.EventParticipantValidator.Ranks.Add(rank);
             }
-            ret.EventAthleteValidator.Ranks.Sort();
-            ret.EventAthleteValidator.MaxNumberPerTeam = 1;
-            ret.EventAthleteValidator.BePointForEveryRank = false;
+            ret.EventParticipantValidator.Ranks.Sort();
+            ret.EventParticipantValidator.NumberPerTeam.Set(1);
+            ret.EventParticipantValidator.BePointForEveryRank = false;
 
             ret.EventPointInfo.PointRate = 2;
 
@@ -220,14 +208,14 @@ namespace TestConfigurationModule
                 game1.Pattern = GameInfo.GamePattern.Elimination;
 
                 game1.GameSession = parent.Sessions[Date.Today][1];
-                game1.OrderInEvent = 0;
-                game1.OrderInSession = 0;
+                game1.OrderInEvent = new Order(0);
+                game1.OrderInSession = new Order(0);
 
                 game1.PlanIntervalTime = new TimeSpan(0, 2, 0);
                 game1.PlanTimePerGroup = new TimeSpan(0, 3, 0);
 
                 game1.GameGroupInfo.Enabled = true;
-                game1.GameGroupInfo.NumberPerGroup = 8;
+                game1.GameGroupInfo.NumberPerGroup.Set(8);
 
                 GameInfo game2 = ret.GameInfos.GenerateNewGameInfo();
                 game2.Name = "XX项目决赛";
@@ -237,14 +225,14 @@ namespace TestConfigurationModule
 
                 game2.NumberOfParticipants = 8;
                 game2.GameSession = parent.Sessions[Date.Today.Tomorrow][0];
-                game2.OrderInEvent = 1;
-                game2.OrderInSession = 0;
+                game2.OrderInEvent = new Order(1);
+                game2.OrderInSession = new Order(0);
 
                 game2.PlanIntervalTime = new TimeSpan(0, 2, 0);
                 game2.PlanTimePerGroup = new TimeSpan(0, 3, 0);
 
                 game2.GameGroupInfo.Enabled = true;
-                game2.GameGroupInfo.NumberPerGroup = 8;
+                game2.GameGroupInfo.NumberPerGroup.Set(8);
             }
         }
 
@@ -257,15 +245,15 @@ namespace TestConfigurationModule
 
             ret.EventTeamworkInfo.SetIsNotTeamwork();
 
-            ret.EventAthleteValidator.Categories.Add(parent.AthleteCategories.Find((element) => element.Name == "学生女子"));
+            ret.EventParticipantValidator.Categories.Add(parent.AthleteCategories.Find((element) => element.Name == "学生女子"));
 
             foreach (var rank in parent.CompetitionRankInfo.AthleteRanks)
             {
-                ret.EventAthleteValidator.Ranks.Add(rank);
+                ret.EventParticipantValidator.Ranks.Add(rank);
             }
-            ret.EventAthleteValidator.Ranks.Sort();
-            ret.EventAthleteValidator.MaxNumberPerTeam = 1;
-            ret.EventAthleteValidator.BePointForEveryRank = true;
+            ret.EventParticipantValidator.Ranks.Sort();
+            ret.EventParticipantValidator.NumberPerTeam.Set(2);
+            ret.EventParticipantValidator.BePointForEveryRank = true;
 
             foreach (var team in parent.TeamInfos)
             {
@@ -281,14 +269,14 @@ namespace TestConfigurationModule
                 game.Pattern = GameInfo.GamePattern.Ranking;
 
                 game.GameSession = parent.Sessions[Date.Today][1];
-                game.OrderInEvent = 0;
-                game.OrderInSession = 1;
+                game.OrderInEvent = new Order(0);
+                game.OrderInSession = new Order(1);
 
                 game.PlanIntervalTime = new TimeSpan(0, 2, 0);
                 game.PlanTimePerGroup = new TimeSpan(0, 3, 0);
 
                 game.GameGroupInfo.Enabled = true;
-                game.GameGroupInfo.NumberPerGroup = 8;
+                game.GameGroupInfo.NumberPerGroup.Set(8);
             }
         }
 
@@ -301,17 +289,17 @@ namespace TestConfigurationModule
 
             ret.EventTeamworkInfo.SetIsNotTeamwork();
 
-            ret.EventAthleteValidator.Categories.AddRange(parent.AthleteCategories.FindAll((element) =>
+            ret.EventParticipantValidator.Categories.AddRange(parent.AthleteCategories.FindAll((element) =>
             {
                 return element.Name == "学生女子" || element.Name == "教师女子";
             }));
             foreach (var rank in parent.CompetitionRankInfo.AthleteRanks)
             {
-                ret.EventAthleteValidator.Ranks.Add(rank);
+                ret.EventParticipantValidator.Ranks.Add(rank);
             }
-            ret.EventAthleteValidator.Ranks.Sort();
-            ret.EventAthleteValidator.MaxNumberPerTeam = 1;
-            ret.EventAthleteValidator.BePointForEveryRank = false;
+            ret.EventParticipantValidator.Ranks.Sort();
+            ret.EventParticipantValidator.NumberPerTeam.Set(1);
+            ret.EventParticipantValidator.BePointForEveryRank = false;
 
             foreach (var team in parent.TeamInfos)
             {
@@ -327,14 +315,14 @@ namespace TestConfigurationModule
                 game1.Pattern = GameInfo.GamePattern.Elimination;
 
                 game1.GameSession = parent.Sessions[Date.Today][0];
-                game1.OrderInEvent = 0;
-                game1.OrderInSession = 1;
+                game1.OrderInEvent = new Order(0);
+                game1.OrderInSession = new Order(1);
 
                 game1.PlanIntervalTime = new TimeSpan(0, 2, 0);
                 game1.PlanTimePerGroup = new TimeSpan(0, 3, 0);
 
                 game1.GameGroupInfo.Enabled = true;
-                game1.GameGroupInfo.NumberPerGroup = 8;
+                game1.GameGroupInfo.NumberPerGroup.Set(8);
 
                 GameInfo game2 = ret.GameInfos.GenerateNewGameInfo();
                 game2.Name = "XX项目复赛";
@@ -344,14 +332,14 @@ namespace TestConfigurationModule
 
                 game2.NumberOfParticipants = 16;
                 game2.GameSession = parent.Sessions[Date.Today][1];
-                game2.OrderInEvent = 1;
-                game2.OrderInSession = 2;
+                game2.OrderInEvent = new Order(1);
+                game2.OrderInSession = new Order(2);
 
                 game2.PlanIntervalTime = new TimeSpan(0, 2, 0);
                 game2.PlanTimePerGroup = new TimeSpan(0, 3, 0);
 
                 game2.GameGroupInfo.Enabled = true;
-                game2.GameGroupInfo.NumberPerGroup = 8;
+                game2.GameGroupInfo.NumberPerGroup.Set(8);
 
                 GameInfo game3 = ret.GameInfos.GenerateNewGameInfo();
                 game3.Name = "XX项目决赛";
@@ -361,14 +349,14 @@ namespace TestConfigurationModule
 
                 game3.NumberOfParticipants = 8;
                 game3.GameSession = parent.Sessions[Date.Today.Tomorrow][0];
-                game3.OrderInEvent = 2;
-                game3.OrderInSession = 1;
+                game3.OrderInEvent = new Order(2);
+                game3.OrderInSession = new Order(1);
 
                 game3.PlanIntervalTime = new TimeSpan(0, 2, 0);
                 game3.PlanTimePerGroup = new TimeSpan(0, 3, 0);
 
                 game3.GameGroupInfo.Enabled = true;
-                game3.GameGroupInfo.NumberPerGroup = 8;
+                game3.GameGroupInfo.NumberPerGroup.Set(8);
             }
         }
     }

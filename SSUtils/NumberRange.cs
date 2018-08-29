@@ -4,9 +4,9 @@ namespace SSUtils
 {
     public class NumberRange : UInt32Range
     {
-        public const UInt32 Nolimit = 0;
+        public const UInt32 NoLimit = 0;
 
-        public NumberRange(UInt32 min = 0, UInt32 max = Nolimit)
+        public NumberRange(UInt32 min = 0, UInt32 max = NoLimit)
             : base(min, max)
         {
         }
@@ -16,9 +16,19 @@ namespace SSUtils
             return Set(number, number);
         }
 
+        public bool Set(NumberRange range)
+        {
+            return Set(range.Minimun, range.Maximun);
+        }
+
         public override bool Valid()
         {
             return Valid(Minimun, Maximun);
+        }
+
+        public bool HasRange()
+        {
+            return Valid() && (Minimun != 0 || Maximun != 0);
         }
 
         protected override bool Valid(UInt32 min, UInt32 max)

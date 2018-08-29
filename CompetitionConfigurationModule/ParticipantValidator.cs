@@ -45,6 +45,7 @@ namespace SCAS
             public NumberRange NumberPerTeam
             {
                 get;
+                set;
             }
 
             public bool BePointForEveryRank

@@ -7,7 +7,6 @@ namespace SCAS
     {
         public class CompetitionInfo
         {
-            private PointInfo _publicPointInfo;
             private SessionPool _sessions;
 
             private List<UInt32> _useLines;
@@ -181,7 +180,7 @@ namespace SCAS
                 TeamCategories = new TeamCategoryPool();
                 TeamInfos = new TeamInfoPool();
 
-                UseLines = new List<UInt32>();
+                _useLines = new List<UInt32>();
                 SetLineConfiguration();
 
                 GameInfos = new Dictionary<Session, GameInfoList>();

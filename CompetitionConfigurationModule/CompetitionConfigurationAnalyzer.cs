@@ -48,7 +48,7 @@ namespace SCAS
 
                 AnalyzeCompetitionInfoFunctions = new List<AnalyzeNodeFunctionType<CompetitionInfo>>
                 {
-                    AnalyzeApplicationValidatorNode,
+                    AnalyzeEntryValidatorNode,
                     AnalyzePrincipleNode,
                     AnalyzePublicPointInfoNode,
                     AnalyzeSessionsNode,
@@ -62,7 +62,7 @@ namespace SCAS
                 {
                     AnalyzeGradeInfoNode,
                     AnalyzeTeamworkInfoNode,
-                    AnalyzeAthleteValidatorNode,
+                    AnalyzeParticipantValidatorNode,
                     AnalyzePointInfoNode,
                     AnalyzeEnabledTeamsNode
                 };
@@ -230,7 +230,7 @@ namespace SCAS
                         data.GameInfos.Remove(temp);
                         return false;
                     }
-                    Session session = data.Competition.Sessions[date].Find((element) => element.OrderInDate == orderInDate);
+                    Session session = data.Competition.Sessions[date].Find((element) => element.OrderInDate.Equals(orderInDate));
                     if (session == null)
                     {
                         data.GameInfos.Remove(temp);
@@ -239,10 +239,10 @@ namespace SCAS
                     temp.GameSession = session;
 
                     XmlElement orderInEventNode = (XmlElement)node.GetElementsByTagName("OrderInEvent")[0];
-                    temp.OrderInEvent = Int32.Parse(orderInEventNode.InnerText);
+                    temp.OrderInEvent = new SSUtils.Order(Int32.Parse(orderInEventNode.InnerText));
 
                     XmlElement orderInSessionNode = (XmlElement)node.GetElementsByTagName("OrderInSession")[0];
-                    temp.OrderInSession = Int32.Parse(orderInSessionNode.InnerText);
+                    temp.OrderInSession = new SSUtils.Order(Int32.Parse(orderInSessionNode.InnerText));
 
                     XmlElement planIntervalTimeNode = (XmlElement)node.GetElementsByTagName("PlanIntervalTime")[0];
                     temp.PlanIntervalTime = TimeSpan.Parse(planIntervalTimeNode.InnerText);
@@ -262,10 +262,10 @@ namespace SCAS
                 return true;
             }
 
-            private bool AnalyzeApplicationValidatorNode(XmlElement parent, CompetitionInfo data)
+            private bool AnalyzeEntryValidatorNode(XmlElement parent, CompetitionInfo data)
             {
                 XmlElement node = (XmlElement)parent.GetElementsByTagName("ApplicationValidator")[0];
-                EntryValidator ret = new EntryValidator();
+                EntryValidator ret = data.CompetitionEntryValidator;
                 ret.Enabled = Boolean.Parse(node.GetAttribute("enabled"));
 
                 if (ret.Enabled)
@@ -273,18 +273,33 @@ namespace SCAS
                     XmlElement enabledInTeamworkNode = (XmlElement)node.GetElementsByTagName("EnabledInTeamwork")[0];
                     ret.EnabledInTeamwork = Boolean.Parse(enabledInTeamworkNode.InnerText);
 
-                    XmlElement maxApplicationNumberPerAthleteNode = (XmlElement)node.GetElementsByTagName("MaxApplicationNumberPerAthlete")[0];
-                    ret.ApplicationNumberPerAthlete = Int32.Parse(maxApplicationNumberPerAthleteNode.InnerText);
-                }
+                    XmlNodeList entryNumberPerAthleteNodes = node.GetElementsByTagName("EntryNumberPerAthlete");
+                    if (entryNumberPerAthleteNodes.Count != 0)
+                    {
+                        XmlElement entryNumberPerAthleteNode = (XmlElement)node.GetElementsByTagName("EntryNumberPerAthlete")[0];
 
-                data.CompetitionApplicationValidator = ret;
+                        UInt32 min = SSUtils.NumberRange.NoLimit;
+                        UInt32 max = SSUtils.NumberRange.NoLimit;
+                        if (entryNumberPerAthleteNode.HasAttribute("min"))
+                        {
+                           min  = UInt32.Parse(entryNumberPerAthleteNode.GetAttribute("min"));
+                        }
+                        if (entryNumberPerAthleteNode.HasAttribute("max"))
+                        {
+                            max = UInt32.Parse(entryNumberPerAthleteNode.GetAttribute("max"));
+                        }
+
+                        ret.EntryNumberPerAthlete.Set(min, max);
+                    }
+                }
+                
                 return true;
             }
 
             private bool AnalyzePrincipleNode(XmlElement parent, CompetitionInfo data)
             {
                 XmlElement node = (XmlElement)parent.GetElementsByTagName("Principle")[0];
-                PrincipalInfo ret = new PrincipalInfo();
+                PrincipalInfo ret = data.CompetitionPrincipalInfo;
 
                 XmlElement nameNode = (XmlElement)node.GetElementsByTagName("Name")[0];
                 ret.Name = nameNode.InnerText;
@@ -300,15 +315,14 @@ namespace SCAS
                 {
                     ret.Others.Add(otherNode.GetAttribute("key"), otherNode.InnerText);
                 }
-
-                data.CompetitionPrincipalInfo = ret;
+                
                 return true;
             }
 
             private bool AnalyzePublicPointInfoNode(XmlElement parent, CompetitionInfo data)
             {
                 XmlElement node = (XmlElement)parent.GetElementsByTagName("PublicPointInfo")[0];
-                PointInfo ret = new PointInfo();
+                PointInfo ret = data.PublicPointInfo;
 
                 XmlElement pointsNode = (XmlElement)node.GetElementsByTagName("Points")[0];
                 var pointStrings = pointsNode.InnerText.Split(new char[] { ',', ' ' }, StringSplitOptions.RemoveEmptyEntries);
@@ -331,8 +345,7 @@ namespace SCAS
                 {
                     ret.SetBreakRecordPointRateEnabled(breakRecordPointRate);
                 }
-
-                data.PublicPointInfo = ret;
+                
                 return true;
             }
 
@@ -343,7 +356,7 @@ namespace SCAS
 
                 foreach (XmlElement sessionNode in sessionNodes)
                 {
-                    Session session = new Session(Date.Parse(sessionNode.GetAttribute("date")), UInt32.Parse(sessionNode.GetAttribute("order")));
+                    Session session = new Session(Date.Parse(sessionNode.GetAttribute("date")), new SSUtils.Order(Int32.Parse(sessionNode.GetAttribute("order"))));
 
                     XmlElement nameNode = (XmlElement)sessionNode.GetElementsByTagName("Name")[0];
                     session.Name = nameNode.InnerText;
@@ -479,7 +492,7 @@ namespace SCAS
             private bool AnalyzeTeamworkInfoNode(XmlElement parent, EventInfo data)
             {
                 XmlElement teamworkNode = (XmlElement)parent.GetElementsByTagName("TeamworkInfo")[0];
-                TeamworkInfo ret = new TeamworkInfo();
+                TeamworkInfo ret = data.EventTeamworkInfo;
                 ret.BeTeamwork = Boolean.Parse(teamworkNode.GetAttribute("enabled"));
 
                 if (ret.BeTeamwork)
@@ -507,18 +520,19 @@ namespace SCAS
                                 return false;
                             }
 
-                            var range = new UInt32Range();
+                            var range = new SSUtils.NumberRange();
+                            UInt32 min = SSUtils.NumberRange.NoLimit;
+                            UInt32 max = SSUtils.NumberRange.NoLimit;
                             if (rangeNode.HasAttribute("min"))
                             {
-                                range.Minimun = UInt32.Parse(rangeNode.GetAttribute("min"));
+                                min = UInt32.Parse(rangeNode.GetAttribute("min"));
                             }
-
                             if (rangeNode.HasAttribute("max"))
                             {
-                                range.Maximun = UInt32.Parse(rangeNode.GetAttribute("max"));
+                                max = UInt32.Parse(rangeNode.GetAttribute("max"));
                             }
 
-                            if (!range.Valid())
+                            if (!range.Set(min, max))
                             {
                                 return false;
                             }
@@ -529,35 +543,33 @@ namespace SCAS
                         if (teamRangeNodes.Count != 0)
                         {
                             XmlElement teamRangeNode = (XmlElement)teamRangeNodes[0];
-                            var range = new UInt32Range();
 
+                            UInt32 min = SSUtils.NumberRange.NoLimit;
+                            UInt32 max = SSUtils.NumberRange.NoLimit;
                             if (teamRangeNode.HasAttribute("min"))
                             {
-                                range.Minimun = UInt32.Parse(teamRangeNode.GetAttribute("min"));
+                                min = UInt32.Parse(teamRangeNode.GetAttribute("min"));
                             }
-
                             if (teamRangeNode.HasAttribute("max"))
                             {
-                                range.Maximun = UInt32.Parse(teamRangeNode.GetAttribute("max"));
+                                max = UInt32.Parse(teamRangeNode.GetAttribute("max"));
                             }
 
-                            if (!range.Valid())
+                            if (!ret.RangesOfTeam.Set(min, max))
                             {
                                 return false;
                             }
-                            ret.RangesOfTeam = range;
                         }
                     }
                 }
-
-                data.EventTeamworkInfo = ret;
+                
                 return true;
             }
 
-            private bool AnalyzeAthleteValidatorNode(XmlElement parent, EventInfo data)
+            private bool AnalyzeParticipantValidatorNode(XmlElement parent, EventInfo data)
             {
                 XmlElement node = (XmlElement)parent.GetElementsByTagName("AthleteValidator")[0];
-                ParticipantValidator ret = new ParticipantValidator();
+                ParticipantValidator ret = data.EventParticipantValidator;
 
                 XmlElement categoriesNode = (XmlElement)node.GetElementsByTagName("EnabledCategories")[0];
                 var enabledCategoriesNames = categoriesNode.InnerText.Split(new char[] { ',', ' ' }, StringSplitOptions.RemoveEmptyEntries);
@@ -590,24 +602,38 @@ namespace SCAS
                     }
                 }
 
-                XmlNodeList maxNumberPerTeamNodes = node.GetElementsByTagName("MaxNumberPerTeam");
-                if (maxNumberPerTeamNodes.Count != 0)
+                XmlNodeList numberPerTeamNodes = node.GetElementsByTagName("NumberPerTeam");
+                if (numberPerTeamNodes.Count != 0)
                 {
-                    XmlElement maxNumberPerTeamNode = (XmlElement)maxNumberPerTeamNodes[0];
-                    ret.NumberPerTeam = UInt32.Parse(maxNumberPerTeamNode.InnerText);
+                    XmlElement rangeNode = (XmlElement)numberPerTeamNodes[0];
+
+                    UInt32 min = SSUtils.NumberRange.NoLimit;
+                    UInt32 max = SSUtils.NumberRange.NoLimit;
+                    if (rangeNode.HasAttribute("min"))
+                    {
+                        min = UInt32.Parse(rangeNode.GetAttribute("min"));
+                    }
+                    if (rangeNode.HasAttribute("max"))
+                    {
+                        max = UInt32.Parse(rangeNode.GetAttribute("max"));
+                    }
+
+                    if (!ret.NumberPerTeam.Set(min, max))
+                    {
+                        return false;
+                    }
                 }
 
                 XmlElement pointForEveryRankNode = (XmlElement)node.GetElementsByTagName("PointForEveryRank")[0];
                 ret.BePointForEveryRank = Boolean.Parse(pointForEveryRankNode.InnerText);
-
-                data.EventAthleteValidator = ret;
+                
                 return true;
             }
 
             private bool AnalyzePointInfoNode(XmlElement parent, EventInfo data)
             {
                 XmlElement node = (XmlElement)parent.GetElementsByTagName("PointInfo")[0];
-                PointInfo ret = new PointInfo();
+                PointInfo ret = data.EventPointInfo;
 
                 XmlElement pointsNode = (XmlElement)node.GetElementsByTagName("Points")[0];
                 var pointStrings = pointsNode.InnerText.Split(new char[] { ',', ' ' }, StringSplitOptions.RemoveEmptyEntries);
@@ -630,8 +656,7 @@ namespace SCAS
                 {
                     ret.SetBreakRecordPointRateEnabled(breakRecordPointRate);
                 }
-
-                data.EventPointInfo = ret;
+                
                 return true;
             }
 
@@ -657,17 +682,35 @@ namespace SCAS
 
             private bool AnalyzeGroupInfoNode(XmlElement parent, GameInfo data)
             {
-                GroupInfo ret = new GroupInfo();
+                GroupInfo ret = data.GameGroupInfo;
                 XmlElement groupNode = (XmlElement)parent.GetElementsByTagName("GroupInfo")[0];
                 ret.Enabled = Boolean.Parse(groupNode.GetAttribute("enabled"));
 
                 if (ret.Enabled)
                 {
-                    XmlElement numberPerGroupNode = (XmlElement)parent.GetElementsByTagName("NumberPerGroup")[0];
-                    ret.NumberPerGroup = Int32.Parse(numberPerGroupNode.InnerText);
-                }
+                    XmlNodeList numberPerGroupNodes = parent.GetElementsByTagName("NumberPerGroup");
+                    if (numberPerGroupNodes.Count != 0)
+                    {
+                        XmlElement rangeNode = (XmlElement)parent.GetElementsByTagName("NumberPerGroup")[0];
 
-                data.GameGroupInfo = ret;
+                        UInt32 min = SSUtils.NumberRange.NoLimit;
+                        UInt32 max = SSUtils.NumberRange.NoLimit;
+                        if (rangeNode.HasAttribute("min"))
+                        {
+                            min = UInt32.Parse(rangeNode.GetAttribute("min"));
+                        }
+                        if (rangeNode.HasAttribute("max"))
+                        {
+                            max = UInt32.Parse(rangeNode.GetAttribute("max"));
+                        }
+
+                        if (!ret.NumberPerGroup.Set(min, max))
+                        {
+                            return false;
+                        }
+                    }
+                }
+                
                 return true;
             }
         }

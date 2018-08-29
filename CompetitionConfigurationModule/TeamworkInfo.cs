@@ -12,7 +12,7 @@ namespace SCAS
             private bool _beMultiRank;
             private bool _needEveryPerson;
 
-            private NumberRange _rangesOfTeam
+            private NumberRange _rangesOfTeam;
 
             public bool BeTeamwork
             {

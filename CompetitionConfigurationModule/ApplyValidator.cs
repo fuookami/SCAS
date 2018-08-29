@@ -53,7 +53,7 @@ namespace SCAS
                 }
             }
 
-            public SSUtils.NumberRange ApplicationNumberPerAthlete
+            public SSUtils.NumberRange EntryNumberPerAthlete
             {
                 get
                 {
@@ -74,6 +74,7 @@ namespace SCAS
 
             public EntryValidator()
             {
+                _applicationNumberPerAthlete = new SSUtils.EnabledNumberRange();
                 SetDisabled();
             }
 

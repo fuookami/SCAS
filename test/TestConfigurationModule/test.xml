@@ -1,16 +1,17 @@
-<SCASCompetitionConfiguration id="55bedf357fa74b8ca693570c31dc1b17">
+<SCASCompetitionConfiguration id="cde624f9116b4444a8d3715c106cd844">
   <Name>某游泳比赛</Name>
   <SubName>暨某游泳比赛</SubName>
   <Version>某年某比赛第某版本（测试）</Version>
   <Identifier>给自己看的标识符/标签之类的</Identifier>
+  <Order>0</Order>
   <Template>False</Template>
   <Field>某游泳馆</Field>
   <DisplayBeginLine>1</DisplayBeginLine>
   <NumberOfDisplayLines>8</NumberOfDisplayLines>
   <UseLines>1, 2, 3, 4, 5, 6, 7, 8</UseLines>
   <ApplicationValidator enabled="True">
-    <EnabledInTeamwork>False</EnabledInTeamwork>
-    <MaxApplicationNumberPerAthlete>2</MaxApplicationNumberPerAthlete>
+    <EnabledInTeamwork>True</EnabledInTeamwork>
+    <EntryNumberPerAthlete max="2" />
   </ApplicationValidator>
   <Principle>
     <Name>负责人的姓名</Name>
@@ -26,55 +27,55 @@
     <BreakRecordPointRate>2</BreakRecordPointRate>
   </PublicPointInfo>
   <Sessions>
-    <Session date="2018/8/20" order="0">
+    <Session date="2018/8/29" order="0">
       <Name>上半场</Name>
-      <FullName>8月20日 上半场</FullName>
+      <FullName>8月29日 上半场</FullName>
     </Session>
-    <Session date="2018/8/20" order="1">
+    <Session date="2018/8/29" order="1">
       <Name>下半场</Name>
-      <FullName>8月20日 下半场</FullName>
+      <FullName>8月29日 下半场</FullName>
     </Session>
-    <Session date="2018/8/21" order="0">
+    <Session date="2018/8/30" order="0">
       <Name>上半场</Name>
-      <FullName>8月21日 上半场</FullName>
+      <FullName>8月30日 上半场</FullName>
     </Session>
   </Sessions>
   <AthleteCategories>
-    <AthleteCategory id="ef5f8f68f3e343499334b3e412f04bc6">学生男子</AthleteCategory>
-    <AthleteCategory id="27984550dfb24f3cb7a9815b7ecb8895">学生女子</AthleteCategory>
-    <AthleteCategory id="e572cd794dcc4bf182eecabea2004279">教师男子</AthleteCategory>
-    <AthleteCategory id="8c7a859b41b948d3a7f3ce36bbd1b7b8">教师女子</AthleteCategory>
+    <AthleteCategory id="fa0340aaa8b64661b1c51e74ecff7681">学生男子</AthleteCategory>
+    <AthleteCategory id="0322c7b1b13e4429a6c4a42fca3f0b1a">学生女子</AthleteCategory>
+    <AthleteCategory id="058f727a2d854ed989c6684b897cd30e">教师男子</AthleteCategory>
+    <AthleteCategory id="f27db9206c45432d9be654bc53fd2a77">教师女子</AthleteCategory>
   </AthleteCategories>
   <RankInfo enabled="True">
     <Forced>True</Forced>
     <AthleteRanks default="甲组">
-      <AthleteRank id="58e17757f9d3473cb02be3a885581672">甲组</AthleteRank>
-      <AthleteRank id="016bb76a3f664473af8642218cdd0c0d">乙组</AthleteRank>
-      <AthleteRank id="8e952c2a9ddf49d28786226f6cd4546c">丙组</AthleteRank>
+      <AthleteRank id="5a0383b2cd8a4049a3c7193d508186c5">甲组</AthleteRank>
+      <AthleteRank id="ba41ce98c5ef48329f35017f400022f1">乙组</AthleteRank>
+      <AthleteRank id="aa987e99658246abb96b4e7b31072df0">丙组</AthleteRank>
     </AthleteRanks>
   </RankInfo>
   <TeamCategories>
-    <TeamCategory id="7298d9bb04d346a1a7ca8b06fff2979a">普通队</TeamCategory>
+    <TeamCategory id="77a1a43fe6b849f1a695166f6ca6b4db">普通队</TeamCategory>
   </TeamCategories>
   <Teams>
-    <Team id="ff64b48230f94cb58c1cb6d377093d0d">
+    <Team id="7fcfcc48c91440ffb0736e08c3290ca5">
       <Name>航空宇航学院</Name>
       <ShortName>一院</ShortName>
       <Category>普通队</Category>
     </Team>
-    <Team id="b7d61bd982174c4f808c8433574868f9">
+    <Team id="43a35c8d613047168a9b7f2fe67da95d">
       <Name>能源动力学院</Name>
       <ShortName>二院</ShortName>
       <Category>普通队</Category>
     </Team>
-    <Team id="08bff47b36f14e0ba7f03b206e06d043">
+    <Team id="6a594177d4684a2d81b38b3318297049">
       <Name>自动化学院</Name>
       <ShortName>三院</ShortName>
       <Category>普通队</Category>
     </Team>
   </Teams>
   <EventInfos>
-    <EventInfo id="3e31dbcb90e640b88eea60e6ef3af922">
+    <EventInfo id="e855d6b531804342806d7ce9be4917f3">
       <Name>一个名次赛的例子（团队，名次制预决赛，成绩越小越好）</Name>
       <GradeInfo>
         <BetterType>Smaller</BetterType>
@@ -89,7 +90,7 @@
       <AthleteValidator>
         <EnabledCategories>学生男子</EnabledCategories>
         <EnabledRanks>甲组, 乙组, 丙组</EnabledRanks>
-        <MaxNumberPerTeam>1</MaxNumberPerTeam>
+        <NumberPerTeam min="1" max="1" />
         <PointForEveryRank>True</PointForEveryRank>
       </AthleteValidator>
       <PointInfo>
@@ -99,22 +100,22 @@
       </PointInfo>
       <EnabledTeams>航空宇航学院, 能源动力学院, 自动化学院</EnabledTeams>
       <GameInfos>
-        <GameInfo id="906815846e574960ae3021a797fc9865">
+        <GameInfo id="acdc35bf24cc415db37b07e0e9ab34b1">
           <Name>XX项目预决赛</Name>
           <Type>Finals</Type>
           <Pattern>Ranking</Pattern>
-          <Session date="2018/8/20" order="0" />
+          <Session date="2018/8/29" order="0" />
           <OrderInEvent>0</OrderInEvent>
           <OrderInSession>0</OrderInSession>
           <PlanIntervalTime>00:02:00</PlanIntervalTime>
           <PlanTimePerGroup>00:03:00</PlanTimePerGroup>
           <GroupInfo enabled="True">
-            <NumberPerGroup>8</NumberPerGroup>
+            <NumberPerGroup min="8" max="8" />
           </GroupInfo>
         </GameInfo>
       </GameInfos>
     </EventInfo>
-    <EventInfo id="ad64aa78ad57424f801aed967beaa7f6">
+    <EventInfo id="b7ca2785453d493688f2a6b7d653caa1">
       <Name>一个名次赛的例子（团队，竞标赛制小组赛+名次制决赛，成绩越大越好）</Name>
       <GradeInfo>
         <BetterType>Bigger</BetterType>
@@ -131,7 +132,7 @@
       <AthleteValidator>
         <EnabledCategories>学生男子, 教师男子</EnabledCategories>
         <EnabledRanks>甲组, 乙组, 丙组</EnabledRanks>
-        <MaxNumberPerTeam>1</MaxNumberPerTeam>
+        <NumberPerTeam min="1" max="1" />
         <PointForEveryRank>False</PointForEveryRank>
       </AthleteValidator>
       <PointInfo>
@@ -141,36 +142,36 @@
       </PointInfo>
       <EnabledTeams>航空宇航学院, 能源动力学院, 自动化学院</EnabledTeams>
       <GameInfos>
-        <GameInfo id="24b1ada2371b423ab404cbde3e58a746">
+        <GameInfo id="aad323aaec064b459b280dcd8ce5695f">
           <Name>XX项目预赛</Name>
           <Type>Preliminary</Type>
           <Pattern>Elimination</Pattern>
-          <Session date="2018/8/20" order="1" />
+          <Session date="2018/8/29" order="1" />
           <OrderInEvent>0</OrderInEvent>
           <OrderInSession>0</OrderInSession>
           <PlanIntervalTime>00:02:00</PlanIntervalTime>
           <PlanTimePerGroup>00:03:00</PlanTimePerGroup>
           <GroupInfo enabled="True">
-            <NumberPerGroup>8</NumberPerGroup>
+            <NumberPerGroup min="8" max="8" />
           </GroupInfo>
         </GameInfo>
-        <GameInfo id="c141d26d625743009d440ab6a3211d80">
+        <GameInfo id="7f37e69eb0ba487ca8802a12e19cf908">
           <Name>XX项目决赛</Name>
           <Type>Finals</Type>
           <Pattern>Ranking</Pattern>
           <NumberOfParticipants>8</NumberOfParticipants>
-          <Session date="2018/8/21" order="0" />
+          <Session date="2018/8/30" order="0" />
           <OrderInEvent>1</OrderInEvent>
           <OrderInSession>0</OrderInSession>
           <PlanIntervalTime>00:02:00</PlanIntervalTime>
           <PlanTimePerGroup>00:03:00</PlanTimePerGroup>
           <GroupInfo enabled="True">
-            <NumberPerGroup>8</NumberPerGroup>
+            <NumberPerGroup min="8" max="8" />
           </GroupInfo>
         </GameInfo>
       </GameInfos>
     </EventInfo>
-    <EventInfo id="278655fabb7f4870899a9b9fba827bb5">
+    <EventInfo id="bf6a30430cd54c8e86a637533ad6a482">
       <Name>一个名次赛的例子（个人，名次制，全部组在一起算名次）</Name>
       <GradeInfo>
         <BetterType>Smaller</BetterType>
@@ -179,7 +180,7 @@
       <AthleteValidator>
         <EnabledCategories>学生女子</EnabledCategories>
         <EnabledRanks>甲组, 乙组, 丙组</EnabledRanks>
-        <MaxNumberPerTeam>1</MaxNumberPerTeam>
+        <NumberPerTeam min="2" max="2" />
         <PointForEveryRank>True</PointForEveryRank>
       </AthleteValidator>
       <PointInfo>
@@ -189,22 +190,22 @@
       </PointInfo>
       <EnabledTeams>航空宇航学院, 能源动力学院, 自动化学院</EnabledTeams>
       <GameInfos>
-        <GameInfo id="ad2f9f045bca410c9f30eb151a9f88d6">
+        <GameInfo id="cccd0c1be390469f8ce2a527238a52f7">
           <Name>XX项目预决赛</Name>
           <Type>Finals</Type>
           <Pattern>Ranking</Pattern>
-          <Session date="2018/8/20" order="1" />
+          <Session date="2018/8/29" order="1" />
           <OrderInEvent>0</OrderInEvent>
           <OrderInSession>1</OrderInSession>
           <PlanIntervalTime>00:02:00</PlanIntervalTime>
           <PlanTimePerGroup>00:03:00</PlanTimePerGroup>
           <GroupInfo enabled="True">
-            <NumberPerGroup>8</NumberPerGroup>
+            <NumberPerGroup min="8" max="8" />
           </GroupInfo>
         </GameInfo>
       </GameInfos>
     </EventInfo>
-    <EventInfo id="07de7d31b10949d59b786bac97bed372">
+    <EventInfo id="e2a40ed8718a4c56a7bccfdaf35d57e9">
       <Name>一个名次赛的例子（个人，三轮比赛，竞标赛制 + 名次制，单组内算名次）</Name>
       <GradeInfo>
         <BetterType>Smaller</BetterType>
@@ -213,7 +214,7 @@
       <AthleteValidator>
         <EnabledCategories>学生女子, 教师女子</EnabledCategories>
         <EnabledRanks>甲组, 乙组, 丙组</EnabledRanks>
-        <MaxNumberPerTeam>1</MaxNumberPerTeam>
+        <NumberPerTeam min="1" max="1" />
         <PointForEveryRank>False</PointForEveryRank>
       </AthleteValidator>
       <PointInfo>
@@ -223,45 +224,45 @@
       </PointInfo>
       <EnabledTeams>航空宇航学院, 能源动力学院, 自动化学院</EnabledTeams>
       <GameInfos>
-        <GameInfo id="a8956bcdede8498d9c351b739e03784b">
+        <GameInfo id="8076a6520a0f41f39690fd51b43dad0e">
           <Name>XX项目预赛</Name>
           <Type>Preliminary</Type>
           <Pattern>Elimination</Pattern>
-          <Session date="2018/8/20" order="0" />
+          <Session date="2018/8/29" order="0" />
           <OrderInEvent>0</OrderInEvent>
           <OrderInSession>1</OrderInSession>
           <PlanIntervalTime>00:02:00</PlanIntervalTime>
           <PlanTimePerGroup>00:03:00</PlanTimePerGroup>
           <GroupInfo enabled="True">
-            <NumberPerGroup>8</NumberPerGroup>
+            <NumberPerGroup min="8" max="8" />
           </GroupInfo>
         </GameInfo>
-        <GameInfo id="05600ebcd9ea49909a356fa0a18ffcdd">
+        <GameInfo id="b4b46c6367d44ceaa20e08def90f6c9d">
           <Name>XX项目复赛</Name>
           <Type>SemiFinal</Type>
           <Pattern>Elimination</Pattern>
           <NumberOfParticipants>16</NumberOfParticipants>
-          <Session date="2018/8/20" order="1" />
+          <Session date="2018/8/29" order="1" />
           <OrderInEvent>1</OrderInEvent>
           <OrderInSession>2</OrderInSession>
           <PlanIntervalTime>00:02:00</PlanIntervalTime>
           <PlanTimePerGroup>00:03:00</PlanTimePerGroup>
           <GroupInfo enabled="True">
-            <NumberPerGroup>8</NumberPerGroup>
+            <NumberPerGroup min="8" max="8" />
           </GroupInfo>
         </GameInfo>
-        <GameInfo id="e2f1f296848e41089a861757fc40f14d">
+        <GameInfo id="568d837f300e42168f635d1879f9ad26">
           <Name>XX项目决赛</Name>
           <Type>Finals</Type>
           <Pattern>Ranking</Pattern>
           <NumberOfParticipants>8</NumberOfParticipants>
-          <Session date="2018/8/21" order="0" />
+          <Session date="2018/8/30" order="0" />
           <OrderInEvent>2</OrderInEvent>
           <OrderInSession>1</OrderInSession>
           <PlanIntervalTime>00:02:00</PlanIntervalTime>
           <PlanTimePerGroup>00:03:00</PlanTimePerGroup>
           <GroupInfo enabled="True">
-            <NumberPerGroup>8</NumberPerGroup>
+            <NumberPerGroup min="8" max="8" />
           </GroupInfo>
         </GameInfo>
       </GameInfos>

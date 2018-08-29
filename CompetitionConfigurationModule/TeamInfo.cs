@@ -105,7 +105,7 @@ namespace SCAS
                 {
                     throw new Exception("队伍信息的序号已经满额，无法再分配");
                 }
-                var element = new TeamInfo(teamCategory, existedId ?? Guid.NewGuid().ToString("N"), order);
+                var element = new TeamInfo(teamCategory, existedId ?? Guid.NewGuid().ToString("N"), new SSUtils.Order((Int32)order));
                 Add(element);
                 return element;
             }

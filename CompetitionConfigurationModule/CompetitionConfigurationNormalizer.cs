@@ -47,7 +47,7 @@ namespace SCAS
 
                 NormalizeCompetitionInfoFunctions = new List<NormalizeInfoFunctionType<CompetitionInfo>>
                 {
-                    NormalizeApplicationValidator,
+                    NormalizeEntryValidator,
                     NormalizePrincipalInfo,
                     NormalizePublicPointInfo,
                     NormalizeSessions,
@@ -61,7 +61,7 @@ namespace SCAS
                 {
                     NormalizeGradeInfo,
                     NormalizeTeamworkInfo,
-                    NormalizeAthleteValidator,
+                    NormalizeParticipantValidator,
                     NormalizePointInfo,
                     NormalizeEnabledTeams
                 };
@@ -214,7 +214,7 @@ namespace SCAS
                 patternNode.AppendChild(doc.CreateTextNode(gameInfo.Pattern.ToString()));
                 root.AppendChild(patternNode);
 
-                if (gameInfo.NumberOfParticipants != GameInfo.NoLimit)
+                if (gameInfo.NumberOfParticipants != SSUtils.NumberRange.NoLimit)
                 {
                     XmlElement numberNode = doc.CreateElement("NumberOfParticipants");
                     numberNode.AppendChild(doc.CreateTextNode(gameInfo.NumberOfParticipants.ToString()));
@@ -223,15 +223,15 @@ namespace SCAS
 
                 XmlElement sessionNode = doc.CreateElement("Session");
                 sessionNode.SetAttribute("date", gameInfo.GameSession.SessionDate.ToString());
-                sessionNode.SetAttribute("order", gameInfo.GameSession.OrderInDate.ToString());
+                sessionNode.SetAttribute("order", gameInfo.GameSession.OrderInDate.Value.ToString());
                 root.AppendChild(sessionNode);
 
                 XmlElement orderInEventNode = doc.CreateElement("OrderInEvent");
-                orderInEventNode.AppendChild(doc.CreateTextNode(gameInfo.OrderInEvent.ToString()));
+                orderInEventNode.AppendChild(doc.CreateTextNode(gameInfo.OrderInEvent.Value.ToString()));
                 root.AppendChild(orderInEventNode);
 
                 XmlElement orderInSessionNode = doc.CreateElement("OrderInSession");
-                orderInSessionNode.AppendChild(doc.CreateTextNode(gameInfo.OrderInSession.ToString()));
+                orderInSessionNode.AppendChild(doc.CreateTextNode(gameInfo.OrderInSession.Value.ToString()));
                 root.AppendChild(orderInSessionNode);
 
                 XmlElement planIntervalTimeNode = doc.CreateElement("PlanIntervalTime");
@@ -255,24 +255,36 @@ namespace SCAS
                 return root;
             }
 
-            private XmlElement NormalizeApplicationValidator(XmlDocument doc, CompetitionInfo outputData)
+            private XmlElement NormalizeEntryValidator(XmlDocument doc, CompetitionInfo outputData)
             {
-                EntryValidator data = outputData.CompetitionApplicationValidator;
-                XmlElement applicationValidatorNode = doc.CreateElement("ApplicationValidator");
-                applicationValidatorNode.SetAttribute("enabled", data.Enabled.ToString());
+                EntryValidator data = outputData.CompetitionEntryValidator;
+                XmlElement entryValidatorNode = doc.CreateElement("ApplicationValidator");
+                entryValidatorNode.SetAttribute("enabled", data.Enabled.ToString());
 
                 if (data.Enabled)
                 {
                     XmlElement enabledInTeamworkNode = doc.CreateElement("EnabledInTeamwork");
                     enabledInTeamworkNode.AppendChild(doc.CreateTextNode(data.EnabledInTeamwork.ToString()));
-                    applicationValidatorNode.AppendChild(enabledInTeamworkNode);
+                    entryValidatorNode.AppendChild(enabledInTeamworkNode);
 
-                    XmlElement maxApplicationNumberPerAthleteNode = doc.CreateElement("MaxApplicationNumberPerAthlete");
-                    maxApplicationNumberPerAthleteNode.AppendChild(doc.CreateTextNode(data.ApplicationNumberPerAthlete.ToString()));
-                    applicationValidatorNode.AppendChild(maxApplicationNumberPerAthleteNode);
+                    if (data.EntryNumberPerAthlete.HasRange())
+                    {
+                        XmlElement rangeNode = doc.CreateElement("EntryNumberPerAthlete");
+
+                        if (data.EntryNumberPerAthlete.Minimun != SSUtils.NumberRange.NoLimit)
+                        {
+                            rangeNode.SetAttribute("min", data.EntryNumberPerAthlete.Minimun.ToString());
+                        }
+                        if (data.EntryNumberPerAthlete.Maximun != SSUtils.NumberRange.NoLimit)
+                        {
+                            rangeNode.SetAttribute("max", data.EntryNumberPerAthlete.Maximun.ToString());
+                        }
+
+                        entryValidatorNode.AppendChild(rangeNode);
+                    }
                 }
 
-                return applicationValidatorNode;
+                return entryValidatorNode;
             }
 
             private XmlElement NormalizePrincipalInfo(XmlDocument doc, CompetitionInfo outputData)
@@ -334,7 +346,7 @@ namespace SCAS
                     {
                         XmlElement sessionNode = doc.CreateElement("Session");
                         sessionNode.SetAttribute("date", date.Key.ToString());
-                        sessionNode.SetAttribute("order", session.OrderInDate.ToString());
+                        sessionNode.SetAttribute("order", session.OrderInDate.Value.ToString());
 
                         XmlElement nameNode = doc.CreateElement("Name");
                         nameNode.AppendChild(doc.CreateTextNode(session.Name));
@@ -483,17 +495,16 @@ namespace SCAS
 
                         foreach (var range in data.RangesOfCategories)
                         {
-                            if (range.Value.Minimun != UInt32Range.NoLimit
-                                && range.Value.Maximun != UInt32Range.NoLimit)
+                            if (range.Value.HasRange())
                             {
                                 XmlElement rangeNode = doc.CreateElement("Range");
 
                                 rangeNode.SetAttribute("category", range.Key.Name);
-                                if (range.Value.Minimun != UInt32Range.NoLimit)
+                                if (range.Value.Minimun != SSUtils.NumberRange.NoLimit)
                                 {
                                     rangeNode.SetAttribute("min", range.Value.Minimun.ToString());
                                 }
-                                if (range.Value.Maximun != UInt32Range.NoLimit)
+                                if (range.Value.Maximun != SSUtils.NumberRange.NoLimit)
                                 {
                                     rangeNode.SetAttribute("max", range.Value.Maximun.ToString());
                                 }
@@ -502,16 +513,15 @@ namespace SCAS
                             }
                         }
 
-                        if (data.RangesOfTeam.Minimun != UInt32Range.NoLimit
-                            && data.RangesOfTeam.Maximun != UInt32Range.NoLimit)
+                        if (data.RangesOfTeam.HasRange())
                         {
                             XmlElement rangeNode = doc.CreateElement("TeamRange");
 
-                            if (data.RangesOfTeam.Minimun != UInt32Range.NoLimit)
+                            if (data.RangesOfTeam.Minimun != SSUtils.NumberRange.NoLimit)
                             {
                                 rangeNode.SetAttribute("min", data.RangesOfTeam.Minimun.ToString());
                             }
-                            if (data.RangesOfTeam.Maximun != UInt32Range.NoLimit)
+                            if (data.RangesOfTeam.Maximun != SSUtils.NumberRange.NoLimit)
                             {
                                 rangeNode.SetAttribute("max", data.RangesOfTeam.Maximun.ToString());
                             }
@@ -526,9 +536,9 @@ namespace SCAS
                 return teamworkNode;
             }
 
-            private XmlElement NormalizeAthleteValidator(XmlDocument doc, EventInfo outputData)
+            private XmlElement NormalizeParticipantValidator(XmlDocument doc, EventInfo outputData)
             {
-                ParticipantValidator data = outputData.EventAthleteValidator;
+                ParticipantValidator data = outputData.EventParticipantValidator;
                 XmlElement athleteValidatorNode = doc.CreateElement("AthleteValidator");
 
                 XmlElement categoriesNode = doc.CreateElement("EnabledCategories");
@@ -552,11 +562,20 @@ namespace SCAS
                     athleteValidatorNode.AppendChild(ranksNode);
                 }
 
-                if (data.NumberPerTeam != ParticipantValidator.NoLimit)
+                if (data.NumberPerTeam.HasRange())
                 {
-                    XmlElement maxNumberPerTeamNode = doc.CreateElement("MaxNumberPerTeam");
-                    maxNumberPerTeamNode.AppendChild(doc.CreateTextNode(data.NumberPerTeam.ToString()));
-                    athleteValidatorNode.AppendChild(maxNumberPerTeamNode);
+                    XmlElement rangeNode = doc.CreateElement("NumberPerTeam");
+
+                    if (data.NumberPerTeam.Minimun != SSUtils.NumberRange.NoLimit)
+                    {
+                        rangeNode.SetAttribute("min", data.NumberPerTeam.Minimun.ToString());
+                    }
+                    if (data.NumberPerTeam.Maximun != SSUtils.NumberRange.NoLimit)
+                    {
+                        rangeNode.SetAttribute("max", data.NumberPerTeam.Maximun.ToString());
+                    }
+
+                    athleteValidatorNode.AppendChild(rangeNode);
                 }
 
                 XmlElement pointForEveryRankNode = doc.CreateElement("PointForEveryRank");
@@ -606,11 +625,20 @@ namespace SCAS
                 XmlElement groupNode = doc.CreateElement("GroupInfo");
                 groupNode.SetAttribute("enabled", data.Enabled.ToString());
 
-                if (data.Enabled)
+                if (data.Enabled && data.NumberPerGroup.HasRange())
                 {
-                    XmlElement numberPerGroupNode = doc.CreateElement("NumberPerGroup");
-                    numberPerGroupNode.AppendChild(doc.CreateTextNode(data.NumberPerGroup.ToString()));
-                    groupNode.AppendChild(numberPerGroupNode);
+                    XmlElement rangeNode = doc.CreateElement("NumberPerGroup");
+
+                    if (data.NumberPerGroup.Minimun != SSUtils.NumberRange.NoLimit)
+                    {
+                        rangeNode.SetAttribute("min", data.NumberPerGroup.Minimun.ToString());
+                    }
+                    if (data.NumberPerGroup.Maximun != SSUtils.NumberRange.NoLimit)
+                    {
+                        rangeNode.SetAttribute("max", data.NumberPerGroup.Maximun.ToString());
+                    }
+
+                    groupNode.AppendChild(rangeNode);
                 }
 
                 return groupNode;

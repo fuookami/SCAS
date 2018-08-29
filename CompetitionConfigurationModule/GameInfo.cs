@@ -223,7 +223,7 @@ namespace SCAS
                     return true;
                 }
 
-                for (Int32 i = this[0].NumberOfParticipants == SSUtils.NumberRange.Nolimit ? 1 : 0,
+                for (Int32 i = this[0].NumberOfParticipants == SSUtils.NumberRange.NoLimit ? 1 : 0,
                     j = this.Count - 1; i != j; ++i)
                 {
                     if (this[i].NumberOfParticipants >= this[i + 1].NumberOfParticipants)
