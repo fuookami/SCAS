@@ -1,20 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using SCAS.CompetitionConfiguration;
 
 namespace SCAS
 {
     namespace CompetitionData
     {
-        class Point
+        public class Point
         {
             private Team team;
-            private Participator participator;
+            private Participant participant;
         }
 
-        class PointPool : List<Point>
+        public class PointPool
         {
-
+            private PointInfo conf;
+            private List<Point> points;
         }
     };
 };

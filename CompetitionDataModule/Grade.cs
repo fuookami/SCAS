@@ -17,43 +17,44 @@ namespace SCAS
                 DNS = 8
             };
 
-            private Code code;
-            private TimeSpan time;
-
-            private Participator participator;
-
             public Code GradeCode
             {
-                get { return code; }
+                get;
+                private set;
             }
 
             public TimeSpan Time
             {
-                get { return time; }
+                get;
+                private set;
             }
 
-            public Participator GradeParticipator
+            public Participant GradeParticipator
             {
-                get { return participator; }
+                get;
             }
 
-            public Grade(Participator participator)
+            public Grade(Participant participator)
             {
-                code = Code.None;
-                time = new TimeSpan();
-                this.participator = participator;
+                GradeCode = Code.None;
+                Time = new TimeSpan();
+                GradeParticipator = participator;
             }
 
             public void Set(Code code, TimeSpan time = new TimeSpan())
             {
-                this.code = code;
+                GradeCode = code;
                 if (HasTime(code))
                 {
                     if (time.TotalMilliseconds == 0)
                     {
                         throw new Exception("");
                     }
-                    this.time = time;
+                    Time = time;
+                }
+                else
+                {
+                    Time = new TimeSpan();
                 }
             }
 

@@ -5,17 +5,29 @@ namespace SCAS
 {
     namespace CompetitionData
     {
-        public struct Line
+        public class Line
         {
-            public UInt32 Order;
-            public Participator LineParticipator;
-            public Grade ParticipatorGrade;
-
-            public Line(UInt32 order, Participator participator)
+            public SSUtils.Order Order
             {
-                Order = order;
-                LineParticipator = participator;
-                ParticipatorGrade = new Grade(participator);
+                get;
+            }
+
+            public Participant LineParticipant
+            {
+                get;
+            }
+
+            public Grade ParticipatorGrade
+            {
+                get;
+                set;
+            }
+
+            public Line(UInt32 order, Participant participant)
+            {
+                Order = new SSUtils.Order((Int32)order);
+                LineParticipant = participant;
+                ParticipatorGrade = new Grade(participant);
             }
         }
 

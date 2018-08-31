@@ -6,9 +6,8 @@ namespace SCAS
 {
     namespace CompetitionData
     {
-        public class Participator
+        class Generator
         {
-            List<Athlete> athletes;
         }
     };
 };

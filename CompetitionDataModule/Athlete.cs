@@ -1,4 +1,4 @@
-﻿using System;
+﻿ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Globalization;
@@ -10,63 +10,64 @@ namespace SCAS
     {
         public class Athlete : IComparable
         {
-            private String id;
-            private String name;
-            private String sid;
-            private String code;
-
-            private AthleteCategory category;
-            private AthleteRank rank;
-
-            private Team team;
-
-            Dictionary<Event, Dictionary<Game, Grade>> grades;
-            Dictionary<Event, Point> points;
+            private AthleteCategory _category;
+            private AthleteRank _rank;
 
             public String Name
             {
-                get { return name; }
-                set { name = value; }
+                get;
+                set;
             }
 
             public String Id
             {
-                get { return id; }
+                get;
+                internal set;
             }
 
             public String Sid
             {
-                get { return sid; }
-                set { sid = value; }
+                get;
+                set;
             }
 
             public String Code
             {
-                get { return code; }
-                set { code = value; }
+                get;
+                internal set;
             }
 
             public AthleteCategory Category
             {
-                get { return category; }
+                get { return _category; }
                 set
                 {
-                    category = value ?? throw new Exception("设置的运动员类别是个无效值");
+                    _category = value ?? throw new Exception("设置的运动员类别是个无效值");
                 }
             }
 
             public AthleteRank Rank
             {
-                get { return rank; }
+                get { return _rank; }
                 set
                 {
-                    rank = value ?? throw new Exception("设置的运动员级别是个无效值");
+                    _rank = value ?? throw new Exception("设置的运动员级别是个无效值");
                 }
             }
 
             public Team BelogingTeam
             {
-                get { return team; }
+                get;
+            }
+
+            public Dictionary<Event, Dictionary<Game, Grade>> Grades
+            {
+                get;
+            }
+
+            public Dictionary<Event, Point> Points
+            {
+                get;
             }
 
             public Athlete(Team team)
@@ -76,29 +77,29 @@ namespace SCAS
 
             public Athlete(Team team, String existedId, String code = null)
             {
-                id = existedId;
-                this.code = code;
-                this.team = team;
+                Id = existedId;
+                Code = code;
+                BelogingTeam = team;
             }
 
             public int CompareTo(object obj)
             {
                 Athlete rhs = (Athlete)obj;
-                int ret = category.CompareTo(rhs.Category);
+                int ret = Category.CompareTo(rhs.Category);
                 if (ret != 0)
                 {
                     return ret;
                 }
 
-                ret = rank.CompareTo(rhs.rank);
-                return ret != 0 ? ret : name.CompareTo(rhs.Name);
+                ret = Rank.CompareTo(rhs.Rank);
+                return ret != 0 ? ret : Name.CompareTo(rhs.Name);
             }
         }
 
         public class AthletePool : Dictionary<String, Athlete>
         {
-            private Team team;
-            private String prefixCode;
+            private Team _team;
+            private String _prefixCode;
 
             static AthletePool()
             {
@@ -107,13 +108,13 @@ namespace SCAS
 
             public AthletePool(Team team, String prefixCode)
             {
-                this.team = team;
-                this.prefixCode = prefixCode;
+                this._team = team;
+                this._prefixCode = prefixCode;
             }
 
             public Athlete GenerateNewAthlete(String existedId = null)
             {
-                return new Athlete(this.team);
+                return new Athlete(this._team);
             }
 
             public void TidyUpCodes()
@@ -144,7 +145,7 @@ namespace SCAS
             {
                 for (UInt32 nextOrder = 1; nextOrder != UInt32.MaxValue; ++nextOrder)
                 {
-                    String code = String.Format("{0}{1:D2}", prefixCode, nextOrder);
+                    String code = String.Format("{0}{1:D2}", _prefixCode, nextOrder);
                     foreach (Athlete athlete in Values)
                     {
                         if (athlete.Code != code)

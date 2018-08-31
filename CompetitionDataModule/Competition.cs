@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using SCAS.CompetitionConfiguration;
 
 namespace SCAS
@@ -8,10 +7,44 @@ namespace SCAS
     {
         public class Competition
         {
-            CompetitionInfo conf;
+            public CompetitionInfo Conf
+            {
+                get;
+                private set;
+            }
 
-            List<Event> events;
-            Dictionary<Session, Game> games;
+            public Dictionary<Session, FieldInfo> FieldInfos
+            {
+                get;
+                internal set;
+            }
+
+            public List<Event> Events
+            {
+                get;
+                internal set;
+            }
+
+            public Dictionary<Session, Game> Games
+            {
+                get;
+                internal set;
+            }
+
+            public List<Team> Teams
+            {
+                get;
+                internal set;
+            }
+
+            public Competition(CompetitionInfo conf)
+            {
+                Conf = conf;
+                FieldInfos = new Dictionary<Session, FieldInfo>();
+                Events = new List<Event>();
+                Games = new Dictionary<Session, Game>();
+                Teams = new List<Team>();
+            }
         }
     };
 };
