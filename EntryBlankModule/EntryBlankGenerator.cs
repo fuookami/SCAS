@@ -8,6 +8,7 @@ namespace SCAS
     {
         class Generator
         {
+
         }
     };
 };
