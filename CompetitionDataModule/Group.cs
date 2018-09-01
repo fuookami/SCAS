@@ -33,7 +33,15 @@ namespace SCAS
 
         public class Group
         {
-            List<Line> lines;
+            public List<Line> Lines
+            {
+                get;
+            }
+
+            public Group()
+            {
+                Lines = new List<Line>();
+            }
         }
     };
 };

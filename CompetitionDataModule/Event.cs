@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using SCAS.CompetitionConfiguration;
 
 namespace SCAS
@@ -8,11 +7,36 @@ namespace SCAS
     {
         public class Event
         {
-            EventInfo conf;
-            Grade matchRecord;
+            public EventInfo Conf
+            {
+                get;
+                private set;
+            }
 
-            List<Game> games;
-            PointPool points;
+            public Grade MatchRecord
+            {
+                get;
+                set;
+            }
+
+            public List<Game> Games
+            {
+                get;
+                internal set;
+            }
+
+            public PointPool Points
+            {
+                get;
+            }
+
+            public Event(EventInfo conf, Grade matchRecord)
+            {
+                Conf = conf;
+                MatchRecord = matchRecord;
+                Games = new List<Game>();
+                Points = new PointPool(conf.EventPointInfo, this);
+            }
         }
     };
 };

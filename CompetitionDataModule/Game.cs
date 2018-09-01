@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using SCAS.CompetitionConfiguration;
 
 namespace SCAS
@@ -8,9 +7,23 @@ namespace SCAS
     {
         public class Game
         {
-            GameInfo conf;
+            public GameInfo Conf
+            {
+                get;
+                private set;
+            }
 
-            List<Group> groups;
+            public List<Group> Groups
+            {
+                get;
+                internal set;
+            }
+
+            public Game(GameInfo conf)
+            {
+                Conf = conf;
+                Groups = new List<Group>();
+            }
         }
     };
 };
