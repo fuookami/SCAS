@@ -38,6 +38,33 @@ namespace SCAS
             }
         }
 
+        public class Leader
+        {
+            public String Sid
+            {
+                get;
+                internal set;
+            }
+
+            public String Name
+            {
+                get;
+                internal set;
+            }
+
+            public String Telephone
+            {
+                get;
+                internal set;
+            }
+
+            public String EMail
+            {
+                get;
+                internal set;
+            }
+        }
+
         public class Entry
         {
             public String EventName
@@ -45,7 +72,17 @@ namespace SCAS
                 get;
             }
 
-            public List<List<Athlete>> Athletes
+            public List<Athlete> Athletes
+            {
+                get;
+            }
+
+            public Leader TeamLeader
+            {
+                get;
+            }
+
+            public List<Leader> TeamSubLeader
             {
                 get;
             }
@@ -53,7 +90,9 @@ namespace SCAS
             public Entry(String eventName)
             {
                 EventName = eventName;
-                Athletes = new List<List<Athlete>>();
+                Athletes = new List<Athlete>();
+                TeamLeader = new Leader();
+                TeamSubLeader = new List<Leader>();
             }
         }
 
@@ -67,6 +106,7 @@ namespace SCAS
             public TeamInfo Team
             {
                 get;
+                internal set;
             }
 
             public List<Athlete> Athletes
@@ -81,7 +121,19 @@ namespace SCAS
 
             public EntryBlank(CompetitionInfo conf)
             {
-                
+                Conf = conf;
+                Team = null;
+                Athletes = new List<Athlete>();
+                Entries = new List<Entry>();
+            }
+
+            public EntryBlank(CompetitionInfo conf, String teamId)
+            {
+                Conf = conf;
+                TeamInfo temp = conf.TeamInfos.Find((element) => element.Id == teamId);
+                Team = temp ?? throw new Exception("没有该ID对应的队伍");
+                Athletes = new List<Athlete>();
+                Entries = new List<Entry>();
             }
         };
     };
