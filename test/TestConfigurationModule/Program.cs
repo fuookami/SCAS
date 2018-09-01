@@ -60,10 +60,19 @@ namespace TestConfigurationModule
 
             ret.Field = "某游泳馆";
 
-            ret.AthleteCategories.GenerateNewCategory().Name = "学生男子";
-            ret.AthleteCategories.GenerateNewCategory().Name = "学生女子";
-            ret.AthleteCategories.GenerateNewCategory().Name = "教师男子";
-            ret.AthleteCategories.GenerateNewCategory().Name = "教师女子";
+            AthleteCategory category = null;
+            category = ret.AthleteCategories.GenerateNewCategory();
+            category.Name = "学生男子";
+            category.SidKey = "学号";
+            category = ret.AthleteCategories.GenerateNewCategory();
+            category.Name = "学生女子";
+            category.SidKey = "学号";
+            category = ret.AthleteCategories.GenerateNewCategory();
+            category.Name = "教师男子";
+            category.SidKey = "工号";
+            category = ret.AthleteCategories.GenerateNewCategory();
+            category.Name = "教师女子";
+            category.SidKey = "工号";
 
             ret.CompetitionRankInfo.Enabled = true;
             ret.CompetitionRankInfo.AthleteRanks.GenerateNewRank().Name = "甲组";

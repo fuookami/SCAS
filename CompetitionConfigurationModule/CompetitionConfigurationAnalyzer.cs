@@ -384,6 +384,7 @@ namespace SCAS
                 foreach (XmlElement categoryNode in categoryNodes)
                 {
                     AthleteCategory newCategory = athleteCategories.GenerateNewCategory(categoryNode.GetAttribute("id"));
+                    newCategory.SidKey = categoryNode.GetAttribute("sidKey");
                     newCategory.Name = categoryNode.InnerText;
                 }
 

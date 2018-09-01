@@ -25,6 +25,12 @@ namespace SCAS
                 set;
             }
 
+            public String SidKey
+            {
+                get;
+                set;
+            }
+
             public AthleteCategory()
                 : this(Guid.NewGuid().ToString("N"), new SSUtils.Order())
             {

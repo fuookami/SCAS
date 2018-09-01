@@ -376,6 +376,7 @@ namespace SCAS
                 {
                     XmlElement categoryNode = doc.CreateElement("AthleteCategory");
                     categoryNode.SetAttribute("id", category.Id);
+                    categoryNode.SetAttribute("sidKey", category.SidKey);
                     categoryNode.AppendChild(doc.CreateTextNode(category.Name));
                     athleteCategoriesNode.AppendChild(categoryNode);
                 }
