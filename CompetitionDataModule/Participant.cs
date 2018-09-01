@@ -24,6 +24,12 @@ namespace SCAS
                 private set;
             }
 
+            public Grade ParticipantGrade
+            {
+                get;
+                set;
+            }
+
             public Participant(Team team, List<Athlete> athletesInOrder)
             {
                 ParticipantTeam = team;
