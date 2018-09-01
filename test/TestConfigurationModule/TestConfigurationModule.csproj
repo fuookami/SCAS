@@ -7,7 +7,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\CompetitionConfigurationModule\CompetitionConfigurationModule.csproj" />
-    <ProjectReference Include="..\..\PublicModule\PublicModule.csproj" />
   </ItemGroup>
 
 </Project>

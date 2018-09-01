@@ -16,35 +16,33 @@ namespace SCAS
 
             private delegate bool AnalyzeNodeFunctionType<T>(XmlElement parent, T data);
 
-            private Boolean faultTolerant;
-            private InputType inputType;
-            private CompetitionInfo result;
             private readonly List<AnalyzeNodeFunctionType<CompetitionInfo>> AnalyzeCompetitionInfoFunctions;
             private readonly List<AnalyzeNodeFunctionType<EventInfo>> AnalyzeEventInfoFunctions;
             private readonly List<AnalyzeNodeFunctionType<GameInfo>> AnalyzeGameInfoFunctions;
 
             public Boolean FaultTolerant
             {
-                get { return faultTolerant; }
-                set { faultTolerant = value; }
+                get;
+                set;
             }
 
             public InputType DataInputType
             {
-                get { return inputType; }
-                set { inputType = value; }
+                get;
+                set;
             }
 
             public CompetitionInfo Result
             {
-                get { return result; }
+                get;
+                private set;
             }
 
             public Analyzer(Boolean beFaultTolerant = false, InputType dataInputType = InputType.File)
             {
-                faultTolerant = beFaultTolerant;
-                inputType = dataInputType;
-                result = null;
+                FaultTolerant = beFaultTolerant;
+                DataInputType = dataInputType;
+                Result = null;
 
                 AnalyzeCompetitionInfoFunctions = new List<AnalyzeNodeFunctionType<CompetitionInfo>>
                 {
@@ -75,7 +73,7 @@ namespace SCAS
 
             public bool Analyze(String data)
             {
-                switch (inputType)
+                switch (DataInputType)
                 {
                     case InputType.Binary:
                         return AnalyzeFromBinary(data);
@@ -128,6 +126,9 @@ namespace SCAS
                     XmlElement isTemplateNode = (XmlElement)root.GetElementsByTagName("Template")[0];
                     temp.BeTemplate = Boolean.Parse(isTemplateNode.InnerText);
 
+                    XmlElement entryClosingDateNode = (XmlElement)root.GetElementsByTagName("EntryClosingDate")[0];
+                    temp.EntryClosingDate = Date.Parse(entryClosingDateNode.InnerText);
+
                     XmlElement fieldNode = (XmlElement)root.GetElementsByTagName("Field")[0];
                     temp.Field = fieldNode.InnerText;
 
@@ -161,7 +162,7 @@ namespace SCAS
                     }
                 }
 
-                result = temp;
+                Result = temp;
                 return true;
             }
 

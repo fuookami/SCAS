@@ -10,21 +10,21 @@ namespace SCAS
         {
             private delegate XmlElement NormalizeInfoFunctionType<T>(XmlDocument doc, T outputData);
 
-            private CompetitionInfo outputData;
-            private XmlDocument docData;
-            private String binaryData;
+            private CompetitionInfo _outputData;
+            private XmlDocument _docData;
+            private String _binaryData;
             private readonly List<NormalizeInfoFunctionType<CompetitionInfo>> NormalizeCompetitionInfoFunctions;
             private readonly List<NormalizeInfoFunctionType<EventInfo>> NormalizeEventInfoFunctions;
             private readonly List<NormalizeInfoFunctionType<GameInfo>> NormalizeGameInfoFunctions;
 
             public CompetitionInfo Data
             {
-                get { return outputData; }
+                get { return _outputData; }
                 set
                 {
-                    outputData = value;
-                    docData = null;
-                    binaryData = null;
+                    _outputData = value ?? throw new Exception("设置的要输出的比赛信息是个无效值");
+                    _docData = null;
+                    _binaryData = null;
                 }
             }
 
@@ -32,18 +32,18 @@ namespace SCAS
             {
                 get
                 {
-                    if (binaryData == null && docData != null)
+                    if (_binaryData == null && _docData != null)
                     {
-                        binaryData = docData.ToString();
+                        _binaryData = _docData.ToString();
                     }
-                    return binaryData;
+                    return _binaryData;
                 }
             }
 
             public Normalizer(CompetitionInfo data)
             {
-                outputData = data;
-                binaryData = "";
+                _outputData = data;
+                _binaryData = "";
 
                 NormalizeCompetitionInfoFunctions = new List<NormalizeInfoFunctionType<CompetitionInfo>>
                 {
@@ -74,7 +74,7 @@ namespace SCAS
 
             public bool Normalize()
             {
-                if (docData != null)
+                if (_docData != null)
                 {
                     return true;
                 }
@@ -83,52 +83,56 @@ namespace SCAS
                 XmlElement root = doc.CreateElement("SCASCompetitionConfiguration");
 
                 {
-                    root.SetAttribute("id", outputData.Id);
+                    root.SetAttribute("id", _outputData.Id);
 
                     XmlElement nameNode = doc.CreateElement("Name");
-                    nameNode.AppendChild(doc.CreateTextNode(outputData.Name));
+                    nameNode.AppendChild(doc.CreateTextNode(_outputData.Name));
                     root.AppendChild(nameNode);
 
                     XmlElement subNameNode = doc.CreateElement("SubName");
-                    subNameNode.AppendChild(doc.CreateTextNode(outputData.SubName));
+                    subNameNode.AppendChild(doc.CreateTextNode(_outputData.SubName));
                     root.AppendChild(subNameNode);
 
                     XmlElement versionNode = doc.CreateElement("Version");
-                    versionNode.AppendChild(doc.CreateTextNode(outputData.Version));
+                    versionNode.AppendChild(doc.CreateTextNode(_outputData.Version));
                     root.AppendChild(versionNode);
 
                     XmlElement identifierNode = doc.CreateElement("Identifier");
-                    identifierNode.AppendChild(doc.CreateTextNode(outputData.Identifier));
+                    identifierNode.AppendChild(doc.CreateTextNode(_outputData.Identifier));
                     root.AppendChild(identifierNode);
 
                     XmlElement orderNode = doc.CreateElement("Order");
-                    orderNode.AppendChild(doc.CreateTextNode(outputData.Order.ToString()));
+                    orderNode.AppendChild(doc.CreateTextNode(_outputData.Order.ToString()));
                     root.AppendChild(orderNode);
 
                     XmlElement beTemplateNode = doc.CreateElement("Template");
-                    beTemplateNode.AppendChild(doc.CreateTextNode(outputData.BeTemplate.ToString()));
+                    beTemplateNode.AppendChild(doc.CreateTextNode(_outputData.BeTemplate.ToString()));
                     root.AppendChild(beTemplateNode);
 
+                    XmlElement entryClosingDate = doc.CreateElement("EntryClosingDate");
+                    entryClosingDate.AppendChild(doc.CreateTextNode(_outputData.EntryClosingDate.ToString()));
+                    root.AppendChild(entryClosingDate);
+
                     XmlElement fieldNode = doc.CreateElement("Field");
-                    fieldNode.AppendChild(doc.CreateTextNode(outputData.Field.ToString()));
+                    fieldNode.AppendChild(doc.CreateTextNode(_outputData.Field.ToString()));
                     root.AppendChild(fieldNode);
 
                     XmlElement displayBeginLineNode = doc.CreateElement("DisplayBeginLine");
-                    displayBeginLineNode.AppendChild(doc.CreateTextNode(outputData.DisplayBeginLine.ToString()));
+                    displayBeginLineNode.AppendChild(doc.CreateTextNode(_outputData.DisplayBeginLine.ToString()));
                     root.AppendChild(displayBeginLineNode);
 
                     XmlElement numberOfDisplayLinesNode = doc.CreateElement("NumberOfDisplayLines");
-                    numberOfDisplayLinesNode.AppendChild(doc.CreateTextNode(outputData.NumberOfDisplayLines.ToString()));
+                    numberOfDisplayLinesNode.AppendChild(doc.CreateTextNode(_outputData.NumberOfDisplayLines.ToString()));
                     root.AppendChild(numberOfDisplayLinesNode);
 
                     XmlElement useLinesNode = doc.CreateElement("UseLines");
-                    useLinesNode.AppendChild(doc.CreateTextNode(String.Join(", ", outputData.UseLines)));
+                    useLinesNode.AppendChild(doc.CreateTextNode(String.Join(", ", _outputData.UseLines)));
                     root.AppendChild(useLinesNode);
                 }
 
                 foreach (var normalizeFunction in NormalizeCompetitionInfoFunctions)
                 {
-                    XmlElement node = normalizeFunction(doc, outputData);
+                    XmlElement node = normalizeFunction(doc, _outputData);
                     if (node == null)
                     {
                         return false;
@@ -137,7 +141,7 @@ namespace SCAS
                 }
 
                 XmlElement eventInfosNode = doc.CreateElement("EventInfos");
-                foreach (var eventInfo in outputData.EventInfos)
+                foreach (var eventInfo in _outputData.EventInfos)
                 {
                     XmlElement node = NormalizeEventInfo(doc, eventInfo);
                     if (node == null)
@@ -149,17 +153,17 @@ namespace SCAS
                 root.AppendChild(eventInfosNode);
 
                 doc.AppendChild(root);
-                docData = doc;
+                _docData = doc;
                 return true;
             }
 
             public bool NormalizeToFile(String url)
             {
-                if (docData == null && !Normalize())
+                if (_docData == null && !Normalize())
                 {
                     return false;
                 }
-                docData.Save(url);
+                _docData.Save(url);
                 return true;
             }
 

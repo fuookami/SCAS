@@ -24,6 +24,7 @@ namespace TestConfigurationModule
             ret.SubName = "暨某游泳比赛";
             ret.Version = "某年某比赛第某版本（测试）";
             ret.Identifier = "给自己看的标识符/标签之类的";
+            ret.EntryClosingDate = new Date(2018, 10, 14);
 
             ret.CompetitionEntryValidator.SetEnabled(2);
             ret.CompetitionEntryValidator.SetEnabledInTeamwork();

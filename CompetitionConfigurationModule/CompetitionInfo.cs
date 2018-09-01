@@ -53,6 +53,12 @@ namespace SCAS
                 set;
             }
 
+            public Date EntryClosingDate
+            {
+                get;
+                set;
+            }
+
             public EntryValidator CompetitionEntryValidator
             {
                 get;
@@ -169,6 +175,7 @@ namespace SCAS
             {
                 Id = existedId;
                 BeTemplate = false;
+                EntryClosingDate = new Date();
 
                 CompetitionEntryValidator = new EntryValidator();
                 CompetitionPrincipalInfo = new PrincipalInfo();
