@@ -465,6 +465,24 @@ namespace SCAS
                     XmlElement shortNameNode = (XmlElement)teamNode.GetElementsByTagName("ShortName")[0];
                     newTeam.Name = nameNode.InnerText;
                     newTeam.ShortName = shortNameNode.InnerText;
+
+                    XmlNodeList subLeaderNodes = teamNode.GetElementsByTagName("SubLeaderNumber");
+                    if (subLeaderNodes.Count != 0)
+                    {
+                        XmlElement subLeaderNode = (XmlElement)subLeaderNodes[0];
+
+                        UInt32 min = SSUtils.NumberRange.NoLimit;
+                        UInt32 max = SSUtils.NumberRange.NoLimit;
+                        if (subLeaderNode.HasAttribute("min"))
+                        {
+                            min = UInt32.Parse(subLeaderNode.GetAttribute("min"));
+                        }
+                        if (subLeaderNode.HasAttribute("max"))
+                        {
+                            max = UInt32.Parse(subLeaderNode.GetAttribute("max"));
+                        }
+                        newTeam.SubLeaderNumber.Set(min, max);
+                    }
                 }
 
                 return true;

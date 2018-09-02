@@ -444,6 +444,20 @@ namespace SCAS
                     nameNode.AppendChild(doc.CreateTextNode(team.Name));
                     teamNode.AppendChild(nameNode);
 
+                    if (team.SubLeaderNumber.Minimun != SSUtils.NumberRange.NoLimit
+                        && team.SubLeaderNumber.Maximun != SSUtils.NumberRange.NoLimit)
+                    {
+                        XmlElement subLeaderNumberNode = doc.CreateElement("SubLeaderNumber");
+                        if (team.SubLeaderNumber.Minimun != SSUtils.NumberRange.NoLimit)
+                        {
+                            subLeaderNumberNode.SetAttribute("min", team.SubLeaderNumber.Minimun.ToString());
+                        }
+                        if (team.SubLeaderNumber.Maximun != SSUtils.NumberRange.NoLimit)
+                        {
+                            subLeaderNumberNode.SetAttribute("max", team.SubLeaderNumber.Minimun.ToString());
+                        }
+                    }
+
                     XmlElement shortNameNode = doc.CreateElement("ShortName");
                     shortNameNode.AppendChild(doc.CreateTextNode(team.ShortName));
                     teamNode.AppendChild(shortNameNode);

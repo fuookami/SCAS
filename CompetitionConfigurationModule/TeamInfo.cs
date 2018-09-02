@@ -21,6 +21,11 @@ namespace SCAS
                 internal set;
             }
 
+            public SSUtils.NumberRange SubLeaderNumber
+            {
+                get;
+            }
+
             public String ShortName
             {
                 get;
@@ -59,6 +64,7 @@ namespace SCAS
             {
                 Id = existedId;
                 Order = distributiveOrder;
+                SubLeaderNumber = new SSUtils.NumberRange(1, 1);
                 _category = teamCategory;
             }
         }
