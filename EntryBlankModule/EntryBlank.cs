@@ -29,11 +29,23 @@ namespace SCAS
                 set;
             }
 
-            public Athlete(String sid, String name, String type, String rank = "")
+            public bool Optional
+            {
+                get;
+                internal set;
+            }
+
+            internal Athlete(bool optional = false)
+            {
+                Optional = optional;
+            }
+
+            internal Athlete(String sid, String name, String type, bool optional = false, String rank = "")
             {
                 Sid = sid;
                 Name = name;
                 Type = type;
+                Optional = optional;
                 Rank = rank;
             }
         }
@@ -63,36 +75,44 @@ namespace SCAS
                 get;
                 internal set;
             }
+
+            public bool Optional
+            {
+                get;
+                internal set;
+            }
+
+            internal Leader(bool optional = false)
+            {
+                Optional = optional;
+            }
+
+            internal Leader(String sid, String name, String telephone, String email, bool optional = false)
+            {
+                Sid = sid;
+                Name = name;
+                Telephone = telephone;
+                EMail = email;
+                Optional = optional;
+            }
         }
 
         public class Entry
         {
-            public String EventName
+            public EventInfo Conf
             {
                 get;
             }
 
-            public List<Athlete> Athletes
+            public List<KeyValuePair<String, List<Athlete>>> Athletes
             {
                 get;
             }
 
-            public Leader TeamLeader
+            internal Entry(EventInfo conf)
             {
-                get;
-            }
-
-            public List<Leader> TeamSubLeader
-            {
-                get;
-            }
-
-            public Entry(String eventName)
-            {
-                EventName = eventName;
-                Athletes = new List<Athlete>();
-                TeamLeader = new Leader();
-                TeamSubLeader = new List<Leader>();
+                Conf = conf;
+                Athletes = new List<KeyValuePair<String, List<Athlete>>>();
             }
         }
 
@@ -109,7 +129,17 @@ namespace SCAS
                 internal set;
             }
 
-            public List<Athlete> Athletes
+            public Leader TeamLeader
+            {
+                get;
+            }
+
+            public List<Leader> TeamSubLeader
+            {
+                get;
+            }
+
+            public Leader TeamCoach
             {
                 get;
             }
@@ -119,19 +149,29 @@ namespace SCAS
                 get;
             }
 
-            public EntryBlank(CompetitionInfo conf)
+            public List<Athlete> Athletes
+            {
+                get;
+            }
+
+            internal EntryBlank(CompetitionInfo conf)
             {
                 Conf = conf;
                 Team = null;
+                TeamLeader = new Leader();
+                TeamCoach = new Leader();
+                TeamSubLeader = new List<Leader>();
                 Athletes = new List<Athlete>();
                 Entries = new List<Entry>();
             }
 
-            public EntryBlank(CompetitionInfo conf, String teamId)
+            internal EntryBlank(CompetitionInfo conf, String teamId)
             {
                 Conf = conf;
-                TeamInfo temp = conf.TeamInfos.Find((element) => element.Id == teamId);
-                Team = temp ?? throw new Exception("没有该ID对应的队伍");
+                Team = conf.TeamInfos.Find((element) => element.Id == teamId) ?? throw new Exception("没有该ID对应的队伍");
+                TeamLeader = new Leader();
+                TeamCoach = new Leader();
+                TeamSubLeader = new List<Leader>();
                 Athletes = new List<Athlete>();
                 Entries = new List<Entry>();
             }

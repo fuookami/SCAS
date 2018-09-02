@@ -21,7 +21,7 @@ namespace TestEntryBlankModule
             SCAS.CompetitionConfiguration.CompetitionInfo competitionInfo = analyzer.Result;
 
             SCAS.EntryBlank.Generator generator = new SCAS.EntryBlank.Generator(competitionInfo);
-            if (generator.Generate())
+            if (generator.Generate("test.xlsx"))
             {
                 Console.WriteLine("OK to generate entry blank.");
             }
