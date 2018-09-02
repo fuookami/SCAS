@@ -562,6 +562,28 @@ namespace SCAS
                                 return false;
                             }
                         }
+
+                        XmlNodeList orderNodes = teamworkNode.GetElementsByTagName("Order");
+                        if (orderNodes.Count != 0)
+                        {
+                            XmlElement orderNode = (XmlElement)orderNodes[0];
+
+                            var orders = orderNode.InnerText.Split(new char[] { ',', ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                            List<AthleteCategory> order = new List<AthleteCategory>();
+
+                            foreach (var orderName in orders)
+                            {
+                                var category = data.Competition.AthleteCategories.Find(element => element.Name == orderName);
+                                if (category == null)
+                                {
+                                    return false;
+                                }
+
+                                order.Add(category);
+                            }
+
+                            ret.SetInOrder(order);
+                        }
                     }
                 }
                 

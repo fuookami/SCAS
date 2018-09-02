@@ -4,27 +4,27 @@ namespace SCAS
 {
     public enum ErrorCode
     {
-        None
+        None,
+        MismatchedFileExtension
     };
 
     public class ErrorStorer
     {
-        private ErrorCode lastErrorCode;
-        private String lastError;
-
         public ErrorCode LastErrorCode
         {
-            get { return lastErrorCode; }
+            get;
+            private set;
         }
 
         public String LastError
         {
-            get { return lastError; }
+            get;
+            private set;
         }
 
         public ErrorStorer()
         {
-            lastErrorCode = ErrorCode.None;
+            LastErrorCode = ErrorCode.None;
         }
 
         public void Refresh()
@@ -34,8 +34,8 @@ namespace SCAS
 
         protected void RefreshError(ErrorCode code, String text = "")
         {
-            lastErrorCode = code;
-            lastError = String.Format("error {0}({1}): {2}", (int)code, code.ToString(), text);
+            LastErrorCode = code;
+            LastError = String.Format("error {0}({1}): {2}", (int)code, code.ToString(), text);
         }
     };
 };

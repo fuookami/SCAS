@@ -536,6 +536,21 @@ namespace SCAS
 
                         teamworkNode.AppendChild(numberNode);
                     }
+
+                    if (data.BeInOrder)
+                    {
+                        XmlElement orderNode = doc.CreateElement("Order");
+
+                        List<String> orders = new List<String>();
+                        foreach (var category in data.Order)
+                        {
+                            orders.Add(category.Name);
+                        }
+
+                        orderNode.AppendChild(doc.CreateTextNode(String.Join(", ", orders)));
+
+                        teamworkNode.AppendChild(orderNode);
+                    }
                 }
 
                 return teamworkNode;

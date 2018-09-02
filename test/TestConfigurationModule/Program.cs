@@ -299,10 +299,22 @@ namespace TestConfigurationModule
 
             ret.EventTeamworkInfo.SetIsNotTeamwork();
 
+            var category1 = parent.AthleteCategories.Find((element) => element.Name == "学生女子");
+            var category2 = parent.AthleteCategories.Find((element) => element.Name == "教师女子");
+            ret.EventTeamworkInfo.SetNeedEveryPerson();
+            ret.EventTeamworkInfo.RangesOfCategories.Add(category1, new NumberRange(4, 4));
+            ret.EventTeamworkInfo.RangesOfCategories.Add(category2, new NumberRange(4, 4));
+            ret.EventTeamworkInfo.RangesOfTeam.Set(8, 8);
+            ret.EventTeamworkInfo.SetInOrder(new List<AthleteCategory>
+            {
+                category1, category2, category1, category2, category1, category2, category1, category2
+            });
+
             ret.EventParticipantValidator.Categories.AddRange(parent.AthleteCategories.FindAll((element) =>
             {
                 return element.Name == "学生女子" || element.Name == "教师女子";
             }));
+
             foreach (var rank in parent.CompetitionRankInfo.AthleteRanks)
             {
                 ret.EventParticipantValidator.Ranks.Add(rank);
