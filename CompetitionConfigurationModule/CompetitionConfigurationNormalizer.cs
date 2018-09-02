@@ -113,19 +113,23 @@ namespace SCAS
                     entryClosingDate.AppendChild(doc.CreateTextNode(_outputData.EntryClosingDate.ToString()));
                     root.AppendChild(entryClosingDate);
                     
-                    if (_outputData.SubLeaderNumber.Minimun != SSUtils.NumberRange.NoLimit
-                        && _outputData.SubLeaderNumber.Maximun != SSUtils.NumberRange.NoLimit)
+                    if (_outputData.NumberOfSubLeader.Minimun != SSUtils.NumberRange.NoLimit
+                        && _outputData.NumberOfSubLeader.Maximun != SSUtils.NumberRange.NoLimit)
                     {
-                        XmlElement subLeaderNumberNode = doc.CreateElement("SubLeaderNumber");
-                        if (_outputData.SubLeaderNumber.Minimun != SSUtils.NumberRange.NoLimit)
+                        XmlElement subLeaderNumberNode = doc.CreateElement("NumberOfSubLeader");
+                        if (_outputData.NumberOfSubLeader.Minimun != SSUtils.NumberRange.NoLimit)
                         {
-                            subLeaderNumberNode.SetAttribute("min", _outputData.SubLeaderNumber.Minimun.ToString());
+                            subLeaderNumberNode.SetAttribute("min", _outputData.NumberOfSubLeader.Minimun.ToString());
                         }
-                        if (_outputData.SubLeaderNumber.Maximun != SSUtils.NumberRange.NoLimit)
+                        if (_outputData.NumberOfSubLeader.Maximun != SSUtils.NumberRange.NoLimit)
                         {
-                            subLeaderNumberNode.SetAttribute("max", _outputData.SubLeaderNumber.Minimun.ToString());
+                            subLeaderNumberNode.SetAttribute("max", _outputData.NumberOfSubLeader.Minimun.ToString());
                         }
                     }
+
+                    XmlElement coachOptionalNode = doc.CreateElement("CoachOptional");
+                    coachOptionalNode.AppendChild(doc.CreateTextNode(_outputData.CoachOptional.ToString()));
+                    root.AppendChild(coachOptionalNode);
 
                     XmlElement fieldNode = doc.CreateElement("Field");
                     fieldNode.AppendChild(doc.CreateTextNode(_outputData.Field.ToString()));

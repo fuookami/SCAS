@@ -59,9 +59,15 @@ namespace SCAS
                 set;
             }
 
-            public SSUtils.NumberRange SubLeaderNumber
+            public SSUtils.NumberRange NumberOfSubLeader
             {
                 get;
+            }
+
+            public Boolean CoachOptional
+            {
+                get;
+                set;
             }
 
             public EntryValidator CompetitionEntryValidator
@@ -181,7 +187,8 @@ namespace SCAS
                 Id = existedId;
                 BeTemplate = false;
                 EntryClosingDate = new Date();
-                SubLeaderNumber = new SSUtils.NumberRange(1, 1);
+                NumberOfSubLeader = new SSUtils.NumberRange(1, 2);
+                CoachOptional = false;
 
                 CompetitionEntryValidator = new EntryValidator();
                 CompetitionPrincipalInfo = new PrincipalInfo();

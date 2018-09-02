@@ -129,7 +129,7 @@ namespace SCAS
                     XmlElement entryClosingDateNode = (XmlElement)root.GetElementsByTagName("EntryClosingDate")[0];
                     temp.EntryClosingDate = Date.Parse(entryClosingDateNode.InnerText);
 
-                    XmlNodeList subLeaderNodes = root.GetElementsByTagName("SubLeaderNumber");
+                    XmlNodeList subLeaderNodes = root.GetElementsByTagName("NumberOfSubLeader");
                     if (subLeaderNodes.Count != 0)
                     {
                         XmlElement subLeaderNode = (XmlElement)subLeaderNodes[0];
@@ -144,8 +144,11 @@ namespace SCAS
                         {
                             max = UInt32.Parse(subLeaderNode.GetAttribute("max"));
                         }
-                        temp.SubLeaderNumber.Set(min, max);
+                        temp.NumberOfSubLeader.Set(min, max);
                     }
+
+                    XmlElement coachOptionalNode = (XmlElement)root.GetElementsByTagName("CoachOptional")[0];
+                    temp.CoachOptional = Boolean.Parse(coachOptionalNode.InnerText);
 
                     XmlElement fieldNode = (XmlElement)root.GetElementsByTagName("Field")[0];
                     temp.Field = fieldNode.InnerText;
