@@ -27,7 +27,6 @@ namespace TestConfigurationModule
             ret.EntryClosingDate = new Date(2018, 10, 14);
 
             ret.CompetitionEntryValidator.SetEnabled(2);
-            ret.CompetitionEntryValidator.SetEnabledInTeamwork();
 
             ret.CompetitionPrincipalInfo.Name = "负责人的姓名";
             ret.CompetitionPrincipalInfo.Telephone = "负责人的手机";

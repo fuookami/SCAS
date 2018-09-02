@@ -112,6 +112,20 @@ namespace SCAS
                     XmlElement entryClosingDate = doc.CreateElement("EntryClosingDate");
                     entryClosingDate.AppendChild(doc.CreateTextNode(_outputData.EntryClosingDate.ToString()));
                     root.AppendChild(entryClosingDate);
+                    
+                    if (_outputData.SubLeaderNumber.Minimun != SSUtils.NumberRange.NoLimit
+                        && _outputData.SubLeaderNumber.Maximun != SSUtils.NumberRange.NoLimit)
+                    {
+                        XmlElement subLeaderNumberNode = doc.CreateElement("SubLeaderNumber");
+                        if (_outputData.SubLeaderNumber.Minimun != SSUtils.NumberRange.NoLimit)
+                        {
+                            subLeaderNumberNode.SetAttribute("min", _outputData.SubLeaderNumber.Minimun.ToString());
+                        }
+                        if (_outputData.SubLeaderNumber.Maximun != SSUtils.NumberRange.NoLimit)
+                        {
+                            subLeaderNumberNode.SetAttribute("max", _outputData.SubLeaderNumber.Minimun.ToString());
+                        }
+                    }
 
                     XmlElement fieldNode = doc.CreateElement("Field");
                     fieldNode.AppendChild(doc.CreateTextNode(_outputData.Field.ToString()));
@@ -443,20 +457,6 @@ namespace SCAS
                     XmlElement nameNode = doc.CreateElement("Name");
                     nameNode.AppendChild(doc.CreateTextNode(team.Name));
                     teamNode.AppendChild(nameNode);
-
-                    if (team.SubLeaderNumber.Minimun != SSUtils.NumberRange.NoLimit
-                        && team.SubLeaderNumber.Maximun != SSUtils.NumberRange.NoLimit)
-                    {
-                        XmlElement subLeaderNumberNode = doc.CreateElement("SubLeaderNumber");
-                        if (team.SubLeaderNumber.Minimun != SSUtils.NumberRange.NoLimit)
-                        {
-                            subLeaderNumberNode.SetAttribute("min", team.SubLeaderNumber.Minimun.ToString());
-                        }
-                        if (team.SubLeaderNumber.Maximun != SSUtils.NumberRange.NoLimit)
-                        {
-                            subLeaderNumberNode.SetAttribute("max", team.SubLeaderNumber.Minimun.ToString());
-                        }
-                    }
 
                     XmlElement shortNameNode = doc.CreateElement("ShortName");
                     shortNameNode.AppendChild(doc.CreateTextNode(team.ShortName));

@@ -59,6 +59,11 @@ namespace SCAS
                 set;
             }
 
+            public SSUtils.NumberRange SubLeaderNumber
+            {
+                get;
+            }
+
             public EntryValidator CompetitionEntryValidator
             {
                 get;
@@ -176,6 +181,7 @@ namespace SCAS
                 Id = existedId;
                 BeTemplate = false;
                 EntryClosingDate = new Date();
+                SubLeaderNumber = new SSUtils.NumberRange(1, 1);
 
                 CompetitionEntryValidator = new EntryValidator();
                 CompetitionPrincipalInfo = new PrincipalInfo();
