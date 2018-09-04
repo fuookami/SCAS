@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using SCAS.CompetitionConfiguration;
 
 namespace SCAS
@@ -63,9 +65,24 @@ namespace SCAS
 
                     foreach (var eventConf in _conf.EventInfos)
                     {
-                        Entry entry = new Entry(eventConf);
-
-                        temp.Entries.Add(entry);
+                        if (!eventConf.EventTeamworkInfo.BeTeamwork)
+                        {
+                            var entry = GeneratePersonalEntry(eventConf);
+                            if (entry == null)
+                            {
+                                return false;
+                            }
+                            temp.PersonalEntries.Add(entry);
+                        }
+                        else
+                        {
+                            var entry = GenerateTeamworkEntry(eventConf);
+                            if (entry == null)
+                            {
+                                return false;
+                            }
+                            temp.TeamworkEntries.Add(entry);
+                        }
                     }
 
                     Result = temp;
@@ -84,6 +101,49 @@ namespace SCAS
                 }
 
                 return true;
+            }
+
+            private PersonalEntry GeneratePersonalEntry(EventInfo eventConf)
+            {
+                PersonalEntry entry = new PersonalEntry(eventConf);
+
+                UInt32 number = eventConf.EventParticipantValidator.NumberPerTeam.Maximun != SSUtils.NumberRange.NoLimit ?
+                                eventConf.EventParticipantValidator.NumberPerTeam.Maximun : 5;
+
+                List<String> categoryNames = new List<String>();
+                List<String> sidKeys = new List<String>();
+                foreach (var category in entry.Conf.EventParticipantValidator.Categories)
+                {
+                    categoryNames.Add(category.Name);
+                    sidKeys.Add(category.SidKey);
+                }
+                String categoryNamesString = String.Join("/", categoryNames.Distinct().ToList());
+                String sidKeysString = String.Join("/", sidKeys.Distinct().ToList());
+
+                for (UInt32 i = 0; i != number; ++i)
+                {
+                    Athlete athlete = new Athlete(false);
+                    if (eventConf.EventParticipantValidator.NumberPerTeam.Minimun != SSUtils.NumberRange.NoLimit
+                        && i >= eventConf.EventParticipantValidator.NumberPerTeam.Minimun)
+                    {
+                        athlete.Optional = true;
+                    }
+
+                    entry.Items.Add(new EntryItem {
+                        Key = athlete.Optional ? (categoryNamesString + "(可选)") : categoryNamesString,
+                        SidKey = sidKeysString,
+                        Value = athlete
+                    });
+                }
+
+                return entry;
+            }
+
+            private TeamworkEntry GenerateTeamworkEntry(EventInfo eventConf)
+            {
+                TeamworkEntry entry = new TeamworkEntry(eventConf);
+
+                return entry;
             }
         }
     };

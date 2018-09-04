@@ -139,7 +139,7 @@ namespace TestConfigurationModule
 
             ret.EventTeamworkInfo.SetNeedEveryPerson();
             ret.EventTeamworkInfo.BeMultiRank = true;
-            ret.EventTeamworkInfo.RangesOfCategories.Add(parent.AthleteCategories.Find((element) => element.Name == "学生男子"), new NumberRange(4, 4));
+            ret.EventTeamworkInfo.RangesOfCategories.Add(parent.AthleteCategories.Find((element) => element.Name == "学生男子"), new NumberRange(0, 4));
 
             ret.EventParticipantValidator.Categories.Add(parent.AthleteCategories.Find((element) => element.Name == "学生男子"));
             foreach (var rank in parent.CompetitionRankInfo.AthleteRanks)
@@ -147,7 +147,7 @@ namespace TestConfigurationModule
                 ret.EventParticipantValidator.Ranks.Add(rank);
             }
             ret.EventParticipantValidator.Ranks.Sort();
-            ret.EventParticipantValidator.NumberPerTeam.Set(1);
+            ret.EventParticipantValidator.NumberPerTeam.Set(0, 2);
             ret.EventParticipantValidator.BePointForEveryRank = true;
 
             ret.EventPointInfo.PointRate = 2;
@@ -198,7 +198,7 @@ namespace TestConfigurationModule
                 ret.EventParticipantValidator.Ranks.Add(rank);
             }
             ret.EventParticipantValidator.Ranks.Sort();
-            ret.EventParticipantValidator.NumberPerTeam.Set(1);
+            ret.EventParticipantValidator.NumberPerTeam.Set(0, 1);
             ret.EventParticipantValidator.BePointForEveryRank = false;
 
             ret.EventPointInfo.PointRate = 2;
@@ -261,7 +261,7 @@ namespace TestConfigurationModule
                 ret.EventParticipantValidator.Ranks.Add(rank);
             }
             ret.EventParticipantValidator.Ranks.Sort();
-            ret.EventParticipantValidator.NumberPerTeam.Set(2);
+            ret.EventParticipantValidator.NumberPerTeam.Set(0, 2);
             ret.EventParticipantValidator.BePointForEveryRank = true;
 
             foreach (var team in parent.TeamInfos)
@@ -293,11 +293,10 @@ namespace TestConfigurationModule
         {
             EventInfo ret = parent.GenerateNewEventInfo();
 
-            ret.Name = "一个名次赛的例子（个人，三轮比赛，竞标赛制 + 名次制，单组内算名次）";
+            ret.Name = "一个名次赛的例子（团队，三轮比赛，竞标赛制 + 名次制，单组内算名次）";
             ret.EventGradeInfo.GradeBetterType = GradeInfo.BetterType.Smaller;
 
-            ret.EventTeamworkInfo.SetIsNotTeamwork();
-
+            ret.EventTeamworkInfo.SetIsTeamwork();
             var category1 = parent.AthleteCategories.Find((element) => element.Name == "学生女子");
             var category2 = parent.AthleteCategories.Find((element) => element.Name == "教师女子");
             ret.EventTeamworkInfo.SetNeedEveryPerson();
@@ -319,7 +318,7 @@ namespace TestConfigurationModule
                 ret.EventParticipantValidator.Ranks.Add(rank);
             }
             ret.EventParticipantValidator.Ranks.Sort();
-            ret.EventParticipantValidator.NumberPerTeam.Set(1);
+            ret.EventParticipantValidator.NumberPerTeam.Set(0, 1);
             ret.EventParticipantValidator.BePointForEveryRank = false;
 
             foreach (var team in parent.TeamInfos)

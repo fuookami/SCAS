@@ -97,22 +97,70 @@ namespace SCAS
             }
         }
 
-        public class Entry
+        public struct EntryItem
+        {
+            public String Key
+            {
+                get;
+                set;
+            }
+
+            public String SidKey
+            {
+                get;
+                set;
+            }
+
+            public Athlete Value
+            {
+                get;
+                set;
+            }
+        }
+
+        public class PersonalEntry
         {
             public EventInfo Conf
             {
                 get;
             }
 
-            public List<KeyValuePair<String, List<Athlete>>> Athletes
+            public List<EntryItem> Items
             {
                 get;
             }
 
-            internal Entry(EventInfo conf)
+            internal PersonalEntry(EventInfo conf)
             {
+                if (conf.EventTeamworkInfo.BeTeamwork)
+                {
+                    throw new Exception("设置的项目信息不是一个个人项目");
+                }
                 Conf = conf;
-                Athletes = new List<KeyValuePair<String, List<Athlete>>>();
+                Items = new List<EntryItem>();
+            }
+        }
+
+        public class TeamworkEntry
+        {
+            public EventInfo Conf
+            {
+                get;
+            }
+
+            public List<KeyValuePair<String, List<EntryItem>>> ItemLists
+            {
+                get;
+            }
+
+            internal TeamworkEntry(EventInfo conf)
+            {
+                if (!conf.EventTeamworkInfo.BeTeamwork)
+                {
+                    throw new Exception("设置的项目信息不是一个团队项目");
+                }
+                Conf = conf;
+                ItemLists = new List<KeyValuePair<String, List<EntryItem>>>();
             }
         }
 
@@ -144,12 +192,17 @@ namespace SCAS
                 get;
             }
 
-            public List<Entry> Entries
+            public List<Athlete> Athletes
             {
                 get;
             }
 
-            public List<Athlete> Athletes
+            public List<PersonalEntry> PersonalEntries
+            {
+                get;
+            }
+
+            public List<TeamworkEntry> TeamworkEntries
             {
                 get;
             }
@@ -162,7 +215,8 @@ namespace SCAS
                 TeamCoach = new Leader();
                 TeamSubLeader = new List<Leader>();
                 Athletes = new List<Athlete>();
-                Entries = new List<Entry>();
+                PersonalEntries = new List<PersonalEntry>();
+                TeamworkEntries = new List<TeamworkEntry>();
             }
 
             internal EntryBlank(CompetitionInfo conf, String teamId)
@@ -173,7 +227,8 @@ namespace SCAS
                 TeamCoach = new Leader();
                 TeamSubLeader = new List<Leader>();
                 Athletes = new List<Athlete>();
-                Entries = new List<Entry>();
+                PersonalEntries = new List<PersonalEntry>();
+                TeamworkEntries = new List<TeamworkEntry>();
             }
         };
     };
