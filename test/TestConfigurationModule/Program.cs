@@ -139,7 +139,7 @@ namespace TestConfigurationModule
 
             ret.EventTeamworkInfo.SetNeedEveryPerson();
             ret.EventTeamworkInfo.BeMultiRank = true;
-            ret.EventTeamworkInfo.RangesOfCategories.Add(parent.AthleteCategories.Find((element) => element.Name == "学生男子"), new NumberRange(0, 4));
+            ret.EventTeamworkInfo.RangesOfCategories.Add(parent.AthleteCategories.Find((element) => element.Name == "学生男子"), new NumberRange(2, 4));
 
             ret.EventParticipantValidator.Categories.Add(parent.AthleteCategories.Find((element) => element.Name == "学生男子"));
             foreach (var rank in parent.CompetitionRankInfo.AthleteRanks)
@@ -147,7 +147,7 @@ namespace TestConfigurationModule
                 ret.EventParticipantValidator.Ranks.Add(rank);
             }
             ret.EventParticipantValidator.Ranks.Sort();
-            ret.EventParticipantValidator.NumberPerTeam.Set(0, 2);
+            ret.EventParticipantValidator.NumberPerTeam.Set(1, 2);
             ret.EventParticipantValidator.BePointForEveryRank = true;
 
             ret.EventPointInfo.PointRate = 2;
