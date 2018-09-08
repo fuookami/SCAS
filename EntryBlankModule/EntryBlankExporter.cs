@@ -69,27 +69,6 @@ namespace SCAS
                 }
             }
 
-            private void AddLeaderInfoBlank(ExcelWorksheet worksheet, Int32 row, String title)
-            {
-                worksheet.Cells[row, 1].Value = title;
-                worksheet.Cells[row, 1].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-                worksheet.Cells[row, 1].Style.Font.Bold = true;
-                worksheet.Cells[row, 1].Style.Font.Size += 2;
-                worksheet.Cells[row, 1, row + 3, 1].Merge = true;
-                worksheet.Cells[row, 2].Value = "姓名：";
-                worksheet.Cells[row, 2].Style.Font.Bold = true;
-                worksheet.Cells[row, 3, row, 6].Merge = true;
-                worksheet.Cells[row + 1, 2].Value = "学号/工号：";
-                worksheet.Cells[row + 1, 2].Style.Font.Bold = true;
-                worksheet.Cells[row + 1, 3, row + 1, 6].Merge = true;
-                worksheet.Cells[row + 2, 2].Value = "联系方式：";
-                worksheet.Cells[row + 2, 2].Style.Font.Bold = true;
-                worksheet.Cells[row + 2, 3, row + 2, 6].Merge = true;
-                worksheet.Cells[row + 3, 2].Value = "邮箱：";
-                worksheet.Cells[row + 3, 2].Style.Font.Bold = true;
-                worksheet.Cells[row + 3, 3, row + 3, 6].Merge = true;
-            }
-
             private bool ExportForcedOrNotRankEntryBlank(FileInfo file)
             {
                 using (ExcelPackage package = new ExcelPackage(file))
@@ -117,44 +96,12 @@ namespace SCAS
                     AddLeaderInfoBlank(worksheet, row, !Blank.TeamCoach.Optional ? "教练" : "教练\n（可选）");
                     row += 4;
 
-                    worksheet.Cells[row, 1].Value = "个人项目报名表";
-                    worksheet.Cells[row, 1].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-                    worksheet.Cells[row, 1].Style.Font.Bold = true;
-                    worksheet.Cells[row, 1].Style.Font.Size += 4;
-                    worksheet.Cells[row, 1, row, 6].Merge = true;
-                    worksheet.Row(row).Height = 20;
-                    row += 1;
-
-                    foreach (var entry in Blank.PersonalEntries)
+                    Int32 temp = ExportEntries(worksheet, row, Blank);
+                    if (temp == 0)
                     {
-                        Int32 bgRow = row;
-                        worksheet.Cells[row, 1].Value = entry.Conf.Name;
-                        worksheet.Cells[row, 1].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-                        worksheet.Cells[row, 1].Style.Font.Bold = true;
-                        worksheet.Cells[row, 1].Style.Font.Size += 2;
-
-                        foreach (var item in entry.Items)
-                        {
-                            worksheet.Cells[row, 3].Value = item.Key;
-                            worksheet.Cells[row, 5].Value = item.SidKey;
-                            ++row;
-                        }
-
-                        worksheet.Cells[bgRow, 1, row - 1, 2].Merge = true;
+                        return false;
                     }
-
-                    worksheet.Cells[row, 1].Value = "团体项目报名表";
-                    worksheet.Cells[row, 1].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-                    worksheet.Cells[row, 1].Style.Font.Bold = true;
-                    worksheet.Cells[row, 1].Style.Font.Size += 4;
-                    worksheet.Cells[row, 1, row, 6].Merge = true;
-                    worksheet.Row(row).Height = 20;
-                    row += 1;
-
-                    foreach (var entry in Blank.TeamworkEntries)
-                    {
-
-                    }
+                    row = temp;
 
                     worksheet.Cells[1, 1, row, 6].Style.Font.Name = "微软雅黑";
                     worksheet.Cells[1, 1, row, 6].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
@@ -168,8 +115,145 @@ namespace SCAS
 
             private bool ExportNotForcedRankEntryBlank(FileInfo file)
             {
+                using (ExcelPackage package = new ExcelPackage(file))
+                {
+                    ExcelWorksheet basicInfoWorksheet = package.Workbook.Worksheets.Add("基本信息");
+                    basicInfoWorksheet.Column(1).Style.WrapText = true;
+                    basicInfoWorksheet.Column(1).Width = 18;
+                    basicInfoWorksheet.Column(2).Width = 12;
 
+                    basicInfoWorksheet.Cells[1, 1].Value = "院名：";
+                    basicInfoWorksheet.Cells[1, 1].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                    basicInfoWorksheet.Cells[1, 1].Style.Font.Bold = true;
+                    basicInfoWorksheet.Cells[1, 1].Style.Font.Size += 4;
+                    basicInfoWorksheet.Cells[1, 2, 1, 7].Merge = true;
+
+                    Int32 row = 2;
+
+                    AddLeaderInfoBlank(basicInfoWorksheet, row, "领队");
+                    row += 4;
+                    foreach (var subLeader in Blank.TeamSubLeader)
+                    {
+                        AddLeaderInfoBlank(basicInfoWorksheet, row, !subLeader.Optional ? "副领队" : "副领队\n（可选）");
+                        row += 4;
+                    }
+                    AddLeaderInfoBlank(basicInfoWorksheet, row, !Blank.TeamCoach.Optional ? "教练" : "教练\n（可选）");
+                    row += 4;
+
+                    basicInfoWorksheet.Cells[row, 1].Value = "运动员报名表";
+                    basicInfoWorksheet.Cells[row, 1].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                    basicInfoWorksheet.Cells[row, 1].Style.Font.Bold = true;
+                    basicInfoWorksheet.Cells[row, 1].Style.Font.Size += 4;
+                    basicInfoWorksheet.Cells[row, 1, row, 7].Merge = true;
+                    basicInfoWorksheet.Row(row).Height = 20;
+                    row += 1;
+
+                    //! to do
+
+                    basicInfoWorksheet.Cells[1, 1, row, 7].Style.Font.Name = "微软雅黑";
+                    basicInfoWorksheet.Cells[1, 1, row, 7].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+
+                    ExcelWorksheet entryWorksheet = package.Workbook.Worksheets.Add("报名表");
+                    Int32 temp = ExportEntries(entryWorksheet, row, Blank);
+                    if (temp == 0)
+                    {
+                        return false;
+                    }
+                    row = temp;
+
+                    entryWorksheet.Cells[1, 1, row, 6].Style.Font.Name = "微软雅黑";
+                    entryWorksheet.Cells[1, 1, row, 6].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+
+                    package.Save();
+                };
+                
                 return true;
+            }
+
+            private void AddLeaderInfoBlank(ExcelWorksheet worksheet, Int32 row, String title)
+            {
+                worksheet.Cells[row, 1].Value = title;
+                worksheet.Cells[row, 1].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                worksheet.Cells[row, 1].Style.Font.Bold = true;
+                worksheet.Cells[row, 1].Style.Font.Size += 2;
+                worksheet.Cells[row, 1, row + 3, 1].Merge = true;
+                worksheet.Cells[row, 2].Value = "姓名：";
+                worksheet.Cells[row, 2].Style.Font.Bold = true;
+                worksheet.Cells[row, 3, row, 6].Merge = true;
+                worksheet.Cells[row + 1, 2].Value = "学号/工号：";
+                worksheet.Cells[row + 1, 2].Style.Font.Bold = true;
+                worksheet.Cells[row + 1, 3, row + 1, 6].Merge = true;
+                worksheet.Cells[row + 2, 2].Value = "联系方式：";
+                worksheet.Cells[row + 2, 2].Style.Font.Bold = true;
+                worksheet.Cells[row + 2, 3, row + 2, 6].Merge = true;
+                worksheet.Cells[row + 3, 2].Value = "邮箱：";
+                worksheet.Cells[row + 3, 2].Style.Font.Bold = true;
+                worksheet.Cells[row + 3, 3, row + 3, 6].Merge = true;
+            }
+
+            private Int32 ExportEntries(ExcelWorksheet sheet, Int32 row, EntryBlank blank)
+            {
+                sheet.Cells[row, 1].Value = "个人项目报名表";
+                sheet.Cells[row, 1].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                sheet.Cells[row, 1].Style.Font.Bold = true;
+                sheet.Cells[row, 1].Style.Font.Size += 4;
+                sheet.Cells[row, 1, row, 6].Merge = true;
+                sheet.Row(row).Height = 20;
+                row += 1;
+
+                foreach (var entry in Blank.PersonalEntries)
+                {
+                    Int32 bgRow = row;
+                    sheet.Cells[row, 1].Value = entry.Conf.Name;
+                    sheet.Cells[row, 1].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                    sheet.Cells[row, 1].Style.Font.Bold = true;
+                    sheet.Cells[row, 1].Style.Font.Size += 2;
+
+                    foreach (var item in entry.Items)
+                    {
+                        sheet.Cells[row, 3].Value = item.Key;
+                        sheet.Cells[row, 5].Value = item.SidKey;
+                        ++row;
+                    }
+
+                    sheet.Cells[bgRow, 1, row - 1, 2].Merge = true;
+                }
+
+                sheet.Cells[row, 1].Value = "团体项目报名表";
+                sheet.Cells[row, 1].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                sheet.Cells[row, 1].Style.Font.Bold = true;
+                sheet.Cells[row, 1].Style.Font.Size += 4;
+                sheet.Cells[row, 1, row, 6].Merge = true;
+                sheet.Row(row).Height = 20;
+                row += 1;
+
+                foreach (var entry in Blank.TeamworkEntries)
+                {
+                    Int32 bgRow = row;
+                    sheet.Cells[row, 1].Value = entry.Conf.Name;
+                    sheet.Cells[row, 1].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                    sheet.Cells[row, 1].Style.Font.Bold = true;
+                    sheet.Cells[row, 1].Style.Font.Size += 2;
+
+                    foreach (var itemList in entry.ItemLists)
+                    {
+                        Int32 thisBgRow = row;
+                        sheet.Cells[row, 2].Value = itemList.Name;
+
+                        foreach (var item in itemList.Items)
+                        {
+                            sheet.Cells[row, 3].Value = item.Key;
+                            sheet.Cells[row, 5].Value = item.SidKey;
+                            ++row;
+                        }
+                        
+                        sheet.Cells[thisBgRow, 2, row - 1, 2].Merge = true;
+                    }
+                    
+                    sheet.Cells[bgRow, 1, row - 1, 1].Merge = true;
+                }
+
+                return row;
             }
         }
     };

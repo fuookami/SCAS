@@ -177,22 +177,22 @@ namespace SCAS
                 UInt32 sum = 0;
                 foreach (var item in RangesOfCategories)
                 {
-                    if (item.Value.Minimun == 0 || item.Value.Minimun != item.Value.Maximun)
+                    if (item.Value.Minimum == 0 || item.Value.Minimum != item.Value.Maximum)
                     {
                         return null;
                     }
 
-                    ret.Add(item.Key, item.Value.Minimun);
-                    sum += item.Value.Minimun;
+                    ret.Add(item.Key, item.Value.Minimum);
+                    sum += item.Value.Minimum;
                 }
 
                 if (RangesOfTeam.Valid())
                 {
-                    if (RangesOfTeam.Minimun != RangesOfTeam.Maximun)
+                    if (RangesOfTeam.Minimum != RangesOfTeam.Maximum)
                     {
                         return null;
                     }
-                    if (RangesOfTeam.Minimun != sum)
+                    if (RangesOfTeam.Minimum != sum)
                     {
                         return null;
                     }

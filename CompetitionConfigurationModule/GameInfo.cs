@@ -54,7 +54,7 @@ namespace SCAS
             {
                 get
                 {
-                    return _numberOfParticipants.Maximun;
+                    return _numberOfParticipants.Maximum;
                 }
                 set
                 {

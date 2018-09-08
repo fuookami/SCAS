@@ -118,6 +118,34 @@ namespace SCAS
             }
         }
 
+        public struct EntryItemList
+        {
+            public String Name
+            {
+                get;
+                set;
+            }
+
+            public List<EntryItem> Items
+            {
+                get;
+                set;
+            }
+
+            public bool Optional
+            {
+                get;
+                set;
+            }
+
+            internal EntryItemList(bool optional = false)
+            {
+                Name = "";
+                Items = new List<EntryItem>();
+                Optional = optional;
+            }
+        }
+
         public class PersonalEntry
         {
             public EventInfo Conf
@@ -148,7 +176,7 @@ namespace SCAS
                 get;
             }
 
-            public List<KeyValuePair<String, List<EntryItem>>> ItemLists
+            public List<EntryItemList> ItemLists
             {
                 get;
             }
@@ -160,7 +188,7 @@ namespace SCAS
                     throw new Exception("设置的项目信息不是一个团队项目");
                 }
                 Conf = conf;
-                ItemLists = new List<KeyValuePair<String, List<EntryItem>>>();
+                ItemLists = new List<EntryItemList>();
             }
         }
 

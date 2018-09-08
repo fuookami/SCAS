@@ -113,17 +113,17 @@ namespace SCAS
                     entryClosingDate.AppendChild(doc.CreateTextNode(_outputData.EntryClosingDate.ToString()));
                     root.AppendChild(entryClosingDate);
                     
-                    if (_outputData.NumberOfSubLeader.Minimun != SSUtils.NumberRange.NoLimit
-                        && _outputData.NumberOfSubLeader.Maximun != SSUtils.NumberRange.NoLimit)
+                    if (_outputData.NumberOfSubLeader.Minimum != SSUtils.NumberRange.NoLimit
+                        && _outputData.NumberOfSubLeader.Maximum != SSUtils.NumberRange.NoLimit)
                     {
                         XmlElement subLeaderNumberNode = doc.CreateElement("NumberOfSubLeader");
-                        if (_outputData.NumberOfSubLeader.Minimun != SSUtils.NumberRange.NoLimit)
+                        if (_outputData.NumberOfSubLeader.Minimum != SSUtils.NumberRange.NoLimit)
                         {
-                            subLeaderNumberNode.SetAttribute("min", _outputData.NumberOfSubLeader.Minimun.ToString());
+                            subLeaderNumberNode.SetAttribute("min", _outputData.NumberOfSubLeader.Minimum.ToString());
                         }
-                        if (_outputData.NumberOfSubLeader.Maximun != SSUtils.NumberRange.NoLimit)
+                        if (_outputData.NumberOfSubLeader.Maximum != SSUtils.NumberRange.NoLimit)
                         {
-                            subLeaderNumberNode.SetAttribute("max", _outputData.NumberOfSubLeader.Minimun.ToString());
+                            subLeaderNumberNode.SetAttribute("max", _outputData.NumberOfSubLeader.Minimum.ToString());
                         }
                     }
 
@@ -293,13 +293,13 @@ namespace SCAS
                     {
                         XmlElement rangeNode = doc.CreateElement("EntryNumberPerAthlete");
 
-                        if (data.EntryNumberPerAthlete.Minimun != SSUtils.NumberRange.NoLimit)
+                        if (data.EntryNumberPerAthlete.Minimum != SSUtils.NumberRange.NoLimit)
                         {
-                            rangeNode.SetAttribute("min", data.EntryNumberPerAthlete.Minimun.ToString());
+                            rangeNode.SetAttribute("min", data.EntryNumberPerAthlete.Minimum.ToString());
                         }
-                        if (data.EntryNumberPerAthlete.Maximun != SSUtils.NumberRange.NoLimit)
+                        if (data.EntryNumberPerAthlete.Maximum != SSUtils.NumberRange.NoLimit)
                         {
-                            rangeNode.SetAttribute("max", data.EntryNumberPerAthlete.Maximun.ToString());
+                            rangeNode.SetAttribute("max", data.EntryNumberPerAthlete.Maximum.ToString());
                         }
 
                         entryValidatorNode.AppendChild(rangeNode);
@@ -523,13 +523,13 @@ namespace SCAS
                                 XmlElement rangeNode = doc.CreateElement("Range");
 
                                 rangeNode.SetAttribute("category", range.Key.Name);
-                                if (range.Value.Minimun != SSUtils.NumberRange.NoLimit)
+                                if (range.Value.Minimum != SSUtils.NumberRange.NoLimit)
                                 {
-                                    rangeNode.SetAttribute("min", range.Value.Minimun.ToString());
+                                    rangeNode.SetAttribute("min", range.Value.Minimum.ToString());
                                 }
-                                if (range.Value.Maximun != SSUtils.NumberRange.NoLimit)
+                                if (range.Value.Maximum != SSUtils.NumberRange.NoLimit)
                                 {
-                                    rangeNode.SetAttribute("max", range.Value.Maximun.ToString());
+                                    rangeNode.SetAttribute("max", range.Value.Maximum.ToString());
                                 }
 
                                 numberNode.AppendChild(rangeNode);
@@ -540,13 +540,13 @@ namespace SCAS
                         {
                             XmlElement rangeNode = doc.CreateElement("TeamRange");
 
-                            if (data.RangesOfTeam.Minimun != SSUtils.NumberRange.NoLimit)
+                            if (data.RangesOfTeam.Minimum != SSUtils.NumberRange.NoLimit)
                             {
-                                rangeNode.SetAttribute("min", data.RangesOfTeam.Minimun.ToString());
+                                rangeNode.SetAttribute("min", data.RangesOfTeam.Minimum.ToString());
                             }
-                            if (data.RangesOfTeam.Maximun != SSUtils.NumberRange.NoLimit)
+                            if (data.RangesOfTeam.Maximum != SSUtils.NumberRange.NoLimit)
                             {
-                                rangeNode.SetAttribute("max", data.RangesOfTeam.Maximun.ToString());
+                                rangeNode.SetAttribute("max", data.RangesOfTeam.Maximum.ToString());
                             }
 
                             numberNode.AppendChild(rangeNode);
@@ -604,13 +604,13 @@ namespace SCAS
                 {
                     XmlElement rangeNode = doc.CreateElement("NumberPerTeam");
 
-                    if (data.NumberPerTeam.Minimun != SSUtils.NumberRange.NoLimit)
+                    if (data.NumberPerTeam.Minimum != SSUtils.NumberRange.NoLimit)
                     {
-                        rangeNode.SetAttribute("min", data.NumberPerTeam.Minimun.ToString());
+                        rangeNode.SetAttribute("min", data.NumberPerTeam.Minimum.ToString());
                     }
-                    if (data.NumberPerTeam.Maximun != SSUtils.NumberRange.NoLimit)
+                    if (data.NumberPerTeam.Maximum != SSUtils.NumberRange.NoLimit)
                     {
-                        rangeNode.SetAttribute("max", data.NumberPerTeam.Maximun.ToString());
+                        rangeNode.SetAttribute("max", data.NumberPerTeam.Maximum.ToString());
                     }
 
                     athleteValidatorNode.AppendChild(rangeNode);
@@ -667,13 +667,13 @@ namespace SCAS
                 {
                     XmlElement rangeNode = doc.CreateElement("NumberPerGroup");
 
-                    if (data.NumberPerGroup.Minimun != SSUtils.NumberRange.NoLimit)
+                    if (data.NumberPerGroup.Minimum != SSUtils.NumberRange.NoLimit)
                     {
-                        rangeNode.SetAttribute("min", data.NumberPerGroup.Minimun.ToString());
+                        rangeNode.SetAttribute("min", data.NumberPerGroup.Minimum.ToString());
                     }
-                    if (data.NumberPerGroup.Maximun != SSUtils.NumberRange.NoLimit)
+                    if (data.NumberPerGroup.Maximum != SSUtils.NumberRange.NoLimit)
                     {
-                        rangeNode.SetAttribute("max", data.NumberPerGroup.Maximun.ToString());
+                        rangeNode.SetAttribute("max", data.NumberPerGroup.Maximum.ToString());
                     }
 
                     groupNode.AppendChild(rangeNode);

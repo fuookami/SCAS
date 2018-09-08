@@ -18,17 +18,17 @@ namespace SSUtils
 
         public bool Set(NumberRange range)
         {
-            return Set(range.Minimun, range.Maximun);
+            return Set(range.Minimum, range.Maximum);
         }
 
         public override bool Valid()
         {
-            return Valid(Minimun, Maximun);
+            return Valid(Minimum, Maximum);
         }
 
         public bool HasRange()
         {
-            return Valid() && (Minimun != 0 || Maximun != 0);
+            return Valid() && (Minimum != 0 || Maximum != 0);
         }
 
         protected override bool Valid(UInt32 min, UInt32 max)

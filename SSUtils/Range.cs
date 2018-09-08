@@ -5,8 +5,8 @@ namespace SSUtils
     public class Range<T>
         where T : IComparable
     {
-        public T Minimun { get; private set; }
-        public T Maximun { get; private set; }
+        public T Minimum { get; private set; }
+        public T Maximum { get; private set; }
 
         public Range(T min, T max)
         {
@@ -20,14 +20,14 @@ namespace SSUtils
                 return false;
             }
 
-            Minimun = min;
-            Maximun = max;
+            Minimum = min;
+            Maximum = max;
             return true;
         }
 
         public virtual bool Valid()
         {
-            return Valid(Minimun, Maximun);
+            return Valid(Minimum, Maximum);
         }
 
         protected virtual bool Valid(T min, T max)
