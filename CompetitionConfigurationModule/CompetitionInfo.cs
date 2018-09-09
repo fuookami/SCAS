@@ -186,6 +186,7 @@ namespace SCAS
             {
                 Id = existedId;
                 BeTemplate = false;
+                Field = "";
                 EntryClosingDate = new Date();
                 NumberOfSubLeader = new SSUtils.NumberRange(1, 2);
                 CoachOptional = false;
