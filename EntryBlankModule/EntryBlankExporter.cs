@@ -105,7 +105,7 @@ namespace SCAS
 
                     worksheet.Cells[1, 1, row, 6].Style.Font.Name = "微软雅黑";
                     worksheet.Cells[1, 1, row, 6].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
-                    // worksheet.Cells[1, 1].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.FromArgb(255, 192, 192, 192));
+                    worksheet.Cells[1, 1].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.FromArgb(255, 192, 192, 192));
 
                     package.Save();
                 }
@@ -148,7 +148,26 @@ namespace SCAS
                     basicInfoWorksheet.Row(row).Height = 20;
                     row += 1;
 
-                    //! to do
+                    foreach (var category in Blank.Conf.AthleteCategories)
+                    {
+                        basicInfoWorksheet.Cells[row, 1].Value = category.Name;
+                        basicInfoWorksheet.Cells[row, 1].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                        basicInfoWorksheet.Cells[row, 1].Style.Font.Bold = true;
+                        basicInfoWorksheet.Cells[row, 1].Style.Font.Size += 2;
+
+                        for (Int32 i = 0; i != 5; ++i)
+                        {
+                            basicInfoWorksheet.Cells[row + i, 2].Value = "姓名";
+                            basicInfoWorksheet.Cells[row + i, 2].Style.Font.Bold = true;
+                            basicInfoWorksheet.Cells[row + i, 4].Value = category.SidKey;
+                            basicInfoWorksheet.Cells[row + i, 4].Style.Font.Bold = true;
+                            basicInfoWorksheet.Cells[row + i, 6].Value = "组别";
+                            basicInfoWorksheet.Cells[row + i, 6].Style.Font.Bold = true;
+                        }
+
+                        basicInfoWorksheet.Cells[row, 1, row + 4, 1].Merge = true;
+                        row += 5;
+                    }
 
                     basicInfoWorksheet.Cells[1, 1, row, 7].Style.Font.Name = "微软雅黑";
                     basicInfoWorksheet.Cells[1, 1, row, 7].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
