@@ -22,7 +22,8 @@ namespace SCAS
             };
 
             private SSUtils.NumberRange _numberOfParticipants;
-            
+
+            private TimeSpan _planOffsetTime;
             private TimeSpan _planIntervalTime;
             private TimeSpan _planTimePerGroup;
 
@@ -80,6 +81,22 @@ namespace SCAS
                 set;
             }
 
+            public TimeSpan PlanOffsetTime
+            {
+                get
+                {
+                    return _planOffsetTime;
+                }
+                set
+                {
+                    if (value.TotalSeconds < 0)
+                    {
+                        throw new Exception("不能将比赛前休息时间时间设置为负数");
+                    }
+                    _planOffsetTime = value;
+                }
+            }
+
             public TimeSpan PlanIntervalTime
             {
                 get
@@ -90,7 +107,7 @@ namespace SCAS
                 {
                     if (value.TotalSeconds <= 0)
                     {
-                        throw new Exception("不能将比赛间计划间隔时间设置为负数");
+                        throw new Exception("不能将比赛间计划间隔时间设置为非正数");
                     }
                     _planIntervalTime = value;
                 }
@@ -106,7 +123,7 @@ namespace SCAS
                 {
                     if (value.TotalSeconds <= 0)
                     {
-                        throw new Exception("不能将每组比赛计划时间设置为负数");
+                        throw new Exception("不能将每组比赛计划时间设置为非正数");
                     }
                     _planTimePerGroup = value;
                 }

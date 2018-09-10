@@ -266,6 +266,9 @@ namespace SCAS
                     XmlElement orderInSessionNode = (XmlElement)node.GetElementsByTagName("OrderInSession")[0];
                     temp.OrderInSession = new SSUtils.Order(Int32.Parse(orderInSessionNode.InnerText));
 
+                    XmlElement planOffsetTimeNode = (XmlElement)node.GetElementsByTagName("PlanOffsetTime")[0];
+                    temp.PlanOffsetTime = TimeSpan.Parse(planOffsetTimeNode.InnerText);
+
                     XmlElement planIntervalTimeNode = (XmlElement)node.GetElementsByTagName("PlanIntervalTime")[0];
                     temp.PlanIntervalTime = TimeSpan.Parse(planIntervalTimeNode.InnerText);
 

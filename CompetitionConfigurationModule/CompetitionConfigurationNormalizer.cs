@@ -132,7 +132,7 @@ namespace SCAS
                     root.AppendChild(coachOptionalNode);
 
                     XmlElement fieldNode = doc.CreateElement("Field");
-                    fieldNode.AppendChild(doc.CreateTextNode(_outputData.Field.ToString()));
+                    fieldNode.AppendChild(doc.CreateTextNode(_outputData.Field));
                     root.AppendChild(fieldNode);
 
                     XmlElement displayBeginLineNode = doc.CreateElement("DisplayBeginLine");
@@ -255,6 +255,10 @@ namespace SCAS
                 XmlElement orderInSessionNode = doc.CreateElement("OrderInSession");
                 orderInSessionNode.AppendChild(doc.CreateTextNode(gameInfo.OrderInSession.Value.ToString()));
                 root.AppendChild(orderInSessionNode);
+
+                XmlElement planOffsetTimeNode = doc.CreateElement("PlanOffsetTime");
+                planOffsetTimeNode.AppendChild(doc.CreateTextNode(gameInfo.PlanOffsetTime.ToString()));
+                root.AppendChild(planOffsetTimeNode);
 
                 XmlElement planIntervalTimeNode = doc.CreateElement("PlanIntervalTime");
                 planIntervalTimeNode.AppendChild(doc.CreateTextNode(gameInfo.PlanIntervalTime.ToString()));
