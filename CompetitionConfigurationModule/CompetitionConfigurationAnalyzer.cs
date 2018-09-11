@@ -146,6 +146,10 @@ namespace SCAS
                         }
                         temp.NumberOfSubLeader.Set(min, max);
                     }
+                    else
+                    {
+                        temp.NumberOfSubLeader.Set(0, 0);
+                    }
 
                     XmlElement coachOptionalNode = (XmlElement)root.GetElementsByTagName("CoachOptional")[0];
                     temp.CoachOptional = Boolean.Parse(coachOptionalNode.InnerText);

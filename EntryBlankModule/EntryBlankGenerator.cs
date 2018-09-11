@@ -61,6 +61,10 @@ namespace SCAS
                     {
                         temp.TeamSubLeader.Add(new Leader(true));
                     }
+                    if (temp.TeamSubLeader.Count == 0)
+                    {
+                        temp.TeamSubLeader.Add(new Leader(true));
+                    }
                     temp.TeamCoach.Optional = _conf.CoachOptional;
 
                     foreach (var eventConf in _conf.EventInfos)

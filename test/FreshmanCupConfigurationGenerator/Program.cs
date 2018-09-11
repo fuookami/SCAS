@@ -33,6 +33,9 @@ namespace FreshmanCupConfigurationGenerator
             ret.CompetitionPrincipalInfo.Telephone = "负责人的手机";
             ret.CompetitionPrincipalInfo.Email = "负责人的邮箱@xxx.xx";
 
+            ret.NumberOfSubLeader.Set(0, 0);
+            ret.CoachOptional = true;
+
             ret.PublicPointInfo.Points = new List<UInt32> { 9, 7, 6, 5, 4, 3, 2, 1 };
             ret.PublicPointInfo.PointRate = 1.0;
             ret.PublicPointInfo.BreakRecordPointRateEnabled = true;
@@ -408,6 +411,7 @@ namespace FreshmanCupConfigurationGenerator
                 eventInfo.EventTeamworkInfo.SetIsTeamwork();
                 eventInfo.EventTeamworkInfo.SetNeedEveryPerson();
                 eventInfo.EventTeamworkInfo.RangesOfCategories.Add(category2, new NumberRange(4, 4));
+                eventInfo.EventTeamworkInfo.RangesOfTeam.Set(4, 4);
                 eventInfo.EventTeamworkInfo.SetInOrder(new List<AthleteCategory>
                 {
                     category2, category2, category2, category2
@@ -417,7 +421,7 @@ namespace FreshmanCupConfigurationGenerator
                 eventInfo.EventPointInfo.BreakRecordPointRate = 3.0;
 
                 eventInfo.EventParticipantValidator.Categories.Add(category2);
-                eventInfo.EventParticipantValidator.NumberPerTeam.Set(4, 4);
+                eventInfo.EventParticipantValidator.NumberPerTeam.Set(0, 1);
                 eventInfo.EventParticipantValidator.BePointForEveryRank = false;
 
                 foreach (var team in ret.TeamInfos)
@@ -453,6 +457,7 @@ namespace FreshmanCupConfigurationGenerator
                 eventInfo.EventTeamworkInfo.SetIsTeamwork();
                 eventInfo.EventTeamworkInfo.SetNeedEveryPerson();
                 eventInfo.EventTeamworkInfo.RangesOfCategories.Add(category1, new NumberRange(4, 4));
+                eventInfo.EventTeamworkInfo.RangesOfTeam.Set(4, 4);
                 eventInfo.EventTeamworkInfo.SetInOrder(new List<AthleteCategory>
                 {
                     category1, category1, category1, category1
@@ -462,7 +467,7 @@ namespace FreshmanCupConfigurationGenerator
                 eventInfo.EventPointInfo.BreakRecordPointRate = 3.0;
 
                 eventInfo.EventParticipantValidator.Categories.Add(category1);
-                eventInfo.EventParticipantValidator.NumberPerTeam.Set(4, 4);
+                eventInfo.EventParticipantValidator.NumberPerTeam.Set(0, 1);
                 eventInfo.EventParticipantValidator.BePointForEveryRank = false;
 
                 foreach (var team in ret.TeamInfos)
