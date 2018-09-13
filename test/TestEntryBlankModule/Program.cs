@@ -9,6 +9,7 @@ namespace TestEntryBlankModule
         {
             Generate("test");
             Generate("FreshmanCupConf");
+            Generate("IntercollegeCupConf");
             
             Console.ReadKey();
         }
