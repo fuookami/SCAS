@@ -108,8 +108,8 @@ namespace FreshmanCupConfigurationGenerator
                     gameInfo.OrderInEvent = new Order(0);
                     gameInfo.OrderInSession = new Order(6);
 
-                    gameInfo.PlanIntervalTime = new TimeSpan(0, 2, 0);
-                    gameInfo.PlanTimePerGroup = new TimeSpan(0, 3, 0);
+                    gameInfo.PlanIntervalTime = new TimeSpan(0, 3, 0);
+                    gameInfo.PlanTimePerGroup = new TimeSpan(0, 1, 0);
 
                     gameInfo.GameGroupInfo.Enabled = true;
                     gameInfo.GameGroupInfo.NumberPerGroup.Set(8);
@@ -173,7 +173,7 @@ namespace FreshmanCupConfigurationGenerator
                     gameInfo.OrderInSession = new Order(0);
 
                     gameInfo.PlanIntervalTime = new TimeSpan(0, 4, 0);
-                    gameInfo.PlanTimePerGroup = new TimeSpan(0, 6, 0);
+                    gameInfo.PlanTimePerGroup = new TimeSpan(0, 1, 0);
 
                     gameInfo.GameGroupInfo.Enabled = true;
                     gameInfo.GameGroupInfo.NumberPerGroup.Set(8);
@@ -205,7 +205,7 @@ namespace FreshmanCupConfigurationGenerator
                     gameInfo.OrderInSession = new Order(1);
 
                     gameInfo.PlanIntervalTime = new TimeSpan(0, 4, 0);
-                    gameInfo.PlanTimePerGroup = new TimeSpan(0, 6, 0);
+                    gameInfo.PlanTimePerGroup = new TimeSpan(0, 1, 0);
 
                     gameInfo.GameGroupInfo.Enabled = true;
                     gameInfo.GameGroupInfo.NumberPerGroup.Set(8);
@@ -237,7 +237,7 @@ namespace FreshmanCupConfigurationGenerator
                     gameInfo.OrderInSession = new Order(2);
 
                     gameInfo.PlanIntervalTime = new TimeSpan(0, 3, 0);
-                    gameInfo.PlanTimePerGroup = new TimeSpan(0, 5, 0);
+                    gameInfo.PlanTimePerGroup = new TimeSpan(0, 1, 0);
 
                     gameInfo.GameGroupInfo.Enabled = true;
                     gameInfo.GameGroupInfo.NumberPerGroup.Set(8);
@@ -269,7 +269,7 @@ namespace FreshmanCupConfigurationGenerator
                     gameInfo.OrderInSession = new Order(3);
 
                     gameInfo.PlanIntervalTime = new TimeSpan(0, 3, 0);
-                    gameInfo.PlanTimePerGroup = new TimeSpan(0, 5, 0);
+                    gameInfo.PlanTimePerGroup = new TimeSpan(0, 1, 0);
 
                     gameInfo.GameGroupInfo.Enabled = true;
                     gameInfo.GameGroupInfo.NumberPerGroup.Set(8);
@@ -301,7 +301,7 @@ namespace FreshmanCupConfigurationGenerator
                     gameInfo.OrderInSession = new Order(7);
 
                     gameInfo.PlanIntervalTime = new TimeSpan(0, 2, 0);
-                    gameInfo.PlanTimePerGroup = new TimeSpan(0, 3, 0);
+                    gameInfo.PlanTimePerGroup = new TimeSpan(0, 1, 0);
 
                     gameInfo.GameGroupInfo.Enabled = true;
                     gameInfo.GameGroupInfo.NumberPerGroup.Set(8);
@@ -333,7 +333,7 @@ namespace FreshmanCupConfigurationGenerator
                     gameInfo.OrderInSession = new Order(8);
 
                     gameInfo.PlanIntervalTime = new TimeSpan(0, 2, 0);
-                    gameInfo.PlanTimePerGroup = new TimeSpan(0, 3, 0);
+                    gameInfo.PlanTimePerGroup = new TimeSpan(0, 1, 0);
 
                     gameInfo.GameGroupInfo.Enabled = true;
                     gameInfo.GameGroupInfo.NumberPerGroup.Set(8);
@@ -365,7 +365,7 @@ namespace FreshmanCupConfigurationGenerator
                     gameInfo.OrderInSession = new Order(4);
 
                     gameInfo.PlanIntervalTime = new TimeSpan(0, 3, 0);
-                    gameInfo.PlanTimePerGroup = new TimeSpan(0, 5, 0);
+                    gameInfo.PlanTimePerGroup = new TimeSpan(0, 1, 0);
 
                     gameInfo.GameGroupInfo.Enabled = true;
                     gameInfo.GameGroupInfo.NumberPerGroup.Set(8);
@@ -397,7 +397,7 @@ namespace FreshmanCupConfigurationGenerator
                     gameInfo.OrderInSession = new Order(5);
 
                     gameInfo.PlanIntervalTime = new TimeSpan(0, 3, 0);
-                    gameInfo.PlanTimePerGroup = new TimeSpan(0, 5, 0);
+                    gameInfo.PlanTimePerGroup = new TimeSpan(0, 1, 0);
 
                     gameInfo.GameGroupInfo.Enabled = true;
                     gameInfo.GameGroupInfo.NumberPerGroup.Set(8);
@@ -443,7 +443,7 @@ namespace FreshmanCupConfigurationGenerator
 
                     gameInfo.PlanOffsetTime = new TimeSpan(0, 15, 0);
                     gameInfo.PlanIntervalTime = new TimeSpan(0, 5, 0);
-                    gameInfo.PlanTimePerGroup = new TimeSpan(0, 5, 0);
+                    gameInfo.PlanTimePerGroup = new TimeSpan(0, 1, 0);
 
                     gameInfo.GameGroupInfo.Enabled = true;
                     gameInfo.GameGroupInfo.NumberPerGroup.Set(8);
@@ -486,10 +486,9 @@ namespace FreshmanCupConfigurationGenerator
                     gameInfo.GameSession = session;
                     gameInfo.OrderInEvent = new Order(0);
                     gameInfo.OrderInSession = new Order(11);
-
-                    gameInfo.PlanOffsetTime = new TimeSpan(0, 0, 0);
+                    
                     gameInfo.PlanIntervalTime = new TimeSpan(0, 5, 0);
-                    gameInfo.PlanTimePerGroup = new TimeSpan(0, 5, 0);
+                    gameInfo.PlanTimePerGroup = new TimeSpan(0, 1, 0);
 
                     gameInfo.GameGroupInfo.Enabled = true;
                     gameInfo.GameGroupInfo.NumberPerGroup.Set(8);

@@ -7,13 +7,13 @@ namespace SCAS
         public class EntryValidator
         {
             private bool _enabledInTeamwork;
-            private SSUtils.EnabledNumberRange _applicationNumberPerAthlete;
+            private SSUtils.EnabledNumberRange _entryNumberPerAthlete;
 
             public bool Enabled
             {
                 get
                 {
-                    return _applicationNumberPerAthlete.IsEnabled();
+                    return _entryNumberPerAthlete.IsEnabled();
                 }
                 set
                 {
@@ -21,11 +21,11 @@ namespace SCAS
                     {
                         if (value)
                         {
-                            _applicationNumberPerAthlete.SetEnabled();
+                            _entryNumberPerAthlete.SetEnabled();
                         }
                         else
                         {
-                            _applicationNumberPerAthlete.SetDisabled();
+                            _entryNumberPerAthlete.SetDisabled();
                         }
                     }
                 }
@@ -57,7 +57,7 @@ namespace SCAS
             {
                 get
                 {
-                    return _applicationNumberPerAthlete.Range;
+                    return _entryNumberPerAthlete.Range;
                 }
                 set
                 {
@@ -74,7 +74,7 @@ namespace SCAS
 
             public EntryValidator()
             {
-                _applicationNumberPerAthlete = new SSUtils.EnabledNumberRange();
+                _entryNumberPerAthlete = new SSUtils.EnabledNumberRange();
                 SetDisabled();
             }
 
@@ -90,13 +90,13 @@ namespace SCAS
 
             public void SetEnabled(SSUtils.NumberRange range)
             {
-                _applicationNumberPerAthlete.SetEnabled(range ?? throw new Exception("设置的每个运动员的项目报名数量范围是个无效值"));
+                _entryNumberPerAthlete.SetEnabled(range ?? throw new Exception("设置的每个运动员的项目报名数量范围是个无效值"));
             }
 
             public void SetDisabled()
             {
                 SetDisabledInTeamwork();
-                _applicationNumberPerAthlete.SetDisabled();
+                _entryNumberPerAthlete.SetDisabled();
             }
 
             public void SetEnabledInTeamwork()
