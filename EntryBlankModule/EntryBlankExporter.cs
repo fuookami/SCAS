@@ -73,39 +73,69 @@ namespace SCAS
             {
                 using (ExcelPackage package = new ExcelPackage(file))
                 {
-                    ExcelWorksheet worksheet = package.Workbook.Worksheets.Add("报名表");
-                    worksheet.Column(1).Style.WrapText = true;
-                    worksheet.Column(1).Width = 18;
-                    worksheet.Column(2).Width = 12;
+                    ExcelWorksheet basicInfoWorksheet = package.Workbook.Worksheets.Add("基本信息");
+                    basicInfoWorksheet.Column(1).Style.WrapText = true;
+                    basicInfoWorksheet.Column(1).Width = 18;
+                    basicInfoWorksheet.Column(2).Width = 12;
 
-                    worksheet.Cells[1, 1].Value = "院名：";
-                    worksheet.Cells[1, 1].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-                    worksheet.Cells[1, 1].Style.Font.Bold = true;
-                    worksheet.Cells[1, 1].Style.Font.Size += 4;
-                    worksheet.Cells[1, 2, 1, 6].Merge = true;
+                    basicInfoWorksheet.Cells[1, 1].Value = "院名：";
+                    basicInfoWorksheet.Cells[1, 1].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                    basicInfoWorksheet.Cells[1, 1].Style.Font.Bold = true;
+                    basicInfoWorksheet.Cells[1, 1].Style.Font.Size += 4;
+                    basicInfoWorksheet.Cells[1, 2, 1, 5].Merge = true;
 
                     Int32 row = 2;
 
-                    AddLeaderInfoBlank(worksheet, row, "领队");
+                    AddLeaderInfoBlank(basicInfoWorksheet, row, 5, "领队");
                     row += 4;
                     foreach (var subLeader in Blank.TeamSubLeader)
                     {
-                        AddLeaderInfoBlank(worksheet, row, !subLeader.Optional ? "副领队" : "副领队\n（可选）");
+                        AddLeaderInfoBlank(basicInfoWorksheet, row, 5, !subLeader.Optional ? "副领队" : "副领队\n（可选）");
                         row += 4;
                     }
-                    AddLeaderInfoBlank(worksheet, row, !Blank.TeamCoach.Optional ? "教练" : "教练\n（可选）");
+                    AddLeaderInfoBlank(basicInfoWorksheet, row, 5, !Blank.TeamCoach.Optional ? "教练" : "教练\n（可选）");
                     row += 4;
 
-                    Int32 temp = ExportEntries(worksheet, row, Blank);
+                    basicInfoWorksheet.Cells[row, 1].Value = "运动员报名表";
+                    basicInfoWorksheet.Cells[row, 1].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                    basicInfoWorksheet.Cells[row, 1].Style.Font.Bold = true;
+                    basicInfoWorksheet.Cells[row, 1].Style.Font.Size += 4;
+                    basicInfoWorksheet.Cells[row, 1, row, 5].Merge = true;
+                    basicInfoWorksheet.Row(row).Height = 20;
+                    row += 1;
+
+                    foreach (var category in Blank.Conf.AthleteCategories)
+                    {
+                        basicInfoWorksheet.Cells[row, 1].Value = category.Name;
+                        basicInfoWorksheet.Cells[row, 1].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                        basicInfoWorksheet.Cells[row, 1].Style.Font.Bold = true;
+                        basicInfoWorksheet.Cells[row, 1].Style.Font.Size += 2;
+
+                        for (Int32 i = 0; i != 5; ++i)
+                        {
+                            basicInfoWorksheet.Cells[row + i, 2].Value = "姓名";
+                            basicInfoWorksheet.Cells[row + i, 2].Style.Font.Bold = true;
+                            basicInfoWorksheet.Cells[row + i, 4].Value = category.SidKey;
+                            basicInfoWorksheet.Cells[row + i, 4].Style.Font.Bold = true;
+                        }
+
+                        basicInfoWorksheet.Cells[row, 1, row + 4, 1].Merge = true;
+                        row += 5;
+                    }
+
+                    basicInfoWorksheet.Cells[1, 1, row, 6].Style.Font.Name = "微软雅黑";
+                    basicInfoWorksheet.Cells[1, 1, row, 6].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+
+                    ExcelWorksheet entryWorksheet = package.Workbook.Worksheets.Add("报名表");
+                    Int32 temp = ExportEntries(entryWorksheet, 1, Blank);
                     if (temp == 0)
                     {
                         return false;
                     }
                     row = temp;
 
-                    worksheet.Cells[1, 1, row, 6].Style.Font.Name = "微软雅黑";
-                    worksheet.Cells[1, 1, row, 6].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
-                    worksheet.Cells[1, 1].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.FromArgb(255, 192, 192, 192));
+                    entryWorksheet.Cells[1, 1, row, 6].Style.Font.Name = "微软雅黑";
+                    entryWorksheet.Cells[1, 1, row, 6].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
 
                     package.Save();
                 }
@@ -130,14 +160,14 @@ namespace SCAS
 
                     Int32 row = 2;
 
-                    AddLeaderInfoBlank(basicInfoWorksheet, row, "领队");
+                    AddLeaderInfoBlank(basicInfoWorksheet, row, 7, "领队");
                     row += 4;
                     foreach (var subLeader in Blank.TeamSubLeader)
                     {
-                        AddLeaderInfoBlank(basicInfoWorksheet, row, !subLeader.Optional ? "副领队" : "副领队\n（可选）");
+                        AddLeaderInfoBlank(basicInfoWorksheet, row, 7, !subLeader.Optional ? "副领队" : "副领队\n（可选）");
                         row += 4;
                     }
-                    AddLeaderInfoBlank(basicInfoWorksheet, row, !Blank.TeamCoach.Optional ? "教练" : "教练\n（可选）");
+                    AddLeaderInfoBlank(basicInfoWorksheet, row, 7, !Blank.TeamCoach.Optional ? "教练" : "教练\n（可选）");
                     row += 4;
 
                     basicInfoWorksheet.Cells[row, 1].Value = "运动员报名表";
@@ -173,7 +203,7 @@ namespace SCAS
                     basicInfoWorksheet.Cells[1, 1, row, 7].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
 
                     ExcelWorksheet entryWorksheet = package.Workbook.Worksheets.Add("报名表");
-                    Int32 temp = ExportEntries(entryWorksheet, row, Blank);
+                    Int32 temp = ExportEntries(entryWorksheet, 1, Blank);
                     if (temp == 0)
                     {
                         return false;
@@ -189,7 +219,7 @@ namespace SCAS
                 return true;
             }
 
-            private void AddLeaderInfoBlank(ExcelWorksheet worksheet, Int32 row, String title)
+            private void AddLeaderInfoBlank(ExcelWorksheet worksheet, Int32 row, Int32 rcol, String title)
             {
                 worksheet.Cells[row, 1].Value = title;
                 worksheet.Cells[row, 1].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
@@ -198,20 +228,24 @@ namespace SCAS
                 worksheet.Cells[row, 1, row + 3, 1].Merge = true;
                 worksheet.Cells[row, 2].Value = "姓名：";
                 worksheet.Cells[row, 2].Style.Font.Bold = true;
-                worksheet.Cells[row, 3, row, 6].Merge = true;
+                worksheet.Cells[row, 3, row, rcol].Merge = true;
                 worksheet.Cells[row + 1, 2].Value = "学号/工号：";
                 worksheet.Cells[row + 1, 2].Style.Font.Bold = true;
-                worksheet.Cells[row + 1, 3, row + 1, 6].Merge = true;
+                worksheet.Cells[row + 1, 3, row + 1, rcol].Merge = true;
                 worksheet.Cells[row + 2, 2].Value = "联系方式：";
                 worksheet.Cells[row + 2, 2].Style.Font.Bold = true;
-                worksheet.Cells[row + 2, 3, row + 2, 6].Merge = true;
+                worksheet.Cells[row + 2, 3, row + 2, rcol].Merge = true;
                 worksheet.Cells[row + 3, 2].Value = "邮箱：";
                 worksheet.Cells[row + 3, 2].Style.Font.Bold = true;
-                worksheet.Cells[row + 3, 3, row + 3, 6].Merge = true;
+                worksheet.Cells[row + 3, 3, row + 3, rcol].Merge = true;
             }
 
             private Int32 ExportEntries(ExcelWorksheet sheet, Int32 row, EntryBlank blank)
             {
+                sheet.Column(1).Style.WrapText = true;
+                sheet.Column(1).Width = 16;
+                sheet.Column(2).Width = 8;
+
                 sheet.Cells[row, 1].Value = "个人项目报名表";
                 sheet.Cells[row, 1].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
                 sheet.Cells[row, 1].Style.Font.Bold = true;
