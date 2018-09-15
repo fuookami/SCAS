@@ -7,9 +7,10 @@ namespace TestEntryBlankModule
     {
         static void Main(string[] args)
         {
-            Generate("test");
+            // Generate("test");
             Generate("FreshmanCupConf");
             Generate("IntercollegeCupConf");
+            Read("read");
             
             Console.ReadKey();
         }
@@ -38,6 +39,11 @@ namespace TestEntryBlankModule
             {
                 Console.WriteLine("False to generate entry blank. {0}", generator.LastError);
             }
+        }
+
+        static void Read(String name)
+        {
+
         }
     }
 }

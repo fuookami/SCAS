@@ -123,6 +123,7 @@ namespace SCAS
                         row += 5;
                     }
 
+                    basicInfoWorksheet.Cells[1, 1, row, 6].Style.Numberformat.Format = "@";
                     basicInfoWorksheet.Cells[1, 1, row, 6].Style.Font.Name = "微软雅黑";
                     basicInfoWorksheet.Cells[1, 1, row, 6].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
 
@@ -134,6 +135,7 @@ namespace SCAS
                     }
                     row = temp;
 
+                    entryWorksheet.Cells[1, 1, row, 6].Style.Numberformat.Format = "@";
                     entryWorksheet.Cells[1, 1, row, 6].Style.Font.Name = "微软雅黑";
                     entryWorksheet.Cells[1, 1, row, 6].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
 
@@ -199,6 +201,7 @@ namespace SCAS
                         row += 5;
                     }
 
+                    basicInfoWorksheet.Cells[1, 1, row, 7].Style.Numberformat.Format = "@";
                     basicInfoWorksheet.Cells[1, 1, row, 7].Style.Font.Name = "微软雅黑";
                     basicInfoWorksheet.Cells[1, 1, row, 7].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
 
@@ -210,6 +213,7 @@ namespace SCAS
                     }
                     row = temp;
 
+                    entryWorksheet.Cells[1, 1, row, 6].Style.Numberformat.Format = "@";
                     entryWorksheet.Cells[1, 1, row, 6].Style.Font.Name = "微软雅黑";
                     entryWorksheet.Cells[1, 1, row, 6].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
 
@@ -266,6 +270,7 @@ namespace SCAS
                     {
                         sheet.Cells[row, 3].Value = item.Key;
                         sheet.Cells[row, 5].Value = item.SidKey;
+                        sheet.Cells[row, 6].Formula = String.Format("IF(D{0}<>\"\", VLOOKUP(D{0}, 基本信息!$C:$E, 3, FALSE ), \"\")", row);
                         ++row;
                     }
 
@@ -297,6 +302,7 @@ namespace SCAS
                         {
                             sheet.Cells[row, 3].Value = item.Key;
                             sheet.Cells[row, 5].Value = item.SidKey;
+                            sheet.Cells[row, 6].Formula = String.Format("IF(D{0}<>\"\", VLOOKUP(D{0}, 基本信息!$C:$E, 3, FALSE ), \"\")", row);
                             ++row;
                         }
                         
