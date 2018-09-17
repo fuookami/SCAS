@@ -10,7 +10,7 @@ namespace TestEntryBlankModule
             // Generate("test");
             Generate("FreshmanCupConf");
             Generate("IntercollegeCupConf");
-            Read("read");
+            Read("3");
             
             Console.ReadKey();
         }
@@ -43,7 +43,26 @@ namespace TestEntryBlankModule
 
         static void Read(String name)
         {
+            SCAS.CompetitionConfiguration.Analyzer confAnalyzer = new SCAS.CompetitionConfiguration.Analyzer();
+            if (confAnalyzer.Analyze(String.Format("IntercollegeCupConf.xml", name)))
+            {
+                Console.WriteLine("OK to read conf.");
+            }
+            else
+            {
+                Console.WriteLine("False to read conf. {0}", confAnalyzer.LastError);
+                return;
+            }
 
+            SCAS.EntryBlank.Analyzer analyzer = new SCAS.EntryBlank.Analyzer(confAnalyzer.Result);
+            if (analyzer.Analyze(String.Format("{0}.xlsx", name)))
+            {
+                Console.WriteLine("OK to read entry blank.");
+            }
+            else
+            {
+                Console.WriteLine("False to read entry blank.");
+            }
         }
     }
 }

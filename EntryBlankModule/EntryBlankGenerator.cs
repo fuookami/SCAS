@@ -47,7 +47,7 @@ namespace SCAS
                 return Generate(TargetUrl);
             }
 
-            public bool Generate(String targetUrl, bool export = true)
+            public bool Generate()
             {
                 if (Result == null)
                 {
@@ -90,6 +90,16 @@ namespace SCAS
                     }
 
                     Result = temp;
+                }
+
+                return true;
+            }
+
+            public bool Generate(String targetUrl, bool export = true)
+            {
+                if (!Generate())
+                {
+                    return false;
                 }
 
                 if (!export)
