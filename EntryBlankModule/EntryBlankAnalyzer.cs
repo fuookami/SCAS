@@ -99,6 +99,153 @@ namespace SCAS
                 }
                 blank.Team = team;
 
+                blank.TeamSubLeader.RemoveAll((element) => element.Optional);
+                Int32 row = 2;
+                while (worksheet.Cells[row, 1, row + 3, 1].Merge)
+                {
+                    String leaderTitle = worksheet.Cells[row, 1].Value.ToString();
+                    
+                    if (leaderTitle.StartsWith("领队"))
+                    {
+                        if (worksheet.Cells[row, 3].Value == null
+                            || worksheet.Cells[row + 1, 3].Value == null
+                            || worksheet.Cells[row + 2, 3].Value == null
+                            || worksheet.Cells[row + 3, 3].Value == null)
+                        {
+                            return false;
+                        }
+
+                        Leader leader = blank.TeamLeader;
+
+                        String name = worksheet.Cells[row, 3].Value.ToString();
+                        String sid = worksheet.Cells[row + 1, 3].Value.ToString();
+                        String telephone = worksheet.Cells[row + 2, 3].Value.ToString();
+                        String email = worksheet.Cells[row + 3, 3].Value.ToString();
+
+                        leader.Name = name;
+                        leader.Sid = sid;
+                        leader.Telephone = telephone;
+                        leader.EMail = email;
+                    }
+                    else if (leaderTitle.StartsWith("副领队"))
+                    {
+                        Leader subLeader = blank.TeamSubLeader.Find((element) => !element.Optional && element.Sid == null);
+
+                        if (worksheet.Cells[row, 3].Value == null
+                            || worksheet.Cells[row + 1, 3].Value == null
+                            || worksheet.Cells[row + 2, 3].Value == null
+                            || worksheet.Cells[row + 3, 3].Value == null)
+                        {
+                            if (subLeader != null)
+                            {
+                                return false;
+                            }
+                        }
+
+                        String name = worksheet.Cells[row, 3].Value.ToString();
+                        String sid = worksheet.Cells[row + 1, 3].Value.ToString();
+                        String telephone = worksheet.Cells[row + 2, 3].Value.ToString();
+                        String email = worksheet.Cells[row + 3, 3].Value.ToString();
+
+                        if (subLeader != null)
+                        {
+                            subLeader.Name = name;
+                            subLeader.Sid = sid;
+                            subLeader.Telephone = telephone;
+                            subLeader.EMail = email;
+                        }
+                        else
+                        {
+                            subLeader = new Leader(true);
+
+                            subLeader.Name = name;
+                            subLeader.Sid = sid;
+                            subLeader.Telephone = telephone;
+                            subLeader.EMail = email;
+
+                            blank.TeamSubLeader.Add(subLeader);
+                        }
+                    }
+                    else if (leaderTitle.StartsWith("教练"))
+                    {
+                        if (worksheet.Cells[row, 3].Value == null
+                            || worksheet.Cells[row + 1, 3].Value == null
+                            || worksheet.Cells[row + 2, 3].Value == null
+                            || worksheet.Cells[row + 3, 3].Value == null)
+                        {
+                            if (!blank.TeamCoach.Optional)
+                            {
+                                return false;
+                            }
+                            else
+                            {
+                                blank.TeamCoach = null;
+                            }
+                        }
+
+                        Leader coach = blank.TeamCoach;
+
+                        if (coach != null)
+                        {
+                            String name = worksheet.Cells[row, 3].Value.ToString();
+                            String sid = worksheet.Cells[row + 1, 3].Value.ToString();
+                            String telephone = worksheet.Cells[row + 2, 3].Value.ToString();
+                            String email = worksheet.Cells[row + 3, 3].Value.ToString();
+
+                            coach.Name = name;
+                            coach.Sid = sid;
+                            coach.Telephone = telephone;
+                            coach.EMail = email;
+                        }
+                    }
+                    else
+                    {
+                        break;
+                    }
+
+                    row += 4;
+                }
+
+                if (worksheet.Cells[row, 1].Value == null || worksheet.Cells[row, 1].Value.ToString() != "运动员报名表")
+                {
+                    return false;
+                }
+                row += 1;
+
+                String categoryTitle = "";
+                for (;row != maxRow; ++row)
+                {
+                    if (worksheet.Cells[row, 1].Value != null)
+                    {
+                        categoryTitle = worksheet.Cells[row, 1].Value.ToString();
+                    }
+
+                    if (worksheet.Cells[row, 3].Value != null && worksheet.Cells[row, 5].Value != null)
+                    {
+                        String name = worksheet.Cells[row, 3].Value.ToString();
+                        String sid = worksheet.Cells[row, 5].Value.ToString();
+
+                        if (Conf.CompetitionRankInfo.Enabled && !Conf.CompetitionRankInfo.Forced)
+                        {
+                            if (worksheet.Cells[row, 7].Value == null)
+                            {
+                                return false;
+                            }
+
+                            String rank = worksheet.Cells[row, 7].Value.ToString();
+                            blank.Athletes.Add(new Athlete(sid, name, categoryTitle, false, rank));
+                        }
+                        else
+                        {
+                            blank.Athletes.Add(new Athlete(sid, name, categoryTitle));
+                        }
+                    }
+                    else
+                    {
+                        continue;
+                    }
+                }
+
                 return true;
             }
 

@@ -6,7 +6,7 @@ namespace SCAS
 {
     namespace EntryBlank
     {
-        public class Athlete
+        public class Athlete : ICloneable
         {
             public String Sid
             {
@@ -18,7 +18,7 @@ namespace SCAS
                 get;
             }
 
-            public String Type
+            public String Category
             {
                 get;
             }
@@ -40,13 +40,18 @@ namespace SCAS
                 Optional = optional;
             }
 
-            internal Athlete(String sid, String name, String type, bool optional = false, String rank = "")
+            internal Athlete(String sid, String name, String category, bool optional = false, String rank = "")
             {
                 Sid = sid;
                 Name = name;
-                Type = type;
-                Optional = optional;
+                Category = category;
                 Rank = rank;
+                Optional = optional;
+            }
+
+            public Object Clone()
+            {
+                return new Athlete(Sid, Name, Category, Optional, Rank);
             }
         }
 
@@ -218,6 +223,7 @@ namespace SCAS
             public Leader TeamCoach
             {
                 get;
+                internal set;
             }
 
             public List<Athlete> Athletes
