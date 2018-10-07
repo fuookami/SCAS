@@ -101,6 +101,7 @@ namespace SCAS
                     basicInfoWorksheet.Row(row).Height = 20;
                     row += 1;
 
+                    Int32 infoBeginRow = row;
                     foreach (var category in Blank.Conf.AthleteCategories)
                     {
                         basicInfoWorksheet.Cells[row, 1].Value = category.Name;
@@ -120,21 +121,21 @@ namespace SCAS
                         row += 5;
                     }
 
-                    basicInfoWorksheet.Cells[1, 1, row, 6].Style.Numberformat.Format = "@";
-                    basicInfoWorksheet.Cells[1, 1, row, 6].Style.Font.Name = "微软雅黑";
-                    basicInfoWorksheet.Cells[1, 1, row, 6].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+                    basicInfoWorksheet.Cells[1, 1, row, 8].Style.Numberformat.Format = "@";
+                    basicInfoWorksheet.Cells[1, 1, row, 8].Style.Font.Name = "微软雅黑";
+                    basicInfoWorksheet.Cells[1, 1, row, 8].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
 
                     ExcelWorksheet entryWorksheet = package.Workbook.Worksheets.Add("报名表");
-                    Int32 temp = ExportEntries(entryWorksheet, 1, Blank);
+                    Int32 temp = ExportEntries(entryWorksheet, 1, Blank, infoBeginRow);
                     if (temp == 0)
                     {
                         return false;
                     }
                     row = temp;
 
-                    entryWorksheet.Cells[1, 1, row, 6].Style.Numberformat.Format = "@";
-                    entryWorksheet.Cells[1, 1, row, 6].Style.Font.Name = "微软雅黑";
-                    entryWorksheet.Cells[1, 1, row, 6].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+                    entryWorksheet.Cells[1, 1, row, 8].Style.Numberformat.Format = "@";
+                    entryWorksheet.Cells[1, 1, row, 8].Style.Font.Name = "微软雅黑";
+                    entryWorksheet.Cells[1, 1, row, 8].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
 
                     package.Save();
                 }
@@ -177,6 +178,7 @@ namespace SCAS
                     basicInfoWorksheet.Row(row).Height = 20;
                     row += 1;
 
+                    Int32 infoBeginRow = row;
                     foreach (var category in Blank.Conf.AthleteCategories)
                     {
                         basicInfoWorksheet.Cells[row, 1].Value = category.Name;
@@ -203,16 +205,16 @@ namespace SCAS
                     basicInfoWorksheet.Cells[1, 1, row, 7].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
 
                     ExcelWorksheet entryWorksheet = package.Workbook.Worksheets.Add("报名表");
-                    Int32 temp = ExportEntries(entryWorksheet, 1, Blank);
+                    Int32 temp = ExportEntries(entryWorksheet, 1, Blank, infoBeginRow);
                     if (temp == 0)
                     {
                         return false;
                     }
                     row = temp;
 
-                    entryWorksheet.Cells[1, 1, row, 6].Style.Numberformat.Format = "@";
-                    entryWorksheet.Cells[1, 1, row, 6].Style.Font.Name = "微软雅黑";
-                    entryWorksheet.Cells[1, 1, row, 6].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+                    entryWorksheet.Cells[1, 1, row, 8].Style.Numberformat.Format = "@";
+                    entryWorksheet.Cells[1, 1, row, 8].Style.Font.Name = "微软雅黑";
+                    entryWorksheet.Cells[1, 1, row, 8].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
 
                     package.Save();
                 };
@@ -241,7 +243,7 @@ namespace SCAS
                 worksheet.Cells[row + 3, 3, row + 3, rcol].Merge = true;
             }
 
-            private Int32 ExportEntries(ExcelWorksheet sheet, Int32 row, EntryBlank blank)
+            private Int32 ExportEntries(ExcelWorksheet sheet, Int32 row, EntryBlank blank, Int32 infoBeginRow)
             {
                 sheet.Column(1).Style.WrapText = true;
                 sheet.Column(1).Width = 16;
@@ -251,7 +253,7 @@ namespace SCAS
                 sheet.Cells[row, 1].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
                 sheet.Cells[row, 1].Style.Font.Bold = true;
                 sheet.Cells[row, 1].Style.Font.Size += 4;
-                sheet.Cells[row, 1, row, 6].Merge = true;
+                sheet.Cells[row, 1, row, 8].Merge = true;
                 sheet.Row(row).Height = 20;
                 row += 1;
 
@@ -267,7 +269,8 @@ namespace SCAS
                     {
                         sheet.Cells[row, 3].Value = item.Key;
                         sheet.Cells[row, 5].Value = item.SidKey;
-                        sheet.Cells[row, 6].Formula = String.Format("IF(D{0}<>\"\", VLOOKUP(D{0}, 基本信息!$C:$E, 3, FALSE ), \"\")", row);
+                        sheet.Cells[row, 6].Formula = String.Format("IF(D{0}<>\"\", VLOOKUP(D{0}, 基本信息!C{1}:E65536, 3, FALSE ), \"\")", row, infoBeginRow);
+                        sheet.Cells[row, 7].Value = "最好成绩（选填）";
                         ++row;
                     }
 
@@ -278,7 +281,7 @@ namespace SCAS
                 sheet.Cells[row, 1].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
                 sheet.Cells[row, 1].Style.Font.Bold = true;
                 sheet.Cells[row, 1].Style.Font.Size += 4;
-                sheet.Cells[row, 1, row, 6].Merge = true;
+                sheet.Cells[row, 1, row, 8].Merge = true;
                 sheet.Row(row).Height = 20;
                 row += 1;
 
@@ -290,23 +293,52 @@ namespace SCAS
                     sheet.Cells[row, 1].Style.Font.Bold = true;
                     sheet.Cells[row, 1].Style.Font.Size += 2;
 
-                    foreach (var itemList in entry.ItemLists)
+                    if (entry.ItemLists.Count == 1)
                     {
+                        var itemList = entry.ItemLists[0];
+
                         Int32 thisBgRow = row;
-                        sheet.Cells[row, 2].Value = itemList.Name;
 
                         foreach (var item in itemList.Items)
                         {
                             sheet.Cells[row, 3].Value = item.Key;
                             sheet.Cells[row, 5].Value = item.SidKey;
-                            sheet.Cells[row, 6].Formula = String.Format("IF(D{0}<>\"\", VLOOKUP(D{0}, 基本信息!$C:$E, 3, FALSE ), \"\")", row);
+                            sheet.Cells[row, 6].Formula = String.Format("IF(D{0}<>\"\", VLOOKUP(D{0}, 基本信息!C{1}:E65536, 3, FALSE ), \"\")", row, infoBeginRow);
                             ++row;
                         }
-                        
+
                         sheet.Cells[thisBgRow, 2, row - 1, 2].Merge = true;
+                        sheet.Cells[thisBgRow, 7].Value = "最好成绩（选填）";
+                        sheet.Cells[thisBgRow, 7].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                        sheet.Cells[thisBgRow, 7, row - 1, 7].Merge = true;
+                        sheet.Cells[thisBgRow, 8, row - 1, 8].Merge = true;
+
+                        sheet.Cells[bgRow, 1, row - 1, 2].Merge = true;
                     }
-                    
-                    sheet.Cells[bgRow, 1, row - 1, 1].Merge = true;
+                    else
+                    {
+                        foreach (var itemList in entry.ItemLists)
+                        {
+                            Int32 thisBgRow = row;
+                            sheet.Cells[row, 2].Value = itemList.Name;
+
+                            foreach (var item in itemList.Items)
+                            {
+                                sheet.Cells[row, 3].Value = item.Key;
+                                sheet.Cells[row, 5].Value = item.SidKey;
+                                sheet.Cells[row, 6].Formula = String.Format("IF(D{0}<>\"\", VLOOKUP(D{0}, 基本信息!C{1}:E65536, 3, FALSE ), \"\")", row, infoBeginRow);
+                                ++row;
+                            }
+
+                            sheet.Cells[thisBgRow, 2, row - 1, 2].Merge = true;
+                            sheet.Cells[thisBgRow, 7].Value = "最好成绩（选填）";
+                            sheet.Cells[thisBgRow, 7].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                            sheet.Cells[thisBgRow, 7, row - 1, 7].Merge = true;
+                            sheet.Cells[thisBgRow, 8, row - 1, 8].Merge = true;
+                        }
+
+                        sheet.Cells[bgRow, 1, row - 1, 1].Merge = true;
+                    }
                 }
 
                 return row;

@@ -116,6 +116,12 @@ namespace SCAS
                 set;
             }
 
+            public TimeSpan BestGrade
+            {
+                get;
+                set;
+            }
+
             public Athlete Value
             {
                 get;
@@ -143,11 +149,18 @@ namespace SCAS
                 set;
             }
 
+            public TimeSpan BestGrade
+            {
+                get;
+                set;
+            }
+
             internal EntryItemList(bool optional = false)
             {
                 Name = "";
                 Items = new List<EntryItem>();
                 Optional = optional;
+                BestGrade = new TimeSpan();
             }
         }
 
