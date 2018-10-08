@@ -106,7 +106,7 @@ namespace FreshmanCupConfigurationGenerator
 
                     gameInfo.GameSession = session;
                     gameInfo.OrderInEvent = new Order(0);
-                    gameInfo.OrderInSession = new Order(6);
+                    gameInfo.OrderInSession = new Order(0);
 
                     gameInfo.PlanIntervalTime = new TimeSpan(0, 3, 0);
                     gameInfo.PlanTimePerGroup = new TimeSpan(0, 1, 0);
@@ -138,7 +138,71 @@ namespace FreshmanCupConfigurationGenerator
 
                     gameInfo.GameSession = session;
                     gameInfo.OrderInEvent = new Order(0);
-                    gameInfo.OrderInSession = new Order(7);
+                    gameInfo.OrderInSession = new Order(1);
+
+                    gameInfo.PlanIntervalTime = new TimeSpan(0, 2, 0);
+                    gameInfo.PlanTimePerGroup = new TimeSpan(0, 3, 0);
+
+                    gameInfo.GameGroupInfo.Enabled = true;
+                    gameInfo.GameGroupInfo.NumberPerGroup.Set(8);
+                }
+            }
+
+            {
+                EventInfo eventInfo = ret.GenerateNewEventInfo();
+                eventInfo.Name = "女子25米蝶泳";
+
+                eventInfo.EventParticipantValidator.Categories.Add(category2);
+                eventInfo.EventParticipantValidator.NumberPerTeam.Set(0, 5);
+                
+                foreach (var team in ret.TeamInfos)
+                {
+                    eventInfo.EnabledTeams.Add(team);
+                }
+                eventInfo.EnabledTeams.Sort();
+
+                {
+                    GameInfo gameInfo = eventInfo.GameInfos.GenerateNewGameInfo();
+                    gameInfo.Name = String.Format("{0}预决赛", eventInfo.Name);
+
+                    gameInfo.Type = GameInfo.GameType.Finals;
+                    gameInfo.Pattern = GameInfo.GamePattern.Ranking;
+
+                    gameInfo.GameSession = session;
+                    gameInfo.OrderInEvent = new Order(0);
+                    gameInfo.OrderInSession = new Order(2);
+
+                    gameInfo.PlanIntervalTime = new TimeSpan(0, 3, 0);
+                    gameInfo.PlanTimePerGroup = new TimeSpan(0, 1, 0);
+
+                    gameInfo.GameGroupInfo.Enabled = true;
+                    gameInfo.GameGroupInfo.NumberPerGroup.Set(8);
+                }
+            }
+
+            {
+                EventInfo eventInfo = ret.GenerateNewEventInfo();
+                eventInfo.Name = "男子25米蝶泳";
+
+                eventInfo.EventParticipantValidator.Categories.Add(category1);
+                eventInfo.EventParticipantValidator.NumberPerTeam.Set(0, 5);
+
+                foreach (var team in ret.TeamInfos)
+                {
+                    eventInfo.EnabledTeams.Add(team);
+                }
+                eventInfo.EnabledTeams.Sort();
+
+                {
+                    GameInfo gameInfo = eventInfo.GameInfos.GenerateNewGameInfo();
+                    gameInfo.Name = String.Format("{0}预决赛", eventInfo.Name);
+
+                    gameInfo.Type = GameInfo.GameType.Finals;
+                    gameInfo.Pattern = GameInfo.GamePattern.Ranking;
+
+                    gameInfo.GameSession = session;
+                    gameInfo.OrderInEvent = new Order(0);
+                    gameInfo.OrderInSession = new Order(3);
 
                     gameInfo.PlanIntervalTime = new TimeSpan(0, 2, 0);
                     gameInfo.PlanTimePerGroup = new TimeSpan(0, 3, 0);
@@ -170,7 +234,7 @@ namespace FreshmanCupConfigurationGenerator
 
                     gameInfo.GameSession = session;
                     gameInfo.OrderInEvent = new Order(0);
-                    gameInfo.OrderInSession = new Order(0);
+                    gameInfo.OrderInSession = new Order(8);
 
                     gameInfo.PlanIntervalTime = new TimeSpan(0, 4, 0);
                     gameInfo.PlanTimePerGroup = new TimeSpan(0, 1, 0);
@@ -202,7 +266,7 @@ namespace FreshmanCupConfigurationGenerator
 
                     gameInfo.GameSession = session;
                     gameInfo.OrderInEvent = new Order(0);
-                    gameInfo.OrderInSession = new Order(1);
+                    gameInfo.OrderInSession = new Order(9);
 
                     gameInfo.PlanIntervalTime = new TimeSpan(0, 4, 0);
                     gameInfo.PlanTimePerGroup = new TimeSpan(0, 1, 0);
@@ -234,7 +298,7 @@ namespace FreshmanCupConfigurationGenerator
 
                     gameInfo.GameSession = session;
                     gameInfo.OrderInEvent = new Order(0);
-                    gameInfo.OrderInSession = new Order(2);
+                    gameInfo.OrderInSession = new Order(6);
 
                     gameInfo.PlanIntervalTime = new TimeSpan(0, 3, 0);
                     gameInfo.PlanTimePerGroup = new TimeSpan(0, 1, 0);
@@ -266,7 +330,7 @@ namespace FreshmanCupConfigurationGenerator
 
                     gameInfo.GameSession = session;
                     gameInfo.OrderInEvent = new Order(0);
-                    gameInfo.OrderInSession = new Order(3);
+                    gameInfo.OrderInSession = new Order(7);
 
                     gameInfo.PlanIntervalTime = new TimeSpan(0, 3, 0);
                     gameInfo.PlanTimePerGroup = new TimeSpan(0, 1, 0);
@@ -298,7 +362,7 @@ namespace FreshmanCupConfigurationGenerator
 
                     gameInfo.GameSession = session;
                     gameInfo.OrderInEvent = new Order(0);
-                    gameInfo.OrderInSession = new Order(7);
+                    gameInfo.OrderInSession = new Order(10);
 
                     gameInfo.PlanIntervalTime = new TimeSpan(0, 2, 0);
                     gameInfo.PlanTimePerGroup = new TimeSpan(0, 1, 0);
@@ -330,7 +394,7 @@ namespace FreshmanCupConfigurationGenerator
 
                     gameInfo.GameSession = session;
                     gameInfo.OrderInEvent = new Order(0);
-                    gameInfo.OrderInSession = new Order(8);
+                    gameInfo.OrderInSession = new Order(11);
 
                     gameInfo.PlanIntervalTime = new TimeSpan(0, 2, 0);
                     gameInfo.PlanTimePerGroup = new TimeSpan(0, 1, 0);
@@ -439,7 +503,7 @@ namespace FreshmanCupConfigurationGenerator
 
                     gameInfo.GameSession = session;
                     gameInfo.OrderInEvent = new Order(0);
-                    gameInfo.OrderInSession = new Order(10);
+                    gameInfo.OrderInSession = new Order(12);
 
                     gameInfo.PlanOffsetTime = new TimeSpan(0, 15, 0);
                     gameInfo.PlanIntervalTime = new TimeSpan(0, 5, 0);
@@ -485,7 +549,7 @@ namespace FreshmanCupConfigurationGenerator
 
                     gameInfo.GameSession = session;
                     gameInfo.OrderInEvent = new Order(0);
-                    gameInfo.OrderInSession = new Order(11);
+                    gameInfo.OrderInSession = new Order(13);
                     
                     gameInfo.PlanIntervalTime = new TimeSpan(0, 5, 0);
                     gameInfo.PlanTimePerGroup = new TimeSpan(0, 1, 0);
