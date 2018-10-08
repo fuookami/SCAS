@@ -153,7 +153,7 @@ namespace FreshmanCupConfigurationGenerator
                 eventInfo.Name = "女子25米蝶泳";
 
                 eventInfo.EventParticipantValidator.Categories.Add(category2);
-                eventInfo.EventParticipantValidator.NumberPerTeam.Set(0, 5);
+                eventInfo.EventParticipantValidator.NumberPerTeam.Set(0, 3);
                 
                 foreach (var team in ret.TeamInfos)
                 {
@@ -185,7 +185,7 @@ namespace FreshmanCupConfigurationGenerator
                 eventInfo.Name = "男子25米蝶泳";
 
                 eventInfo.EventParticipantValidator.Categories.Add(category1);
-                eventInfo.EventParticipantValidator.NumberPerTeam.Set(0, 5);
+                eventInfo.EventParticipantValidator.NumberPerTeam.Set(0, 3);
 
                 foreach (var team in ret.TeamInfos)
                 {
