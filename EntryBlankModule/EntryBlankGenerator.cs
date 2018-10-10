@@ -137,17 +137,31 @@ namespace SCAS
                 for (UInt32 i = 0; i != number; ++i)
                 {
                     Athlete athlete = new Athlete(false);
-                    if (eventConf.EventParticipantValidator.NumberPerTeam.Minimum != SSUtils.NumberRange.NoLimit
-                        && i >= eventConf.EventParticipantValidator.NumberPerTeam.Minimum)
+                    if (eventConf.EventParticipantValidator.NumberPerTeam.Minimum == SSUtils.NumberRange.NoLimit)
                     {
                         athlete.Optional = true;
-                    }
 
-                    entry.Items.Add(new EntryItem {
-                        Key = athlete.Optional ? (categoryNamesString + "(可选)") : categoryNamesString,
-                        SidKey = sidKeysString,
-                        Value = athlete
-                    });
+                        entry.Items.Add(new EntryItem
+                        {
+                            Key =categoryNamesString,
+                            SidKey = sidKeysString,
+                            Value = athlete
+                        });
+                    }
+                    else
+                    {
+                        if (i >= eventConf.EventParticipantValidator.NumberPerTeam.Minimum)
+                        {
+                            athlete.Optional = true;
+                        }
+                        
+                        entry.Items.Add(new EntryItem
+                        {
+                            Key = athlete.Optional ? (categoryNamesString + "(可选)") : categoryNamesString,
+                            SidKey = sidKeysString,
+                            Value = athlete
+                        });
+                    }
                 }
 
                 return entry;
@@ -333,11 +347,18 @@ namespace SCAS
                         Items = new List<EntryItem>(items),
                         Optional = false
                     };
-                    if (eventConf.EventParticipantValidator.NumberPerTeam.Minimum != SSUtils.NumberRange.NoLimit
-                        && i >= eventConf.EventParticipantValidator.NumberPerTeam.Minimum)
+
+                    if (eventConf.EventParticipantValidator.NumberPerTeam.Minimum == SSUtils.NumberRange.NoLimit)
                     {
                         itemList.Optional = true;
-                        itemList.Name += "(可选)";
+                    }
+                    else
+                    {
+                        if (i >= eventConf.EventParticipantValidator.NumberPerTeam.Minimum)
+                        {
+                            itemList.Optional = true;
+                            itemList.Name += "(可选)";
+                        }
                     }
 
                     entry.ItemLists.Add(itemList);

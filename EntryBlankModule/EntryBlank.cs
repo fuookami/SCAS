@@ -21,6 +21,7 @@ namespace SCAS
             public String Category
             {
                 get;
+                set;
             }
 
             public String Rank
@@ -40,7 +41,7 @@ namespace SCAS
                 Optional = optional;
             }
 
-            internal Athlete(String sid, String name, String category, bool optional = false, String rank = "")
+            internal Athlete(String sid, String name, String category = "", bool optional = false, String rank = "")
             {
                 Sid = sid;
                 Name = name;
@@ -102,7 +103,7 @@ namespace SCAS
             }
         }
 
-        public struct EntryItem
+        public class EntryItem
         {
             public String Key
             {
@@ -129,7 +130,7 @@ namespace SCAS
             }
         }
 
-        public struct EntryItemList
+        public class EntryItemList
         {
             public String Name
             {
