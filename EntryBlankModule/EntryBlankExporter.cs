@@ -9,9 +9,9 @@ namespace SCAS
     {
         public class Exporter : ErrorStorer
         {
-            private EntryBlank _blank;
+            private Blank _blank;
 
-            public EntryBlank Blank
+            public Blank Blank
             {
                 get
                 {
@@ -29,7 +29,7 @@ namespace SCAS
                 set;
             }
 
-            public Exporter(EntryBlank blank, String targetUrl = "")
+            public Exporter(Blank blank, String targetUrl = "")
             {
                 _blank = blank;
                 TargetUrl = targetUrl;
@@ -243,7 +243,7 @@ namespace SCAS
                 worksheet.Cells[row + 3, 3, row + 3, rcol].Merge = true;
             }
 
-            private Int32 ExportEntries(ExcelWorksheet sheet, Int32 row, EntryBlank blank, Int32 infoBeginRow)
+            private Int32 ExportEntries(ExcelWorksheet sheet, Int32 row, Blank blank, Int32 infoBeginRow)
             {
                 sheet.Column(1).Style.WrapText = true;
                 sheet.Column(1).Width = 16;

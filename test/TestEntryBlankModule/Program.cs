@@ -45,7 +45,7 @@ namespace TestEntryBlankModule
         static void Read(String name)
         {
             SCAS.CompetitionConfiguration.Analyzer confAnalyzer = new SCAS.CompetitionConfiguration.Analyzer();
-            if (confAnalyzer.Analyze(String.Format("IntercollegeCupConf.xml", name)))
+            if (confAnalyzer.Analyze("IntercollegeCupConf.xml"))
             {
                 Console.WriteLine("OK to read conf.");
             }

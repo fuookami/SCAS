@@ -11,7 +11,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CompetitionConfigurationModule\CompetitionConfigurationModule.csproj" />
-    <ProjectReference Include="..\CompetitionDataModule\CompetitionDataModule.csproj" />
   </ItemGroup>
 
 </Project>

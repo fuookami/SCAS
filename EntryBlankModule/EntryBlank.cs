@@ -211,7 +211,7 @@ namespace SCAS
             }
         }
 
-        public class EntryBlank
+        public class Blank
         {
             public CompetitionInfo Conf
             {
@@ -255,7 +255,7 @@ namespace SCAS
                 get;
             }
 
-            internal EntryBlank(CompetitionInfo conf)
+            internal Blank(CompetitionInfo conf)
             {
                 Conf = conf;
                 Team = null;
@@ -267,7 +267,7 @@ namespace SCAS
                 TeamworkEntries = new List<TeamworkEntry>();
             }
 
-            internal EntryBlank(CompetitionInfo conf, String teamId)
+            internal Blank(CompetitionInfo conf, String teamId)
             {
                 Conf = conf;
                 Team = conf.TeamInfos.Find((element) => element.Id == teamId) ?? throw new Exception("没有该ID对应的队伍");

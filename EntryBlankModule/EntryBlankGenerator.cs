@@ -24,7 +24,7 @@ namespace SCAS
                 }
             }
 
-            public EntryBlank Result
+            public Blank Result
             {
                 get;
                 private set;
@@ -51,7 +51,7 @@ namespace SCAS
             {
                 if (Result == null)
                 {
-                    EntryBlank temp = new EntryBlank(_conf);
+                    Blank temp = new Blank(_conf);
 
                     for (Int32 i = 0, j = (Int32)_conf.NumberOfSubLeader.Minimum; i != j; ++i)
                     {

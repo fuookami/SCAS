@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\CompetitionConfigurationModule\CompetitionConfigurationModule.csproj" />
+    <ProjectReference Include="..\..\CompetitionDataModule\CompetitionDataModule.csproj" />
+    <ProjectReference Include="..\..\EntryBlankModule\EntryBlankModule.csproj" />
+  </ItemGroup>
+
+</Project>

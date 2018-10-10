@@ -8,7 +8,7 @@ namespace SCAS
 {
     namespace EntryBlank
     {
-        public class Analyzer
+        public class Analyzer : ErrorStorer
         {
             private CompetitionInfo _conf;
 
@@ -25,7 +25,7 @@ namespace SCAS
                 }
             }
 
-            public EntryBlank Result
+            public Blank Result
             {
                 get;
                 private set;
@@ -52,7 +52,7 @@ namespace SCAS
                     {
                         return false;
                     }
-                    EntryBlank temp = generator.Result;
+                    Blank temp = generator.Result;
 
                     FileInfo file = new FileInfo(targetUrl);
                     if (!file.Exists)
@@ -75,7 +75,7 @@ namespace SCAS
                 return true;
             }
 
-            private bool AnalyzeBasicInfo(ExcelWorksheet worksheet, EntryBlank blank)
+            private bool AnalyzeBasicInfo(ExcelWorksheet worksheet, Blank blank)
             {
                 int maxRow = worksheet.Dimension.End.Row;
                 int maxColumn = worksheet.Dimension.End.Column;
@@ -254,7 +254,7 @@ namespace SCAS
                 return true;
             }
 
-            private bool AnalyzeEntryBlank(ExcelWorksheet worksheet, EntryBlank blank)
+            private bool AnalyzeEntryBlank(ExcelWorksheet worksheet, Blank blank)
             {
                 int maxRow = worksheet.Dimension.End.Row;
                 int maxColumn = worksheet.Dimension.End.Column;
@@ -371,7 +371,7 @@ namespace SCAS
                 return true;
             }
 
-            private bool TidyUpEntryBlank(EntryBlank blank)
+            private bool TidyUpEntryBlank(Blank blank)
             {
                 foreach (var entry in blank.PersonalEntries)
                 {
