@@ -91,19 +91,26 @@ namespace SCAS
 
         public class TeamInfoPool : TeamInfoList
         {
-            public TeamInfo GenerateNewInfo(TeamCategory teamCategory, String existedId = null)
+            public TeamInfo GenerateNewInfo(TeamCategory teamCategory, Int32 existedOrder = -1, String existedId = null)
             {
                 UInt32 order = 0;
-                for (; order != UInt32.MaxValue; ++order)
+                if (Find((ele) => ele.Order.Equals(existedOrder)) == null)
                 {
-                    if (this.Find((ele) => ele.Order.Equals(order)) == null)
-                    {
-                        break;
-                    }
+                    order = (UInt32)existedOrder;
                 }
-                if (order == UInt32.MaxValue)
+                else
                 {
-                    throw new Exception("队伍信息的序号已经满额，无法再分配");
+                    for (; order != UInt32.MaxValue; ++order)
+                    {
+                        if (Find((ele) => ele.Order.Equals(order)) == null)
+                        {
+                            break;
+                        }
+                    }
+                    if (order == UInt32.MaxValue)
+                    {
+                        throw new Exception("队伍信息的序号已经满额，无法再分配");
+                    }
                 }
                 var element = new TeamInfo(teamCategory, existedId ?? Guid.NewGuid().ToString("N"), new SSUtils.Order((Int32)order));
                 Add(element);

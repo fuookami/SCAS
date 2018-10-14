@@ -20,6 +20,8 @@ namespace IntercollegeCupConfigurationGenerator
             {
                 Console.WriteLine("False to write. {0}", normalizer.LastError);
             }
+
+            Console.ReadKey();
         }
 
         static CompetitionInfo GenerateIntercollegeCupCompetitionInfoTemplate()
@@ -82,28 +84,28 @@ namespace IntercollegeCupConfigurationGenerator
 
             ret.TeamCategories.GenerateNewCategory().Name = "普通队";
 
-            List<Tuple<String, String>> teamInfos = new List<Tuple<String, String>>
+            List<Tuple<String, String, Int32>> teamInfos = new List<Tuple<String, String, Int32>>
             {
-                new Tuple<String, String>("一院", "航空宇航学院"),
-                new Tuple<String, String>("二院", "能源动力学院"),
-                new Tuple<String, String>("三院", "自动化学院"),
-                new Tuple<String, String>("四院", "电子信息工程学院"),
-                new Tuple<String, String>("五院", "机电学院"),
-                new Tuple<String, String>("六院", "材料科学与技术学院"),
-                new Tuple<String, String>("七院", "民航飞行学院"),
-                new Tuple<String, String>("八院", "理学院"),
-                new Tuple<String, String>("九院", "经济与管理学院"),
-                new Tuple<String, String>("十院", "人文学院"),
-                new Tuple<String, String>("十一院", "艺术学院"),
-                new Tuple<String, String>("十二院", "外国语学院"),
-                new Tuple<String, String>("十五院", "航天学院"),
-                new Tuple<String, String>("十六院", "计算机科学与技术学院"),
-                new Tuple<String, String>("十九院", "国际教育学院"),
-                new Tuple<String, String>("继教院", "继续教育学院")
+                new Tuple<String, String, Int32>("一院", "航空宇航学院", 1),
+                new Tuple<String, String, Int32>("二院", "能源动力学院", 2),
+                new Tuple<String, String, Int32>("三院", "自动化学院", 3),
+                new Tuple<String, String, Int32>("四院", "电子信息工程学院", 4),
+                new Tuple<String, String, Int32>("五院", "机电学院", 5),
+                new Tuple<String, String, Int32>("六院", "材料科学与技术学院", 6),
+                new Tuple<String, String, Int32>("七院", "民航飞行学院", 7),
+                new Tuple<String, String, Int32>("八院", "理学院", 8),
+                new Tuple<String, String, Int32>("九院", "经济与管理学院", 9),
+                new Tuple<String, String, Int32>("十院", "人文学院", 10),
+                new Tuple<String, String, Int32>("十一院", "艺术学院", 11),
+                new Tuple<String, String, Int32>("十二院", "外国语学院", 12),
+                new Tuple<String, String, Int32>("十五院", "航天学院", 15),
+                new Tuple<String, String, Int32>("十六院", "计算机科学与技术学院", 16),
+                new Tuple<String, String, Int32>("十九院", "国际教育学院", 19),
+                new Tuple<String, String, Int32>("继教院", "继续教育学院", 20)
             };
             foreach (var info in teamInfos)
             {
-                var teamInfo = ret.TeamInfos.GenerateNewInfo(ret.TeamCategories[0]);
+                var teamInfo = ret.TeamInfos.GenerateNewInfo(ret.TeamCategories[0], info.Item3);
                 teamInfo.ShortName = info.Item1;
                 teamInfo.Name = info.Item2;
             }

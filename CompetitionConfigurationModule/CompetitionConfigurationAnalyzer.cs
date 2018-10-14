@@ -167,6 +167,9 @@ namespace SCAS
                         useLines.Add(UInt32.Parse(useLineString));
                     }
                     temp.SetLineConfiguration(useLines, UInt32.Parse(displayBeginLineNode.InnerText), UInt32.Parse(numberOfDisplayLinesNode.InnerText));
+
+                    XmlElement randomNode = (XmlElement)root.GetElementsByTagName("AllRandomIfNoAllBestGrade")[0];
+                    temp.AllRandomIfNoAllBestGrade = Boolean.Parse(randomNode.InnerText);
                 }
 
                 foreach (var analyzezeFunction in AnalyzeCompetitionInfoFunctions)
@@ -488,7 +491,7 @@ namespace SCAS
                         return false;
                     }
 
-                    TeamInfo newTeam = teams.GenerateNewInfo(category, teamNode.GetAttribute("id"));
+                    TeamInfo newTeam = teams.GenerateNewInfo(category, Int32.Parse(teamNode.GetAttribute("order")), teamNode.GetAttribute("id"));
                     XmlElement nameNode = (XmlElement)teamNode.GetElementsByTagName("Name")[0];
                     XmlElement shortNameNode = (XmlElement)teamNode.GetElementsByTagName("ShortName")[0];
                     newTeam.Name = nameNode.InnerText;

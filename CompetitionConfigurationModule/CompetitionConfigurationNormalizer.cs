@@ -146,6 +146,10 @@ namespace SCAS
                     XmlElement useLinesNode = doc.CreateElement("UseLines");
                     useLinesNode.AppendChild(doc.CreateTextNode(String.Join(", ", _outputData.UseLines)));
                     root.AppendChild(useLinesNode);
+
+                    XmlElement randomNode = doc.CreateElement("AllRandomIfNoAllBestGrade");
+                    randomNode.AppendChild(doc.CreateTextNode(_outputData.AllRandomIfNoAllBestGrade.ToString()));
+                    root.AppendChild(randomNode);
                 }
 
                 foreach (var normalizeFunction in NormalizeCompetitionInfoFunctions)
@@ -461,6 +465,7 @@ namespace SCAS
                 {
                     XmlElement teamNode = doc.CreateElement("Team");
                     teamNode.SetAttribute("id", team.Id);
+                    teamNode.SetAttribute("order", team.Order.Value.ToString());
 
                     XmlElement nameNode = doc.CreateElement("Name");
                     nameNode.AppendChild(doc.CreateTextNode(team.Name));

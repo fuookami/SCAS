@@ -168,6 +168,12 @@ namespace SCAS
                 }
             }
 
+            public Boolean AllRandomIfNoAllBestGrade
+            {
+                get;
+                set;
+            }
+
             public List<EventInfo> EventInfos
             {
                 get;
@@ -202,6 +208,7 @@ namespace SCAS
 
                 _useLines = new List<UInt32>();
                 SetLineConfiguration();
+                AllRandomIfNoAllBestGrade = false;
 
                 GameInfos = new Dictionary<Session, GameInfoList>();
                 EventInfos = new List<EventInfo>();
