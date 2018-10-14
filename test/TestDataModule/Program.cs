@@ -10,12 +10,12 @@ namespace TestDataModule
             var data1 = Generate1();
             if (data1 != null)
             {
-
+                TestWriteAndReadData(data1, "IntercollegeCup.xml");
             }
             var data2 = Generate2();
             if (data2 != null)
             {
-
+                TestWriteAndReadData(data2, "FreshmanCup.xml");
             }
 
             Console.ReadKey();
@@ -108,6 +108,20 @@ namespace TestDataModule
             }
 
             return generator.Result;
+        }
+
+        static void TestWriteAndReadData(SCAS.CompetitionData.Competition data, String name)
+        {
+            SCAS.CompetitionData.Normalizer normalizer = new SCAS.CompetitionData.Normalizer(data);
+            if (normalizer.NormalizeToFile(name))
+            {
+                Console.WriteLine("OK to write data.");
+            }
+            else
+            {
+                Console.WriteLine("False to read data. {0}", normalizer.LastError);
+                return;
+            }
         }
     }
 }

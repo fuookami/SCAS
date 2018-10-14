@@ -19,7 +19,10 @@ namespace SCAS
 
             public CompetitionInfo Data
             {
-                get { return _outputData; }
+                get
+                {
+                    return _outputData;
+                }
                 set
                 {
                     _outputData = value ?? throw new Exception("设置的要输出的比赛信息是个无效值");
