@@ -7,7 +7,16 @@ namespace TestDataModule
     {
         static void Main(string[] args)
         {
-            Generate();
+            var data1 = Generate1();
+            if (data1 != null)
+            {
+
+            }
+            var data2 = Generate2();
+            if (data2 != null)
+            {
+
+            }
 
             Console.ReadKey();
         }
@@ -27,7 +36,7 @@ namespace TestDataModule
             return analyzer.Result;
         }
 
-        static void Generate()
+        static SCAS.CompetitionData.Competition Generate1()
         {
             SCAS.CompetitionConfiguration.Analyzer confAnalyzer = new SCAS.CompetitionConfiguration.Analyzer();
             if (confAnalyzer.Analyze("IntercollegeCupConf.xml"))
@@ -37,7 +46,7 @@ namespace TestDataModule
             else
             {
                 Console.WriteLine("False to read conf. {0}", confAnalyzer.LastError);
-                return;
+                return null;
             }
 
             var conf = confAnalyzer.Result;
@@ -60,6 +69,45 @@ namespace TestDataModule
             {
                 Console.WriteLine("False to generate data. {0}", generator.LastError);
             }
+
+            return generator.Result;
+        }
+
+        static SCAS.CompetitionData.Competition Generate2()
+        {
+            SCAS.CompetitionConfiguration.Analyzer confAnalyzer = new SCAS.CompetitionConfiguration.Analyzer();
+            if (confAnalyzer.Analyze("FreshmanCupConf.xml"))
+            {
+                Console.WriteLine("OK to read conf.");
+            }
+            else
+            {
+                Console.WriteLine("False to read conf. {0}", confAnalyzer.LastError);
+                return null;
+            }
+
+            var conf = confAnalyzer.Result;
+            SCAS.CompetitionData.Generator generator = new SCAS.CompetitionData.Generator(conf, "");
+            List<String> readTargets = new List<String> { "1", "3", "4", "5", "6", "7", "8", "9", "11", "12", "15", "16" };
+            foreach (var target in readTargets)
+            {
+                var blank = ReadBlank("2", target, conf);
+                if (blank != null)
+                {
+                    generator.EntryBlanks.Add(blank);
+                }
+            }
+
+            if (generator.Generate())
+            {
+                Console.WriteLine("Ok to generate data.");
+            }
+            else
+            {
+                Console.WriteLine("False to generate data. {0}", generator.LastError);
+            }
+
+            return generator.Result;
         }
     }
 }

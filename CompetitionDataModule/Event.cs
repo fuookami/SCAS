@@ -29,8 +29,7 @@ namespace SCAS
             {
                 get;
             }
-
-            public Event(EventInfo conf, Grade matchRecord)
+            public Event(EventInfo conf, Grade matchRecord = null)
             {
                 Conf = conf;
                 MatchRecord = matchRecord;

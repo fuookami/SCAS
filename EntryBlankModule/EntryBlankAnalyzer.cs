@@ -384,6 +384,11 @@ namespace SCAS
                         {
                             item.Value = athlete;
                         }
+                        else
+                        {
+                            blank.Athletes.Add(item.Value);
+                            athlete = item.Value;
+                        }
 
                         if (athlete.Category == null || athlete.Category.Length == 0)
                         {
@@ -393,6 +398,39 @@ namespace SCAS
                             if (category != null)
                             {
                                 athlete.Category = category.Name;
+                            }
+                        }
+                    }
+                }
+
+                foreach (var entry in blank.TeamworkEntries)
+                {
+                    foreach (var items in entry.ItemLists)
+                    {
+                        foreach (var item in items.Items)
+                        {
+                            var sid = item.Value.Sid;
+
+                            var athlete = blank.Athletes.Find((ele) => ele.Sid == sid);
+                            if (athlete != null)
+                            {
+                                item.Value = athlete;
+                            }
+                            else
+                            {
+                                blank.Athletes.Add(item.Value);
+                                athlete = item.Value;
+                            }
+
+                            if (athlete.Category == null || athlete.Category.Length == 0)
+                            {
+                                String categoryName = item.Key;
+                                var category = blank.Conf.AthleteCategories.Find((ele) => ele.Name == categoryName);
+
+                                if (category != null)
+                                {
+                                    athlete.Category = category.Name;
+                                }
                             }
                         }
                     }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading;
+using System.Linq;
 using System.Globalization;
 using SCAS.CompetitionConfiguration;
 
@@ -80,12 +81,35 @@ namespace SCAS
                 Id = existedId;
                 Code = code;
                 BelogingTeam = team;
+                Grades = new Dictionary<Event, Dictionary<Game, Grade>>();
+                Points = new Dictionary<Event, Point>();
             }
 
             public int CompareTo(object obj)
             {
                 Athlete rhs = (Athlete)obj;
-                int ret = Category.CompareTo(rhs.Category);
+                if (Code == null || rhs.Code == null)
+                {
+                    if (Code == null && rhs.Code == null)
+                    {
+                        return 0;
+                    }
+                    else if (rhs.Code == null)
+                    {
+                        return 1;
+                    }
+                    else
+                    {
+                        return -1;
+                    }
+                }
+                int ret = Code.CompareTo(rhs.Code);
+                if (ret != 0)
+                {
+                    return ret;
+                }
+
+                ret = Category.CompareTo(rhs.Category);
                 if (ret != 0)
                 {
                     return ret;
@@ -114,7 +138,14 @@ namespace SCAS
 
             public Athlete GenerateNewAthlete(String existedId = null)
             {
-                return new Athlete(this._team);
+                var ret = new Athlete(this._team);
+                if (existedId == null)
+                {
+                    existedId = Guid.NewGuid().ToString("N");
+                }
+                ret.Id = existedId;
+                Add(existedId, ret);
+                return ret;
             }
 
             public void TidyUpCodes()
@@ -135,7 +166,10 @@ namespace SCAS
                     athleteList.Sort();
                     foreach (var athlete in athleteList)
                     {
-                        athlete.Code = NextCode() ?? throw new Exception("运动员的序号已经满额，无法再分配");
+                        if (athlete.Code == null)
+                        {
+                            athlete.Code = NextCode() ?? throw new Exception("运动员的序号已经满额，无法再分配");
+                        }
                         Add(athlete.Code, athlete);
                     }
                 }
@@ -146,14 +180,19 @@ namespace SCAS
                 for (UInt32 nextOrder = 1; nextOrder != UInt32.MaxValue; ++nextOrder)
                 {
                     String code = String.Format("{0}{1:D2}", _prefixCode, nextOrder);
-                    foreach (Athlete athlete in Values)
+                    if (Values.Count == 0)
                     {
-                        if (athlete.Code != code)
+                        return code;
+                    }
+                    else
+                    {
+                        if (!Values.Any((ele) => ele.Code == code))
                         {
                             return code;
                         }
                     }
                 }
+
                 return null;
             }
         }

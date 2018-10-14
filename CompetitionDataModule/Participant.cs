@@ -29,10 +29,17 @@ namespace SCAS
                 get;
                 set;
             }
+            
+            public TimeSpan BestGrade
+            {
+                get;
+                set;
+            }
 
             public Participant(Team team, List<Athlete> athletesInOrder)
             {
                 ParticipantTeam = team;
+                BestGrade = TimeSpan.Zero;
                 Set(athletesInOrder);
             }
 

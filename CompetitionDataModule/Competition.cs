@@ -25,7 +25,7 @@ namespace SCAS
                 internal set;
             }
 
-            public Dictionary<Session, Game> Games
+            public Dictionary<Session, List<Game>> Games
             {
                 get;
                 internal set;
@@ -42,7 +42,7 @@ namespace SCAS
                 Conf = conf;
                 FieldInfos = new Dictionary<Session, FieldInfo>();
                 Events = new List<Event>();
-                Games = new Dictionary<Session, Game>();
+                Games = new Dictionary<Session, List<Game>>();
                 Teams = new List<Team>();
             }
         }

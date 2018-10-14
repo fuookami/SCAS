@@ -71,7 +71,14 @@ namespace SCAS
             {
                 get
                 {
-                    //! to do: 
+                    UInt32 ret = 0;
+                    foreach (var pointList in Points)
+                    {
+                        foreach (var point in pointList.Value)
+                        {
+                            ret += point.PointValue;
+                        }
+                    }
                     return 0;
                 }
             }
