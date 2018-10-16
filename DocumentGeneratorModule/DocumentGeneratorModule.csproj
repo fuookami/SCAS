@@ -8,4 +8,10 @@
     <PackageReference Include="DotNetCore.NPOI" Version="1.2.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\CompetitionConfigurationModule\CompetitionConfigurationModule.csproj" />
+    <ProjectReference Include="..\CompetitionDataModule\CompetitionDataModule.csproj" />
+    <ProjectReference Include="..\SSUtils\SSUtils.csproj" />
+  </ItemGroup>
+
 </Project>

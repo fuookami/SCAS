@@ -70,6 +70,16 @@ namespace TestDataModule
                 Console.WriteLine("False to generate data. {0}", generator.LastError);
             }
 
+            SCAS.DocumentGenerator.ProgramExporter exporter = new SCAS.DocumentGenerator.ProgramExporter(generator.Result, "IntercollegeCup.docx");
+            if (exporter.Export())
+            {
+                Console.WriteLine("Ok to export data.");
+            }
+            else
+            {
+                Console.WriteLine("False to export data. {0}", exporter.LastError);
+            }
+
             return generator.Result;
         }
 
@@ -105,6 +115,16 @@ namespace TestDataModule
             else
             {
                 Console.WriteLine("False to generate data. {0}", generator.LastError);
+            }
+
+            SCAS.DocumentGenerator.ProgramExporter exporter = new SCAS.DocumentGenerator.ProgramExporter(generator.Result, "FreshmanCup.docx");
+            if (exporter.Export())
+            {
+                Console.WriteLine("Ok to export data.");
+            }
+            else
+            {
+                Console.WriteLine("False to export data. {0}", exporter.LastError);
             }
 
             return generator.Result;
