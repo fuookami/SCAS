@@ -14,12 +14,6 @@ namespace SCAS
             private AthleteCategory _category;
             private AthleteRank _rank;
 
-            public String Name
-            {
-                get;
-                set;
-            }
-
             public String Id
             {
                 get;
@@ -27,6 +21,12 @@ namespace SCAS
             }
 
             public String Sid
+            {
+                get;
+                set;
+            }
+
+            public String Name
             {
                 get;
                 set;

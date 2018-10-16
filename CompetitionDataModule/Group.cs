@@ -17,17 +17,18 @@ namespace SCAS
                 get;
             }
 
-            public Grade ParticipatorGrade
+            public Grade ParticipantGrade
             {
-                get;
-                set;
+                get
+                {
+                    return LineParticipant.ParticipantGrade;
+                }
             }
 
             public Line(UInt32 order, Participant participant)
             {
                 Order = new SSUtils.Order((Int32)order);
                 LineParticipant = participant;
-                ParticipatorGrade = new Grade(participant);
             }
         }
 

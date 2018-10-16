@@ -13,7 +13,7 @@ namespace SCAS
                 private set;
             }
 
-            public Grade MatchRecord
+            public RecordGrade MatchRecord
             {
                 get;
                 set;
@@ -29,7 +29,7 @@ namespace SCAS
             {
                 get;
             }
-            public Event(EventInfo conf, Grade matchRecord = null)
+            public Event(EventInfo conf, RecordGrade matchRecord = null)
             {
                 Conf = conf;
                 MatchRecord = matchRecord;

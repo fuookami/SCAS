@@ -6,9 +6,9 @@ namespace SCAS
 {
     namespace CompetitionData
     {
-        public class Grade
+        public class GradeBase
         {
-            public enum Code
+            public enum Code : Int32
             {
                 None = 0,
                 Normal = 1,
@@ -29,16 +29,15 @@ namespace SCAS
                 private set;
             }
 
-            public Participant GradeParticipator
+            protected GradeBase()
+                : this(Code.None, TimeSpan.Zero)
             {
-                get;
             }
 
-            public Grade(Participant participator)
+            protected GradeBase(Code code, TimeSpan time)
             {
-                GradeCode = Code.None;
-                Time = new TimeSpan();
-                GradeParticipator = participator;
+                GradeCode = code;
+                Time = time;
             }
 
             public void Set(Code code, TimeSpan time = new TimeSpan())
@@ -63,5 +62,70 @@ namespace SCAS
                 return code == Code.Normal || code == Code.MR;
             }
         }
+
+        public class RecordGrade : GradeBase
+        {
+            public Tuple<String, String, UInt32> Competition
+            {
+                get;
+            }
+
+            public Tuple<String, String> Event
+            {
+                get;
+            }
+
+            public Tuple<String, String> Game
+            {
+                get;
+            }
+
+            public String ParticipantId
+            {
+                get;
+            }
+
+            public List<Tuple<String, String, String>> Athletes
+            {
+                get;
+            }
+
+            public RecordGrade(Tuple<String, String, UInt32> competitionIdNameOrderPair, Tuple<String, String> eventIdNamePair, Tuple<String, String> gameIdNamePair, String participantId, Tuple<String, String, String> athlete, Code code, TimeSpan time)
+                : base(code, time)
+            {
+                Competition = competitionIdNameOrderPair;
+                Event = eventIdNamePair;
+                Game = gameIdNamePair;
+                ParticipantId = participantId;
+                Athletes = new List<Tuple<String, String, String>>
+                {
+                    athlete
+                };
+            }
+
+            public RecordGrade(Tuple<String, String, UInt32> competitionIdNameOrderPair, Tuple<String, String> eventIdNamePair, Tuple<String, String> gameIdNamePair, String participantId, List<Tuple<String, String, String>> athletes, Code code, TimeSpan time)
+                : base(code, time)
+            {
+                Competition = competitionIdNameOrderPair;
+                Event = eventIdNamePair;
+                Game = gameIdNamePair;
+                ParticipantId = participantId;
+                Athletes = athletes;
+            }
+        };
+
+        public class Grade : GradeBase
+        {
+            public Participant GradeParticipator
+            {
+                get;
+            }
+
+            public Grade(Participant participant, Code code = Code.None, TimeSpan time = new TimeSpan())
+                : base(code, time)
+            {
+                GradeParticipator = participant;
+            }
+        };
     };
 };

@@ -7,6 +7,12 @@ namespace SCAS
     {
         public class Participant
         {
+            public String Id
+            {
+                get;
+                internal set;
+            }
+
             public Team ParticipantTeam
             {
                 get;
@@ -18,7 +24,7 @@ namespace SCAS
                 private set;
             }
 
-            public Map<Athlete, SSUtils.Order> OrdersOfAthletes
+            public Dictionary<Athlete, SSUtils.Order> OrdersOfAthletes
             {
                 get;
                 private set;
@@ -36,9 +42,11 @@ namespace SCAS
                 set;
             }
 
-            public Participant(Team team, List<Athlete> athletesInOrder)
+            public Participant(Team team, List<Athlete> athletesInOrder, String existedId = null)
             {
+                Id = existedId ?? Guid.NewGuid().ToString("N");
                 ParticipantTeam = team;
+                ParticipantGrade = new Grade(this);
                 BestGrade = TimeSpan.Zero;
                 Set(athletesInOrder);
             }
@@ -47,7 +55,7 @@ namespace SCAS
             {
                 Athletes = athletesInOrder ?? throw new Exception("设置的参赛运动员为无效值");
 
-                OrdersOfAthletes = new Map<Athlete, SSUtils.Order>();
+                OrdersOfAthletes = new Dictionary<Athlete, SSUtils.Order>();
                 for (Int32 i = 0, j = athletesInOrder.Count; i != j; ++i)
                 {
                     OrdersOfAthletes.Add(athletesInOrder[i], new SSUtils.Order(i));
