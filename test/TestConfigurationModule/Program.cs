@@ -45,14 +45,14 @@ namespace TestConfigurationModule
 
             SessionPool sessions = new SessionPool();
             sessions.AddDate(Date.Today);
-            var todaySession1 = sessions.GenerateNewSession(Date.Today);
+            var todaySession1 = sessions.GenerateNewSession(Date.Today, new TimeSpan(9, 0, 0));
             todaySession1.Name = "上半场";
             todaySession1.FullName = String.Format("{0}月{1}日 上半场", Date.Today.Month, Date.Today.Day);
-            var todaySession2 = sessions.GenerateNewSession(Date.Today);
+            var todaySession2 = sessions.GenerateNewSession(Date.Today, new TimeSpan(14, 0, 0));
             todaySession2.Name = "下半场";
             todaySession2.FullName = String.Format("{0}月{1}日 下半场", Date.Today.Month, Date.Today.Day);
             sessions.AddDate(Date.Today.Tomorrow);
-            var tomorrowSession1 = sessions.GenerateNewSession(Date.Today.Tomorrow);
+            var tomorrowSession1 = sessions.GenerateNewSession(Date.Today.Tomorrow, new TimeSpan(9, 0, 0));
             tomorrowSession1.Name = "上半场";
             tomorrowSession1.FullName = String.Format("{0}月{1}日 上半场", Date.Today.Tomorrow.Month, Date.Today.Tomorrow.Day);
             ret.Sessions = sessions;

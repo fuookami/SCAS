@@ -62,12 +62,12 @@ namespace FreshmanCupConfigurationGenerator
 
             ret.Field = "南京航空航天大学（江宁校区）游泳馆";
             
-            var category1 = ret.AthleteCategories.GenerateNewCategory();
-            category1.Name = "学生男子";
-            category1.SidKey = "学号";
             var category2 = ret.AthleteCategories.GenerateNewCategory();
             category2.Name = "学生女子";
             category2.SidKey = "学号";
+            var category1 = ret.AthleteCategories.GenerateNewCategory();
+            category1.Name = "学生男子";
+            category1.SidKey = "学号";
 
             ret.TeamCategories.GenerateNewCategory().Name = "普通队";
 

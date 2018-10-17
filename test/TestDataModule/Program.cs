@@ -50,7 +50,7 @@ namespace TestDataModule
             }
 
             var conf = confAnalyzer.Result;
-            SCAS.CompetitionData.Generator generator = new SCAS.CompetitionData.Generator(conf, "");
+             SCAS.CompetitionData.Generator generator = new SCAS.CompetitionData.Generator(conf, "");
             List<String> readTargets = new List<String> { "1", "3", "4", "5", "6", "7", "8", "9", "11", "12", "15", "16" };
             foreach (var target in readTargets)
             {

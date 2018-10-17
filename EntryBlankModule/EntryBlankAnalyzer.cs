@@ -302,7 +302,7 @@ namespace SCAS
 
                 foreach (var entry in blank.PersonalEntries)
                 {
-                    entry.Items.RemoveAll((ele) => ele.Value == null);
+                    entry.Items.RemoveAll((ele) => ele.Value == null || ele.Value.Sid == null || ele.Value.Sid.Length == 0);
                 }
                 
                 ++row;
@@ -350,7 +350,7 @@ namespace SCAS
                 {
                     foreach (var list in entry.ItemLists)
                     {
-                        var validItem = list.Items.Find((ele) => !ele.Value.Optional && ele.Value.Sid == null);
+                        var validItem = list.Items.Find((ele) => !ele.Value.Optional && (ele.Value.Sid == null || ele.Value.Sid.Length == 0));
                         if (!list.Optional && validItem != null)
                         {
                             return false;
@@ -361,7 +361,7 @@ namespace SCAS
                         }
                         else
                         {
-                            list.Items.RemoveAll((ele) => !ele.Value.Optional && ele.Value.Sid.Length == 0);
+                            list.Items.RemoveAll((ele) => !ele.Value.Optional && (ele.Value.Sid == null || ele.Value.Sid.Length == 0));
                         }
                     }
 
