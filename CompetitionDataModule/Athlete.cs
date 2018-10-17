@@ -150,27 +150,29 @@ namespace SCAS
 
             public void TidyUpCodes()
             {
-                Dictionary<AthleteCategory, List<Athlete>> athletes = new Dictionary<AthleteCategory, List<Athlete>>();
+                Dictionary<AthleteCategory, Int32> index = new Dictionary<AthleteCategory, int>();
+                List<Tuple<AthleteCategory, List<Athlete>>> athletes = new List<Tuple<AthleteCategory, List<Athlete>>>();
+
                 foreach (var athlete in Values)
                 {
-                    if (!athletes.ContainsKey(athlete.Category))
+                    if (!index.ContainsKey(athlete.Category))
                     {
-                        athletes.Add(athlete.Category, new List<Athlete>());
+                        index.Add(athlete.Category, athletes.Count);
+                        athletes.Add(new Tuple<AthleteCategory, List<Athlete>>(athlete.Category, new List<Athlete>()));
                     }
-                    athletes[athlete.Category].Add(athlete);
+                    athletes[index[athlete.Category]].Item2.Add(athlete);
                 }
 
-                Clear();
-                foreach (var athleteList in athletes.Values)
+                athletes.Sort((lhs, rhs) => lhs.Item1.CompareTo(rhs.Item1));
+                foreach (var athleteList in athletes)
                 {
-                    athleteList.Sort();
-                    foreach (var athlete in athleteList)
+                    athleteList.Item2.Sort();
+                    foreach (var athlete in athleteList.Item2)
                     {
                         if (athlete.Code == null)
                         {
                             athlete.Code = NextCode() ?? throw new Exception("运动员的序号已经满额，无法再分配");
                         }
-                        Add(athlete.Code, athlete);
                     }
                 }
             }

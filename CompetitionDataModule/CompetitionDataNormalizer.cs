@@ -267,6 +267,14 @@ namespace SCAS
                 XmlElement root = doc.CreateElement("Participant");
                 root.SetAttribute("id", participant.Id);
                 root.SetAttribute("teamId", participant.ParticipantTeam.Conf.Id);
+                root.SetAttribute("orderInTeam", participant.OrderInTeam.Value.ToString());
+
+                if (participant.Name != null && participant.Name.Length != 0)
+                {
+                    XmlElement nameNode = doc.CreateElement("Name");
+                    nameNode.AppendChild(doc.CreateTextNode(participant.Name));
+                    root.AppendChild(nameNode);
+                }
 
                 XmlElement athletesNode = doc.CreateElement("Athletes");
                 foreach (var athlete in participant.Athletes)

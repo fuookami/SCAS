@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using SSUtils;
 
 namespace SCAS
 {
@@ -13,9 +14,21 @@ namespace SCAS
                 internal set;
             }
 
+            public String Name
+            {
+                get;
+                internal set;
+            }
+
             public Team ParticipantTeam
             {
                 get;
+            }
+
+            public Order OrderInTeam
+            {
+                get;
+                internal set;
             }
 
             public List<Athlete> Athletes
@@ -45,6 +58,8 @@ namespace SCAS
             public Participant(Team team, List<Athlete> athletesInOrder, String existedId = null)
             {
                 Id = existedId ?? Guid.NewGuid().ToString("N");
+                Name = "";
+                OrderInTeam = new Order();
                 ParticipantTeam = team;
                 ParticipantGrade = new Grade(this);
                 BestGrade = TimeSpan.Zero;

@@ -17,7 +17,7 @@ namespace SCAS
             private String _rankTableUrl;
             Dictionary<EntryBlank.Athlete, Athlete> _blankAthlete2DataAthlete;
             private Dictionary<Event, List<Tuple<Team, EntryItem>>> _personalEntry;
-            private Dictionary<Event, List<Tuple<Team, EntryItemList>>> _teamworkEntry;
+            private Dictionary<Event, Dictionary<Team, List<EntryItemList>>> _teamworkEntry;
 
             static Generator()
             {
@@ -53,7 +53,7 @@ namespace SCAS
                 _rankTableUrl = rankTableUrl;
                 _blankAthlete2DataAthlete = new Dictionary<EntryBlank.Athlete, Athlete>();
                 _personalEntry = new Dictionary<Event, List<Tuple<Team, EntryItem>>>();
-                _teamworkEntry = new Dictionary<Event, List<Tuple<Team, EntryItemList>>>();
+                _teamworkEntry = new Dictionary<Event, Dictionary<Team, List<EntryItemList>>>();
                 EntryBlanks = new List<Blank>();
                 Result = null;
             }
@@ -97,7 +97,7 @@ namespace SCAS
                     }
                     else
                     {
-                        _teamworkEntry.Add(eventTemp, new List<Tuple<Team, EntryItemList>>());
+                        _teamworkEntry.Add(eventTemp, new Dictionary<Team, List<EntryItemList>>());
                     }
                     eventTemp.Games.Sort((lhs, rhs) => lhs.Conf.OrderInEvent.CompareTo(rhs.Conf.OrderInEvent));
                     temp.Events.Add(eventTemp);
@@ -253,7 +253,11 @@ namespace SCAS
                     }
                     foreach (var teamworkEntryItem in teamworkEntry.ItemLists)
                     {
-                        _teamworkEntry[eventData].Add(new Tuple<Team, EntryItemList>(temp, teamworkEntryItem));
+                        if (!_teamworkEntry[eventData].ContainsKey(temp))
+                        {
+                            _teamworkEntry[eventData].Add(temp, new List<EntryItemList>());
+                        }
+                        _teamworkEntry[eventData][temp].Add(teamworkEntryItem);
                     }
                 }
 
@@ -305,20 +309,47 @@ namespace SCAS
                 var entries = _teamworkEntry[eventData];
                 var participants = new List<Participant>();
 
-                foreach (var entry in entries)
+                foreach (var entryList in entries)
                 {
-                    List<Athlete> athletes = new List<Athlete>();
-                    foreach (var item in entry.Item2.Items)
+                    var team = entryList.Key;
+                    if (entryList.Value.Count == 1)
                     {
-                        if (_blankAthlete2DataAthlete[item.Value] == null)
+                        List<Athlete> athletes = new List<Athlete>();
+                        var entry = entryList.Value[0];
+                        foreach (var item in entry.Items)
                         {
-                            return false;
+                            if (_blankAthlete2DataAthlete[item.Value] == null)
+                            {
+                                return false;
+                            }
+                            athletes.Add(_blankAthlete2DataAthlete[item.Value]);
                         }
-                        athletes.Add(_blankAthlete2DataAthlete[item.Value]);
+                        Participant temp = new Participant(team, athletes);
+                        temp.Name = team.Conf.ShortName;
+                        temp.BestGrade = entry.BestGrade;
+                        participants.Add(temp);
                     }
-                    Participant temp = new Participant(entry.Item1, athletes);
-                    temp.BestGrade = entry.Item2.BestGrade;
-                    participants.Add(temp);
+                    else
+                    {
+                        Int32 index = 0;
+                        foreach (var entry in entryList.Value)
+                        {
+                            List<Athlete> athletes = new List<Athlete>();
+                            foreach (var item in entry.Items)
+                            {
+                                if (_blankAthlete2DataAthlete[item.Value] == null)
+                                {
+                                    return false;
+                                }
+                                athletes.Add(_blankAthlete2DataAthlete[item.Value]);
+                            }
+                            Participant temp = new Participant(team, athletes);
+                            temp.Name = team.Conf.ShortName + entry.Name;
+                            temp.OrderInTeam = new SSUtils.Order(index++);
+                            temp.BestGrade = entry.BestGrade;
+                            participants.Add(temp);
+                        }
+                    }
                 }
 
                 var groups = GenerateGroups(firstGame.Conf.GameGroupInfo, participants);
@@ -393,7 +424,7 @@ namespace SCAS
                 Int32 i = 0;
                 if (groupNumber <= 3)
                 {
-                    for (Int32 j = -1; participantList[i].BestGrade != TimeSpan.Zero; ++i, --j)
+                    for (Int32 j = -1, k = participantList.Count; i != k && participantList[i].BestGrade != TimeSpan.Zero; ++i, --j)
                     {
                         j = j == -1 ? groupNumber - 1 : j;
                         var thisParticipant = participantList[i];
@@ -403,7 +434,7 @@ namespace SCAS
                 }
                 else
                 {
-                    for (Int32 j = groupNumber - 4; participantList[i].BestGrade != TimeSpan.Zero; ++i, --j)
+                    for (Int32 j = groupNumber - 4, k = participantList.Count; i != k && participantList[i].BestGrade != TimeSpan.Zero; ++i, --j)
                     {
                         j = j == (groupNumber - 4) ? groupNumber - 1 : j;
                         var thisParticipant = participantList[i];
