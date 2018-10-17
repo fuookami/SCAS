@@ -73,11 +73,11 @@ namespace TestDataModule
             SCAS.DocumentGenerator.ProgramExporter exporter = new SCAS.DocumentGenerator.ProgramExporter(generator.Result, "IntercollegeCup.docx");
             if (exporter.Export())
             {
-                Console.WriteLine("Ok to export data.");
+                Console.WriteLine("Ok to export program.");
             }
             else
             {
-                Console.WriteLine("False to export data. {0}", exporter.LastError);
+                Console.WriteLine("False to export program. {0}", exporter.LastError);
             }
 
             return generator.Result;
@@ -120,11 +120,11 @@ namespace TestDataModule
             SCAS.DocumentGenerator.ProgramExporter exporter = new SCAS.DocumentGenerator.ProgramExporter(generator.Result, "FreshmanCup.docx");
             if (exporter.Export())
             {
-                Console.WriteLine("Ok to export data.");
+                Console.WriteLine("Ok to export program.");
             }
             else
             {
-                Console.WriteLine("False to export data. {0}", exporter.LastError);
+                Console.WriteLine("False to export program. {0}", exporter.LastError);
             }
 
             return generator.Result;
