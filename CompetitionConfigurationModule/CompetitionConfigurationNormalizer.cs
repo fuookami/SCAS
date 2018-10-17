@@ -50,6 +50,7 @@ namespace SCAS
 
                 NormalizeCompetitionInfoFunctions = new List<NormalizeInfoFunctionType<CompetitionInfo>>
                 {
+                    NormalizeRegulationInfo,
                     NormalizeEntryValidator,
                     NormalizePrincipalInfo,
                     NormalizePublicPointInfo,
@@ -288,6 +289,60 @@ namespace SCAS
                 return root;
             }
 
+            private XmlElement NormalizeRegulationInfo(XmlDocument doc, CompetitionInfo outputData)
+            {
+                RegulationInfo data = outputData.CompetitionRegulationInfo;
+                XmlElement regulationInfoNode = doc.CreateElement("RegulationInfo");
+
+                XmlElement organizersNode = doc.CreateElement("Organizers");
+                foreach (var organizer in data.Organizers)
+                {
+                    XmlElement organizerNode = doc.CreateElement("Organizer");
+                    organizerNode.AppendChild(doc.CreateTextNode(organizer));
+                    organizersNode.AppendChild(organizerNode);
+                }
+                regulationInfoNode.AppendChild(organizersNode);
+
+                XmlElement undertakersNode = doc.CreateElement("Undertakers");
+                foreach (var undertaker in data.Undertakers)
+                {
+                    XmlElement undertakerNode = doc.CreateElement("Undertaker");
+                    undertakerNode.AppendChild(doc.CreateTextNode(undertaker));
+                    undertakersNode.AppendChild(undertakerNode);
+                }
+                regulationInfoNode.AppendChild(undertakersNode);
+
+                XmlElement coorganizersNode = doc.CreateElement("Coorganizers");
+                foreach (var coorganizer in data.Coorganizers)
+                {
+                    XmlElement coorganizerNode = doc.CreateElement("Coorganizer");
+                    coorganizerNode.AppendChild(doc.CreateTextNode(coorganizer));
+                    coorganizersNode.AppendChild(coorganizerNode);
+                }
+                regulationInfoNode.AppendChild(coorganizersNode);
+
+                XmlElement plansNode = doc.CreateElement("Plans");
+                foreach (var plan in data.Plans)
+                {
+                    XmlElement planNode = doc.CreateElement("Plan");
+                    planNode.SetAttribute("key", plan.Item1);
+                    planNode.AppendChild(doc.CreateTextNode(plan.Item2));
+                    plansNode.AppendChild(planNode);
+                }
+                regulationInfoNode.AppendChild(plansNode);
+
+                XmlElement contestantsNode = doc.CreateElement("Contestants");
+                foreach (var contestant in data.Contestants)
+                {
+                    XmlElement contestantNode = doc.CreateElement("Contestant");
+                    contestantNode.AppendChild(doc.CreateTextNode(contestant));
+                    contestantsNode.AppendChild(contestantNode);
+                }
+                regulationInfoNode.AppendChild(contestantsNode);
+
+                return regulationInfoNode;
+            }
+
             private XmlElement NormalizeEntryValidator(XmlDocument doc, CompetitionInfo outputData)
             {
                 EntryValidator data = outputData.CompetitionEntryValidator;
@@ -388,6 +443,10 @@ namespace SCAS
                         XmlElement fullNameNode = doc.CreateElement("FullName");
                         fullNameNode.AppendChild(doc.CreateTextNode(session.FullName));
                         sessionNode.AppendChild(fullNameNode);
+
+                        XmlElement beginTimeNode = doc.CreateElement("BeginTime");
+                        beginTimeNode.AppendChild(doc.CreateTextNode(session.BeginTime.ToString()));
+                        sessionNode.AppendChild(beginTimeNode);
 
                         sessionsNode.AppendChild(sessionNode);
                     }

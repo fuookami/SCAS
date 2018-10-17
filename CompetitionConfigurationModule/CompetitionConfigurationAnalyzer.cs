@@ -46,6 +46,7 @@ namespace SCAS
 
                 AnalyzeCompetitionInfoFunctions = new List<AnalyzeNodeFunctionType<CompetitionInfo>>
                 {
+                    AnalyzeRegulationInfoNode,
                     AnalyzeEntryValidatorNode,
                     AnalyzePrincipleNode,
                     AnalyzePublicPointInfoNode,
@@ -294,6 +295,49 @@ namespace SCAS
                 return true;
             }
 
+            private bool AnalyzeRegulationInfoNode(XmlElement parent, CompetitionInfo data)
+            {
+                XmlElement node = (XmlElement)parent.GetElementsByTagName("RegulationInfo")[0];
+                RegulationInfo ret = data.CompetitionRegulationInfo;
+                
+                XmlElement organizersNode = (XmlElement)node.GetElementsByTagName("Organizers")[0];
+                var organizerNodes = organizersNode.GetElementsByTagName("Organizer");
+                foreach (XmlElement organizerNode in organizerNodes)
+                {
+                    ret.Organizers.Add(organizerNode.InnerText);
+                }
+
+                XmlElement undertakersNode = (XmlElement)node.GetElementsByTagName("Undertakers")[0];
+                var undertakerNodes = undertakersNode.GetElementsByTagName("Undertaker");
+                foreach (XmlElement undertakerNode in undertakerNodes)
+                {
+                    ret.Undertakers.Add(undertakerNode.InnerText);
+                }
+
+                XmlElement coorganizersNode = (XmlElement)node.GetElementsByTagName("Coorganizers")[0];
+                var coorganizerNodes = coorganizersNode.GetElementsByTagName("Coorganizer");
+                foreach (XmlElement coorganizerNode in coorganizerNodes)
+                {
+                    ret.Coorganizers.Add(coorganizerNode.InnerText);
+                }
+
+                XmlElement plansNode = (XmlElement)node.GetElementsByTagName("Plans")[0];
+                var planNodes = plansNode.GetElementsByTagName("Plan");
+                foreach (XmlElement planNode in planNodes)
+                {
+                    ret.Plans.Add(new Tuple<String, String>(planNode.GetAttribute("key"), planNode.InnerText));
+                }
+
+                XmlElement contestantsNode = (XmlElement)node.GetElementsByTagName("Contestants")[0];
+                var contestantNodes = contestantsNode.GetElementsByTagName("Contestant");
+                foreach (XmlElement contestantNode in contestantNodes)
+                {
+                    ret.Contestants.Add(contestantNode.InnerText);
+                }
+
+                return true;
+            }
+
             private bool AnalyzeEntryValidatorNode(XmlElement parent, CompetitionInfo data)
             {
                 XmlElement node = (XmlElement)parent.GetElementsByTagName("ApplicationValidator")[0];
@@ -388,7 +432,9 @@ namespace SCAS
 
                 foreach (XmlElement sessionNode in sessionNodes)
                 {
-                    Session session = new Session(Date.Parse(sessionNode.GetAttribute("date")), new SSUtils.Order(Int32.Parse(sessionNode.GetAttribute("order"))));
+                    XmlElement beginTimeNode = (XmlElement)sessionNode.GetElementsByTagName("BeginTime")[0];
+
+                    Session session = new Session(Date.Parse(sessionNode.GetAttribute("date")), TimeSpan.Parse(beginTimeNode.InnerText), new SSUtils.Order(Int32.Parse(sessionNode.GetAttribute("order"))));
 
                     XmlElement nameNode = (XmlElement)sessionNode.GetElementsByTagName("Name")[0];
                     session.Name = nameNode.InnerText;

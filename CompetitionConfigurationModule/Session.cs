@@ -30,15 +30,23 @@ namespace SCAS
                 set;
             }
 
-            internal Session(Date sessionDate, UInt32 order)
+            public TimeSpan BeginTime
+            {
+                get;
+                set;
+            }
+
+            internal Session(Date sessionDate, TimeSpan beginTime, UInt32 order)
             {
                 SessionDate = sessionDate;
+                BeginTime = beginTime;
                 OrderInDate = new SSUtils.Order((Int32)order);
             }
 
-            internal Session(Date sessionDate, SSUtils.Order order = new SSUtils.Order())
+            internal Session(Date sessionDate, TimeSpan beginTime, SSUtils.Order order = new SSUtils.Order())
             {
                 SessionDate = sessionDate;
+                BeginTime = beginTime;
                 OrderInDate = order;
             }
         }
@@ -84,10 +92,10 @@ namespace SCAS
                 }
             }
 
-            public Session GenerateNewSession(Date date)
+            public Session GenerateNewSession(Date date, TimeSpan beginTime)
             {
                 AddDate(date);
-                Session ret = new Session(date, GetNextOrder(date));
+                Session ret = new Session(date, beginTime, GetNextOrder(date));
                 this[date].Add(ret);
                 return ret;
             }

@@ -31,6 +31,17 @@ namespace FreshmanCupConfigurationGenerator
             ret.Name = "南京航空航天大学第X届“新生杯”游泳比赛";
             ret.EntryClosingDate = new Date(2018, 10, 21);
 
+            ret.CompetitionRegulationInfo.Organizers.Add("南京航空航天大学体育部");
+            ret.CompetitionRegulationInfo.Undertakers.Add("南京航空航天大学学生会");
+            ret.CompetitionRegulationInfo.Undertakers.Add("南京航空航天大学游泳协会");
+            ret.CompetitionRegulationInfo.Coorganizers.Add("南京航空航天大学（江宁校区）游泳馆");
+            ret.CompetitionRegulationInfo.Plans.Add(new Tuple<String, String>("8:00 - 8:50", "游泳池开放给运动员热身"));
+            ret.CompetitionRegulationInfo.Plans.Add(new Tuple<String, String>("8:50 - 9:00", "游泳池清池准备比赛，第一个项目开始检录"));
+            ret.CompetitionRegulationInfo.Plans.Add(new Tuple<String, String>("9:00整", "当天第一个项目第一组开赛"));
+            ret.CompetitionRegulationInfo.Plans.Add(new Tuple<String, String>("11:00前", "完成当天所有项目的比赛"));
+            ret.CompetitionRegulationInfo.Plans.Add(new Tuple<String, String>("12:00前", "完成当天所有项目的奖牌、奖状颁发以及场地收拾"));
+            ret.CompetitionRegulationInfo.Contestants.Add("南京航空航天大学各院系");
+
             ret.CompetitionPrincipalInfo.Name = "负责人的姓名";
             ret.CompetitionPrincipalInfo.Telephone = "负责人的手机";
             ret.CompetitionPrincipalInfo.Email = "负责人的邮箱@xxx.xx";
@@ -46,7 +57,7 @@ namespace FreshmanCupConfigurationGenerator
             SessionPool sessions = ret.Sessions;
             Date date = new Date(2018, 10, 27);
             sessions.AddDate(date);
-            var session = sessions.GenerateNewSession(date);
+            var session = sessions.GenerateNewSession(date, new TimeSpan(9, 0, 0));
             session.FullName = String.Format("{0}月{1}日", date.Month, date.Day);
 
             ret.Field = "南京航空航天大学（江宁校区）游泳馆";

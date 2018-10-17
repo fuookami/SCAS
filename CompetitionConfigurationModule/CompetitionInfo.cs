@@ -70,6 +70,11 @@ namespace SCAS
                 set;
             }
 
+            public RegulationInfo CompetitionRegulationInfo
+            {
+                get;
+            }
+
             public EntryValidator CompetitionEntryValidator
             {
                 get;
@@ -196,6 +201,7 @@ namespace SCAS
                 NumberOfSubLeader = new SSUtils.NumberRange(1, 2);
                 CoachOptional = false;
 
+                CompetitionRegulationInfo = new RegulationInfo();
                 CompetitionEntryValidator = new EntryValidator();
                 CompetitionPrincipalInfo = new PrincipalInfo();
                 PublicPointInfo = new PointInfo();
