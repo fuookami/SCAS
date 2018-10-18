@@ -153,6 +153,16 @@ namespace SCAS
                     }
                 }
 
+                foreach (var eventData in temp.Events)
+                {
+                    if (eventData.Games[0].Groups.Count == 0)
+                    {
+                        foreach (var gameList in temp.Games)
+                        {
+                            gameList.Value.RemoveAll((ele) => ele.Conf.Event.Id == eventData.Conf.Id);
+                        }
+                    }
+                }
                 temp.Events.RemoveAll((ele) =>
                 {
                     return ele.Games[0].Groups.Count == 0;
@@ -371,6 +381,11 @@ namespace SCAS
 
             private List<Group> GenerateGroups(GroupInfo conf, List<Participant> participantList)
             {
+                if (participantList.Count == 0)
+                {
+                    return new List<Group>();
+                }
+
                 List<List<Participant>> participantLists = new List<List<Participant>>();
                 if (!conf.Enabled)
                 {

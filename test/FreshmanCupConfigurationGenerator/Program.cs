@@ -75,7 +75,7 @@ namespace FreshmanCupConfigurationGenerator
             List<Tuple<String, String, Int32>> teamInfos = new List<Tuple<String, String, Int32>>
             {
                 new Tuple<String, String, Int32>("一院", "航空宇航学院", 1),
-                new Tuple<String, String, Int32>("二院", "能源动力学院", 2),
+                new Tuple<String, String, Int32>("二院", "能源与动力学院", 2),
                 new Tuple<String, String, Int32>("三院", "自动化学院", 3),
                 new Tuple<String, String, Int32>("四院", "电子信息工程学院", 4),
                 new Tuple<String, String, Int32>("五院", "机电学院", 5),

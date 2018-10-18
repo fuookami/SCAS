@@ -109,19 +109,19 @@ namespace SCAS
                     if (leaderTitle.StartsWith("领队"))
                     {
                         if (worksheet.Cells[row, 3].Value == null
-                            || worksheet.Cells[row + 1, 3].Value == null
-                            || worksheet.Cells[row + 2, 3].Value == null
-                            || worksheet.Cells[row + 3, 3].Value == null)
+                            && worksheet.Cells[row + 1, 3].Value == null
+                            && worksheet.Cells[row + 2, 3].Value == null
+                            && worksheet.Cells[row + 3, 3].Value == null)
                         {
                             return false;
                         }
 
                         Leader leader = blank.TeamLeader;
 
-                        String name = worksheet.Cells[row, 3].Value.ToString();
-                        String sid = worksheet.Cells[row + 1, 3].Value.ToString();
-                        String telephone = worksheet.Cells[row + 2, 3].Value.ToString();
-                        String email = worksheet.Cells[row + 3, 3].Value.ToString();
+                        String name = worksheet.Cells[row, 3].Value == null ? "" : worksheet.Cells[row, 3].Value.ToString();
+                        String sid = worksheet.Cells[row + 1, 3].Value == null ? "" : worksheet.Cells[row + 1, 3].Value.ToString();
+                        String telephone = worksheet.Cells[row + 2, 3].Value == null ? "" : worksheet.Cells[row + 2, 3].Value.ToString();
+                        String email = worksheet.Cells[row + 3, 3].Value == null ? "" : worksheet.Cells[row + 3, 3].Value.ToString();
 
                         leader.Name = name;
                         leader.Sid = sid;
@@ -133,9 +133,9 @@ namespace SCAS
                         Leader subLeader = blank.TeamSubLeader.Find((element) => !element.Optional && element.Sid == null);
 
                         if (worksheet.Cells[row, 3].Value == null
-                            || worksheet.Cells[row + 1, 3].Value == null
-                            || worksheet.Cells[row + 2, 3].Value == null
-                            || worksheet.Cells[row + 3, 3].Value == null)
+                            && worksheet.Cells[row + 1, 3].Value == null
+                            && worksheet.Cells[row + 2, 3].Value == null
+                            && worksheet.Cells[row + 3, 3].Value == null)
                         {
                             if (subLeader != null)
                             {
@@ -144,10 +144,10 @@ namespace SCAS
                         }
                         else
                         {
-                            String name = worksheet.Cells[row, 3].Value.ToString();
-                            String sid = worksheet.Cells[row + 1, 3].Value.ToString();
-                            String telephone = worksheet.Cells[row + 2, 3].Value.ToString();
-                            String email = worksheet.Cells[row + 3, 3].Value.ToString();
+                            String name = worksheet.Cells[row, 3].Value == null ? "" : worksheet.Cells[row, 3].Value.ToString();
+                            String sid = worksheet.Cells[row + 1, 3].Value == null ? "" : worksheet.Cells[row + 1, 3].Value.ToString();
+                            String telephone = worksheet.Cells[row + 2, 3].Value == null ? "" : worksheet.Cells[row + 2, 3].Value.ToString();
+                            String email = worksheet.Cells[row + 3, 3].Value == null ? "" : worksheet.Cells[row + 3, 3].Value.ToString();
 
                             if (subLeader != null)
                             {
@@ -172,9 +172,9 @@ namespace SCAS
                     else if (leaderTitle.StartsWith("教练"))
                     {
                         if (worksheet.Cells[row, 3].Value == null
-                            || worksheet.Cells[row + 1, 3].Value == null
-                            || worksheet.Cells[row + 2, 3].Value == null
-                            || worksheet.Cells[row + 3, 3].Value == null)
+                            && worksheet.Cells[row + 1, 3].Value == null
+                            && worksheet.Cells[row + 2, 3].Value == null
+                            && worksheet.Cells[row + 3, 3].Value == null)
                         {
                             if (!blank.TeamCoach.Optional)
                             {
@@ -191,10 +191,10 @@ namespace SCAS
 
                             if (coach != null)
                             {
-                                String name = worksheet.Cells[row, 3].Value.ToString();
-                                String sid = worksheet.Cells[row + 1, 3].Value.ToString();
-                                String telephone = worksheet.Cells[row + 2, 3].Value.ToString();
-                                String email = worksheet.Cells[row + 3, 3].Value.ToString();
+                                String name = worksheet.Cells[row, 3].Value == null ? "" : worksheet.Cells[row, 3].Value.ToString();
+                                String sid = worksheet.Cells[row + 1, 3].Value == null ? "" : worksheet.Cells[row + 1, 3].Value.ToString();
+                                String telephone = worksheet.Cells[row + 2, 3].Value == null ? "" : worksheet.Cells[row + 2, 3].Value.ToString();
+                                String email = worksheet.Cells[row + 3, 3].Value == null ? "" : worksheet.Cells[row + 3, 3].Value.ToString();
 
                                 coach.Name = name;
                                 coach.Sid = sid;

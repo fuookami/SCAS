@@ -98,7 +98,7 @@ namespace IntercollegeCupConfigurationGenerator
             List<Tuple<String, String, Int32>> teamInfos = new List<Tuple<String, String, Int32>>
             {
                 new Tuple<String, String, Int32>("一院", "航空宇航学院", 1),
-                new Tuple<String, String, Int32>("二院", "能源动力学院", 2),
+                new Tuple<String, String, Int32>("二院", "能源与动力学院", 2),
                 new Tuple<String, String, Int32>("三院", "自动化学院", 3),
                 new Tuple<String, String, Int32>("四院", "电子信息工程学院", 4),
                 new Tuple<String, String, Int32>("五院", "机电学院", 5),
@@ -106,7 +106,7 @@ namespace IntercollegeCupConfigurationGenerator
                 new Tuple<String, String, Int32>("七院", "民航飞行学院", 7),
                 new Tuple<String, String, Int32>("八院", "理学院", 8),
                 new Tuple<String, String, Int32>("九院", "经济与管理学院", 9),
-                new Tuple<String, String, Int32>("十院", "人文学院", 10),
+                new Tuple<String, String, Int32>("十院", "人文与社会科学学院", 10),
                 new Tuple<String, String, Int32>("十一院", "艺术学院", 11),
                 new Tuple<String, String, Int32>("十二院", "外国语学院", 12),
                 new Tuple<String, String, Int32>("十五院", "航天学院", 15),
