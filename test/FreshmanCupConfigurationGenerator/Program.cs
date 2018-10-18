@@ -28,8 +28,9 @@ namespace FreshmanCupConfigurationGenerator
         {
             CompetitionInfo ret = new CompetitionInfo();
 
-            ret.Name = "南京航空航天大学第X届“新生杯”游泳比赛";
+            ret.Name = "南京航空航天大学第4届“新生杯”游泳比赛";
             ret.EntryClosingDate = new Date(2018, 10, 21);
+            ret.Order = 4;
 
             ret.CompetitionRegulationInfo.Organizers.Add("南京航空航天大学体育部");
             ret.CompetitionRegulationInfo.Undertakers.Add("南京航空航天大学学生会");
@@ -55,7 +56,7 @@ namespace FreshmanCupConfigurationGenerator
             ret.PublicPointInfo.BreakRecordPointRate = 2.0;
 
             SessionPool sessions = ret.Sessions;
-            Date date = new Date(2018, 10, 27);
+            Date date = new Date(2018, 10, 28);
             sessions.AddDate(date);
             var session = sessions.GenerateNewSession(date, new TimeSpan(9, 0, 0));
             session.FullName = String.Format("{0}月{1}日", date.Month, date.Day);
