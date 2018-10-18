@@ -118,7 +118,7 @@ namespace SCAS
                     root.AppendChild(entryClosingDate);
                     
                     if (_outputData.NumberOfSubLeader.Minimum != SSUtils.NumberRange.NoLimit
-                        && _outputData.NumberOfSubLeader.Maximum != SSUtils.NumberRange.NoLimit)
+                        || _outputData.NumberOfSubLeader.Maximum != SSUtils.NumberRange.NoLimit)
                     {
                         XmlElement subLeaderNumberNode = doc.CreateElement("NumberOfSubLeader");
                         if (_outputData.NumberOfSubLeader.Minimum != SSUtils.NumberRange.NoLimit)
@@ -131,9 +131,19 @@ namespace SCAS
                         }
                     }
 
-                    XmlElement coachOptionalNode = doc.CreateElement("CoachOptional");
-                    coachOptionalNode.AppendChild(doc.CreateTextNode(_outputData.CoachOptional.ToString()));
-                    root.AppendChild(coachOptionalNode);
+                    if (_outputData.NumberOfCoach.Minimum != SSUtils.NumberRange.NoLimit
+                        || _outputData.NumberOfCoach.Minimum != SSUtils.NumberRange.NoLimit)
+                    {
+                        XmlElement coachNumberNode = doc.CreateElement("NumberOfCoach");
+                        if (_outputData.NumberOfCoach.Minimum != SSUtils.NumberRange.NoLimit)
+                        {
+                            coachNumberNode.SetAttribute("min", _outputData.NumberOfCoach.Minimum.ToString());
+                        }
+                        if (_outputData.NumberOfSubLeader.Maximum != SSUtils.NumberRange.NoLimit)
+                        {
+                            coachNumberNode.SetAttribute("max", _outputData.NumberOfCoach.Minimum.ToString());
+                        }
+                    }
 
                     XmlElement fieldNode = doc.CreateElement("Field");
                     fieldNode.AppendChild(doc.CreateTextNode(_outputData.Field));

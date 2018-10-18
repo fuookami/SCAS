@@ -152,8 +152,27 @@ namespace SCAS
                         temp.NumberOfSubLeader.Set(0, 0);
                     }
 
-                    XmlElement coachOptionalNode = (XmlElement)root.GetElementsByTagName("CoachOptional")[0];
-                    temp.CoachOptional = Boolean.Parse(coachOptionalNode.InnerText);
+                    XmlNodeList coachNodes = root.GetElementsByTagName("NumberOfCoach");
+                    if (subLeaderNodes.Count != 0)
+                    {
+                        XmlElement coachNode = (XmlElement)subLeaderNodes[0];
+
+                        UInt32 min = SSUtils.NumberRange.NoLimit;
+                        UInt32 max = SSUtils.NumberRange.NoLimit;
+                        if (coachNode.HasAttribute("min"))
+                        {
+                            min = UInt32.Parse(coachNode.GetAttribute("min"));
+                        }
+                        if (coachNode.HasAttribute("max"))
+                        {
+                            max = UInt32.Parse(coachNode.GetAttribute("max"));
+                        }
+                        temp.NumberOfCoach.Set(min, max);
+                    }
+                    else
+                    {
+                        temp.NumberOfCoach.Set(0, 0);
+                    }
 
                     XmlElement fieldNode = (XmlElement)root.GetElementsByTagName("Field")[0];
                     temp.Field = fieldNode.InnerText;
