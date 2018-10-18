@@ -20,7 +20,7 @@ namespace TestDataModule
             var data3 = Generate3();
             if (data3 != null)
             {
-                TestWriteAndReadData(data3, "4.xml");
+                TestWriteAndReadData(data3, "FreshmanCup.xml");
             }
 
             Console.ReadKey();
@@ -153,7 +153,7 @@ namespace TestDataModule
             List<String> readTargets = new List<String> { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "15", "16" };
             foreach (var target in readTargets)
             {
-                var blank = ReadBlank("4", target, conf);
+                var blank = ReadBlank("3", target, conf);
                 if (blank != null)
                 {
                     generator.EntryBlanks.Add(blank);
@@ -169,7 +169,7 @@ namespace TestDataModule
                 Console.WriteLine("False to generate data. {0}", generator.LastError);
             }
 
-            SCAS.DocumentGenerator.ProgramExporter exporter = new SCAS.DocumentGenerator.ProgramExporter(generator.Result, "4.docx");
+            SCAS.DocumentGenerator.ProgramExporter exporter = new SCAS.DocumentGenerator.ProgramExporter(generator.Result, "3.docx");
             if (exporter.Export())
             {
                 Console.WriteLine("Ok to export program.");

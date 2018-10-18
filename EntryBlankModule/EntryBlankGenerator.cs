@@ -65,7 +65,19 @@ namespace SCAS
                     {
                         temp.TeamSubLeader.Add(new Leader(true));
                     }
-                    temp.TeamCoach.Optional = _conf.CoachOptional;
+
+                    for (Int32 i = 0, j = (Int32)_conf.NumberOfCoach.Minimum; i != j; ++i)
+                    {
+                        temp.TeamCoaches.Add(new Leader());
+                    }
+                    for (Int32 i = (Int32)_conf.NumberOfCoach.Minimum, j = (Int32)_conf.NumberOfCoach.Maximum; i != j; ++i)
+                    {
+                        temp.TeamCoaches.Add(new Leader(true));
+                    }
+                    if (temp.TeamCoaches.Count == 0)
+                    {
+                        temp.TeamCoaches.Add(new Leader(true));
+                    }
 
                     foreach (var eventConf in _conf.EventInfos)
                     {

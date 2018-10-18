@@ -401,14 +401,19 @@ namespace SCAS
                 }
                 root.AppendChild(leaderNode);
 
-                if (team.Coach != null)
+                if (team.TeamCoaches.Count != 0)
                 {
-                    XmlElement coachNode = NormalizeLeader(doc, team.Coach, "Coach");
-                    if (coachNode == null)
+                    XmlElement coachesNode = doc.CreateElement("Coaches");
+                    foreach (var coach in team.TeamCoaches)
                     {
-                        return null;
+                        XmlElement coachNode = NormalizeLeader(doc, coach, "Coach");
+                        if (coachNode == null)
+                        {
+                            return null;
+                        }
+                        coachesNode.AppendChild(coachNode);
                     }
-                    root.AppendChild(coachNode);
+                    root.AppendChild(coachesNode);
                 }
 
                 if (team.TeamSubLeaders.Count != 0)

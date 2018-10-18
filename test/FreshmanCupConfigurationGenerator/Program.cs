@@ -47,8 +47,8 @@ namespace FreshmanCupConfigurationGenerator
             ret.CompetitionPrincipalInfo.Telephone = "负责人的手机";
             ret.CompetitionPrincipalInfo.Email = "负责人的邮箱@xxx.xx";
 
-            ret.NumberOfSubLeader.Set(0, 0);
-            ret.CoachOptional = true;
+            ret.NumberOfSubLeader.Set(1, 1);
+            ret.NumberOfCoach.Set(0, 2);
 
             ret.PublicPointInfo.Points = new List<UInt32> { 9, 7, 6, 5, 4, 3, 2, 1 };
             ret.PublicPointInfo.PointRate = 1.0;
@@ -83,7 +83,7 @@ namespace FreshmanCupConfigurationGenerator
                 new Tuple<String, String, Int32>("七院", "民航飞行学院", 7),
                 new Tuple<String, String, Int32>("八院", "理学院", 8),
                 new Tuple<String, String, Int32>("九院", "经济与管理学院", 9),
-                new Tuple<String, String, Int32>("十院", "人文学院", 10),
+                new Tuple<String, String, Int32>("十院", "人文与社会科学学院", 10),
                 new Tuple<String, String, Int32>("十一院", "艺术学院", 11),
                 new Tuple<String, String, Int32>("十二院", "外国语学院", 12),
                 new Tuple<String, String, Int32>("十五院", "航天学院", 15),

@@ -130,14 +130,15 @@ namespace SCAS
                     }
                     else if (leaderTitle.StartsWith("副领队"))
                     {
-                        Leader subLeader = blank.TeamSubLeader.Find((element) => !element.Optional && element.Sid == null);
+                        Leader subLeader = blank.TeamSubLeader.Find((element) => !element.Optional && element.Sid == null) 
+                            ?? blank.TeamSubLeader.Find((element) => element.Sid == null);
 
                         if (worksheet.Cells[row, 3].Value == null
                             && worksheet.Cells[row + 1, 3].Value == null
                             && worksheet.Cells[row + 2, 3].Value == null
                             && worksheet.Cells[row + 3, 3].Value == null)
                         {
-                            if (subLeader != null)
+                            if (subLeader != null && !subLeader.Optional)
                             {
                                 return false;
                             }
@@ -171,35 +172,44 @@ namespace SCAS
                     }
                     else if (leaderTitle.StartsWith("教练"))
                     {
+                        Leader coach = blank.TeamCoaches.Find((element) => !element.Optional && element.Sid == null)
+                            ?? blank.TeamCoaches.Find((element) => element.Sid == null);
+
                         if (worksheet.Cells[row, 3].Value == null
                             && worksheet.Cells[row + 1, 3].Value == null
                             && worksheet.Cells[row + 2, 3].Value == null
                             && worksheet.Cells[row + 3, 3].Value == null)
                         {
-                            if (!blank.TeamCoach.Optional)
+                            if (coach != null && !coach.Optional)
                             {
                                 return false;
-                            }
-                            else
-                            {
-                                blank.TeamCoach = null;
                             }
                         }
                         else
                         {
-                            Leader coach = blank.TeamCoach;
+
+                            String name = worksheet.Cells[row, 3].Value == null ? "" : worksheet.Cells[row, 3].Value.ToString();
+                            String sid = worksheet.Cells[row + 1, 3].Value == null ? "" : worksheet.Cells[row + 1, 3].Value.ToString();
+                            String telephone = worksheet.Cells[row + 2, 3].Value == null ? "" : worksheet.Cells[row + 2, 3].Value.ToString();
+                            String email = worksheet.Cells[row + 3, 3].Value == null ? "" : worksheet.Cells[row + 3, 3].Value.ToString();
 
                             if (coach != null)
                             {
-                                String name = worksheet.Cells[row, 3].Value == null ? "" : worksheet.Cells[row, 3].Value.ToString();
-                                String sid = worksheet.Cells[row + 1, 3].Value == null ? "" : worksheet.Cells[row + 1, 3].Value.ToString();
-                                String telephone = worksheet.Cells[row + 2, 3].Value == null ? "" : worksheet.Cells[row + 2, 3].Value.ToString();
-                                String email = worksheet.Cells[row + 3, 3].Value == null ? "" : worksheet.Cells[row + 3, 3].Value.ToString();
+                                coach.Name = name;
+                                coach.Sid = sid;
+                                coach.Telephone = telephone;
+                                coach.EMail = email;
+                            }
+                            else
+                            {
+                                coach = new Leader(true);
 
                                 coach.Name = name;
                                 coach.Sid = sid;
                                 coach.Telephone = telephone;
                                 coach.EMail = email;
+
+                                blank.TeamCoaches.Add(coach);
                             }
                         }
                     }

@@ -90,8 +90,11 @@ namespace SCAS
                         AddLeaderInfoBlank(basicInfoWorksheet, row, 5, !subLeader.Optional ? "副领队" : "副领队\n（可选）");
                         row += 4;
                     }
-                    AddLeaderInfoBlank(basicInfoWorksheet, row, 5, !Blank.TeamCoach.Optional ? "教练" : "教练\n（可选）");
-                    row += 4;
+                    foreach (var coach in Blank.TeamCoaches)
+                    {
+                        AddLeaderInfoBlank(basicInfoWorksheet, row, 5, !coach.Optional ? "教练" : "教练\n（可选）");
+                        row += 4;
+                    }
 
                     basicInfoWorksheet.Cells[row, 1].Value = "运动员报名表";
                     basicInfoWorksheet.Cells[row, 1].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
@@ -167,8 +170,11 @@ namespace SCAS
                         AddLeaderInfoBlank(basicInfoWorksheet, row, 7, !subLeader.Optional ? "副领队" : "副领队\n（可选）");
                         row += 4;
                     }
-                    AddLeaderInfoBlank(basicInfoWorksheet, row, 7, !Blank.TeamCoach.Optional ? "教练" : "教练\n（可选）");
-                    row += 4;
+                    foreach (var coach in Blank.TeamCoaches)
+                    {
+                        AddLeaderInfoBlank(basicInfoWorksheet, row, 7, !coach.Optional ? "教练" : "教练\n（可选）");
+                        row += 4;
+                    }
 
                     basicInfoWorksheet.Cells[row, 1].Value = "运动员报名表";
                     basicInfoWorksheet.Cells[row, 1].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;

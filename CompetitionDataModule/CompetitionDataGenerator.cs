@@ -191,17 +191,21 @@ namespace SCAS
                 SetLeader(temp.TeamLeader, blank.TeamLeader);
                 foreach (var subLeader in blank.TeamSubLeader)
                 {
-                    if (subLeader != null)
+                    if (subLeader != null && subLeader.Sid != null)
                     {
                         Leader newSubLeader = new Leader();
                         SetLeader(newSubLeader, subLeader);
                         temp.TeamSubLeaders.Add(newSubLeader);
                     }
                 }
-                if (blank.TeamCoach != null)
+                foreach (var coach in blank.TeamCoaches)
                 {
-                    temp.Coach = new Leader();
-                    SetLeader(temp.Coach, blank.TeamCoach);
+                    if (coach != null && coach.Sid != null)
+                    {
+                        Leader newCoach = new Leader();
+                        SetLeader(newCoach, coach);
+                        temp.TeamCoaches.Add(newCoach);
+                    }
                 }
 
                 foreach (var athlete in blank.Athletes)

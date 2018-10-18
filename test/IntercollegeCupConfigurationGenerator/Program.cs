@@ -46,8 +46,8 @@ namespace IntercollegeCupConfigurationGenerator
             ret.CompetitionPrincipalInfo.Telephone = "负责人的手机";
             ret.CompetitionPrincipalInfo.Email = "负责人的邮箱@xxx.xx";
 
-            ret.NumberOfSubLeader.Set(0, 0);
-            ret.CoachOptional = true;
+            ret.NumberOfSubLeader.Set(1, 1);
+            ret.NumberOfCoach.Set(0, 2);
 
             ret.PublicPointInfo.Points = new List<UInt32> { 9, 7, 6, 5, 4, 3, 2, 1 };
             ret.PublicPointInfo.PointRate = 1.0;

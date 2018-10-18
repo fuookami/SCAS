@@ -127,8 +127,9 @@ namespace SCAS
                         }
                         if (_outputData.NumberOfSubLeader.Maximum != SSUtils.NumberRange.NoLimit)
                         {
-                            subLeaderNumberNode.SetAttribute("max", _outputData.NumberOfSubLeader.Minimum.ToString());
+                            subLeaderNumberNode.SetAttribute("max", _outputData.NumberOfSubLeader.Maximum.ToString());
                         }
+                        root.AppendChild(subLeaderNumberNode);
                     }
 
                     if (_outputData.NumberOfCoach.Minimum != SSUtils.NumberRange.NoLimit
@@ -141,8 +142,9 @@ namespace SCAS
                         }
                         if (_outputData.NumberOfSubLeader.Maximum != SSUtils.NumberRange.NoLimit)
                         {
-                            coachNumberNode.SetAttribute("max", _outputData.NumberOfCoach.Minimum.ToString());
+                            coachNumberNode.SetAttribute("max", _outputData.NumberOfCoach.Maximum.ToString());
                         }
+                        root.AppendChild(coachNumberNode);
                     }
 
                     XmlElement fieldNode = doc.CreateElement("Field");

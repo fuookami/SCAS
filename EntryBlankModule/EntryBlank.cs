@@ -234,10 +234,9 @@ namespace SCAS
                 get;
             }
 
-            public Leader TeamCoach
+            public List<Leader> TeamCoaches
             {
                 get;
-                internal set;
             }
 
             public List<Athlete> Athletes
@@ -260,7 +259,7 @@ namespace SCAS
                 Conf = conf;
                 Team = null;
                 TeamLeader = new Leader();
-                TeamCoach = new Leader();
+                TeamCoaches = new List<Leader>();
                 TeamSubLeader = new List<Leader>();
                 Athletes = new List<Athlete>();
                 PersonalEntries = new List<PersonalEntry>();
@@ -268,15 +267,9 @@ namespace SCAS
             }
 
             internal Blank(CompetitionInfo conf, String teamId)
+                : this(conf)
             {
-                Conf = conf;
                 Team = conf.TeamInfos.Find((element) => element.Id == teamId) ?? throw new Exception("没有该ID对应的队伍");
-                TeamLeader = new Leader();
-                TeamCoach = new Leader();
-                TeamSubLeader = new List<Leader>();
-                Athletes = new List<Athlete>();
-                PersonalEntries = new List<PersonalEntry>();
-                TeamworkEntries = new List<TeamworkEntry>();
             }
         };
     };

@@ -236,9 +236,14 @@ namespace SCAS
                         }
                         writer.Write(String.Format("    副领队：{0}", String.Join("、", names)));
                     }
-                    if (team.Coach != null)
+                    if (team.TeamCoaches.Count != 0)
                     {
-                        writer.Write(String.Format("    教练：{0}", team.Coach.Name));
+                        List<String> names = new List<String>();
+                        foreach (var coach in team.TeamCoaches)
+                        {
+                            names.Add(coach.Name);
+                        }
+                        writer.Write(String.Format("    教练：{0}", String.Join("、", names)));
                     }
                     writer.WriteLine("</p>");
 
@@ -308,7 +313,7 @@ namespace SCAS
                 {
                     TimeSpan beginTime = sessionGames.Key.BeginTime;
                     writer.WriteLine(String.Format("<h2 style='text-align: center;'>{0}</h2>", sessionGames.Key.FullName));
-                    writer.WriteLine("<ol>");
+                    Int32 gameIndex = 1;
                     foreach (var game in sessionGames.Value)
                     {
                         beginTime += game.Conf.PlanOffsetTime;
@@ -318,19 +323,20 @@ namespace SCAS
                         {
                             if (game.Conf.GameGroupInfo.Enabled)
                             {
-                                endTime += game.Conf.PlanTimePerGroup * (game.Conf.NumberOfParticipants / game.Conf.GameGroupInfo.NumberPerGroup.Minimum);
-                                endTime += game.Conf.PlanIntervalTime * (game.Conf.NumberOfParticipants / game.Conf.GameGroupInfo.NumberPerGroup.Minimum - 1);
-                                writer.WriteLine(String.Format("<li style='margin-top: .5em;'><h3>{0} {1}{2} {3}组  （{4}:{5:D2} - {6}:{7:D2}）<h3></li>", 
+                                var planGroupNumber = game.Conf.NumberOfParticipants / game.Conf.GameGroupInfo.NumberPerGroup.Minimum;
+                                endTime += game.Conf.PlanTimePerGroup * planGroupNumber;
+                                endTime += game.Conf.PlanIntervalTime * (planGroupNumber == 1 ? 1 : planGroupNumber - 1);
+                                writer.WriteLine(String.Format("<h3>{8}. {0} {1}{2} {3}组  （{4}:{5:D2} - {6}:{7:D2}）</h3>", 
                                     game.Conf.Name, game.Conf.NumberOfParticipants, unit, game.Conf.NumberOfParticipants / game.Conf.GameGroupInfo.NumberPerGroup.Minimum, 
-                                    beginTime.Hours, beginTime.Minutes, endTime.Hours, endTime.Minutes
+                                    beginTime.Hours, beginTime.Minutes, endTime.Hours, endTime.Minutes, gameIndex
                                 ));
                             }
                             else
                             {
-                                endTime += game.Conf.PlanTimePerGroup;
-                                writer.WriteLine(String.Format("<li style='margin-top: .5em;'><h3>{0} {1}{2}   （{3}:{4:D2} - {5}:{6:D2}）<h3></li>", 
+                                endTime += game.Conf.PlanTimePerGroup  + game.Conf.PlanIntervalTime;
+                                writer.WriteLine(String.Format("<h3>{7}. {0} {1}{2}   （{3}:{4:D2} - {5}:{6:D2}）</h3>", 
                                     game.Conf.Name, game.Conf.NumberOfParticipants, unit, 
-                                    beginTime.Hours, beginTime.Minutes, endTime.Hours, endTime.Minutes
+                                    beginTime.Hours, beginTime.Minutes, endTime.Hours, endTime.Minutes, gameIndex
                                 ));
                             }
                         }
@@ -339,18 +345,18 @@ namespace SCAS
                             if (game.Conf.GameGroupInfo.Enabled)
                             {
                                 endTime += game.Conf.PlanTimePerGroup * game.Groups.Count;
-                                endTime += game.Conf.PlanIntervalTime * (game.Groups.Count - 1);
-                                writer.WriteLine(String.Format("<li style='margin-top: .5em;'><h3>{0} {1}{2} {3}组  （{4}:{5:D2} - {6}:{7:D2}）<h3></li>", 
+                                endTime += game.Conf.PlanIntervalTime * (game.Groups.Count == 1 ? 1 : game.Groups.Count - 1);
+                                writer.WriteLine(String.Format("<h3>{8}. {0} {1}{2} {3}组  （{4}:{5:D2} - {6}:{7:D2}）</h3>", 
                                     game.Conf.Name, CountNumberOfParticipant(game), unit, game.Groups.Count, 
-                                    beginTime.Hours, beginTime.Minutes, endTime.Hours, endTime.Minutes
+                                    beginTime.Hours, beginTime.Minutes, endTime.Hours, endTime.Minutes, gameIndex
                                 ));
                             }
                             else
                             {
-                                endTime += game.Conf.PlanTimePerGroup;
-                                writer.WriteLine(String.Format("<li style='margin-top: .5em;'><h3>{0} {1}{2} {3}组  （{4}:{5:D2} - {6}:{7:D2}）<h3></li>", 
+                                endTime += game.Conf.PlanTimePerGroup + game.Conf.PlanIntervalTime;
+                                writer.WriteLine(String.Format("<h3>{7}. {0} {1}{2}  （{3}:{4:D2} - {5}:{6:D2}）</h3>", 
                                     game.Conf.Name, CountNumberOfParticipant(game), unit, game.Groups.Count, 
-                                    beginTime.Hours, beginTime.Minutes, endTime.Hours, endTime.Minutes
+                                    beginTime.Hours, beginTime.Minutes, endTime.Hours, endTime.Minutes, gameIndex
                                 ));
                             }
 
@@ -412,8 +418,8 @@ namespace SCAS
                             }
                         }
                         beginTime = endTime;
+                        ++gameIndex;
                     }
-                    writer.WriteLine("</ol>");
                 }
 
                 writer.Flush();

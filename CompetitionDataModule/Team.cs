@@ -46,10 +46,9 @@ namespace SCAS
                 get;
             }
 
-            public Leader Coach
+            public List<Leader> TeamCoaches
             {
                 get;
-                internal set;
             }
 
             public List<Leader> TeamSubLeaders
@@ -89,7 +88,7 @@ namespace SCAS
                 Athletes = new AthletePool(this, String.Format("{0:D2}", Conf.Order.Value));
                 Points = new Dictionary<Event, List<Point>>();
                 TeamLeader = new Leader();
-                Coach = null;
+                TeamCoaches = new List<Leader>();
                 TeamSubLeaders = new List<Leader>();
             }
         }

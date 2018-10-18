@@ -153,9 +153,9 @@ namespace SCAS
                     }
 
                     XmlNodeList coachNodes = root.GetElementsByTagName("NumberOfCoach");
-                    if (subLeaderNodes.Count != 0)
+                    if (coachNodes.Count != 0)
                     {
-                        XmlElement coachNode = (XmlElement)subLeaderNodes[0];
+                        XmlElement coachNode = (XmlElement)coachNodes[0];
 
                         UInt32 min = SSUtils.NumberRange.NoLimit;
                         UInt32 max = SSUtils.NumberRange.NoLimit;
