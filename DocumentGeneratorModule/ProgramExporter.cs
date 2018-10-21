@@ -324,8 +324,8 @@ namespace SCAS
                             if (game.Conf.GameGroupInfo.Enabled)
                             {
                                 var planGroupNumber = game.Conf.NumberOfParticipants / game.Conf.GameGroupInfo.NumberPerGroup.Minimum;
-                                endTime += game.Conf.PlanTimePerGroup * planGroupNumber;
-                                endTime += game.Conf.PlanIntervalTime * (planGroupNumber == 1 ? 1 : planGroupNumber - 1);
+                                endTime += new TimeSpan(0, 0, (Int32)(game.Conf.PlanTimePerGroup.TotalSeconds * planGroupNumber));
+                                endTime += new TimeSpan(0, 0, (Int32)(game.Conf.PlanIntervalTime.TotalSeconds * (planGroupNumber == 1 ? 1 : planGroupNumber - 1)));
                                 writer.WriteLine(String.Format("<h3>{8}. {0} {1}{2} {3}组  （{4}:{5:D2} - {6}:{7:D2}）</h3>", 
                                     game.Conf.Name, game.Conf.NumberOfParticipants, unit, game.Conf.NumberOfParticipants / game.Conf.GameGroupInfo.NumberPerGroup.Minimum, 
                                     beginTime.Hours, beginTime.Minutes, endTime.Hours, endTime.Minutes, gameIndex
@@ -344,8 +344,8 @@ namespace SCAS
                         {
                             if (game.Conf.GameGroupInfo.Enabled)
                             {
-                                endTime += game.Conf.PlanTimePerGroup * game.Groups.Count;
-                                endTime += game.Conf.PlanIntervalTime * (game.Groups.Count == 1 ? 1 : game.Groups.Count - 1);
+                                endTime += new TimeSpan(0, 0, (Int32)(game.Conf.PlanTimePerGroup.TotalSeconds * game.Groups.Count));
+                                endTime += new TimeSpan(0, 0, (Int32)(game.Conf.PlanIntervalTime.TotalSeconds * (game.Groups.Count == 1 ? 1 : game.Groups.Count - 1)));
                                 writer.WriteLine(String.Format("<h3>{8}. {0} {1}{2} {3}组  （{4}:{5:D2} - {6}:{7:D2}）</h3>", 
                                     game.Conf.Name, CountNumberOfParticipant(game), unit, game.Groups.Count, 
                                     beginTime.Hours, beginTime.Minutes, endTime.Hours, endTime.Minutes, gameIndex
