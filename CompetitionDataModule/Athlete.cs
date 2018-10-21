@@ -132,18 +132,17 @@ namespace SCAS
 
             public AthletePool(Team team, String prefixCode)
             {
-                this._team = team;
-                this._prefixCode = prefixCode;
+                _team = team;
+                _prefixCode = prefixCode;
             }
 
-            public Athlete GenerateNewAthlete(String existedId = null)
+            public Athlete GenerateNewAthlete(String existedId = null, String existedCode = null)
             {
-                var ret = new Athlete(this._team);
                 if (existedId == null)
                 {
                     existedId = Guid.NewGuid().ToString("N");
                 }
-                ret.Id = existedId;
+                var ret = new Athlete(_team, existedId, existedCode);
                 Add(existedId, ret);
                 return ret;
             }

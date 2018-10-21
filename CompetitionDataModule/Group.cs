@@ -24,11 +24,21 @@ namespace SCAS
                     return LineParticipant.ParticipantGrade;
                 }
             }
-
-            public Line(UInt32 order, Participant participant)
+            
+            public Group Parent
             {
+                get;
+            }
+
+            public Line(Group parent, UInt32 order, Participant participant)
+            {
+                Parent = parent;
                 Order = new SSUtils.Order((Int32)order);
                 LineParticipant = participant;
+                if (participant != null)
+                {
+                    participant.Parent = this;
+                }
             }
         }
 
@@ -39,8 +49,14 @@ namespace SCAS
                 get;
             }
 
-            public Group()
+            public Game Parent
             {
+                get;
+            }
+
+            public Group(Game parent)
+            {
+                Parent = parent;
                 Lines = new List<Line>();
             }
         }

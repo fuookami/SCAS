@@ -67,21 +67,12 @@ namespace SCAS
                     return false;
                 }
 
-                foreach (var datePair in _conf.Sessions)
-                {
-                    for (Int32 i = 0, j = datePair.Value.Count; i != j; ++i)
-                    {
-                        var session = datePair.Value[i];
-                        temp.FieldInfos.Add(session, new FieldInfo(session));
-                    }
-                }
-
                 foreach (var eventConf in _conf.EventInfos)
                 {
-                    Event eventTemp = new Event(eventConf);
+                    Event eventTemp = new Event(temp, eventConf);
                     foreach (var gameConf in eventConf.GameInfos)
                     {
-                        Game game = new Game(gameConf);
+                        Game game = new Game(eventTemp, gameConf);
                         eventTemp.Games.Add(game);
 
                         if (!temp.Games.ContainsKey(gameConf.GameSession))
@@ -303,7 +294,7 @@ namespace SCAS
                     participants.Add(temp);
                 }
 
-                var groups = GenerateGroups(firstGame.Conf.GameGroupInfo, participants);
+                var groups = GenerateGroups(firstGame, firstGame.Conf.GameGroupInfo, participants);
                 if (groups == null)
                 {
                     return false;
@@ -366,7 +357,7 @@ namespace SCAS
                     }
                 }
 
-                var groups = GenerateGroups(firstGame.Conf.GameGroupInfo, participants);
+                var groups = GenerateGroups(firstGame, firstGame.Conf.GameGroupInfo, participants);
                 if (groups == null)
                 {
                     return false;
@@ -383,7 +374,7 @@ namespace SCAS
                 data.EMail = origin.EMail;
             }
 
-            private List<Group> GenerateGroups(GroupInfo conf, List<Participant> participantList)
+            private List<Group> GenerateGroups(Game parent, GroupInfo conf, List<Participant> participantList)
             {
                 if (participantList.Count == 0)
                 {
@@ -435,7 +426,7 @@ namespace SCAS
                     }
                 }
                 
-                return TransformParticipantListsToGroups(participantLists);
+                return TransformParticipantListsToGroups(parent, participantLists);
             }
 
             private void ArrangeParticipantWithBestGrade(List<List<Participant>> participantLists, List<Participant> participantList, Int32 groupNumber)
@@ -557,16 +548,16 @@ namespace SCAS
                 return orders;
             }
 
-            private List<Group> TransformParticipantListsToGroups(List<List<Participant>> participantLists)
+            private List<Group> TransformParticipantListsToGroups(Game parent, List<List<Participant>> participantLists)
             {
                 List<Group> ret = new List<Group>();
 
                 foreach (var participantList in participantLists)
                 {
-                    var newGroup = new Group();
+                    var newGroup = new Group(parent);
                     for (Int32 i = 0, j = (Int32)_conf.NumberOfUseLines; i != j; ++i)
                     {
-                        newGroup.Lines.Add(new Line(_conf.UseLines[i], participantList[i]));
+                        newGroup.Lines.Add(new Line(newGroup, _conf.UseLines[i], participantList[i]));
                     }
                     ret.Add(newGroup);
                 }

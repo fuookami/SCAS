@@ -194,6 +194,28 @@ namespace TestDataModule
                 Console.WriteLine("False to read data. {0}", normalizer.LastError);
                 return;
             }
+
+            SCAS.CompetitionData.Analyzer analyzer = new SCAS.CompetitionData.Analyzer(data.Conf);
+            if (analyzer.Analyze(name))
+            {
+                Console.WriteLine("OK to read data.");
+            }
+            else
+            {
+                Console.WriteLine("False to read data. {0}", analyzer.LastError);
+                return;
+            }
+
+            SCAS.CompetitionData.Normalizer normalizer2 = new SCAS.CompetitionData.Normalizer(analyzer.Result);
+            if (normalizer2.NormalizeToFile(String.Format("_{0}", name)))
+            {
+                Console.WriteLine("OK to write data2.");
+            }
+            else
+            {
+                Console.WriteLine("False to write data2. {0}", analyzer.LastError);
+                return;
+            }
         }
     }
 }

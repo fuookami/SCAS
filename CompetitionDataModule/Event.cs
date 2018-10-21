@@ -29,8 +29,15 @@ namespace SCAS
             {
                 get;
             }
-            public Event(EventInfo conf, RecordGrade matchRecord = null)
+
+            public Competition Parent
             {
+                get;
+            }
+
+            public Event(Competition parent, EventInfo conf, RecordGrade matchRecord = null)
+            {
+                Parent = parent;
                 Conf = conf;
                 MatchRecord = matchRecord;
                 Games = new List<Game>();

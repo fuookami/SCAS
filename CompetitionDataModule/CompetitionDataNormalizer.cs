@@ -54,7 +54,6 @@ namespace SCAS
 
                 XmlDocument doc = new XmlDocument();
                 XmlElement root = doc.CreateElement("SCASCompetitionData");
-
                 root.SetAttribute("id", Data.Conf.Id);
 
                 {
@@ -149,12 +148,12 @@ namespace SCAS
 
                 if (eventData.MatchRecord != null)
                 {
-                    XmlElement matchGradeNode = NormalizeRecordGrade(doc, eventData.MatchRecord, "MatchGrade");
-                    if (matchGradeNode == null)
+                    XmlElement matchRecordGradeNode = NormalizeRecordGrade(doc, eventData.MatchRecord, "MatchRecord");
+                    if (matchRecordGradeNode == null)
                     {
                         return null;
                     }
-                    root.AppendChild(matchGradeNode);
+                    root.AppendChild(matchRecordGradeNode);
                 }
 
                 XmlElement gamesNode = doc.CreateElement("Games");
@@ -267,7 +266,10 @@ namespace SCAS
                 XmlElement root = doc.CreateElement("Participant");
                 root.SetAttribute("id", participant.Id);
                 root.SetAttribute("teamId", participant.ParticipantTeam.Conf.Id);
-                root.SetAttribute("orderInTeam", participant.OrderInTeam.Value.ToString());
+                if (participant.OrderInTeam.Valid())
+                {
+                    root.SetAttribute("orderInTeam", participant.OrderInTeam.Value.ToString());
+                }
 
                 if (participant.Name != null && participant.Name.Length != 0)
                 {
@@ -318,13 +320,15 @@ namespace SCAS
                 eventNode.AppendChild(doc.CreateTextNode(recordGrade.Event.Item2));
                 root.AppendChild(eventNode);
 
-                XmlElement gameNode = doc.CreateElement("Event");
+                XmlElement gameNode = doc.CreateElement("Game");
                 gameNode.SetAttribute("id", recordGrade.Game.Item1);
                 gameNode.AppendChild(doc.CreateTextNode(recordGrade.Game.Item2));
                 root.AppendChild(eventNode);
 
                 XmlElement participantNode = doc.CreateElement("Participant");
-                participantNode.SetAttribute("id", recordGrade.ParticipantId);
+                participantNode.SetAttribute("id", recordGrade.Participant.Item1);
+                participantNode.SetAttribute("group", recordGrade.Participant.Item2.ToString());
+                participantNode.SetAttribute("line", recordGrade.Participant.Item3.ToString());
                 root.AppendChild(participantNode);
 
                 if (recordGrade.Athletes.Count == 1)
@@ -401,21 +405,6 @@ namespace SCAS
                 }
                 root.AppendChild(leaderNode);
 
-                if (team.TeamCoaches.Count != 0)
-                {
-                    XmlElement coachesNode = doc.CreateElement("Coaches");
-                    foreach (var coach in team.TeamCoaches)
-                    {
-                        XmlElement coachNode = NormalizeLeader(doc, coach, "Coach");
-                        if (coachNode == null)
-                        {
-                            return null;
-                        }
-                        coachesNode.AppendChild(coachNode);
-                    }
-                    root.AppendChild(coachesNode);
-                }
-
                 if (team.TeamSubLeaders.Count != 0)
                 {
                     XmlElement subLeadersNode = doc.CreateElement("SubLeaders");
@@ -429,6 +418,21 @@ namespace SCAS
                         subLeadersNode.AppendChild(subLeaderNode);
                     }
                     root.AppendChild(subLeadersNode);
+                }
+
+                if (team.TeamCoaches.Count != 0)
+                {
+                    XmlElement coachesNode = doc.CreateElement("Coaches");
+                    foreach (var coach in team.TeamCoaches)
+                    {
+                        XmlElement coachNode = NormalizeLeader(doc, coach, "Coach");
+                        if (coachNode == null)
+                        {
+                            return null;
+                        }
+                        coachesNode.AppendChild(coachNode);
+                    }
+                    root.AppendChild(coachesNode);
                 }
 
                 XmlElement athletesNode = doc.CreateElement("Athletes");

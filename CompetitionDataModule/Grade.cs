@@ -57,7 +57,12 @@ namespace SCAS
                 }
             }
 
-            static private bool HasTime(Code code)
+            public void Set(Tuple<Code, TimeSpan> value)
+            {
+                Set(value.Item1, value.Item2);
+            }
+
+            static public bool HasTime(Code code)
             {
                 return code == Code.Normal || code == Code.MR;
             }
@@ -80,7 +85,7 @@ namespace SCAS
                 get;
             }
 
-            public String ParticipantId
+            public Tuple<String, UInt32, UInt32> Participant
             {
                 get;
             }
@@ -90,26 +95,26 @@ namespace SCAS
                 get;
             }
 
-            public RecordGrade(Tuple<String, String, UInt32> competitionIdNameOrderPair, Tuple<String, String> eventIdNamePair, Tuple<String, String> gameIdNamePair, String participantId, Tuple<String, String, String> athlete, Code code, TimeSpan time)
+            public RecordGrade(Tuple<String, String, UInt32> competitionIdNameOrderPair, Tuple<String, String> eventIdNamePair, Tuple<String, String> gameIdNamePair, Tuple<String, UInt32, UInt32> participant, Tuple<String, String, String> athlete, Code code, TimeSpan time)
                 : base(code, time)
             {
                 Competition = competitionIdNameOrderPair;
                 Event = eventIdNamePair;
                 Game = gameIdNamePair;
-                ParticipantId = participantId;
+                Participant = participant;
                 Athletes = new List<Tuple<String, String, String>>
                 {
                     athlete
                 };
             }
 
-            public RecordGrade(Tuple<String, String, UInt32> competitionIdNameOrderPair, Tuple<String, String> eventIdNamePair, Tuple<String, String> gameIdNamePair, String participantId, List<Tuple<String, String, String>> athletes, Code code, TimeSpan time)
+            public RecordGrade(Tuple<String, String, UInt32> competitionIdNameOrderPair, Tuple<String, String> eventIdNamePair, Tuple<String, String> gameIdNamePair, Tuple<String, UInt32, UInt32> participant, List<Tuple<String, String, String>> athletes, Code code, TimeSpan time)
                 : base(code, time)
             {
                 Competition = competitionIdNameOrderPair;
                 Event = eventIdNamePair;
                 Game = gameIdNamePair;
-                ParticipantId = participantId;
+                Participant = participant;
                 Athletes = athletes;
             }
         };

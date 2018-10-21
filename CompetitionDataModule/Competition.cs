@@ -44,6 +44,15 @@ namespace SCAS
                 Events = new List<Event>();
                 Games = new Dictionary<Session, List<Game>>();
                 Teams = new List<Team>();
+
+                foreach (var dateSessions in conf.Sessions)
+                {
+                    foreach (var session in dateSessions.Value)
+                    {
+                        FieldInfos.Add(session, new FieldInfo(session));
+                        Games.Add(session, new List<Game>());
+                    }
+                }
             }
         }
     };

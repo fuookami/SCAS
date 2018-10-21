@@ -8,6 +8,8 @@ namespace SCAS
     {
         public class Participant
         {
+            private Line _parent;
+
             public String Id
             {
                 get;
@@ -55,8 +57,21 @@ namespace SCAS
                 set;
             }
 
+            public Line Parent
+            {
+                get
+                {
+                    return _parent;
+                }
+                internal set
+                {
+                    _parent = value ?? throw new Exception("安排的道次是个无效值");
+                }
+            }
+
             public Participant(Team team, List<Athlete> athletesInOrder, String existedId = null)
             {
+                _parent = null;
                 Id = existedId ?? Guid.NewGuid().ToString("N");
                 Name = "";
                 OrderInTeam = new Order();

@@ -19,8 +19,14 @@ namespace SCAS
                 internal set;
             }
 
-            public Game(GameInfo conf)
+            public Event Parent
             {
+                get;
+            }
+
+            public Game(Event parent, GameInfo conf)
+            {
+                Parent = parent;
                 Conf = conf;
                 Groups = new List<Group>();
             }
