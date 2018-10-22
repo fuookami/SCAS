@@ -8,7 +8,7 @@ namespace SCAS
     {
         static void Main(string[] args)
         {
-            BuildAvaloniaApp().Start<MainWindow>();
+            BuildAvaloniaApp().Start<ControlWindow>();
         }
 
         public static AppBuilder BuildAvaloniaApp()

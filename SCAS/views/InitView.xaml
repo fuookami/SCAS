@@ -1,0 +1,44 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <StackPanel Orientation="Vertical" Margin="4" HorizontalAlignment="Center" VerticalAlignment="Center">
+    <StackPanel Orientation="Horizontal" Margin="4">
+      <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="比赛设置文件：" 
+                 FontFamily="微软雅黑" FontSize="16"/>
+      <TextBox Name="ConfFileUrl" Watermark="选择设置文件" IsReadOnly="True"
+               Margin="8, 0, 8, 0" Width="400" FontFamily="微软雅黑"></TextBox>
+      <Button Name="SelectConfFile" Foreground="White" FontFamily="微软雅黑">选择文件</Button>
+    </StackPanel>
+
+    <StackPanel Orientation="Horizontal" Margin="4">
+      <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="比赛数据文件："
+                 FontFamily="微软雅黑" FontSize="16"/>
+      <TextBox Name="DataFileUrl" Watermark="选择数据文件" IsReadOnly="True" IsEnabled="False" 
+               Margin="8, 0, 8, 0" Width="400" FontFamily="微软雅黑"></TextBox>
+      <Button Name="SelectDataFile" Foreground="White" FontFamily="微软雅黑">选择文件</Button>
+    </StackPanel>
+
+    <StackPanel Orientation="Horizontal" Margin="4">
+      <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="主控屏："
+                 FontFamily="微软雅黑" FontSize="16" />
+      <DropDown Name="ControlScreen" Items="{Binding Screens}" VerticalAlignment="Center" 
+                Width="525" Height="28" FontFamily="微软雅黑" FontSize="14"/>
+    </StackPanel>
+
+    <StackPanel Orientation="Horizontal" Margin="4">
+      <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="显示屏："
+                 FontFamily="微软雅黑" FontSize="16"/>
+      <DropDown Name="DisplayScreen" Items="{Binding Screens}" VerticalAlignment="Center"
+                Width="525" Height="28" FontFamily="微软雅黑" FontSize="14" />
+    </StackPanel>
+
+    <StackPanel Orientation="Horizontal" Margin="4, 16, 4, 16" Height="20">
+      <TextBlock Name="Message" FontFamily="微软雅黑" FontSize="16" Foreground="Red"></TextBlock>
+    </StackPanel>
+
+    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="4">
+      <Button Name="RefreshScreens" Foreground="White" FontFamily="微软雅黑" Margin="4">刷新屏幕列表</Button>
+      <Button Name="TestFiles" Foreground="White" FontFamily="微软雅黑" Margin="4">测试文件</Button>
+      <Button Name="Comfirm" Foreground="White" FontFamily="微软雅黑" Margin="4">确定</Button>
+    </StackPanel>
+  </StackPanel>
+</UserControl>
