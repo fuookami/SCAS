@@ -8,13 +8,14 @@ namespace SCAS
 {
     public class ControlWindow : Window
     {
-        private delegate void OpenInitWindowDelegate();
+        const double WinMaxWidth = 1280;
+        const double WinMaxHeight = 720;
 
-        CompetitionData.Competition _data;
+        public delegate void InitCompletedHandler(CompetitionData.Competition data, DisplayWindow display);
+        public event InitCompletedHandler InitCompleted;
 
         public ControlWindow()
         {
-            _data = null;
             this.Activated += OpenInitWindow;
         }
 
@@ -36,12 +37,19 @@ namespace SCAS
 
         internal void Init(CompetitionData.Competition data, Screen controlScreen, Screen displayScreen)
         {
-            _data = data;
             InitializeComponent();
             Show();
 
-            var displayWindow = new DisplayWindow();
-            displayWindow.Show();
+            DisplayWindow display = new DisplayWindow(displayScreen);
+            display.Show();
+
+            double width = controlScreen.Bounds.Width <= WinMaxWidth ? controlScreen.Bounds.Width : WinMaxWidth;
+            double height = controlScreen.Bounds.Height <= WinMaxHeight ? controlScreen.Bounds.Height : WinMaxHeight;
+
+            Position = new Point(controlScreen.Bounds.X + (controlScreen.Bounds.Width - width) / 2, controlScreen.Bounds.Y + (controlScreen.Bounds.Height - height) / 2);
+            Bounds = new Rect(new Size(width, height));
+
+            InitCompleted(data, display);
         }
     }
 }

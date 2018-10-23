@@ -79,7 +79,7 @@ namespace SCAS.views
             this.FindControl<Button>("RefreshScreens").Click += delegate
             {
                 Window w = (Window)VisualRoot;
-                Screen[] screens = w.Screens.All;
+                List<Screen> screens = new List<Screen>(w.Screens.All);
                 RefreshScreenList(screens);
             };
 
@@ -103,7 +103,7 @@ namespace SCAS.views
 
             this.FindControl<Button>("Comfirm").Click += delegate
             {
-                if (this._result != null && !ReadUrlAndLoadFiles())
+                if (this._result == null && !ReadUrlAndLoadFiles())
                 {
                     return;
                 }
@@ -141,13 +141,16 @@ namespace SCAS.views
         public override void Render(DrawingContext context)
         {
             Window w = (Window)VisualRoot;
-            Screen[] screens = w.Screens.All;
+            List<Screen> screens = new List<Screen>(w.Screens.All);
             RefreshScreenList(screens);
+
+            Screen mainScreen = screens.Find((ele) => ele.Primary);
+            w.Position = new Point((mainScreen.Bounds.Width - w.Bounds.Width) / 2, (mainScreen.Bounds.Height - w.Bounds.Height) / 2);
         }
 
-        private void RefreshScreenList(Screen[] screens)
+        private void RefreshScreenList(List<Screen> screens)
         {
-            for (Int32 i = 0, j = screens.Length; i != j; ++i)
+            for (Int32 i = 0, j = screens.Count; i != j; ++i)
             {
                 String str = GenerateScreenString(i, screens[i]);
                 if (!_model.Name2Screen.ContainsKey(str))
@@ -157,7 +160,7 @@ namespace SCAS.views
                 }
             }
 
-            if (screens.Length < 2)
+            if (screens.Count < 2)
             {
                 this.FindControl<TextBlock>("Message").Text = "屏幕的数量少于两个，请确认是否连接成功";
             }

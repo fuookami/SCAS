@@ -14,6 +14,10 @@
   <ItemGroup>
     <None Remove="DisplayWindow.xaml" />
     <None Remove="InitWindow.xaml" />
+    <None Remove="views\ControlEventView.xaml" />
+    <None Remove="views\ControlGameView.xaml" />
+    <None Remove="views\ControlView.xaml" />
+    <None Remove="views\DisplayView.xaml" />
     <None Remove="views\InitView.xaml" />
   </ItemGroup>
   <ItemGroup>
@@ -27,12 +31,27 @@
     <Compile Update="ControlWindow.xaml.cs">
       <DependentUpon>ControlWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Update="views\ControlGameView.xaml.cs">
+      <DependentUpon>ControlGameView.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Update="DisplayWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="InitWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="views\ControlEventView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="views\ControlGameView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="views\ControlView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="views\DisplayView.xaml">
       <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="views\InitView.xaml">

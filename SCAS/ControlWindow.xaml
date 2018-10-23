@@ -1,5 +1,11 @@
 ﻿<Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="SCAS">
-    Hello World!
+        Title="SCAS"
+        xmlns:local="clr-namespace:SCAS.views">
+  <DockPanel>
+    <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
+      <Button Name="SaveDataFile" Foreground="White" FontFamily="微软雅黑">保存</Button>
+    </StackPanel>
+    <local:ControlView/>
+  </DockPanel>
 </Window>
