@@ -135,7 +135,6 @@ namespace SCAS.views
         {
             base.OnAttachedToVisualTree(e);
             Window w = (Window)VisualRoot;
-            w.PositionChanged += (sender, args) => InvalidateVisual();
         }
 
         public override void Render(DrawingContext context)
@@ -191,14 +190,14 @@ namespace SCAS.views
         private bool ReadUrlAndLoadFiles()
         {
             var confFileUrl = this.FindControl<TextBox>("ConfFileUrl").Text;
-            if (confFileUrl.Length == 0)
+            if (confFileUrl == null || confFileUrl.Length == 0)
             {
                 this.FindControl<TextBlock>("Message").Text = "未选择比赛设置文件";
                 return false;
             }
 
             var dataFileUrl = this.FindControl<TextBox>("DataFileUrl").Text;
-            if (dataFileUrl.Length == 0)
+            if (dataFileUrl == null || dataFileUrl.Length == 0)
             {
                 this.FindControl<TextBlock>("Message").Text = "未选择比赛数据文件";
                 return false;

@@ -15,9 +15,11 @@
     <None Remove="DisplayWindow.xaml" />
     <None Remove="InitWindow.xaml" />
     <None Remove="views\ControlEventView.xaml" />
+    <None Remove="views\ControlFieldView.xaml" />
     <None Remove="views\ControlGameView.xaml" />
     <None Remove="views\ControlView.xaml" />
-    <None Remove="views\DisplayView.xaml" />
+    <None Remove="views\DisplayEventView.xaml" />
+    <None Remove="views\DisplayGameView.xaml" />
     <None Remove="views\InitView.xaml" />
   </ItemGroup>
   <ItemGroup>
@@ -45,13 +47,19 @@
     <EmbeddedResource Update="views\ControlEventView.xaml">
       <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Update="views\ControlFieldView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="views\ControlGameView.xaml">
       <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="views\ControlView.xaml">
       <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="views\DisplayView.xaml">
+    <EmbeddedResource Update="views\DisplayEventView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="views\DisplayGameView.xaml">
       <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="views\InitView.xaml">

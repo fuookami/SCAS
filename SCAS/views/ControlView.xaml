@@ -1,15 +1,26 @@
 ﻿<UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:SCAS.views">
-  <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="0 16 0 0">
-    <TreeView Name="CompTree" Items="{Binding}">
+  <Grid Margin="0 16 0 0">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="*"/>
+    </Grid.RowDefinitions>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="Auto" />
+      <ColumnDefinition Width="*" />
+    </Grid.ColumnDefinitions>
+
+    <TreeView Grid.Row="0" Grid.Column="0" Name="CompTree" Items="{Binding}">
       <TreeView.ItemTemplate>
         <TreeDataTemplate ItemsSource="{Binding Children}">
           <TextBlock Text="{Binding Header}" FontFamily="微软雅黑" FontSize="16"/>
         </TreeDataTemplate>
       </TreeView.ItemTemplate>
     </TreeView>
-    <local:ControlGameView Name="GameView" />
-    <local:ControlEventView Name="EventView" />
-  </StackPanel>
+
+    <StackPanel Grid.Row="0" Grid.Column="1">
+      <local:ControlGameView Name="GameView" />
+      <local:ControlEventView Name="EventView" />
+    </StackPanel>
+  </Grid>
 </UserControl>

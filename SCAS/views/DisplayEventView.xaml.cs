@@ -4,16 +4,16 @@ using Avalonia.Markup.Xaml;
 
 namespace SCAS.views
 {
-    public class DisplayView : UserControl
+    public class DisplayEventView : DisplayDataViewBase
     {
-        public DisplayView()
+        public DisplayEventView()
         {
             this.InitializeComponent();
         }
 
-        private void InitializeComponent()
+        public override void Clear()
         {
-            AvaloniaXamlLoader.Load(this);
+            
         }
     }
 }

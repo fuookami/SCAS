@@ -1,4 +1,66 @@
 ﻿<UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-  Game!
+  <Grid Margin="4">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="*"/>
+    </Grid.RowDefinitions>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="Auto"/>
+      <ColumnDefinition Width="*"/>
+    </Grid.ColumnDefinitions>
+
+    <StackPanel Grid.Row="0" Grid.Column="0">
+      <TextBlock Text="当前组" FontFamily="微软雅黑" FontSize="14" />
+      <DropDown Name="GroupSelect" Items="{Binding Groups}" VerticalAlignment="Center" Width="525" Height="28" FontFamily="微软雅黑" FontSize="14" />
+    </StackPanel>
+
+    <StackPanel Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2"  Orientation="Horizontal" HorizontalAlignment="Right">
+      <Button Name="DisplayGroup" VerticalAlignment="Center" Foreground="White" FontFamily="微软雅黑" FontSize="16" Margin="4,0,0,0">显示当前组</Button>
+      <Button Name="RefreshGroup" VerticalAlignment="Center" Foreground="White" FontFamily="微软雅黑" FontSize="16" Margin="4,0,0,0">更新当前组成绩</Button>
+      <Border Background="Black" BorderThickness="2" Margin="4,0,0,0"/>
+      <Button Name="PrevGroup" VerticalAlignment="Center" Foreground="White" FontFamily="微软雅黑" FontSize="16" Margin="4,0,0,0">上一组</Button>
+      <Button Name="NextGroup" VerticalAlignment="Center" Foreground="White" FontFamily="微软雅黑" FontSize="16" Margin="4,0,0,0">下一组</Button>
+      <Border Background="Black" BorderThickness="2" Margin="4,0,0,0"/>
+      <Button Name="DisplayGameResult" VerticalAlignment="Center" Foreground="White" FontFamily="微软雅黑" FontSize="16" Margin="4,0,0,0">显示当前子项总成绩</Button>
+      <Button Name="SaveGameResult" VerticalAlignment="Center" Foreground="White" FontFamily="微软雅黑" FontSize="16" Margin="4,0,0,0">导出当前子项总成绩</Button>
+    </StackPanel>
+
+    <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" VerticalAlignment="Top" ColumnDefinitions="120,180,180,*">
+      <TextBlock Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" Text="道次" FontFamily="微软雅黑" FontSize="16"/>
+      <TextBlock Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" Text="姓名" FontFamily="微软雅黑" FontSize="16"/>
+      <TextBlock Grid.Row="0" Grid.Column="2" HorizontalAlignment="Center" Text="队伍" FontFamily="微软雅黑" FontSize="16"/>
+      <TextBlock Grid.Row="0" Grid.Column="3" HorizontalAlignment="Center" Text="成绩" FontFamily="微软雅黑" FontSize="16"/>
+    </Grid>
+
+    <ListBox Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Items="{Binding CurrGroupLines}">
+      <ListBox.ItemTemplate>
+        <DataTemplate>
+          <StackPanel>
+            <Grid VerticalAlignment="Top" ColumnDefinitions="120,180,180,*">
+              <TextBlock Grid.Row="0" Grid.Column="0" Text="{Binding Line}" HorizontalAlignment="Center" FontFamily="微软雅黑" FontSize="16"/>
+              <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Name}" HorizontalAlignment="Center" FontFamily="微软雅黑" FontSize="16"/>
+              <TextBlock Grid.Row="0" Grid.Column="2" Text="{Binding Team}" HorizontalAlignment="Center" FontFamily="微软雅黑" FontSize="16"/>
+              <StackPanel Orientation="Horizontal">
+                <StackPanel>
+                  <CheckBox>犯规</CheckBox>
+                  <CheckBox>弃权</CheckBox>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                  <TextBox Text="{Binding Min}" HorizontalAlignment="Center" FontFamily="微软雅黑" FontSize="16"/>
+                  <TextBlock Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" Text="分" FontFamily="微软雅黑" FontSize="16"/>
+                  <TextBox Text="{Binding Sec}" HorizontalAlignment="Center" FontFamily="微软雅黑" FontSize="16"/>
+                  <TextBlock Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" Text="秒" FontFamily="微软雅黑" FontSize="16"/>
+                  <TextBox Text="{Binding HMillSec}" HorizontalAlignment="Center" FontFamily="微软雅黑" FontSize="16"/>
+                  <TextBlock Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" Text="百毫秒" FontFamily="微软雅黑" FontSize="16"/>
+                </StackPanel>
+              </StackPanel>
+            </Grid>
+            <Border Background="Black" BorderThickness="2"/>
+          </StackPanel>
+        </DataTemplate>
+      </ListBox.ItemTemplate>
+    </ListBox>
+  </Grid>
 </UserControl>

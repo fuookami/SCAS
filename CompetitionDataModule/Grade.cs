@@ -62,9 +62,37 @@ namespace SCAS
                 Set(value.Item1, value.Item2);
             }
 
+            public bool Valid()
+            {
+                return GradeCode != Code.None;
+            }
+
             static public bool HasTime(Code code)
             {
                 return code == Code.Normal || code == Code.MR;
+            }
+
+            public String ToFormatString()
+            {
+                if (!Valid())
+                {
+                    return "";
+                }
+                else if (HasTime(GradeCode))
+                {
+                    return String.Format("{0}{1}", FormatTime(Time), GradeCode == Code.MR ? "(MR)" : "");
+                }
+                else
+                {
+                    return GradeCode.ToString();
+                }
+            }
+
+            private static String FormatTime(TimeSpan time)
+            {
+                return time.TotalMinutes < 1 ? String.Format("{0:D2}.{1:D2}", time.Seconds, time.Milliseconds / 100)
+                    : time.TotalHours >= 1 ? String.Format("{0:D}:{1:D}:{2:D2}.{3:D2}", time.Hours, time.Minutes, time.Seconds, time.Milliseconds / 100)
+                    : String.Format("{0:D}:{1:D2}.{2:D2}", time.Minutes, time.Seconds, time.Milliseconds / 100);
             }
         }
 

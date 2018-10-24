@@ -5,11 +5,15 @@ namespace SCAS.views
 {
     public abstract class ControlDataViewBase : UserControl
     {
-        DisplayWindow _display;
+        protected DisplayWindow Display
+        {
+            get;
+            private set;
+        }
 
         public void SetDisplay(DisplayWindow display)
         {
-            _display = display;
+            Display = display;
         }
 
         public abstract void Clear();
