@@ -7,6 +7,7 @@ using Avalonia.Platform;
 using SCAS.CompetitionData;
 using SCAS.CompetitionConfiguration;
 
+
 namespace SCAS
 {
     public class ControlWindow : Window

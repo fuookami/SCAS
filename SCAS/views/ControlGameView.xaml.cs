@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
@@ -31,63 +32,6 @@ namespace SCAS.views
             }
         }
 
-        public class LineItem
-        {
-            public Line Data
-            {
-                get;
-            }
-
-            public String Line
-            {
-                get
-                {
-                    return Data.Order.Value.ToString();
-                }
-            }
-
-            public String Name
-            {
-                get
-                {
-                    return Data.LineParticipant == null ? "" 
-                        : Data.LineParticipant.Athletes.Count == 1 ? Data.LineParticipant.Athletes[0].Name : Data.LineParticipant.Name;
-                }
-            }
-
-            public String Team
-            {
-                get
-                {
-                    return Data.LineParticipant == null ? ""
-                        : Data.LineParticipant.ParticipantTeam.Conf.ShortName;
-                }
-            }
-
-            public String Min
-            {
-                get;
-                set;
-            }
-
-            public String Sec
-            {
-                get;
-                set;
-            }
-
-            public String HMillSec
-            {
-                get;
-                set;
-            }
-
-            public LineItem(Line data)
-            {
-                Data = data;
-            }
-        }
-
         public class Model
         {
             public List<GroupItem> Groups
@@ -95,7 +39,7 @@ namespace SCAS.views
                 get;
             }
 
-            public List<LineItem> CurrGroupLines
+            public List<ControlGameViewLineItem.LineItem> CurrGroupLines
             {
                 get;
             }
@@ -103,25 +47,30 @@ namespace SCAS.views
             public Model()
             {
                 Groups = new List<GroupItem>();
-                CurrGroupLines = new List<LineItem>();
+                CurrGroupLines = new List<ControlGameViewLineItem.LineItem>();
             }
         }
 
         private Game _data;
         private Model _model;
         private Group _currGroup;
+        private StackPanel _lineItemsBox;
 
         public ControlGameView()
         {
-            this.InitializeComponent();
             _model = new Model();
             DataContext = _model;
+            this.InitializeComponent();
+        }
 
+        private void InitializeComponent()
+        {
+            AvaloniaXamlLoader.Load(this);
+            
             var groupSelect = this.FindControl<DropDown>("GroupSelect");
+            _lineItemsBox = this.FindControl<StackPanel>("LineItemsBox");
             groupSelect.SelectionChanged += delegate
             {
-                //TODO Binding: Error in binding to "Avalonia.Controls.TreeView"."Items": "Could not convert 'SCAS.ControlWindow+Model' to 'IEnumerable'."
-                //显示不出来
                 var item = (GroupItem)groupSelect.SelectedItem;
                 if (_currGroup != item.Data)
                 {
@@ -129,9 +78,16 @@ namespace SCAS.views
                     _model.CurrGroupLines.Clear();
                     foreach (var line in _currGroup.Lines)
                     {
-                        _model.CurrGroupLines.Add(new LineItem(line));
+                        _model.CurrGroupLines.Add(new ControlGameViewLineItem.LineItem(line));
                     }
                 }
+
+                _lineItemsBox.Children.Clear();
+                Enumerable.Range(0, _model.CurrGroupLines.Count).Select(i => new ControlGameViewLineItem(_model.CurrGroupLines[i])).All(ele => 
+                {
+                    _lineItemsBox.Children.Add(ele);
+                    return true;
+                });
             };
         }
 

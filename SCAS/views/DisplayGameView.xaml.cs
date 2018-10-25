@@ -11,6 +11,11 @@ namespace SCAS.views
             this.InitializeComponent();
         }
 
+        private void InitializeComponent()
+        {
+            AvaloniaXamlLoader.Load(this);
+        }
+
         public override void Clear()
         {
 
