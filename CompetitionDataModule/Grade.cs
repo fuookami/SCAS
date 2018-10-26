@@ -6,7 +6,7 @@ namespace SCAS
 {
     namespace CompetitionData
     {
-        public class GradeBase
+        public class GradeBase : IComparable
         {
             public enum Code : Int32
             {
@@ -67,6 +67,11 @@ namespace SCAS
                 return GradeCode != Code.None;
             }
 
+            public bool HasTime()
+            {
+                return HasTime(GradeCode);
+            }
+
             static public bool HasTime(Code code)
             {
                 return code == Code.Normal || code == Code.MR;
@@ -93,6 +98,62 @@ namespace SCAS
                 return time.TotalMinutes < 1 ? String.Format("{0:D2}.{1:D2}", time.Seconds, time.Milliseconds / 100)
                     : time.TotalHours >= 1 ? String.Format("{0:D}:{1:D}:{2:D2}.{3:D2}", time.Hours, time.Minutes, time.Seconds, time.Milliseconds / 100)
                     : String.Format("{0:D}:{1:D2}.{2:D2}", time.Minutes, time.Seconds, time.Milliseconds / 100);
+            }
+
+            public override bool Equals(object obj)
+            {
+                GradeBase rhs = (GradeBase)obj;
+                if (GradeCode != rhs.GradeCode)
+                {
+                    return false;
+                }
+                else
+                {
+                    return Time.Equals(rhs.Time);
+                }
+            }
+
+            public Int32 CompareTo(Object obj)
+            {
+                GradeBase rhs = (GradeBase)obj;
+                if (!Valid() && !rhs.Valid())
+                {
+                    return 1;
+                }
+                else if (Valid() && !rhs.Valid())
+                {
+                    return 1;
+                }
+                else if (!Valid() && rhs.Valid())
+                {
+                    return -1;
+                }
+                else
+                {
+                    if (HasTime() && rhs.HasTime())
+                    {
+                        return Time.CompareTo(rhs.Time);
+                    }
+                    else if (HasTime() && !rhs.HasTime())
+                    {
+                        return 1;
+                    }
+                    else if (!HasTime() && rhs.HasTime())
+                    {
+                        return -1;
+                    }
+                    else
+                    {
+                        if (GradeCode == Code.DSQ || GradeCode == rhs.GradeCode)
+                        {
+                            return 1;
+                        }
+                        else
+                        {
+                            return -1;
+                        }
+                    }
+                }
             }
         }
 
@@ -149,6 +210,8 @@ namespace SCAS
 
         public class Grade : GradeBase
         {
+            public static readonly Grade NoGrade = new Grade(null);
+
             public Participant GradeParticipator
             {
                 get;

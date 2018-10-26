@@ -1,0 +1,22 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <Grid VerticalAlignment="Center">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="*"/>
+    </Grid.RowDefinitions>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="120"/>
+      <ColumnDefinition Width="180"/>
+      <ColumnDefinition Width="180"/>
+      <ColumnDefinition Width="*"/>
+      <ColumnDefinition Width="120"/>
+    </Grid.ColumnDefinitions>
+
+    <TextBlock Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" Text="{Binding Line}" Foreground="White" FontFamily="微软雅黑" FontSize="16"/>
+    <TextBlock Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" Text="{Binding Name}" Foreground="White" FontFamily="微软雅黑" FontSize="16"/>
+    <TextBlock Grid.Row="0" Grid.Column="2" HorizontalAlignment="Center" Text="{Binding Team}" Foreground="White" FontFamily="微软雅黑" FontSize="16"/>
+    <TextBlock Grid.Row="0" Grid.Column="3" HorizontalAlignment="Center" Text="{Binding Grade}" Foreground="White" FontFamily="微软雅黑" FontSize="16"/>
+    <TextBlock Grid.Row="0" Grid.Column="4" HorizontalAlignment="Center" Text="{Binding OrderInGroup}" Foreground="White" FontFamily="微软雅黑" FontSize="16"/>
+  </Grid>
+
+</UserControl>

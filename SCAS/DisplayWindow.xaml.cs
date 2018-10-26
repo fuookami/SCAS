@@ -72,11 +72,16 @@ namespace SCAS
             this.FindControl<TextBlock>("Check").Text = checkName;
         }
 
-        public void SetGame(String gameName, Group group)
+        public void SetGroup(String gameName, Group group)
         {
             this.FindControl<TextBlock>("Game").Text = gameName;
-
-            //TODO 显示gameView，赋group，显示group
+            foreach (var view in _views)
+            {
+                view.Clear();
+                view.IsVisible = false;
+            }
+            _gameView.IsVisible = true;
+            _gameView.Refresh(group, this.Height);
         }
 
         public void SetEnd()

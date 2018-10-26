@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using SCAS.CompetitionConfiguration;
 
 namespace SCAS
@@ -22,6 +24,19 @@ namespace SCAS
             public Event Parent
             {
                 get;
+            }
+
+            public List<Tuple<SSUtils.Order, List<Line>>> OrderInGame
+            {
+                get
+                {
+                    List<Line> lineWithGrade = new List<Line>();
+                    foreach (var group in Groups)
+                    {
+                        lineWithGrade.AddRange(group.Lines.FindAll((line) => line.ParticipantGrade.Valid()));
+                    }
+                    return Line.GroupByGrade(lineWithGrade);
+                }
             }
 
             public Game(Event parent, GameInfo conf)

@@ -64,7 +64,7 @@
       <TextBlock Grid.Row="1" Grid.Column="1" Name="Check" Foreground="White" FontFamily="微软雅黑"></TextBlock>
     </Grid>
 
-    <StackPanel Grid.Row="0" Grid.Column="1" Grid.RowSpan="3">
+    <StackPanel Grid.Row="0" Grid.Column="2" Grid.RowSpan="3">
       <local:DisplayGameView Name="GameView" />
       <local:DisplayEventView Name="EventView" />
     </StackPanel>

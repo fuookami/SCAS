@@ -39,20 +39,15 @@ namespace SCAS.views
                 get;
             }
 
-            public List<ControlGameViewLineItem.LineItem> CurrGroupLines
-            {
-                get;
-            }
-
             public Model()
             {
                 Groups = new List<GroupItem>();
-                CurrGroupLines = new List<ControlGameViewLineItem.LineItem>();
             }
         }
 
         private Game _data;
         private Model _model;
+        private GroupItem _currGroupItem;
         private Group _currGroup;
         private StackPanel _lineItemsBox;
 
@@ -74,27 +69,29 @@ namespace SCAS.views
                 var item = (GroupItem)groupSelect.SelectedItem;
                 if (_currGroup != item.Data)
                 {
+                    _currGroupItem = item;
                     _currGroup = item.Data;
-                    _model.CurrGroupLines.Clear();
+                    _lineItemsBox.Children.Clear();
                     foreach (var line in _currGroup.Lines)
                     {
-                        _model.CurrGroupLines.Add(new ControlGameViewLineItem.LineItem(line));
+                        _lineItemsBox.Children.Add(new ControlGameViewLineItem(new ControlGameViewLineItem.LineItem(line)));
                     }
                 }
+            };
 
-                _lineItemsBox.Children.Clear();
-                Enumerable.Range(0, _model.CurrGroupLines.Count).Select(i => new ControlGameViewLineItem(_model.CurrGroupLines[i])).All(ele => 
+            this.FindControl<Button>("DisplayGroup").Click += delegate
+            {
+                if (_currGroup != null)
                 {
-                    _lineItemsBox.Children.Add(ele);
-                    return true;
-                });
+                    Display.SetGroup(_data.Conf.Name + _currGroupItem.ToString(), _currGroup);
+                }
             };
         }
 
         public override void Clear()
         {
             _model.Groups.Clear();
-            _model.CurrGroupLines.Clear();
+            _lineItemsBox.Children.Clear();
         }
 
         public void Refresh(Game data)

@@ -18,7 +18,7 @@
 
     <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
       <Button Name="DisplayGroup" VerticalAlignment="Center" Foreground="White" FontFamily="微软雅黑" FontSize="16" Margin="4,0,0,0">显示当前组</Button>
-      <Button Name="RefreshGroup" VerticalAlignment="Center" Foreground="White" FontFamily="微软雅黑" FontSize="16" Margin="4,0,0,0">更新当前组成绩</Button>
+      <Button Name="RefreshGroup" VerticalAlignment="Center" Foreground="White" FontFamily="微软雅黑" FontSize="16" Margin="4,0,0,0">保存当前组成绩</Button>
       <Border Background="Black" BorderThickness="2" Margin="4,0,0,0"/>
       <Button Name="PrevGroup" VerticalAlignment="Center" Foreground="White" FontFamily="微软雅黑" FontSize="16" Margin="4,0,0,0">上一组</Button>
       <Button Name="NextGroup" VerticalAlignment="Center" Foreground="White" FontFamily="微软雅黑" FontSize="16" Margin="4,0,0,0">下一组</Button>

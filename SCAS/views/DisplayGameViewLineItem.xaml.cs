@@ -6,7 +6,7 @@ using SCAS.CompetitionData;
 
 namespace SCAS.views
 {
-    public class ControlGameViewLineItem : UserControl
+    public class DisplayGameViewLineItem : UserControl
     {
         public class LineItem
         {
@@ -41,55 +41,52 @@ namespace SCAS.views
                 }
             }
 
-            public String Min
+            public String Grade
             {
-                get;
-                set;
+                get
+                {
+                    return Data.ParticipantGrade.ToFormatString();
+                }
             }
 
-            public String Sec
+            public String OrderInGroup
             {
-                get;
-                set;
-            }
-
-            public String HMillSec
-            {
-                get;
-                set;
+                get
+                {
+                    var indexPair = Data.Parent.OrderInGroup.Find((ele) =>
+                    {
+                        return ele.Item2.FindIndex((l) => l == Data) != -1;
+                    });
+                    if (indexPair == null || indexPair.Item1.Valid())
+                    {
+                        return "";
+                    }
+                    else
+                    {
+                        return indexPair.Item1.Value.ToString();
+                    }
+                }
             }
 
             public LineItem(Line data)
             {
                 Data = data;
-                Min = "";
-                Sec = "";
-                HMillSec = "";
-            }
-
-            public override String ToString()
-            {
-                return Line;
             }
         }
 
         private LineItem _model;
 
-        public ControlGameViewLineItem(LineItem model)
+        public DisplayGameViewLineItem(LineItem model, double height)
         {
             _model = model;
             DataContext = _model;
             this.InitializeComponent();
+            this.Height = height;
         }
 
         private void InitializeComponent()
         {
             AvaloniaXamlLoader.Load(this);
-
-            if (_model.Data.LineParticipant == null)
-            {
-                this.FindControl<StackPanel>("GradeInputBox").IsVisible = false;
-            }
         }
     }
 }

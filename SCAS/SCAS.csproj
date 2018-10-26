@@ -21,6 +21,7 @@
     <None Remove="views\ControlView.xaml" />
     <None Remove="views\DisplayEventView.xaml" />
     <None Remove="views\DisplayGameView.xaml" />
+    <None Remove="views\DisplayGameViewLineItem.xaml" />
     <None Remove="views\InitView.xaml" />
   </ItemGroup>
   <ItemGroup>
@@ -64,6 +65,9 @@
       <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="views\DisplayGameView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="views\DisplayGameViewLineItem.xaml">
       <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="views\InitView.xaml">
