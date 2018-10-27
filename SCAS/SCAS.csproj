@@ -31,6 +31,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CompetitionDataModule\CompetitionDataModule.csproj" />
+    <ProjectReference Include="..\DocumentGeneratorModule\DocumentGeneratorModule.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="ControlWindow.xaml.cs">

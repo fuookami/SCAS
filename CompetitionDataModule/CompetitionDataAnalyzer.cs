@@ -413,7 +413,7 @@ namespace SCAS
                 var valueNode = (XmlElement)node.GetElementsByTagName("Value")[0];
                 var code = (GradeBase.Code)Enum.Parse(typeof(GradeBase.Code), valueNode.GetAttribute("code"));
                 return GradeBase.HasTime(code) 
-                    ? new Tuple<GradeBase.Code, TimeSpan>(code, TimeSpan.Parse(node.GetAttribute("time")))
+                    ? new Tuple<GradeBase.Code, TimeSpan>(code, TimeSpan.Parse(valueNode.GetAttribute("time")))
                     : new Tuple<GradeBase.Code, TimeSpan>(code, TimeSpan.Zero);
             }
 

@@ -89,9 +89,21 @@ namespace SCAS
         {
             AvaloniaXamlLoader.Load(this);
 
-            this.FindControl<Button>("SaveDataFile").Click += delegate
+            this.FindControl<Button>("SaveDataFile").Click += async delegate
             {
-                //TODO
+                if (_data != null)
+                {
+                    CompetitionData.Normalizer normalizer = new CompetitionData.Normalizer(_data);
+                    var result = await new SaveFileDialog
+                    {
+                        Title = "选择保存路径",
+                        Filters = GenerateFilters("比赛数据文件")
+                    }.ShowAsync((Window)VisualRoot);
+                    if (result != null && result.Length != 0)
+                    {
+                        normalizer.NormalizeToFile(result);
+                    }
+                }
             };
 
             this.FindControl<Button>("EndSession").Click += delegate
@@ -162,6 +174,21 @@ namespace SCAS
             {
                 _model.Sessions.Add(new SessionItem(gameList.Key));
             }
+        }
+
+        static private List<FileDialogFilter> GenerateFilters(String name)
+        {
+            return new List<FileDialogFilter>
+            {
+                new FileDialogFilter()
+                {
+                    Extensions = new List<String>
+                    {
+                        "xml"
+                    },
+                    Name = name
+                }
+            };
         }
     }
 }

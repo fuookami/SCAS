@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using SCAS.CompetitionConfiguration;
 
 namespace SCAS
@@ -25,6 +26,14 @@ namespace SCAS
                 internal set;
             }
 
+            public Game LastGame
+            {
+                get
+                {
+                    return Games[Games.Count - 1];
+                }
+            }
+
             public PointPool Points
             {
                 get;
@@ -42,6 +51,12 @@ namespace SCAS
                 MatchRecord = matchRecord;
                 Games = new List<Game>();
                 Points = new PointPool(conf.EventPointInfo, this);
+            }
+
+            public Dictionary<String, List<Tuple<SSUtils.Order, List<Line>>>> GetOrderInEvent()
+            {
+                return Conf.EventTeamworkInfo.BeTeamwork ? LastGame.GetOrderInGameOfTeamworkGame()
+                    : LastGame.GetOrderInGameOfPersonalGame();
             }
         }
     };

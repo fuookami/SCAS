@@ -225,7 +225,7 @@ namespace SCAS.views
                     isDNSBtn.IsChecked = false;
                 }
                 var tuple = Model.ToGradeTuple();
-                _message.Text = Grade.ToFormatString(tuple.Item1, tuple.Item2);
+                _message.Text = Grade.ToDisplayFormatString(tuple.Item1, tuple.Item2);
             };
             isDNSBtn.Click += delegate
             {
@@ -234,7 +234,7 @@ namespace SCAS.views
                     isDQSBtn.IsChecked = false;
                 }
                 var tuple = Model.ToGradeTuple();
-                _message.Text = Grade.ToFormatString(tuple.Item1, tuple.Item2);
+                _message.Text = Grade.ToDisplayFormatString(tuple.Item1, tuple.Item2);
             };
 
             this.FindControl<TextBox>("MinInput").TextInput += delegate (object obj, TextInputEventArgs e)
@@ -246,7 +246,7 @@ namespace SCAS.views
                 else
                 {
                     var tuple = Model.ToGradeTuple();
-                    _message.Text = Grade.ToFormatString(tuple.Item1, tuple.Item2);
+                    _message.Text = Grade.ToDisplayFormatString(tuple.Item1, tuple.Item2);
                 }
             };
             this.FindControl<TextBox>("SecInput").TextInput += delegate (object obj, TextInputEventArgs e)
@@ -258,7 +258,7 @@ namespace SCAS.views
                 else
                 {
                     var tuple = Model.ToGradeTuple();
-                    _message.Text = Grade.ToFormatString(tuple.Item1, tuple.Item2);
+                    _message.Text = Grade.ToDisplayFormatString(tuple.Item1, tuple.Item2);
                 }
             };
             this.FindControl<TextBox>("TMillSecInput").TextInput += delegate (object obj, TextInputEventArgs e)
@@ -270,7 +270,7 @@ namespace SCAS.views
                 else
                 {
                     var tuple = Model.ToGradeTuple();
-                    _message.Text = Grade.ToFormatString(tuple.Item1, tuple.Item2);
+                    _message.Text = Grade.ToDisplayFormatString(tuple.Item1, tuple.Item2);
                 }
             };
         }

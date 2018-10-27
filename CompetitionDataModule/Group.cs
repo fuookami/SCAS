@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using SCAS.CompetitionConfiguration;
 
 namespace SCAS
 {
@@ -134,6 +135,56 @@ namespace SCAS
             {
                 Parent = parent;
                 Lines = new List<Line>();
+            }
+
+            public Dictionary<String, List<Tuple<SSUtils.Order, List<Line>>>> GetOrderInGroupOfPersonalGame()
+            {
+                var ranks = new Dictionary<String, List<Line>>();
+                foreach (var line in Lines)
+                {
+                    if (line.LineParticipant != null)
+                    {
+                        var rank = line.LineParticipant.Athletes[0].Rank;
+                        var key = rank == null ? "" : rank.Name;
+                        if (ranks.ContainsKey(key))
+                        {
+                            ranks.Add(key, new List<Line>());
+                        }
+                        ranks[key].Add(line);
+                    }
+                }
+
+                Dictionary<String, List<Tuple<SSUtils.Order, List<Line>>>> ret = new Dictionary<String, List<Tuple<SSUtils.Order, List<Line>>>>();
+                foreach (var rankPair in ranks)
+                {
+                    ret.Add(rankPair.Key, Line.GroupByGrade(rankPair.Value));
+                }
+                return ret;
+            }
+
+            public Dictionary<String, List<Tuple<SSUtils.Order, List<Line>>>> GetOrderInGroupOfTeamworkGame()
+            {
+                var ranks = new Dictionary<String, List<Line>>();
+                foreach (var line in Lines)
+                {
+                    if (line.LineParticipant != null)
+                    {
+                        var rank = line.LineParticipant.ParticipantTeam.Conf.Category;
+                        var key = rank == null ? "" : rank.Name;
+                        if (ranks.ContainsKey(key))
+                        {
+                            ranks.Add(key, new List<Line>());
+                        }
+                        ranks[key].Add(line);
+                    }
+                }
+
+                Dictionary<String, List<Tuple<SSUtils.Order, List<Line>>>> ret = new Dictionary<String, List<Tuple<SSUtils.Order, List<Line>>>>();
+                foreach (var rankPair in ranks)
+                {
+                    ret.Add(rankPair.Key, Line.GroupByGrade(rankPair.Value));
+                }
+                return ret;
             }
         }
     };

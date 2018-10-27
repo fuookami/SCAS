@@ -95,6 +95,22 @@ namespace SCAS
                 }
                 else if (HasTime(code))
                 {
+                    return String.Format("{0}", FormatTime(time));
+                }
+                else
+                {
+                    return code.ToString();
+                }
+            }
+
+            public static String ToDisplayFormatString(Code code, TimeSpan time)
+            {
+                if (!Valid(code))
+                {
+                    return "";
+                }
+                else if (HasTime(code))
+                {
                     return String.Format("{0}{1}", FormatTime(time), code == Code.MR ? "(MR)" : "");
                 }
                 else
