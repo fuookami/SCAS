@@ -1,3 +1,6 @@
 ﻿<UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+    <Button Name="SavePointResult" Margin="4" Foreground="White" FontFamily="微软雅黑" FontSize="16">导出总积分</Button>
+  </StackPanel>
 </UserControl>

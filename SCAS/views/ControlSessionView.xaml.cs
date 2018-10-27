@@ -4,9 +4,10 @@ using Avalonia.Markup.Xaml;
 
 namespace SCAS.views
 {
-    public class ControlFieldView : UserControl
+    public class ControlSessionView : ControlDataViewBase
     {
-        public ControlFieldView()
+        public ControlSessionView(DisplayWindow display)
+            : base(display)
         {
             this.InitializeComponent();
         }

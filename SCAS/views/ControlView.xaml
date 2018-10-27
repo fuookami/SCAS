@@ -18,9 +18,6 @@
       </TreeView.ItemTemplate>
     </TreeView>
 
-    <StackPanel Grid.Row="0" Grid.Column="1">
-      <local:ControlGameView Name="GameView"/>
-      <local:ControlEventView Name="EventView"/>
-    </StackPanel>
+    <StackPanel Grid.Row="0" Grid.Column="1" Name="ViewBox"/>
   </Grid>
 </UserControl>

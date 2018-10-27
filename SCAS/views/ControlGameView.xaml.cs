@@ -47,14 +47,23 @@ namespace SCAS.views
 
         private Game _data;
         private Model _model;
+        private DropDown _groupSelect;
         private GroupItem _currGroupItem;
         private Group _currGroup;
         private StackPanel _lineItemsBox;
         private List<ControlGameViewLineItem> _lineItems;
 
-        public ControlGameView()
+        public ControlGameView(Game data, DisplayWindow display)
+            : base(display)
         {
             _model = new Model();
+            _data = data;
+            UInt32 index = 1;
+            foreach (var group in _data.Groups)
+            {
+                _model.Groups.Add(new GroupItem(index, group));
+                ++index;
+            }
             DataContext = _model;
             _lineItems = new List<ControlGameViewLineItem>();
             this.InitializeComponent();
@@ -63,13 +72,13 @@ namespace SCAS.views
         private void InitializeComponent()
         {
             AvaloniaXamlLoader.Load(this);
-            
-            var groupSelect = this.FindControl<DropDown>("GroupSelect");
+
+            _groupSelect = this.FindControl<DropDown>("GroupSelect");
             _lineItemsBox = this.FindControl<StackPanel>("LineItemsBox");
-            groupSelect.SelectionChanged += delegate
+            _groupSelect.SelectionChanged += delegate
             {
-                var item = (GroupItem)groupSelect.SelectedItem;
-                if (_currGroup != item.Data)
+                var item = (GroupItem)_groupSelect.SelectedItem;
+                if (item != null && _currGroup != item.Data)
                 {
                     _currGroupItem = item;
                     _currGroup = item.Data;
@@ -104,25 +113,6 @@ namespace SCAS.views
                 }
                 Display.RefreshGroup();
             };
-        }
-
-        public override void Clear()
-        {
-            _model.Groups.Clear();
-            _lineItemsBox.Children.Clear();
-        }
-
-        public void Refresh(Game data)
-        {
-            _data = data;
-
-            Clear();
-            UInt32 index = 1;
-            foreach (var group in _data.Groups)
-            {
-                _model.Groups.Add(new GroupItem(index, group));
-                ++index;
-            }
         }
     }
 }

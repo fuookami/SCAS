@@ -12,13 +12,14 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Remove="dialogs\InformationDialog.xaml" />
     <None Remove="DisplayWindow.xaml" />
     <None Remove="InitWindow.xaml" />
     <None Remove="views\ControlCompetitionView.xaml" />
     <None Remove="views\ControlEventView.xaml" />
-    <None Remove="views\ControlFieldView.xaml" />
     <None Remove="views\ControlGameView.xaml" />
     <None Remove="views\ControlGameViewLineItem.xaml" />
+    <None Remove="views\ControlSessionView.xaml" />
     <None Remove="views\ControlView.xaml" />
     <None Remove="views\DisplayEventView.xaml" />
     <None Remove="views\DisplayGameView.xaml" />
@@ -37,11 +38,17 @@
     <Compile Update="ControlWindow.xaml.cs">
       <DependentUpon>ControlWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Update="views\ControlSessionView.xaml.cs">
+      <DependentUpon>ControlSessionView.xaml</DependentUpon>
+    </Compile>
     <Compile Update="views\ControlGameView.xaml.cs">
       <DependentUpon>ControlGameView.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Update="dialogs\InformationDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="DisplayWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>
@@ -54,7 +61,7 @@
     <EmbeddedResource Update="views\ControlEventView.xaml">
       <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="views\ControlFieldView.xaml">
+    <EmbeddedResource Update="views\ControlSessionView.xaml">
       <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="views\ControlGameView.xaml">

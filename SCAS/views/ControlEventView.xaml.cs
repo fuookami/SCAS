@@ -15,8 +15,10 @@ namespace SCAS.views
             private set;
         }
 
-        public ControlEventView()
+        public ControlEventView(Event data, DisplayWindow display)
+            : base(display)
         {
+            Data = data;
             this.InitializeComponent();
         }
 
@@ -33,19 +35,16 @@ namespace SCAS.views
                 }.ShowAsync((Window)VisualRoot);
                 if (result != null && result.Length != 0)
                 {
-                    exporter.ExportToFile(String.Format("{0}\\{1}决赛.html", result, Data.Conf.Name));
+                    if (exporter.ExportToFile(String.Format("{0}\\{1}决赛.html", result, Data.Conf.Name)))
+                    {
+                        await new dialogs.InformationDialog("导出成功").ShowDialog();
+                    }
+                    else
+                    {
+                        await new dialogs.InformationDialog("导出失败").ShowDialog();
+                    }
                 }
             };
-        }
-
-        public override void Clear()
-        {
-            
-        }
-
-        public void Refresh(Event data)
-        {
-            Data = data;
         }
     }
 }

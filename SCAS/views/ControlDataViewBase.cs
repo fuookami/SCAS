@@ -11,11 +11,9 @@ namespace SCAS.views
             private set;
         }
 
-        public void SetDisplay(DisplayWindow display)
+        public ControlDataViewBase(DisplayWindow display)
         {
             Display = display;
         }
-
-        public abstract void Clear();
     }
 }

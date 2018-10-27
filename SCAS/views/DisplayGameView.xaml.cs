@@ -31,12 +31,9 @@ namespace SCAS.views
 
         public void Refresh(Group group, double windowHeight)
         {
-            if (_currGroup != group)
-            {
-                _currGroup = group;
-                _windowHeight = windowHeight;
-                Refresh();
-            }
+            _currGroup = group;
+            _windowHeight = windowHeight;
+            Refresh();
         }
 
         public void Refresh()

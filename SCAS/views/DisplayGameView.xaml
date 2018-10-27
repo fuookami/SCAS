@@ -10,12 +10,12 @@
       <ColumnDefinition Width="*"/>
     </Grid.ColumnDefinitions>
 
-    <Grid Name="Title" Grid.Row="0" Grid.Column="0" VerticalAlignment="Top" ColumnDefinitions="120,180,180,*,120">
-      <TextBlock Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" Text="道次" Foreground="White" FontFamily="微软雅黑" FontSize="16"/>
-      <TextBlock Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" Text="姓名" Foreground="White" FontFamily="微软雅黑" FontSize="16"/>
-      <TextBlock Grid.Row="0" Grid.Column="2" HorizontalAlignment="Center" Text="队伍" Foreground="White" FontFamily="微软雅黑" FontSize="16"/>
-      <TextBlock Grid.Row="0" Grid.Column="3" HorizontalAlignment="Center" Text="成绩" Foreground="White" FontFamily="微软雅黑" FontSize="16"/>
-      <TextBlock Grid.Row="0" Grid.Column="4" HorizontalAlignment="Center" Text="名次" Foreground="White" FontFamily="微软雅黑" FontSize="16"/>
+    <Grid Name="Title" Grid.Row="0" Grid.Column="0" VerticalAlignment="Top" ColumnDefinitions="140,200,200,140,140">
+      <TextBlock Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" Text="道次" Foreground="#66ccb7" FontFamily="微软雅黑" FontSize="24"/>
+      <TextBlock Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" Text="姓名" Foreground="#66ccb7" FontFamily="微软雅黑" FontSize="24"/>
+      <TextBlock Grid.Row="0" Grid.Column="2" HorizontalAlignment="Center" Text="队伍" Foreground="#66ccb7" FontFamily="微软雅黑" FontSize="24"/>
+      <TextBlock Grid.Row="0" Grid.Column="3" HorizontalAlignment="Center" Text="成绩" Foreground="#66ccb7" FontFamily="微软雅黑" FontSize="24"/>
+      <TextBlock Grid.Row="0" Grid.Column="4" HorizontalAlignment="Center" Text="名次" Foreground="#66ccb7" FontFamily="微软雅黑" FontSize="24"/>
     </Grid>
 
     <Border Grid.Row="1" Grid.Column="0" Background="White" BorderThickness="1" Margin="5"/>

@@ -94,9 +94,8 @@ namespace SCAS.views
 
         Node _treeModel;
         Competition _data;
-        ControlGameView _gameView;
-        ControlEventView _eventView;
-        List<ControlDataViewBase> _subViews;
+        StackPanel _viewBox;
+        DisplayWindow _display;
 
         public ControlView()
         {
@@ -107,7 +106,8 @@ namespace SCAS.views
         {
             AvaloniaXamlLoader.Load(this);
 
-            var tree = this.Find<TreeView>("CompTree");
+            _viewBox = this.FindControl<StackPanel>("ViewBox");
+            var tree = this.FindControl<TreeView>("CompTree");
             tree.Tapped += delegate
             {
                 OnTreeViewItemSelected((Node)tree.SelectedItem);
@@ -116,17 +116,6 @@ namespace SCAS.views
             {
                 OnTreeViewItemSelected((Node)tree.SelectedItem);
             };
-
-            _gameView = this.Find<ControlGameView>("GameView");
-            _eventView = this.Find<ControlEventView>("EventView");
-            _subViews = new List<ControlDataViewBase>();
-            _subViews.Add(_gameView);
-            _subViews.Add(_eventView);
-
-            foreach (var view in _subViews)
-            {
-                view.IsVisible = false;
-            }
         }
 
         protected override void OnAttachedToVisualTree(VisualTreeAttachmentEventArgs e)
@@ -135,11 +124,7 @@ namespace SCAS.views
             ((ControlWindow)VisualRoot).InitCompleted += delegate(Competition data, DisplayWindow display)
             {
                 _data = data;
-                foreach (var view in _subViews)
-                {
-                    view.SetDisplay(display);
-                }
-
+                _display = display;
                 _treeModel = new Node();
                 var root = new CompetitionNode(data);
 
@@ -174,21 +159,15 @@ namespace SCAS.views
         {
             if (item != null)
             {
-                foreach (var view in _subViews)
-                {
-                    view.IsVisible = false;
-                    view.Clear();
-                }
+                _viewBox.Children.Clear();
 
                 switch (item.NodeType)
                 {
-                    case Node.Type.Game:
-                        _gameView.IsVisible = true;
-                        _gameView.Refresh(((GameNode)item).Data);
-                        break;
                     case Node.Type.Event:
-                        _eventView.IsVisible = true;
-                        _eventView.Refresh(((EventNode)item).Data);
+                        _viewBox.Children.Add(new ControlEventView(((EventNode)item).Data, _display));
+                        break;
+                    case Node.Type.Game:
+                        _viewBox.Children.Add(new ControlGameView(((GameNode)item).Data, _display));
                         break;
                 }
             }

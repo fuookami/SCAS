@@ -101,7 +101,14 @@ namespace SCAS
                     }.ShowAsync((Window)VisualRoot);
                     if (result != null && result.Length != 0)
                     {
-                        normalizer.NormalizeToFile(result);
+                        if (normalizer.NormalizeToFile(result))
+                        {
+                            await new dialogs.InformationDialog("保存成功").ShowDialog();
+                        }
+                        else
+                        {
+                            await new dialogs.InformationDialog("保存失败").ShowDialog();
+                        }
                     }
                 }
             };
