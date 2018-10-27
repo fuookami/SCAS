@@ -332,7 +332,7 @@ namespace SCAS
                 {
                     foreach (var line in group.Lines)
                     {
-                        if (line.LineParticipant.Id == participantId)
+                        if (line.LineParticipant != null && line.LineParticipant.Id == participantId)
                         {
                             participant = line.LineParticipant;
                         }

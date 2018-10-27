@@ -35,7 +35,7 @@ namespace SCAS
 
             internal Point(Participant participant, PointInfo conf, SSUtils.Order ranking, bool breakRecord = false)
             {
-                if (ranking.Valid())
+                if (!ranking.Valid())
                 {
                     throw new Exception("传入的名次值是个无效值");
                 }

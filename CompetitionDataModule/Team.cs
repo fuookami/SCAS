@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using SCAS.CompetitionConfiguration;
 
 namespace SCAS
@@ -70,15 +71,7 @@ namespace SCAS
             {
                 get
                 {
-                    UInt32 ret = 0;
-                    foreach (var pointList in Points)
-                    {
-                        foreach (var point in pointList.Value)
-                        {
-                            ret += point.PointValue;
-                        }
-                    }
-                    return 0;
+                    return (UInt32)Points.Sum((ele1) => ele1.Value.Sum((ele2) => ele2.PointValue));
                 }
             }
 

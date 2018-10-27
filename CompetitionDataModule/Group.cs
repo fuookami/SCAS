@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using SCAS.CompetitionConfiguration;
 
 namespace SCAS
@@ -52,23 +53,25 @@ namespace SCAS
                         ret.Add(new Tuple<SSUtils.Order, List<Line>>(new SSUtils.Order(SSUtils.Order.NotSet), new List<Line> { lines[0] }));
                     }
 
-                    for (Int32 index = 0, i = 1, j = lines.Count; i != j; ++i)
+                    for (Int32 index = 1, i = 1, k = 0, j = lines.Count; i != j; ++i)
                     {
                         var line = lines[i];
-                        if (line.ParticipantGrade.Equals(ret[index].Item2[ret[index].Item2.Count - 1].ParticipantGrade))
+                        if (line.ParticipantGrade.Equals(ret[k].Item2[ret[k].Item2.Count - 1].ParticipantGrade))
                         {
-                            ret[index].Item2.Add(line);
+                            ret[k].Item2.Add(line);
                         }
                         else
                         {
                             if (line.ParticipantGrade.HasTime())
                             {
-                                ++index;
-                                ret.Add(new Tuple<SSUtils.Order, List<Line>>(new SSUtils.Order(index + 1), new List<Line> { line }));
+                                index += ret[k].Item2.Count;
+                                ++k;
+                                ret.Add(new Tuple<SSUtils.Order, List<Line>>(new SSUtils.Order(index), new List<Line> { line }));
                             }
                             else
                             {
-                                ++index;
+                                index += ret[k].Item2.Count;
+                                ++k;
                                 ret.Add(new Tuple<SSUtils.Order, List<Line>>(new SSUtils.Order(SSUtils.Order.NotSet), new List<Line> { line }));
                             }
                         }

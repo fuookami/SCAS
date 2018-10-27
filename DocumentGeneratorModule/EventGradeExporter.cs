@@ -8,7 +8,7 @@ namespace SCAS
 {
     namespace DocumentGenerator
     {
-        public class EventGradeExporter
+        public class EventGradeExporter : ErrorStorer
         {
             const String Head = "<style>" +
                 "tr" +
@@ -88,13 +88,13 @@ namespace SCAS
                 "	{mso-style-parent:style0;" +
                 "	font-size:9.0pt;" +
                 "	mso-number-format:\"\\@\";" +
-                "   text-align:left;" +
+                "   text-align:center;" +
                 "	padding-left:12px;" +
                 "	mso-char-indent-count:1;}" +
                 ".xl70" +
                 "	{mso-style-parent:style0;" +
                 "	font-size:9.0pt;" +
-                "	text-align:left;" +
+                "	text-align:center;" +
                 "	border-top:.5pt solid windowtext;" +
                 "	border-right:none;" +
                 "	border-bottom:.5pt solid windowtext;" +

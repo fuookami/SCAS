@@ -209,8 +209,8 @@ namespace SCAS.views
 
         private CompetitionData.Competition LoadFiles(String confUrl, String dataUrl)
         {
-            try
-            {
+//             try
+//             {
                 CompetitionConfiguration.Analyzer confAnalyzer = new CompetitionConfiguration.Analyzer();
                 if (!confAnalyzer.Analyze(confUrl))
                 {
@@ -226,13 +226,13 @@ namespace SCAS.views
                 }
 
                 return dataAnalyzer.Result;
-            }
-            catch (Exception e)
-            {
-                this.FindControl<TextBlock>("Message").Text = String.Format("未知错误： {0}", e.Message);
-                Console.Write("False, {0}", e.Message);
-                return null;
-            }
+//             }
+//             catch (Exception e)
+//             {
+//                 this.FindControl<TextBlock>("Message").Text = String.Format("未知错误： {0}", e.Message);
+//                 Console.Write("False, {0}", e.Message);
+//                 return null;
+//             }
         }
     }
 }
