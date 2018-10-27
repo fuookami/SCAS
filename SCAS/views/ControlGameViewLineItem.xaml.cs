@@ -67,7 +67,7 @@ namespace SCAS.views
                     {
                         MinValue = 0;
                     }
-                    else if (IsPositiveInteger(value, 60))
+                    else if (IsPositiveInteger(value, UInt32.MaxValue))
                     {
                         MinValue = UInt32.Parse(value);
                     }

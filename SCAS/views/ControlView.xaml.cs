@@ -163,6 +163,9 @@ namespace SCAS.views
 
                 switch (item.NodeType)
                 {
+                    case Node.Type.Competition:
+                        _viewBox.Children.Add(new ControlCompetitionView(((CompetitionNode)item).Data, _display));
+                        break;
                     case Node.Type.Event:
                         _viewBox.Children.Add(new ControlEventView(((EventNode)item).Data, _display));
                         break;

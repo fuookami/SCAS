@@ -38,12 +38,15 @@ namespace SCAS.views
 
         public void Refresh()
         {
-            Clear();
-            var boxHeight = _windowHeight - TitleHeight;
-            var height = boxHeight / _currGroup.Lines.Count;
-            foreach (var line in _currGroup.Lines)
+            if (_currGroup != null)
             {
-                _lineItemsBox.Children.Add(new DisplayGameViewLineItem(new DisplayGameViewLineItem.LineItem(line), height));
+                Clear();
+                var boxHeight = _windowHeight - TitleHeight;
+                var height = boxHeight / _currGroup.Lines.Count;
+                foreach (var line in _currGroup.Lines)
+                {
+                    _lineItemsBox.Children.Add(new DisplayGameViewLineItem(new DisplayGameViewLineItem.LineItem(line), height));
+                }
             }
         }
     }

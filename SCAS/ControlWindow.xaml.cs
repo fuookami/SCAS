@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Input;
 using Avalonia.Markup.Xaml;
 using Avalonia.Platform;
 using SCAS.CompetitionData;
@@ -12,8 +13,8 @@ namespace SCAS
 {
     public class ControlWindow : Window
     {
-        const double WinMaxWidth = 1280;
-        const double WinMaxHeight = 720;
+        const double WinMaxWidth = 1600;
+        const double WinMaxHeight = 900;
 
         public delegate void InitCompletedHandler(CompetitionData.Competition data, DisplayWindow display);
         public event InitCompletedHandler InitCompleted;
@@ -64,6 +65,48 @@ namespace SCAS
             public List<GameItem> Games
             {
                 get;
+            }
+
+            public String Width
+            {
+                get
+                {
+                    return WidthValue.ToString();
+                }
+                set
+                {
+                    if (IsPositiveInteger(value, UInt32.MaxValue))
+                    {
+                        WidthValue = UInt32.Parse(value);
+                    }
+                }
+            }
+
+            public UInt32 WidthValue
+            {
+                get;
+                internal set;
+            }
+
+            public String Height
+            {
+                get
+                {
+                    return HeightValue.ToString();
+                }
+                set
+                {
+                    if (IsPositiveInteger(value, UInt32.MaxValue))
+                    {
+                        HeightValue = UInt32.Parse(value);
+                    }
+                }
+            }
+
+            public UInt32 HeightValue
+            {
+                get;
+                internal set;
             }
 
             public Model()
@@ -142,6 +185,20 @@ namespace SCAS
                 _display.SetCheck(item.ToString());
             };
 
+            this.FindControl<TextBox>("WidthInput").TextInput += delegate (object obj, TextInputEventArgs e)
+            {
+                NumberInputHandler((TextBox)obj, e, this._model.Width);
+            };
+            this.FindControl<TextBox>("HeightInput").TextInput += delegate (object obj, TextInputEventArgs e)
+            {
+                NumberInputHandler((TextBox)obj, e, this._model.Height);
+            };
+            this.FindControl<Button>("ResizeDisplay").Click += delegate
+            {
+                _display.Width = _model.WidthValue;
+                _display.Height = _model.HeightValue;
+            };
+
             this.Closed += delegate
             {
                 _display.Close();
@@ -171,9 +228,10 @@ namespace SCAS
 
             double width = controlScreen.Bounds.Width <= WinMaxWidth ? controlScreen.Bounds.Width : WinMaxWidth;
             double height = controlScreen.Bounds.Height <= WinMaxHeight ? controlScreen.Bounds.Height : WinMaxHeight;
-
+            
+            this.Width = width;
+            this.Height = height;
             Position = new Avalonia.Point(controlScreen.Bounds.X + (controlScreen.Bounds.Width - width) / 2, controlScreen.Bounds.Y + (controlScreen.Bounds.Height - height) / 2);
-            Bounds = new Rect(new Size(width, height));
 
             InitCompleted(data, _display);
 
@@ -181,6 +239,11 @@ namespace SCAS
             {
                 _model.Sessions.Add(new SessionItem(gameList.Key));
             }
+
+            _model.WidthValue = (UInt32)_display.Width;
+            this.FindControl<TextBox>("WidthInput").Text = _model.Width;
+            _model.HeightValue = (UInt32)_display.Height;
+            this.FindControl<TextBox>("HeightInput").Text = _model.Height;
         }
 
         static private List<FileDialogFilter> GenerateFilters(String name)
@@ -196,6 +259,32 @@ namespace SCAS
                     Name = name
                 }
             };
+        }
+
+        private static bool NumberInputHandler(TextBox src, TextInputEventArgs e, String origin, UInt32 maximum = UInt32.MaxValue)
+        {
+            if (IsPositiveInteger(src.Text, maximum))
+            {
+                return true;
+            }
+            else
+            {
+                src.Text = origin;
+                return false;
+            }
+        }
+
+        private static bool IsPositiveInteger(String src, UInt32 maximum)
+        {
+            UInt32 temp = 0;
+            if (UInt32.TryParse(src, out temp))
+            {
+                return temp < maximum;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }

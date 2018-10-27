@@ -12,7 +12,6 @@ namespace SCAS.views
         public Event Data
         {
             get;
-            private set;
         }
 
         public ControlEventView(Event data, DisplayWindow display)
@@ -44,6 +43,12 @@ namespace SCAS.views
                         await new dialogs.InformationDialog("导出失败").ShowDialog();
                     }
                 }
+            };
+
+            this.FindControl<Button>("RefreshPoint").Click += delegate
+            {
+                Data.RefreshPoints();
+                new dialogs.InformationDialog("计算成功").ShowDialog();
             };
         }
     }

@@ -5,65 +5,71 @@
         Width="1258" Height="674" Background="Black"
         xmlns:local="clr-namespace:SCAS.views">
   <Grid Margin="4">
-    <Grid.RowDefinitions>
-      <RowDefinition Height="Auto"/>
-      <RowDefinition Height="*"/>
-      <RowDefinition Height="Auto"/>
-    </Grid.RowDefinitions>
     <Grid.ColumnDefinitions>
       <ColumnDefinition Width="*" />
+      <ColumnDefinition Width="5" />
       <ColumnDefinition Width="Auto" />
     </Grid.ColumnDefinitions>
 
-    <StackPanel Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center">
-      <TextBlock HorizontalAlignment="Center" TextAlignment="Center" Name="Title" Foreground="White" FontFamily="微软雅黑" TextWrapping="Wrap" FontSize="32"></TextBlock>
-      <TextBlock HorizontalAlignment="Center" TextAlignment="Center" Name="SubTitle" Foreground="White" FontFamily="微软雅黑" TextWrapping="Wrap" FontSize="28"></TextBlock>
-      <TextBlock HorizontalAlignment="Center" TextAlignment="Center" Name="SessionTitle" Foreground="White" FontFamily="微软雅黑" TextWrapping="Wrap" FontSize="24"></TextBlock>
-    </StackPanel>
-
-    <Grid Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center">
+    <Grid>
       <Grid.RowDefinitions>
         <RowDefinition Height="Auto"/>
-        <RowDefinition Height="Auto"/>
-        <RowDefinition Height="Auto"/>
-        <RowDefinition Height="Auto"/>
-      </Grid.RowDefinitions>
-      <Grid.ColumnDefinitions>
-        <ColumnDefinition Width="Auto"/>
-        <ColumnDefinition Width="Auto"/>
-      </Grid.ColumnDefinitions>
-
-      <TextBlock Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" Text="室温：" Foreground="White" FontFamily="微软雅黑" FontSize="20" Margin="0,30,0,0"></TextBlock>
-      <TextBlock Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" Name="IndoorTemperature" Foreground="White" FontFamily="微软雅黑" FontSize="20" Margin="0,30,0,0"></TextBlock>
-
-      <TextBlock Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" Text="水温：" Foreground="White" FontFamily="微软雅黑" FontSize="20" Margin="0,30,0,0"></TextBlock>
-      <TextBlock Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" Name="WaterTemperature" Foreground="White" FontFamily="微软雅黑" FontSize="20" Margin="0,30,0,0"></TextBlock>
-
-      <TextBlock Grid.Row="2" Grid.Column="0" HorizontalAlignment="Right" Text="余氯：" Foreground="White" FontFamily="微软雅黑" FontSize="20" Margin="0,30,0,0"></TextBlock>
-      <TextBlock Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" Name="ResidualChlorine" Foreground="White" FontFamily="微软雅黑" FontSize="20" Margin="0,30,0,0"></TextBlock>
-
-      <TextBlock Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right" Text="PH值：" Foreground="White" FontFamily="微软雅黑" FontSize="20" Margin="0,30,0,0"></TextBlock>
-      <TextBlock Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" Name="PHValue" Foreground="White" FontFamily="微软雅黑" FontSize="20" Margin="0,30,0,0"></TextBlock>
-    </Grid>
-
-    <Grid Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,30">
-      <Grid.RowDefinitions>
-        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="*"/>
         <RowDefinition Height="Auto"/>
       </Grid.RowDefinitions>
-      <Grid.ColumnDefinitions>
-        <ColumnDefinition Width="Auto" />
-        <ColumnDefinition Width="*" />
-      </Grid.ColumnDefinitions>
 
-      <TextBlock Grid.Row="0" Grid.Column="0" Text="当前项目：" Foreground="White" FontFamily="微软雅黑" FontSize="20"></TextBlock>
-      <TextBlock Grid.Row="0" Grid.Column="1" Name="Game" Foreground="White" FontFamily="微软雅黑" FontSize="20"></TextBlock>
+      <StackPanel Grid.Row="0" HorizontalAlignment="Center">
+        <TextBlock HorizontalAlignment="Center" TextAlignment="Center" Name="Title" Foreground="White" FontFamily="微软雅黑" TextWrapping="Wrap" FontSize="32"></TextBlock>
+        <TextBlock HorizontalAlignment="Center" TextAlignment="Center" Name="SubTitle" Foreground="White" FontFamily="微软雅黑" TextWrapping="Wrap" FontSize="28"></TextBlock>
+        <TextBlock HorizontalAlignment="Center" TextAlignment="Center" Name="SessionTitle" Foreground="White" FontFamily="微软雅黑" TextWrapping="Wrap" FontSize="24"></TextBlock>
+      </StackPanel>
 
-      <TextBlock Grid.Row="1" Grid.Column="0" Text="当前检录：" Foreground="White" FontFamily="微软雅黑" FontSize="20" Margin="0,30,0,0"></TextBlock>
-      <TextBlock Grid.Row="1" Grid.Column="1" Name="Check" Foreground="White" FontFamily="微软雅黑" FontSize="20" Margin="0,30,0,0"></TextBlock>
+      <Grid Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <Grid.RowDefinitions>
+          <RowDefinition Height="Auto"/>
+          <RowDefinition Height="Auto"/>
+          <RowDefinition Height="Auto"/>
+          <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="Auto"/>
+          <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+
+        <TextBlock Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" Text="室温：" Foreground="White" FontFamily="微软雅黑" FontSize="20" Margin="0,30,0,0"></TextBlock>
+        <TextBlock Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" Name="IndoorTemperature" Foreground="White" FontFamily="微软雅黑" FontSize="20" Margin="0,30,0,0"></TextBlock>
+
+        <TextBlock Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" Text="水温：" Foreground="White" FontFamily="微软雅黑" FontSize="20" Margin="0,30,0,0"></TextBlock>
+        <TextBlock Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" Name="WaterTemperature" Foreground="White" FontFamily="微软雅黑" FontSize="20" Margin="0,30,0,0"></TextBlock>
+
+        <TextBlock Grid.Row="2" Grid.Column="0" HorizontalAlignment="Right" Text="余氯：" Foreground="White" FontFamily="微软雅黑" FontSize="20" Margin="0,30,0,0"></TextBlock>
+        <TextBlock Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" Name="ResidualChlorine" Foreground="White" FontFamily="微软雅黑" FontSize="20" Margin="0,30,0,0"></TextBlock>
+
+        <TextBlock Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right" Text="PH值：" Foreground="White" FontFamily="微软雅黑" FontSize="20" Margin="0,30,0,0"></TextBlock>
+        <TextBlock Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" Name="PHValue" Foreground="White" FontFamily="微软雅黑" FontSize="20" Margin="0,30,0,0"></TextBlock>
+      </Grid>
+
+      <Grid Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,30">
+        <Grid.RowDefinitions>
+          <RowDefinition Height="Auto"/>
+          <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="Auto" />
+          <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <TextBlock Grid.Row="0" Grid.Column="0" Text="当前项目：" Foreground="White" FontFamily="微软雅黑" FontSize="20"></TextBlock>
+        <TextBlock Grid.Row="0" Grid.Column="1" Name="Game" Foreground="White" FontFamily="微软雅黑" FontSize="20"></TextBlock>
+
+        <TextBlock Grid.Row="1" Grid.Column="0" Text="当前检录：" Foreground="White" FontFamily="微软雅黑" FontSize="20" Margin="0,30,0,0"></TextBlock>
+        <TextBlock Grid.Row="1" Grid.Column="1" Name="Check" Foreground="White" FontFamily="微软雅黑" FontSize="20" Margin="0,30,0,0"></TextBlock>
+      </Grid>
     </Grid>
 
-    <StackPanel Grid.Row="0" Grid.Column="2" Grid.RowSpan="3">
+    <GridSplitter Grid.Column="1" Width="1" HorizontalAlignment="Stretch" />
+
+    <StackPanel Grid.Column="2">
       <local:DisplayGameView Name="GameView" />
       <local:DisplayEventView Name="EventView" />
     </StackPanel>
