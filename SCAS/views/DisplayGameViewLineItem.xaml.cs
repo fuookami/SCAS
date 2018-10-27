@@ -57,7 +57,7 @@ namespace SCAS.views
                     {
                         return ele.Item2.FindIndex((l) => l == Data) != -1;
                     });
-                    if (indexPair == null || indexPair.Item1.Valid())
+                    if (indexPair == null || !indexPair.Item1.Valid())
                     {
                         return "";
                     }

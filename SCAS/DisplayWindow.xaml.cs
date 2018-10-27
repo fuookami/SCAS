@@ -84,6 +84,11 @@ namespace SCAS
             _gameView.Refresh(group, this.Height);
         }
 
+        public void RefreshGroup()
+        {
+            _gameView.Refresh();
+        }
+
         public void SetEnd()
         {
             foreach (var view in _views)

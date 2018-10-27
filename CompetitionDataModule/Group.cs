@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace SCAS
 {
@@ -35,25 +34,46 @@ namespace SCAS
 
             public static List<Tuple<SSUtils.Order, List<Line>>> GroupByGrade(List<Line> lines)
             {
-                lines.Sort((lhs, rhs) => lhs.ParticipantGrade.CompareTo(rhs.ParticipantGrade));
-                var groups = lines.GroupBy((ele) => ele.ParticipantGrade)
-                    .Select((group) => group.ToList()).ToList();
-                
-                List<Tuple<SSUtils.Order, List<Line>>> ret = new List<Tuple<SSUtils.Order, List<Line>>>();
-                Int32 index = 1;
-                foreach (var group in groups)
+                if (lines == null || lines.Count == 0)
                 {
-                    if (group[0].ParticipantGrade.HasTime())
+                    return new List<Tuple<SSUtils.Order, List<Line>>>();
+                }
+                else
+                {
+                    lines.Sort((lhs, rhs) => lhs.ParticipantGrade.CompareTo(rhs.ParticipantGrade));
+                    List<Tuple<SSUtils.Order, List<Line>>> ret = new List<Tuple<SSUtils.Order, List<Line>>>();
+                    if (lines[0].ParticipantGrade.HasTime())
                     {
-                        ret.Add(new Tuple<SSUtils.Order, List<Line>>(new SSUtils.Order(index), group));
-                        ++index;
+                        ret.Add(new Tuple<SSUtils.Order, List<Line>>(new SSUtils.Order(1), new List<Line> { lines[0] }));
                     }
                     else
                     {
-                        ret.Add(new Tuple<SSUtils.Order, List<Line>>(new SSUtils.Order(), group));
+                        ret.Add(new Tuple<SSUtils.Order, List<Line>>(new SSUtils.Order(SSUtils.Order.NotSet), new List<Line> { lines[0] }));
                     }
+
+                    for (Int32 index = 0, i = 1, j = lines.Count; i != j; ++i)
+                    {
+                        var line = lines[i];
+                        if (line.ParticipantGrade.Equals(ret[index].Item2[ret[index].Item2.Count - 1].ParticipantGrade))
+                        {
+                            ret[index].Item2.Add(line);
+                        }
+                        else
+                        {
+                            if (line.ParticipantGrade.HasTime())
+                            {
+                                ++index;
+                                ret.Add(new Tuple<SSUtils.Order, List<Line>>(new SSUtils.Order(index + 1), new List<Line> { line }));
+                            }
+                            else
+                            {
+                                ++index;
+                                ret.Add(new Tuple<SSUtils.Order, List<Line>>(new SSUtils.Order(SSUtils.Order.NotSet), new List<Line> { line }));
+                            }
+                        }
+                    }
+                    return ret;
                 }
-                return ret;
             }
 
             public Line(Group parent, UInt32 order, Participant participant)
@@ -65,6 +85,28 @@ namespace SCAS
                 {
                     participant.Parent = this;
                 }
+            }
+
+            public bool IsNewMatchGrade()
+            {
+                return ParticipantGrade.HasTime() ? IsNewMatchGrade(ParticipantGrade.Time) : false;
+            }
+
+            public bool IsNewMatchGrade(TimeSpan time)
+            {
+                var eventData = Parent.Parent.Parent;
+                if (eventData.MatchRecord != null)
+                {
+                    if (eventData.Conf.EventGradeInfo.GradeBetterType == CompetitionConfiguration.GradeInfo.BetterType.Smaller)
+                    {
+                        return time < eventData.MatchRecord.Time;
+                    }
+                    else if (eventData.Conf.EventGradeInfo.GradeBetterType == CompetitionConfiguration.GradeInfo.BetterType.Bigger)
+                    {
+                        return time > eventData.MatchRecord.Time;
+                    }
+                }
+                return false;
             }
         }
 

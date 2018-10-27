@@ -64,40 +64,50 @@ namespace SCAS
 
             public bool Valid()
             {
-                return GradeCode != Code.None;
+                return Valid(GradeCode);
+            }
+
+            public static bool Valid(Code code)
+            {
+                return code != Code.None;
             }
 
             public bool HasTime()
             {
-                return HasTime(GradeCode);
+                return Valid() && HasTime(GradeCode);
             }
 
-            static public bool HasTime(Code code)
+            public static bool HasTime(Code code)
             {
                 return code == Code.Normal || code == Code.MR;
             }
 
             public String ToFormatString()
             {
-                if (!Valid())
+                return ToFormatString(GradeCode, Time);
+            }
+
+            public static String ToFormatString(Code code, TimeSpan time)
+            {
+                if (!Valid(code))
                 {
                     return "";
                 }
-                else if (HasTime(GradeCode))
+                else if (HasTime(code))
                 {
-                    return String.Format("{0}{1}", FormatTime(Time), GradeCode == Code.MR ? "(MR)" : "");
+                    return String.Format("{0}{1}", FormatTime(time), code == Code.MR ? "(MR)" : "");
                 }
                 else
                 {
-                    return GradeCode.ToString();
+                    return code.ToString();
                 }
             }
 
-            private static String FormatTime(TimeSpan time)
+            public static String FormatTime(TimeSpan time)
             {
-                return time.TotalMinutes < 1 ? String.Format("{0:D2}.{1:D2}", time.Seconds, time.Milliseconds / 100)
-                    : time.TotalHours >= 1 ? String.Format("{0:D}:{1:D}:{2:D2}.{3:D2}", time.Hours, time.Minutes, time.Seconds, time.Milliseconds / 100)
-                    : String.Format("{0:D}:{1:D2}.{2:D2}", time.Minutes, time.Seconds, time.Milliseconds / 100);
+                return time.TotalMinutes < 1 ? String.Format("{0:D}.{1:D2}", time.Seconds, time.Milliseconds / 10)
+                    : time.TotalHours >= 1 ? String.Format("{0:D}:{1:D}:{2:D2}.{3:D2}", time.Hours, time.Minutes, time.Seconds, time.Milliseconds / 10)
+                    : String.Format("{0:D}:{1:D2}.{2:D2}", time.Minutes, time.Seconds, time.Milliseconds / 10);
             }
 
             public override bool Equals(object obj)
@@ -118,15 +128,15 @@ namespace SCAS
                 GradeBase rhs = (GradeBase)obj;
                 if (!Valid() && !rhs.Valid())
                 {
-                    return 1;
+                    return 0;
                 }
                 else if (Valid() && !rhs.Valid())
                 {
-                    return 1;
+                    return -1;
                 }
                 else if (!Valid() && rhs.Valid())
                 {
-                    return -1;
+                    return 1;
                 }
                 else
                 {
@@ -136,21 +146,25 @@ namespace SCAS
                     }
                     else if (HasTime() && !rhs.HasTime())
                     {
-                        return 1;
+                        return -1;
                     }
                     else if (!HasTime() && rhs.HasTime())
                     {
-                        return -1;
+                        return 1;
                     }
                     else
                     {
-                        if (GradeCode == Code.DSQ || GradeCode == rhs.GradeCode)
+                        if (GradeCode == rhs.GradeCode)
                         {
-                            return 1;
+                            return 0;
+                        }
+                        else if (GradeCode == Code.DSQ)
+                        {
+                            return -1;
                         }
                         else
                         {
-                            return -1;
+                            return 1;
                         }
                     }
                 }

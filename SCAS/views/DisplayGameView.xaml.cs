@@ -8,6 +8,7 @@ namespace SCAS.views
     public class DisplayGameView : DisplayDataViewBase
     {
         const double TitleHeight = 50;
+        private double _windowHeight;
         private Group _currGroup;
         private StackPanel _lineItemsBox;
 
@@ -32,14 +33,20 @@ namespace SCAS.views
         {
             if (_currGroup != group)
             {
-                Clear();
                 _currGroup = group;
-                var boxHeight = windowHeight - TitleHeight;
-                var height = boxHeight / _currGroup.Lines.Count;
-                foreach (var line in _currGroup.Lines)
-                {
-                    _lineItemsBox.Children.Add(new DisplayGameViewLineItem(new DisplayGameViewLineItem.LineItem(line), height));
-                }
+                _windowHeight = windowHeight;
+                Refresh();
+            }
+        }
+
+        public void Refresh()
+        {
+            Clear();
+            var boxHeight = _windowHeight - TitleHeight;
+            var height = boxHeight / _currGroup.Lines.Count;
+            foreach (var line in _currGroup.Lines)
+            {
+                _lineItemsBox.Children.Add(new DisplayGameViewLineItem(new DisplayGameViewLineItem.LineItem(line), height));
             }
         }
     }

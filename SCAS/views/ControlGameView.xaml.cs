@@ -50,11 +50,13 @@ namespace SCAS.views
         private GroupItem _currGroupItem;
         private Group _currGroup;
         private StackPanel _lineItemsBox;
+        private List<ControlGameViewLineItem> _lineItems;
 
         public ControlGameView()
         {
             _model = new Model();
             DataContext = _model;
+            _lineItems = new List<ControlGameViewLineItem>();
             this.InitializeComponent();
         }
 
@@ -71,10 +73,13 @@ namespace SCAS.views
                 {
                     _currGroupItem = item;
                     _currGroup = item.Data;
+                    _lineItems.Clear();
                     _lineItemsBox.Children.Clear();
                     foreach (var line in _currGroup.Lines)
                     {
-                        _lineItemsBox.Children.Add(new ControlGameViewLineItem(new ControlGameViewLineItem.LineItem(line)));
+                        var newItem = new ControlGameViewLineItem(new ControlGameViewLineItem.LineItem(line));
+                        _lineItems.Add(newItem);
+                        _lineItemsBox.Children.Add(newItem);
                     }
                 }
             };
@@ -85,6 +90,19 @@ namespace SCAS.views
                 {
                     Display.SetGroup(_data.Conf.Name + _currGroupItem.ToString(), _currGroup);
                 }
+            };
+
+            this.FindControl<Button>("SaveGroup").Click += delegate
+            {
+                foreach (var item in _lineItems)
+                {
+                    var model = item.Model;
+                    if (model.Data.LineParticipant != null)
+                    {
+                        model.Data.ParticipantGrade.Set(model.ToGradeTuple());
+                    }
+                }
+                Display.RefreshGroup();
             };
         }
 
