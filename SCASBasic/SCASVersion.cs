@@ -6,7 +6,7 @@ namespace SCAS
     {
         const Int32 MajorVersion = 0;
         const Int32 SubVersion = 4;
-        const Int32 ModifyVersion = 11;
+        const Int32 ModifyVersion = 12;
 
         new static String ToString()
         {

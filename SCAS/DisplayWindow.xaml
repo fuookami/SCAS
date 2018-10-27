@@ -19,9 +19,9 @@
       </Grid.RowDefinitions>
 
       <StackPanel Grid.Row="0" HorizontalAlignment="Center">
-        <TextBlock HorizontalAlignment="Center" TextAlignment="Center" Name="Title" Foreground="White" FontFamily="微软雅黑" TextWrapping="Wrap" FontSize="32"></TextBlock>
-        <TextBlock HorizontalAlignment="Center" TextAlignment="Center" Name="SubTitle" Foreground="White" FontFamily="微软雅黑" TextWrapping="Wrap" FontSize="28"></TextBlock>
-        <TextBlock HorizontalAlignment="Center" TextAlignment="Center" Name="SessionTitle" Foreground="White" FontFamily="微软雅黑" TextWrapping="Wrap" FontSize="24"></TextBlock>
+        <TextBlock HorizontalAlignment="Center" TextAlignment="Center" Name="Title" Foreground="White" FontFamily="微软雅黑" TextWrapping="Wrap" FontSize="32" Margin="0,30,0,0"></TextBlock>
+        <TextBlock HorizontalAlignment="Center" TextAlignment="Center" Name="SubTitle" Foreground="White" FontFamily="微软雅黑" TextWrapping="Wrap" FontSize="28" Margin="0,30,0,0"></TextBlock>
+        <TextBlock HorizontalAlignment="Center" TextAlignment="Center" Name="SessionTitle" Foreground="White" FontFamily="微软雅黑" TextWrapping="Wrap" FontSize="24" Margin="0,30,0,0"></TextBlock>
       </StackPanel>
 
       <Grid Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
