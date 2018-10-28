@@ -8,6 +8,11 @@ namespace SCAS
     {
         public class Point
         {
+            public PointInfo Conf
+            {
+                get;
+            }
+
             public Team PointTeam
             {
                 get;
@@ -25,7 +30,15 @@ namespace SCAS
 
             public UInt32 PointValue
             {
-                get;
+                get
+                {
+                    UInt32 temp = (UInt32)(Conf.Points[(Int32)Ranking.Value - 1] * Conf.PointRate);
+                    if (Conf.BreakRecordPointRateEnabled && BreakRecord)
+                    {
+                        temp *= (UInt32)Conf.BreakRecordPointRate;
+                    }
+                    return temp;
+                }
             }
 
             public bool BreakRecord
@@ -35,24 +48,16 @@ namespace SCAS
 
             internal Point(Participant participant, PointInfo conf, SSUtils.Order ranking, bool breakRecord = false)
             {
-                if (!ranking.Valid())
+                if (!ranking.Valid() || conf.Points.Count < ranking.Value)
                 {
                     throw new Exception("传入的名次值是个无效值");
                 }
-                else if (conf.Points.Count <= ranking.Value)
-                {
-                    Ranking = new SSUtils.Order();
-                    PointValue = 0;
-                }
                 else
                 {
+                    Conf = conf;
                     Ranking = ranking;
-                    PointValue = (UInt32)(conf.Points[(Int32)ranking.Value] * conf.PointRate);
-                    if (conf.BreakRecordPointRateEnabled && breakRecord)
-                    {
-                        PointValue = (UInt32)(PointValue * conf.BreakRecordPointRate);
-                    }
                     BreakRecord = breakRecord;
+                    
                 }
 
                 PointTeam = participant.ParticipantTeam;

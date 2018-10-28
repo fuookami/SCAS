@@ -58,6 +58,11 @@ namespace SCAS
                     newFile = new FileInfo(targetUrl);
                 }
 
+                foreach (var eventData in Data.Events)
+                {
+                    eventData.RefreshPoints();
+                }
+
                 return ExportOrderToFile(GetOrder(), newFile);
             }
 

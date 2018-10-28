@@ -53,10 +53,16 @@ namespace SCAS
                 Points = new PointPool(conf.EventPointInfo, this);
             }
 
-            public Dictionary<String, List<Tuple<SSUtils.Order, List<Line>>>> GetOrderInEvent()
+            public List<Tuple<String, List<Tuple<SSUtils.Order, List<Line>>>>> GetOrderInEvent()
             {
-                return Conf.EventTeamworkInfo.BeTeamwork ? LastGame.GetOrderInGameOfTeamworkGame()
+                var temp = Conf.EventTeamworkInfo.BeTeamwork ? LastGame.GetOrderInGameOfTeamworkGame()
                     : LastGame.GetOrderInGameOfPersonalGame();
+                var ret = new List<Tuple<String, List<Tuple<SSUtils.Order, List<Line>>>>>();
+                foreach (var pair in temp)
+                {
+                    ret.Add(new Tuple<String, List<Tuple<SSUtils.Order, List<Line>>>>(pair.Key, pair.Value));
+                }
+                return ret;
             }
 
             public void RefreshPoints()
@@ -73,19 +79,17 @@ namespace SCAS
                 var lists = GetOrderInEvent();
                 foreach (var list in lists)
                 {
+                    list.Item2.RemoveAll((ele) => !ele.Item1.Valid());
+
                     var j = Conf.EventPointInfo.Points.Count;
-                    if (j < list.Value.Count)
-                    {
-                        j = list.Value.Count;
-                    }
                     for (Int32 i = 0; i != j; ++i)
                     {
-                        var thisOrder = list.Value[i];
-                        if (!thisOrder.Item1.Valid())
+                        var thisOrder = list.Item2[i];
+                        var lines = thisOrder.Item2;
+                        if (thisOrder.Item1.Value > Conf.EventPointInfo.Points.Count)
                         {
                             break;
                         }
-                        var lines = thisOrder.Item2;
                         foreach (var line in lines)
                         {
                             var newPoint = new Point(line.LineParticipant, Conf.EventPointInfo, thisOrder.Item1, line.ParticipantGrade.GradeCode == GradeBase.Code.MR);

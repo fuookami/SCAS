@@ -255,11 +255,12 @@ namespace SCAS
                     var lines = data.GetOrderInEvent();
                     if (!data.Conf.EventTeamworkInfo.BeTeamwork)
                     {
-                        writer.Write(NormalizePersonalEventGradeListToHtml5(lines[""]));
+                        writer.Write(NormalizePersonalEventGradeListToHtml5(lines[0].Item2));
                     }
                     else
                     {
-                        writer.Write(NormalizeTeamworkEventGradeListToHtml5(lines.Values.GetEnumerator().Current));
+                        
+                        writer.Write(NormalizeTeamworkEventGradeListToHtml5(lines[0].Item2));
                     }
 
                     writer.Write("<tr height=19 valign=middle style='height:14.25pt'>" +
@@ -276,7 +277,7 @@ namespace SCAS
                     var lines = data.GetOrderInEvent();
                     foreach (var pair in lines)
                     {
-                        writer.Write(String.Format("<td colspan = 3 height = 19 class = xl74 style = 'height:14.25pt'>{0}{1}</td>", data.Conf.Name, pair.Key));
+                        writer.Write(String.Format("<td colspan = 3 height = 19 class = xl74 style = 'height:14.25pt'>{0}{1}</td>", data.Conf.Name, pair.Item1));
                         writer.Write("<td></td><td class = xl65>决赛成绩公告</td><td></td></tr>");
                         writer.Write("<tr height = 19 valign = middle style = 'height:14.25pt'>" +
                             "<td height = 19 class = xl68 align = center style = 'height:14.25pt'>名次</td>" +
@@ -287,7 +288,7 @@ namespace SCAS
                             "<td class = xl68 align = center>备注</td>" +
                             "</tr>");
 
-                        writer.Write(NormalizePersonalEventGradeListToHtml5(pair.Value));
+                        writer.Write(NormalizePersonalEventGradeListToHtml5(pair.Item2));
 
                         writer.Write("<tr height=19 valign=middle style='height:14.25pt'>" +
                             "<td height = 19 class = btd style = 'height:14.25pt'></td>" +
