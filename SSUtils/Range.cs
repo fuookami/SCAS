@@ -33,16 +33,9 @@ namespace SSUtils
             Maximum = max;
             return true;
         }
-
-        public virtual bool Valid()
-        {
-            return Valid(Minimum, Maximum);
-        }
-
-        protected virtual bool Valid(T min, T max)
-        {
-            return min.CompareTo(max) < 0;
-        }
+        
+        public virtual bool Valid() => Valid(Minimum, Maximum);
+        protected virtual bool Valid(T min, T max) => min.CompareTo(max) < 0;
     }
 
     public class UInt16Range : Range<UInt16>
