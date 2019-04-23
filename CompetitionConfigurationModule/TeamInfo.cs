@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace SCAS
 {
@@ -24,37 +25,25 @@ namespace SCAS
             public String ShortName
             {
                 get;
-                set;
+                internal set;
             }
 
             public String Name
             {
                 get;
-                set;
+                internal set;
             }
 
             public TeamCategory Category
             {
-                get
-                {
-                    return _category;
-                }
-                set
-                {
-                    _category = value ?? throw new Exception("设置的队伍类型是个无效值");
-                }
+                get { return _category; }
+                internal set { _category = value ?? throw new Exception("设置的队伍类型是个无效值"); }
             }
 
             public TeamInfo(TeamCategory teamCategory, UInt32 distributiveOrder)
-                : this(teamCategory, new SSUtils.Order((Int32)(distributiveOrder)))
-            {
-            }
-
+                : this(teamCategory, new SSUtils.Order((Int32)(distributiveOrder))) {}
             public TeamInfo(TeamCategory teamCategory, SSUtils.Order distributiveOrder = new SSUtils.Order())
-                : this(teamCategory, Guid.NewGuid().ToString("N"), distributiveOrder)
-            {
-            }
-
+                : this(teamCategory, Guid.NewGuid().ToString("N"), distributiveOrder) {}
             public TeamInfo(TeamCategory teamCategory, String existedId, SSUtils.Order distributiveOrder = new SSUtils.Order())
             {
                 Id = existedId;
@@ -78,14 +67,7 @@ namespace SCAS
                 }
 
                 TeamCategory category = this[0].Category;
-                for (Int32 i = 1, j = this.Count; i != j; ++i)
-                {
-                    if (this[i].Category != category)
-                    {
-                        return false;
-                    }
-                }
-                return true;
+                return this.All(info => info.Category == category);
             }
         }
 

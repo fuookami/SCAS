@@ -86,7 +86,7 @@ namespace SCAS
                 }
             }
 
-            private void SetInOrder(List<AthleteCategory> order = null)
+            public void SetInOrder(List<AthleteCategory> order = null)
             {
                 if (!_needEveryPerson)
                 {
@@ -99,7 +99,7 @@ namespace SCAS
                 }
             }
 
-            private void SetNotInOrder()
+            public void SetNotInOrder()
             {
                 BeInOrder = false;
                 Order = null;

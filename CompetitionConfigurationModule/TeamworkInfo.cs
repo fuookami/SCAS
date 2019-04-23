@@ -46,8 +46,8 @@ namespace SCAS
 
             public List<AthleteCategory> Order
             { 
-                get; 
-                private set; 
+                get;
+                private set;
             }
 
             public TeamworkInfo()
