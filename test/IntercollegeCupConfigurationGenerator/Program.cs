@@ -569,8 +569,9 @@ namespace IntercollegeCupConfigurationGenerator
                 EventInfo eventInfo = ret.GenerateNewEventInfo();
                 eventInfo.Name = "女子4X25米自由泳";
 
-                eventInfo.EventTeamworkInfo.SetIsTeamwork();
-                eventInfo.EventTeamworkInfo.SetNeedEveryPerson();
+                eventInfo.EventTeamworkInfo.BeTeamwork = true;
+                eventInfo.EventTeamworkInfo.BeMultiRank = true;
+                eventInfo.EventTeamworkInfo.NeedEveryPerson = true;
                 eventInfo.EventTeamworkInfo.RangesOfCategories.Add(category2, new NumberRange(4, 4));
                 eventInfo.EventTeamworkInfo.RangesOfTeam.Set(4, 4);
                 eventInfo.EventTeamworkInfo.SetInOrder(new List<AthleteCategory>
@@ -614,8 +615,9 @@ namespace IntercollegeCupConfigurationGenerator
                 EventInfo eventInfo = ret.GenerateNewEventInfo();
                 eventInfo.Name = "男子4X25米自由泳";
 
-                eventInfo.EventTeamworkInfo.SetIsTeamwork();
-                eventInfo.EventTeamworkInfo.SetNeedEveryPerson();
+                eventInfo.EventTeamworkInfo.BeTeamwork = true;
+                eventInfo.EventTeamworkInfo.BeMultiRank = true;
+                eventInfo.EventTeamworkInfo.NeedEveryPerson = true;
                 eventInfo.EventTeamworkInfo.RangesOfCategories.Add(category1, new NumberRange(4, 4));
                 eventInfo.EventTeamworkInfo.RangesOfTeam.Set(4, 4);
                 eventInfo.EventTeamworkInfo.SetInOrder(new List<AthleteCategory>
@@ -659,8 +661,9 @@ namespace IntercollegeCupConfigurationGenerator
                 EventInfo eventInfo = ret.GenerateNewEventInfo();
                 eventInfo.Name = "男女混合6X25米自由泳";
 
-                eventInfo.EventTeamworkInfo.SetIsTeamwork();
-                eventInfo.EventTeamworkInfo.SetNeedEveryPerson();
+                eventInfo.EventTeamworkInfo.BeTeamwork = true;
+                eventInfo.EventTeamworkInfo.BeMultiRank = true;
+                eventInfo.EventTeamworkInfo.NeedEveryPerson = true;
                 eventInfo.EventTeamworkInfo.RangesOfCategories.Add(category1, new NumberRange(3, 3));
                 eventInfo.EventTeamworkInfo.RangesOfCategories.Add(category2, new NumberRange(3, 3));
                 eventInfo.EventTeamworkInfo.RangesOfTeam.Set(6, 6);

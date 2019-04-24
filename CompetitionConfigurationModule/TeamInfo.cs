@@ -25,13 +25,13 @@ namespace SCAS
             public String ShortName
             {
                 get;
-                internal set;
+                set;
             }
 
             public String Name
             {
                 get;
-                internal set;
+                set;
             }
 
             public TeamCategory Category

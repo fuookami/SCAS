@@ -17,19 +17,19 @@ namespace SCAS
             public bool BeTeamwork 
             { 
                 get { return _beTeamwork; } 
-                internal set { SetIsTeamwork(value); } 
+                set { SetIsTeamwork(value); } 
             }
             
             public bool BeMultiRank 
             { 
                 get { return _beMultiRank; } 
-                internal set { _beMultiRank = BeTeamwork ? value : false; } 
+                set { _beMultiRank = BeTeamwork ? value : false; } 
             }
 
             public bool NeedEveryPerson 
             { 
                 get { return _needEveryPerson; } 
-                internal set { SetNeedEveryPerson(value); } 
+                set { SetNeedEveryPerson(value); } 
             }
 
             public Dictionary<AthleteCategory, NumberRange> RangesOfCategories 
