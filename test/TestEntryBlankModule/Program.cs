@@ -8,8 +8,8 @@ namespace TestEntryBlankModule
         static void Main(string[] args)
         {
             // Generate("test");
-            Generate("FreshmanCupConf");
-//             Generate("IntercollegeCupConf");
+            //Generate("FreshmanCupConf");
+             Generate("IntercollegeCupConf");
 //             Read("7");
 //             Read("16");
             
