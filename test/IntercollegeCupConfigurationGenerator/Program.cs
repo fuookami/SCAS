@@ -28,23 +28,23 @@ namespace IntercollegeCupConfigurationGenerator
         {
             CompetitionInfo ret = new CompetitionInfo();
 
-            ret.Name = "南京航空航天大学第X届“院际杯”游泳比赛";
-            ret.EntryClosingDate = new Date(2017, 5, 14);
+            ret.Name = "南京航空航天大学第57届校运会暨第5届“浩沙”院际杯游泳比赛";
+            ret.EntryClosingDate = new Date(2019, 5, 12);
 
             ret.CompetitionRegulationInfo.Organizers.Add("南京航空航天大学体育部");
             ret.CompetitionRegulationInfo.Undertakers.Add("南京航空航天大学学生会");
             ret.CompetitionRegulationInfo.Undertakers.Add("南京航空航天大学游泳协会");
             ret.CompetitionRegulationInfo.Coorganizers.Add("南京航空航天大学（江宁校区）游泳馆");
-            ret.CompetitionRegulationInfo.Plans.Add(new Tuple<String, String>("8:00 - 8:50", "游泳池开放给运动员热身"));
-            ret.CompetitionRegulationInfo.Plans.Add(new Tuple<String, String>("8:50 - 9:00", "游泳池清池准备比赛，第一个项目开始检录"));
-            ret.CompetitionRegulationInfo.Plans.Add(new Tuple<String, String>("9:00整", "当天第一个项目第一组开赛"));
+            ret.CompetitionRegulationInfo.Plans.Add(new Tuple<String, String>("7:30 - 7:50", "游泳池开放给运动员热身"));
+            ret.CompetitionRegulationInfo.Plans.Add(new Tuple<String, String>("7:50 - 8:00", "游泳池清池准备比赛，第一个项目开始检录"));
+            ret.CompetitionRegulationInfo.Plans.Add(new Tuple<String, String>("8:00整", "当天第一个项目第一组开赛"));
             ret.CompetitionRegulationInfo.Plans.Add(new Tuple<String, String>("11:00前", "完成当天所有项目的比赛"));
             ret.CompetitionRegulationInfo.Plans.Add(new Tuple<String, String>("12:00前", "完成当天所有项目的奖牌、奖状颁发以及场地收拾"));
             ret.CompetitionRegulationInfo.Contestants.Add("南京航空航天大学各院系");
 
-            ret.CompetitionPrincipalInfo.Name = "负责人的姓名";
-            ret.CompetitionPrincipalInfo.Telephone = "负责人的手机";
-            ret.CompetitionPrincipalInfo.Email = "负责人的邮箱@xxx.xx";
+            ret.CompetitionPrincipalInfo.Name = "赵斯琪";
+            ret.CompetitionPrincipalInfo.Telephone = "18168112116";
+            ret.CompetitionPrincipalInfo.Email = "401070864@qq.com";
 
             ret.NumberOfSubLeader.Set(1, 1);
             ret.NumberOfCoach.Set(0, 2);
@@ -59,13 +59,13 @@ namespace IntercollegeCupConfigurationGenerator
 //             ret.CompetitionEntryValidator.EntryNumberPerAthlete.Set(0, 2);
 
             SessionPool sessions = ret.Sessions;
-            Date date = new Date(2017, 5, 20);
+            Date date = new Date(2019, 5, 11);
             sessions.AddDate(date);
-            var session1 = sessions.GenerateNewSession(date, new TimeSpan(9, 0, 0));
+            var session1 = sessions.GenerateNewSession(date, new TimeSpan(8, 0, 0));
             session1.FullName = String.Format("{0}月{1}日", date.Month, date.Day);
-            date = new Date(2017, 5, 21);
+            date = new Date(2019, 5, 12);
             sessions.AddDate(date);
-            var session2 = sessions.GenerateNewSession(date, new TimeSpan(9, 0, 0));
+            var session2 = sessions.GenerateNewSession(date, new TimeSpan(8, 0, 0));
             session2.FullName = String.Format("{0}月{1}日", date.Month, date.Day);
 
             ret.Field = "南京航空航天大学（江宁校区）游泳馆";
@@ -76,12 +76,6 @@ namespace IntercollegeCupConfigurationGenerator
             var category1 = ret.AthleteCategories.GenerateNewCategory();
             category1.Name = "学生男子";
             category1.SidKey = "学号";
-            var category4 = ret.AthleteCategories.GenerateNewCategory();
-            category4.Name = "教职工女子";
-            category4.SidKey = "工号";
-            var category3 = ret.AthleteCategories.GenerateNewCategory();
-            category3.Name = "教职工男子";
-            category3.SidKey = "工号";
 
             ret.CompetitionRankInfo.Enabled = true;
             var rank1 = ret.CompetitionRankInfo.AthleteRanks.GenerateNewRank();
@@ -94,10 +88,11 @@ namespace IntercollegeCupConfigurationGenerator
             ret.CompetitionRankInfo.DefaultRank = rank3;
 
             ret.TeamCategories.GenerateNewCategory().Name = "普通队";
+            ret.TeamCategories.GenerateNewCategory().Name = "";
 
             List<Tuple<String, String, Int32>> teamInfos = new List<Tuple<String, String, Int32>>
             {
-                new Tuple<String, String, Int32>("一院", "航空宇航学院", 1),
+                new Tuple<String, String, Int32>("一院", "航空学院", 1),
                 new Tuple<String, String, Int32>("二院", "能源与动力学院", 2),
                 new Tuple<String, String, Int32>("三院", "自动化学院", 3),
                 new Tuple<String, String, Int32>("四院", "电子信息工程学院", 4),
@@ -126,7 +121,6 @@ namespace IntercollegeCupConfigurationGenerator
                 eventInfo.Name = "女子25米蛙泳";
 
                 eventInfo.EventParticipantValidator.Categories.Add(category2);
-                eventInfo.EventParticipantValidator.Categories.Add(category4);
                 eventInfo.EventParticipantValidator.NumberPerTeam.Set(0, 5);
                 eventInfo.EventParticipantValidator.Ranks.Add(rank1);
                 eventInfo.EventParticipantValidator.Ranks.Add(rank2);
@@ -163,7 +157,6 @@ namespace IntercollegeCupConfigurationGenerator
                 eventInfo.Name = "男子25米蛙泳";
 
                 eventInfo.EventParticipantValidator.Categories.Add(category1);
-                eventInfo.EventParticipantValidator.Categories.Add(category3);
                 eventInfo.EventParticipantValidator.NumberPerTeam.Set(0, 5);
                 eventInfo.EventParticipantValidator.Ranks.Add(rank1);
                 eventInfo.EventParticipantValidator.Ranks.Add(rank2);
@@ -184,302 +177,6 @@ namespace IntercollegeCupConfigurationGenerator
                     gameInfo.Pattern = GameInfo.GamePattern.Ranking;
 
                     gameInfo.GameSession = session1;
-                    gameInfo.OrderInEvent = new Order(0);
-                    gameInfo.OrderInSession = new Order(1);
-
-                    gameInfo.PlanIntervalTime = new TimeSpan(0, 3, 0);
-                    gameInfo.PlanTimePerGroup = new TimeSpan(0, 1, 0);
-
-                    gameInfo.GameGroupInfo.Enabled = true;
-                    gameInfo.GameGroupInfo.NumberPerGroup.Set(8);
-                }
-            }
-
-            {
-                EventInfo eventInfo = ret.GenerateNewEventInfo();
-                eventInfo.Name = "女子50米蛙泳";
-
-                eventInfo.EventParticipantValidator.Categories.Add(category2);
-                eventInfo.EventParticipantValidator.Categories.Add(category4);
-                eventInfo.EventParticipantValidator.NumberPerTeam.Set(0, 4);
-                eventInfo.EventParticipantValidator.Ranks.Add(rank1);
-                eventInfo.EventParticipantValidator.Ranks.Add(rank2);
-                eventInfo.EventParticipantValidator.Ranks.Add(rank3);
-                eventInfo.EventParticipantValidator.BePointForEveryRank = true;
-
-                foreach (var team in ret.TeamInfos)
-                {
-                    eventInfo.EnabledTeams.Add(team);
-                }
-                eventInfo.EnabledTeams.Sort();
-
-                {
-                    GameInfo gameInfo = eventInfo.GameInfos.GenerateNewGameInfo();
-                    gameInfo.Name = String.Format("{0}预决赛", eventInfo.Name);
-
-                    gameInfo.Type = GameInfo.GameType.Finals;
-                    gameInfo.Pattern = GameInfo.GamePattern.Ranking;
-
-                    gameInfo.GameSession = session2;
-                    gameInfo.OrderInEvent = new Order(0);
-                    gameInfo.OrderInSession = new Order(2);
-
-                    gameInfo.PlanIntervalTime = new TimeSpan(0, 4, 0);
-                    gameInfo.PlanTimePerGroup = new TimeSpan(0, 1, 0);
-
-                    gameInfo.GameGroupInfo.Enabled = true;
-                    gameInfo.GameGroupInfo.NumberPerGroup.Set(8);
-                }
-            }
-
-            {
-                EventInfo eventInfo = ret.GenerateNewEventInfo();
-                eventInfo.Name = "男子50米蛙泳";
-
-                eventInfo.EventParticipantValidator.Categories.Add(category1);
-                eventInfo.EventParticipantValidator.Categories.Add(category3);
-                eventInfo.EventParticipantValidator.NumberPerTeam.Set(0, 4);
-                eventInfo.EventParticipantValidator.Ranks.Add(rank1);
-                eventInfo.EventParticipantValidator.Ranks.Add(rank2);
-                eventInfo.EventParticipantValidator.Ranks.Add(rank3);
-                eventInfo.EventParticipantValidator.BePointForEveryRank = true;
-
-                foreach (var team in ret.TeamInfos)
-                {
-                    eventInfo.EnabledTeams.Add(team);
-                }
-                eventInfo.EnabledTeams.Sort();
-
-                {
-                    GameInfo gameInfo = eventInfo.GameInfos.GenerateNewGameInfo();
-                    gameInfo.Name = String.Format("{0}预决赛", eventInfo.Name);
-
-                    gameInfo.Type = GameInfo.GameType.Finals;
-                    gameInfo.Pattern = GameInfo.GamePattern.Ranking;
-
-                    gameInfo.GameSession = session2;
-                    gameInfo.OrderInEvent = new Order(0);
-                    gameInfo.OrderInSession = new Order(3);
-
-                    gameInfo.PlanIntervalTime = new TimeSpan(0, 4, 0);
-                    gameInfo.PlanTimePerGroup = new TimeSpan(0, 1, 0);
-
-                    gameInfo.GameGroupInfo.Enabled = true;
-                    gameInfo.GameGroupInfo.NumberPerGroup.Set(8);
-                }
-            }
-
-            {
-                EventInfo eventInfo = ret.GenerateNewEventInfo();
-                eventInfo.Name = "女子25米自由泳";
-
-                eventInfo.EventParticipantValidator.Categories.Add(category2);
-                eventInfo.EventParticipantValidator.Categories.Add(category4);
-                eventInfo.EventParticipantValidator.NumberPerTeam.Set(0, 5);
-                eventInfo.EventParticipantValidator.Ranks.Add(rank1);
-                eventInfo.EventParticipantValidator.Ranks.Add(rank2);
-                eventInfo.EventParticipantValidator.Ranks.Add(rank3);
-                eventInfo.EventParticipantValidator.BePointForEveryRank = true;
-
-                foreach (var team in ret.TeamInfos)
-                {
-                    eventInfo.EnabledTeams.Add(team);
-                }
-                eventInfo.EnabledTeams.Sort();
-
-                {
-                    GameInfo gameInfo = eventInfo.GameInfos.GenerateNewGameInfo();
-                    gameInfo.Name = String.Format("{0}预决赛", eventInfo.Name);
-
-                    gameInfo.Type = GameInfo.GameType.Finals;
-                    gameInfo.Pattern = GameInfo.GamePattern.Ranking;
-
-                    gameInfo.GameSession = session2;
-                    gameInfo.OrderInEvent = new Order(0);
-                    gameInfo.OrderInSession = new Order(4);
-
-                    gameInfo.PlanIntervalTime = new TimeSpan(0, 2, 0);
-                    gameInfo.PlanTimePerGroup = new TimeSpan(0, 1, 0);
-
-                    gameInfo.GameGroupInfo.Enabled = true;
-                    gameInfo.GameGroupInfo.NumberPerGroup.Set(8);
-                }
-            }
-
-            {
-                EventInfo eventInfo = ret.GenerateNewEventInfo();
-                eventInfo.Name = "男子25米自由泳";
-
-                eventInfo.EventParticipantValidator.Categories.Add(category1);
-                eventInfo.EventParticipantValidator.Categories.Add(category3);
-                eventInfo.EventParticipantValidator.NumberPerTeam.Set(0, 5);
-                eventInfo.EventParticipantValidator.Ranks.Add(rank1);
-                eventInfo.EventParticipantValidator.Ranks.Add(rank2);
-                eventInfo.EventParticipantValidator.Ranks.Add(rank3);
-                eventInfo.EventParticipantValidator.BePointForEveryRank = true;
-
-                foreach (var team in ret.TeamInfos)
-                {
-                    eventInfo.EnabledTeams.Add(team);
-                }
-                eventInfo.EnabledTeams.Sort();
-
-                {
-                    GameInfo gameInfo = eventInfo.GameInfos.GenerateNewGameInfo();
-                    gameInfo.Name = String.Format("{0}预决赛", eventInfo.Name);
-
-                    gameInfo.Type = GameInfo.GameType.Finals;
-                    gameInfo.Pattern = GameInfo.GamePattern.Ranking;
-
-                    gameInfo.GameSession = session2;
-                    gameInfo.OrderInEvent = new Order(0);
-                    gameInfo.OrderInSession = new Order(4);
-
-                    gameInfo.PlanIntervalTime = new TimeSpan(0, 2, 0);
-                    gameInfo.PlanTimePerGroup = new TimeSpan(0, 1, 0);
-
-                    gameInfo.GameGroupInfo.Enabled = true;
-                    gameInfo.GameGroupInfo.NumberPerGroup.Set(8);
-                }
-            }
-
-            {
-                EventInfo eventInfo = ret.GenerateNewEventInfo();
-                eventInfo.Name = "女子50米自由泳";
-
-                eventInfo.EventParticipantValidator.Categories.Add(category2);
-                eventInfo.EventParticipantValidator.Categories.Add(category4);
-                eventInfo.EventParticipantValidator.NumberPerTeam.Set(0, 4);
-                eventInfo.EventParticipantValidator.Ranks.Add(rank1);
-                eventInfo.EventParticipantValidator.Ranks.Add(rank2);
-                eventInfo.EventParticipantValidator.Ranks.Add(rank3);
-                eventInfo.EventParticipantValidator.BePointForEveryRank = true;
-
-                foreach (var team in ret.TeamInfos)
-                {
-                    eventInfo.EnabledTeams.Add(team);
-                }
-                eventInfo.EnabledTeams.Sort();
-
-                {
-                    GameInfo gameInfo = eventInfo.GameInfos.GenerateNewGameInfo();
-                    gameInfo.Name = String.Format("{0}预决赛", eventInfo.Name);
-
-                    gameInfo.Type = GameInfo.GameType.Finals;
-                    gameInfo.Pattern = GameInfo.GamePattern.Ranking;
-
-                    gameInfo.GameSession = session1;
-                    gameInfo.OrderInEvent = new Order(0);
-                    gameInfo.OrderInSession = new Order(4);
-
-                    gameInfo.PlanIntervalTime = new TimeSpan(0, 3, 0);
-                    gameInfo.PlanTimePerGroup = new TimeSpan(0, 1, 0);
-
-                    gameInfo.GameGroupInfo.Enabled = true;
-                    gameInfo.GameGroupInfo.NumberPerGroup.Set(8);
-                }
-            }
-
-            {
-                EventInfo eventInfo = ret.GenerateNewEventInfo();
-                eventInfo.Name = "男子50米自由泳";
-
-                eventInfo.EventParticipantValidator.Categories.Add(category1);
-                eventInfo.EventParticipantValidator.Categories.Add(category3);
-                eventInfo.EventParticipantValidator.NumberPerTeam.Set(0, 4);
-                eventInfo.EventParticipantValidator.Ranks.Add(rank1);
-                eventInfo.EventParticipantValidator.Ranks.Add(rank2);
-                eventInfo.EventParticipantValidator.Ranks.Add(rank3);
-                eventInfo.EventParticipantValidator.BePointForEveryRank = true;
-
-                foreach (var team in ret.TeamInfos)
-                {
-                    eventInfo.EnabledTeams.Add(team);
-                }
-                eventInfo.EnabledTeams.Sort();
-
-                {
-                    GameInfo gameInfo = eventInfo.GameInfos.GenerateNewGameInfo();
-                    gameInfo.Name = String.Format("{0}预决赛", eventInfo.Name);
-
-                    gameInfo.Type = GameInfo.GameType.Finals;
-                    gameInfo.Pattern = GameInfo.GamePattern.Ranking;
-
-                    gameInfo.GameSession = session1;
-                    gameInfo.OrderInEvent = new Order(0);
-                    gameInfo.OrderInSession = new Order(5);
-
-                    gameInfo.PlanIntervalTime = new TimeSpan(0, 3, 0);
-                    gameInfo.PlanTimePerGroup = new TimeSpan(0, 1, 0);
-
-                    gameInfo.GameGroupInfo.Enabled = true;
-                    gameInfo.GameGroupInfo.NumberPerGroup.Set(8);
-                }
-            }
-
-            {
-                EventInfo eventInfo = ret.GenerateNewEventInfo();
-                eventInfo.Name = "女子25米仰泳";
-
-                eventInfo.EventParticipantValidator.Categories.Add(category2);
-                eventInfo.EventParticipantValidator.Categories.Add(category4);
-                eventInfo.EventParticipantValidator.NumberPerTeam.Set(0, 4);
-                eventInfo.EventParticipantValidator.Ranks.Add(rank1);
-                eventInfo.EventParticipantValidator.Ranks.Add(rank2);
-                eventInfo.EventParticipantValidator.Ranks.Add(rank3);
-                eventInfo.EventParticipantValidator.BePointForEveryRank = true;
-
-                foreach (var team in ret.TeamInfos)
-                {
-                    eventInfo.EnabledTeams.Add(team);
-                }
-                eventInfo.EnabledTeams.Sort();
-
-                {
-                    GameInfo gameInfo = eventInfo.GameInfos.GenerateNewGameInfo();
-                    gameInfo.Name = String.Format("{0}预决赛", eventInfo.Name);
-
-                    gameInfo.Type = GameInfo.GameType.Finals;
-                    gameInfo.Pattern = GameInfo.GamePattern.Ranking;
-
-                    gameInfo.GameSession = session2;
-                    gameInfo.OrderInEvent = new Order(0);
-                    gameInfo.OrderInSession = new Order(0);
-
-                    gameInfo.PlanIntervalTime = new TimeSpan(0, 3, 0);
-                    gameInfo.PlanTimePerGroup = new TimeSpan(0, 1, 0);
-
-                    gameInfo.GameGroupInfo.Enabled = true;
-                    gameInfo.GameGroupInfo.NumberPerGroup.Set(8);
-                }
-            }
-
-            {
-                EventInfo eventInfo = ret.GenerateNewEventInfo();
-                eventInfo.Name = "男子25米仰泳";
-
-                eventInfo.EventParticipantValidator.Categories.Add(category1);
-                eventInfo.EventParticipantValidator.Categories.Add(category3);
-                eventInfo.EventParticipantValidator.NumberPerTeam.Set(0, 4);
-                eventInfo.EventParticipantValidator.Ranks.Add(rank1);
-                eventInfo.EventParticipantValidator.Ranks.Add(rank2);
-                eventInfo.EventParticipantValidator.Ranks.Add(rank3);
-                eventInfo.EventParticipantValidator.BePointForEveryRank = true;
-
-                foreach (var team in ret.TeamInfos)
-                {
-                    eventInfo.EnabledTeams.Add(team);
-                }
-                eventInfo.EnabledTeams.Sort();
-
-                {
-                    GameInfo gameInfo = eventInfo.GameInfos.GenerateNewGameInfo();
-                    gameInfo.Name = String.Format("{0}预决赛", eventInfo.Name);
-
-                    gameInfo.Type = GameInfo.GameType.Finals;
-                    gameInfo.Pattern = GameInfo.GamePattern.Ranking;
-
-                    gameInfo.GameSession = session2;
                     gameInfo.OrderInEvent = new Order(0);
                     gameInfo.OrderInSession = new Order(1);
 
@@ -496,7 +193,6 @@ namespace IntercollegeCupConfigurationGenerator
                 eventInfo.Name = "女子25米蝶泳";
 
                 eventInfo.EventParticipantValidator.Categories.Add(category2);
-                eventInfo.EventParticipantValidator.Categories.Add(category4);
                 eventInfo.EventParticipantValidator.NumberPerTeam.Set(0, 3);
                 eventInfo.EventParticipantValidator.Ranks.Add(rank1);
                 eventInfo.EventParticipantValidator.Ranks.Add(rank2);
@@ -533,7 +229,6 @@ namespace IntercollegeCupConfigurationGenerator
                 eventInfo.Name = "男子25米蝶泳";
 
                 eventInfo.EventParticipantValidator.Categories.Add(category1);
-                eventInfo.EventParticipantValidator.Categories.Add(category3);
                 eventInfo.EventParticipantValidator.NumberPerTeam.Set(0, 3);
                 eventInfo.EventParticipantValidator.Ranks.Add(rank1);
                 eventInfo.EventParticipantValidator.Ranks.Add(rank2);
@@ -556,6 +251,79 @@ namespace IntercollegeCupConfigurationGenerator
                     gameInfo.GameSession = session1;
                     gameInfo.OrderInEvent = new Order(0);
                     gameInfo.OrderInSession = new Order(3);
+
+                    gameInfo.PlanIntervalTime = new TimeSpan(0, 3, 0);
+                    gameInfo.PlanTimePerGroup = new TimeSpan(0, 1, 0);
+
+                    gameInfo.GameGroupInfo.Enabled = true;
+                    gameInfo.GameGroupInfo.NumberPerGroup.Set(8);
+                }
+            }
+
+
+            {
+                EventInfo eventInfo = ret.GenerateNewEventInfo();
+                eventInfo.Name = "女子50米自由泳";
+
+                eventInfo.EventParticipantValidator.Categories.Add(category2);
+                eventInfo.EventParticipantValidator.NumberPerTeam.Set(0, 4);
+                eventInfo.EventParticipantValidator.Ranks.Add(rank1);
+                eventInfo.EventParticipantValidator.Ranks.Add(rank2);
+                eventInfo.EventParticipantValidator.Ranks.Add(rank3);
+                eventInfo.EventParticipantValidator.BePointForEveryRank = true;
+
+                foreach (var team in ret.TeamInfos)
+                {
+                    eventInfo.EnabledTeams.Add(team);
+                }
+                eventInfo.EnabledTeams.Sort();
+
+                {
+                    GameInfo gameInfo = eventInfo.GameInfos.GenerateNewGameInfo();
+                    gameInfo.Name = String.Format("{0}预决赛", eventInfo.Name);
+
+                    gameInfo.Type = GameInfo.GameType.Finals;
+                    gameInfo.Pattern = GameInfo.GamePattern.Ranking;
+
+                    gameInfo.GameSession = session1;
+                    gameInfo.OrderInEvent = new Order(0);
+                    gameInfo.OrderInSession = new Order(4);
+
+                    gameInfo.PlanIntervalTime = new TimeSpan(0, 3, 0);
+                    gameInfo.PlanTimePerGroup = new TimeSpan(0, 1, 0);
+
+                    gameInfo.GameGroupInfo.Enabled = true;
+                    gameInfo.GameGroupInfo.NumberPerGroup.Set(8);
+                }
+            }
+
+            {
+                EventInfo eventInfo = ret.GenerateNewEventInfo();
+                eventInfo.Name = "男子50米自由泳";
+
+                eventInfo.EventParticipantValidator.Categories.Add(category1);
+                eventInfo.EventParticipantValidator.NumberPerTeam.Set(0, 4);
+                eventInfo.EventParticipantValidator.Ranks.Add(rank1);
+                eventInfo.EventParticipantValidator.Ranks.Add(rank2);
+                eventInfo.EventParticipantValidator.Ranks.Add(rank3);
+                eventInfo.EventParticipantValidator.BePointForEveryRank = true;
+
+                foreach (var team in ret.TeamInfos)
+                {
+                    eventInfo.EnabledTeams.Add(team);
+                }
+                eventInfo.EnabledTeams.Sort();
+
+                {
+                    GameInfo gameInfo = eventInfo.GameInfos.GenerateNewGameInfo();
+                    gameInfo.Name = String.Format("{0}预决赛", eventInfo.Name);
+
+                    gameInfo.Type = GameInfo.GameType.Finals;
+                    gameInfo.Pattern = GameInfo.GamePattern.Ranking;
+
+                    gameInfo.GameSession = session1;
+                    gameInfo.OrderInEvent = new Order(0);
+                    gameInfo.OrderInSession = new Order(5);
 
                     gameInfo.PlanIntervalTime = new TimeSpan(0, 3, 0);
                     gameInfo.PlanTimePerGroup = new TimeSpan(0, 1, 0);
@@ -656,6 +424,227 @@ namespace IntercollegeCupConfigurationGenerator
                     gameInfo.GameGroupInfo.NumberPerGroup.Set(8);
                 }
             }
+
+            {
+                EventInfo eventInfo = ret.GenerateNewEventInfo();
+                eventInfo.Name = "女子50米蛙泳";
+
+                eventInfo.EventParticipantValidator.Categories.Add(category2);
+                eventInfo.EventParticipantValidator.NumberPerTeam.Set(0, 4);
+                eventInfo.EventParticipantValidator.Ranks.Add(rank1);
+                eventInfo.EventParticipantValidator.Ranks.Add(rank2);
+                eventInfo.EventParticipantValidator.Ranks.Add(rank3);
+                eventInfo.EventParticipantValidator.BePointForEveryRank = true;
+
+                foreach (var team in ret.TeamInfos)
+                {
+                    eventInfo.EnabledTeams.Add(team);
+                }
+                eventInfo.EnabledTeams.Sort();
+
+                {
+                    GameInfo gameInfo = eventInfo.GameInfos.GenerateNewGameInfo();
+                    gameInfo.Name = String.Format("{0}预决赛", eventInfo.Name);
+
+                    gameInfo.Type = GameInfo.GameType.Finals;
+                    gameInfo.Pattern = GameInfo.GamePattern.Ranking;
+
+                    gameInfo.GameSession = session2;
+                    gameInfo.OrderInEvent = new Order(0);
+                    gameInfo.OrderInSession = new Order(0);
+
+                    gameInfo.PlanIntervalTime = new TimeSpan(0, 4, 0);
+                    gameInfo.PlanTimePerGroup = new TimeSpan(0, 1, 0);
+
+                    gameInfo.GameGroupInfo.Enabled = true;
+                    gameInfo.GameGroupInfo.NumberPerGroup.Set(8);
+                }
+            }
+
+            {
+                EventInfo eventInfo = ret.GenerateNewEventInfo();
+                eventInfo.Name = "男子50米蛙泳";
+
+                eventInfo.EventParticipantValidator.Categories.Add(category1);
+                eventInfo.EventParticipantValidator.NumberPerTeam.Set(0, 4);
+                eventInfo.EventParticipantValidator.Ranks.Add(rank1);
+                eventInfo.EventParticipantValidator.Ranks.Add(rank2);
+                eventInfo.EventParticipantValidator.Ranks.Add(rank3);
+                eventInfo.EventParticipantValidator.BePointForEveryRank = true;
+
+                foreach (var team in ret.TeamInfos)
+                {
+                    eventInfo.EnabledTeams.Add(team);
+                }
+                eventInfo.EnabledTeams.Sort();
+
+                {
+                    GameInfo gameInfo = eventInfo.GameInfos.GenerateNewGameInfo();
+                    gameInfo.Name = String.Format("{0}预决赛", eventInfo.Name);
+
+                    gameInfo.Type = GameInfo.GameType.Finals;
+                    gameInfo.Pattern = GameInfo.GamePattern.Ranking;
+
+                    gameInfo.GameSession = session2;
+                    gameInfo.OrderInEvent = new Order(0);
+                    gameInfo.OrderInSession = new Order(1);
+
+                    gameInfo.PlanIntervalTime = new TimeSpan(0, 4, 0);
+                    gameInfo.PlanTimePerGroup = new TimeSpan(0, 1, 0);
+
+                    gameInfo.GameGroupInfo.Enabled = true;
+                    gameInfo.GameGroupInfo.NumberPerGroup.Set(8);
+                }
+            }
+
+            {
+                EventInfo eventInfo = ret.GenerateNewEventInfo();
+                eventInfo.Name = "女子25米自由泳";
+
+                eventInfo.EventParticipantValidator.Categories.Add(category2);
+                eventInfo.EventParticipantValidator.NumberPerTeam.Set(0, 5);
+                eventInfo.EventParticipantValidator.Ranks.Add(rank1);
+                eventInfo.EventParticipantValidator.Ranks.Add(rank2);
+                eventInfo.EventParticipantValidator.Ranks.Add(rank3);
+                eventInfo.EventParticipantValidator.BePointForEveryRank = true;
+
+                foreach (var team in ret.TeamInfos)
+                {
+                    eventInfo.EnabledTeams.Add(team);
+                }
+                eventInfo.EnabledTeams.Sort();
+
+                {
+                    GameInfo gameInfo = eventInfo.GameInfos.GenerateNewGameInfo();
+                    gameInfo.Name = String.Format("{0}预决赛", eventInfo.Name);
+
+                    gameInfo.Type = GameInfo.GameType.Finals;
+                    gameInfo.Pattern = GameInfo.GamePattern.Ranking;
+
+                    gameInfo.GameSession = session2;
+                    gameInfo.OrderInEvent = new Order(0);
+                    gameInfo.OrderInSession = new Order(4);
+
+                    gameInfo.PlanIntervalTime = new TimeSpan(0, 2, 0);
+                    gameInfo.PlanTimePerGroup = new TimeSpan(0, 1, 0);
+
+                    gameInfo.GameGroupInfo.Enabled = true;
+                    gameInfo.GameGroupInfo.NumberPerGroup.Set(8);
+                }
+            }
+
+            {
+                EventInfo eventInfo = ret.GenerateNewEventInfo();
+                eventInfo.Name = "男子25米自由泳";
+
+                eventInfo.EventParticipantValidator.Categories.Add(category1);
+                eventInfo.EventParticipantValidator.NumberPerTeam.Set(0, 5);
+                eventInfo.EventParticipantValidator.Ranks.Add(rank1);
+                eventInfo.EventParticipantValidator.Ranks.Add(rank2);
+                eventInfo.EventParticipantValidator.Ranks.Add(rank3);
+                eventInfo.EventParticipantValidator.BePointForEveryRank = true;
+
+                foreach (var team in ret.TeamInfos)
+                {
+                    eventInfo.EnabledTeams.Add(team);
+                }
+                eventInfo.EnabledTeams.Sort();
+
+                {
+                    GameInfo gameInfo = eventInfo.GameInfos.GenerateNewGameInfo();
+                    gameInfo.Name = String.Format("{0}预决赛", eventInfo.Name);
+
+                    gameInfo.Type = GameInfo.GameType.Finals;
+                    gameInfo.Pattern = GameInfo.GamePattern.Ranking;
+
+                    gameInfo.GameSession = session2;
+                    gameInfo.OrderInEvent = new Order(0);
+                    gameInfo.OrderInSession = new Order(5);
+
+                    gameInfo.PlanIntervalTime = new TimeSpan(0, 2, 0);
+                    gameInfo.PlanTimePerGroup = new TimeSpan(0, 1, 0);
+
+                    gameInfo.GameGroupInfo.Enabled = true;
+                    gameInfo.GameGroupInfo.NumberPerGroup.Set(8);
+                }
+            }
+
+            
+
+            
+
+            {
+                EventInfo eventInfo = ret.GenerateNewEventInfo();
+                eventInfo.Name = "女子25米仰泳";
+
+                eventInfo.EventParticipantValidator.Categories.Add(category2);
+                eventInfo.EventParticipantValidator.NumberPerTeam.Set(0, 4);
+                eventInfo.EventParticipantValidator.Ranks.Add(rank1);
+                eventInfo.EventParticipantValidator.Ranks.Add(rank2);
+                eventInfo.EventParticipantValidator.Ranks.Add(rank3);
+                eventInfo.EventParticipantValidator.BePointForEveryRank = true;
+
+                foreach (var team in ret.TeamInfos)
+                {
+                    eventInfo.EnabledTeams.Add(team);
+                }
+                eventInfo.EnabledTeams.Sort();
+
+                {
+                    GameInfo gameInfo = eventInfo.GameInfos.GenerateNewGameInfo();
+                    gameInfo.Name = String.Format("{0}预决赛", eventInfo.Name);
+
+                    gameInfo.Type = GameInfo.GameType.Finals;
+                    gameInfo.Pattern = GameInfo.GamePattern.Ranking;
+
+                    gameInfo.GameSession = session2;
+                    gameInfo.OrderInEvent = new Order(0);
+                    gameInfo.OrderInSession = new Order(2);
+
+                    gameInfo.PlanIntervalTime = new TimeSpan(0, 3, 0);
+                    gameInfo.PlanTimePerGroup = new TimeSpan(0, 1, 0);
+
+                    gameInfo.GameGroupInfo.Enabled = true;
+                    gameInfo.GameGroupInfo.NumberPerGroup.Set(8);
+                }
+            }
+
+            {
+                EventInfo eventInfo = ret.GenerateNewEventInfo();
+                eventInfo.Name = "男子25米仰泳";
+
+                eventInfo.EventParticipantValidator.Categories.Add(category1);
+                eventInfo.EventParticipantValidator.NumberPerTeam.Set(0, 4);
+                eventInfo.EventParticipantValidator.Ranks.Add(rank1);
+                eventInfo.EventParticipantValidator.Ranks.Add(rank2);
+                eventInfo.EventParticipantValidator.Ranks.Add(rank3);
+                eventInfo.EventParticipantValidator.BePointForEveryRank = true;
+
+                foreach (var team in ret.TeamInfos)
+                {
+                    eventInfo.EnabledTeams.Add(team);
+                }
+                eventInfo.EnabledTeams.Sort();
+
+                {
+                    GameInfo gameInfo = eventInfo.GameInfos.GenerateNewGameInfo();
+                    gameInfo.Name = String.Format("{0}预决赛", eventInfo.Name);
+
+                    gameInfo.Type = GameInfo.GameType.Finals;
+                    gameInfo.Pattern = GameInfo.GamePattern.Ranking;
+
+                    gameInfo.GameSession = session2;
+                    gameInfo.OrderInEvent = new Order(0);
+                    gameInfo.OrderInSession = new Order(3);
+
+                    gameInfo.PlanIntervalTime = new TimeSpan(0, 3, 0);
+                    gameInfo.PlanTimePerGroup = new TimeSpan(0, 1, 0);
+
+                    gameInfo.GameGroupInfo.Enabled = true;
+                    gameInfo.GameGroupInfo.NumberPerGroup.Set(8);
+                }
+            }
+
 
             {
                 EventInfo eventInfo = ret.GenerateNewEventInfo();
