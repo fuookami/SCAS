@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "TestDataModule": {
+      "commandName": "Project",
+      "workingDirectory": "$(ProjectDir)"
+    }
+  }
+}

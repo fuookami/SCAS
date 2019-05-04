@@ -1,6 +1,8 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
+using OfficeOpenXml;
 using SCAS.CompetitionConfiguration;
 using SCAS.EntryBlank;
 
@@ -167,7 +169,38 @@ namespace SCAS
             {
                 Dictionary<String, AthleteRank> ret = new Dictionary<string, AthleteRank>();
 
-                return ret;
+                FileInfo file = new FileInfo(url);
+                if (!file.Exists)
+                {
+                    return ret;
+                }
+
+                using (ExcelPackage package = new ExcelPackage(file))
+                {
+                    foreach (var sheet in package.Workbook.Worksheets)
+                    {
+                        var rankName = sheet.Name;
+                        AthleteRank rank = null;
+                        {
+                            var temp = _conf.CompetitionRankInfo.AthleteRanks.Where(ele => ele.Name == rankName).ToList();
+                            if (temp.Count == 0)
+                            {
+                                continue;
+                            }
+                            rank = temp[0];
+                        }
+
+                        for (int row = 2, maxRow = sheet.Dimension.End.Row; row != maxRow; ++row)
+                        {
+                            if (sheet.Cells[row, 2].Value != null)
+                            {
+                                ret.Add(sheet.Cells[row, 2].Value.ToString(), rank);
+                            }
+                        }
+                    }
+
+                    return ret;
+                }
             }
 
             private bool GenerateTeamDatas(Competition data, Blank blank, Dictionary<String, AthleteRank> rankTable = null)

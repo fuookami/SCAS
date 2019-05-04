@@ -2,7 +2,6 @@
 using System.IO;
 using SCAS.CompetitionConfiguration;
 using OfficeOpenXml;
-using OfficeOpenXml.Style;
 
 namespace SCAS
 {
