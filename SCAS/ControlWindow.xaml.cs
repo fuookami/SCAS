@@ -182,7 +182,7 @@ namespace SCAS
             checkSelect.SelectionChanged += delegate
             {
                 var item = (GameItem)checkSelect.SelectedItem;
-                _display.SetCheck(item.ToString());
+                _display.SetCheck(item != null ? item.ToString() : "");
             };
 
             this.FindControl<TextBox>("WidthInput").TextInput += delegate (object obj, TextInputEventArgs e)
