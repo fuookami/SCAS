@@ -261,3 +261,5 @@ __pycache__/
 *.pyc
 /Prototypes/SettingParserPrototype/GameInfo.h
 /Prototypes/SettingParserPrototype/Competition.h
+/test/TestDataModule/1
+/test/TestDataModule
