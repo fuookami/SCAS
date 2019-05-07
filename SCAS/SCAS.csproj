@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFrameworks>netcoreapp2.0;net461</TargetFrameworks>
@@ -31,8 +31,8 @@
     <None Remove="views\ControlSessionView.xaml" />
     <None Remove="views\ControlView.xaml" />
     <None Remove="views\DisplayEventView.xaml" />
-    <None Remove="views\DisplayGameView.xaml" />
-    <None Remove="views\DisplayGameViewLineItem.xaml" />
+    <None Remove="views\DisplayGameViewWithRank.xaml" />
+    <None Remove="views\DisplayGameViewWithRankLineItem.xaml" />
     <None Remove="views\InitView.xaml" />
   </ItemGroup>
   <ItemGroup>
@@ -40,8 +40,11 @@
     <PackageReference Include="Avalonia.Desktop" Version="0.6.1" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CompetitionConfigurationModule\CompetitionConfigurationModule.csproj" />
     <ProjectReference Include="..\CompetitionDataModule\CompetitionDataModule.csproj" />
     <ProjectReference Include="..\DocumentGeneratorModule\DocumentGeneratorModule.csproj" />
+    <ProjectReference Include="..\SCASBasic\SCASBasic.csproj" />
+    <ProjectReference Include="..\SSUtils\SSUtils.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="ControlWindow.xaml.cs">
@@ -52,6 +55,12 @@
     </Compile>
     <Compile Update="views\ControlGameView.xaml.cs">
       <DependentUpon>ControlGameView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="views\DisplayGameViewWithRank.xaml.cs">
+      <DependentUpon>DisplayGameViewWithRank.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="views\DisplayGameViewWithRankLineItem.xaml.cs">
+      <DependentUpon>DisplayGameViewWithRankLineItem.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -85,14 +94,22 @@
     <EmbeddedResource Update="views\DisplayEventView.xaml">
       <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="views\DisplayGameView.xaml">
+    <EmbeddedResource Update="views\DisplayGameViewWithRank.xaml">
       <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="views\DisplayGameViewLineItem.xaml">
+    <EmbeddedResource Update="views\DisplayGameViewWithRankLineItem.xaml">
       <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="views\InitView.xaml">
       <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="views\DisplayGameView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </None>
+    <None Update="views\DisplayGameViewLineItem.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </None>
   </ItemGroup>
 </Project>

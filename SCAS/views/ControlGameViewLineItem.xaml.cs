@@ -134,6 +134,15 @@ namespace SCAS.views
                 private set;
             }
 
+            public String Message
+            {
+                get
+                {
+                    return Data.LineParticipant == null ? ""
+                        : Data.LineParticipant.Athletes.Count == 1 && Data.LineParticipant.Athletes[0].Rank != null ? Data.LineParticipant.Athletes[0].Rank.Name : "";
+                }
+            }
+
             public LineItem(Line data)
             {
                 Data = data;

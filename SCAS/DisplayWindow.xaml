@@ -71,6 +71,7 @@
 
     <StackPanel Grid.Column="2">
       <local:DisplayGameView Name="GameView" />
+      <local:DisplayGameViewWithRank Name="GameViewWithRank" />
       <local:DisplayEventView Name="EventView" />
     </StackPanel>
   </Grid>

@@ -18,6 +18,7 @@ namespace SCAS
         Competition _data;
         Session _session;
         DisplayGameView _gameView;
+        DisplayGameViewWithRank _gameViewWithRank;
         DisplayEventView _eventView;
         List<DisplayDataViewBase> _views;
 
@@ -40,6 +41,7 @@ namespace SCAS
             AvaloniaXamlLoader.Load(this);
 
             _gameView = this.FindControl<DisplayGameView>("GameView");
+            _gameViewWithRank = this.FindControl<DisplayGameViewWithRank>("GameViewWithRank");
             _eventView = this.FindControl<DisplayEventView>("EventView");
             _views = new List<DisplayDataViewBase>();
             _views.Add(_gameView);
@@ -80,13 +82,28 @@ namespace SCAS
                 view.Clear();
                 view.IsVisible = false;
             }
-            _gameView.IsVisible = true;
-            _gameView.Refresh(group, this.Height);
+            if (_data.Conf.CompetitionRankInfo.Enabled)
+            {
+                _gameViewWithRank.IsVisible = true;
+                _gameViewWithRank.Refresh(group, this.Height);
+            }
+            else
+            {
+                _gameView.IsVisible = true;
+                _gameView.Refresh(group, this.Height);
+            }
         }
 
         public void RefreshGroup()
         {
-            _gameView.Refresh();
+            if (_data.Conf.CompetitionRankInfo.Enabled)
+            {
+                _gameViewWithRank.Refresh();
+            }
+            else
+            {
+                _gameView.Refresh();
+            }
         }
 
         public void SetEnd()
