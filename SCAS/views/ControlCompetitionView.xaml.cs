@@ -32,11 +32,11 @@ namespace SCAS.views
                 {
                     if (exporter.Export(String.Format("{0}\\{1}总积分.xlsx", result, _data.Conf.Name)))
                     {
-                        await new dialogs.InformationDialog("导出成功").ShowDialog();
+                        await new dialogs.InformationDialog("导出成功").ShowDialog(Display);
                     }
                     else
                     {
-                        await new dialogs.InformationDialog("导出失败").ShowDialog();
+                        await new dialogs.InformationDialog("导出失败").ShowDialog(Display);
                     }
                 }
             };

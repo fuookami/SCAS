@@ -91,12 +91,12 @@ namespace SCAS.views
                 }
             };
 
-            this.FindControl<DropDown>("ControlScreen").SelectionChanged += delegate
+            this.FindControl<ComboBox>("ControlScreen").SelectionChanged += delegate
             {
                 this._counter = 0;
             };
 
-            this.FindControl<DropDown>("DisplayScreen").SelectionChanged += delegate
+            this.FindControl<ComboBox>("DisplayScreen").SelectionChanged += delegate
             {
                 this._counter = 0;
             };
@@ -108,13 +108,13 @@ namespace SCAS.views
                     return;
                 }
 
-                var controlScreen = (String)this.FindControl<DropDown>("ControlScreen").SelectedItem;
+                var controlScreen = (String)this.FindControl<ComboBox>("ControlScreen").SelectedItem;
                 if (controlScreen == null || controlScreen.Length == 0)
                 {
                     this.FindControl<TextBlock>("Message").Text = "没有选择主控屏";
                     return;
                 }
-                var displayScreen = (String)this.FindControl<DropDown>("DisplayScreen").SelectedItem;
+                var displayScreen = (String)this.FindControl<ComboBox>("DisplayScreen").SelectedItem;
                 if (displayScreen == null || displayScreen.Length == 0)
                 {
                     this.FindControl<TextBlock>("Message").Text = "没有选择显示屏";
@@ -144,7 +144,7 @@ namespace SCAS.views
             RefreshScreenList(screens);
 
             Screen mainScreen = screens.Find((ele) => ele.Primary);
-            w.Position = new Point((mainScreen.Bounds.Width - w.Bounds.Width) / 2, (mainScreen.Bounds.Height - w.Bounds.Height) / 2);
+            w.Position = new PixelPoint((int)(mainScreen.Bounds.Width - w.Bounds.Width) / 2, (int)(mainScreen.Bounds.Height - w.Bounds.Height) / 2);
         }
 
         private void RefreshScreenList(List<Screen> screens)

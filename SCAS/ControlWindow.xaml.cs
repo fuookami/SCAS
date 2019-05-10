@@ -146,11 +146,11 @@ namespace SCAS
                     {
                         if (normalizer.NormalizeToFile(result))
                         {
-                            await new dialogs.InformationDialog("保存成功").ShowDialog();
+                            await new dialogs.InformationDialog("保存成功").ShowDialog(this);
                         }
                         else
                         {
-                            await new dialogs.InformationDialog("保存失败").ShowDialog();
+                            await new dialogs.InformationDialog("保存失败").ShowDialog(this);
                         }
                     }
                 }
@@ -161,8 +161,8 @@ namespace SCAS
                 _display.SetEnd();
             };
 
-            var sessionSelect = this.FindControl<DropDown>("SessionSelect");
-            var checkSelect = this.FindControl<DropDown>("CheckSelect");
+            var sessionSelect = this.FindControl<ComboBox>("SessionSelect");
+            var checkSelect = this.FindControl<ComboBox>("CheckSelect");
             sessionSelect.SelectionChanged += delegate
             {
                 var item = (SessionItem)sessionSelect.SelectedItem;
@@ -231,7 +231,7 @@ namespace SCAS
             
             this.Width = width;
             this.Height = height;
-            Position = new Avalonia.Point(controlScreen.Bounds.X + (controlScreen.Bounds.Width - width) / 2, controlScreen.Bounds.Y + (controlScreen.Bounds.Height - height) / 2);
+            Position = new Avalonia.PixelPoint(controlScreen.Bounds.X + (int)(controlScreen.Bounds.Width - width) / 2, controlScreen.Bounds.Y + (int)(controlScreen.Bounds.Height - height) / 2);
 
             InitCompleted(data, _display);
 

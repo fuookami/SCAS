@@ -5,6 +5,8 @@
     <AssemblyVersion>0.0.4.011</AssemblyVersion>
     <FileVersion>0.0.4.011</FileVersion>
     <Version>0.04.011</Version>
+    <ApplicationIcon />
+    <StartupObject />
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netcoreapp2.0|AnyCPU'">
     <Prefer32Bit>true</Prefer32Bit>
@@ -36,8 +38,8 @@
     <None Remove="views\InitView.xaml" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Avalonia" Version="0.6.1" />
-    <PackageReference Include="Avalonia.Desktop" Version="0.6.1" />
+    <PackageReference Include="Avalonia" Version="0.8.0" />
+    <PackageReference Include="Avalonia.Desktop" Version="0.8.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CompetitionConfigurationModule\CompetitionConfigurationModule.csproj" />

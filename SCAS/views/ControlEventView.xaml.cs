@@ -36,11 +36,11 @@ namespace SCAS.views
                 {
                     if (exporter.ExportToFile(String.Format("{0}\\{1}决赛.html", result, Data.Conf.Name)))
                     {
-                        await new dialogs.InformationDialog("导出成功").ShowDialog();
+                        await new dialogs.InformationDialog("导出成功").ShowDialog(Display);
                     }
                     else
                     {
-                        await new dialogs.InformationDialog("导出失败").ShowDialog();
+                        await new dialogs.InformationDialog("导出失败").ShowDialog(Display);
                     }
                 }
             };
@@ -48,7 +48,7 @@ namespace SCAS.views
             this.FindControl<Button>("RefreshPoint").Click += delegate
             {
                 Data.RefreshPoints();
-                new dialogs.InformationDialog("计算成功").ShowDialog();
+                new dialogs.InformationDialog("计算成功").ShowDialog(Display);
             };
         }
     }

@@ -26,11 +26,11 @@
       </StackPanel>
       <StackPanel Margin="16,0,0,0">
         <TextBlock Text="场次" FontFamily="微软雅黑" FontSize="14" />
-        <DropDown Name="SessionSelect" Items="{Binding Sessions}" VerticalAlignment="Center" Width="525" Height="28" FontFamily="微软雅黑" FontSize="14" />
+        <ComboBox Name="SessionSelect" Items="{Binding Sessions}" VerticalAlignment="Center" Width="525" Height="28" FontFamily="微软雅黑" FontSize="14" />
       </StackPanel>
       <StackPanel Margin="16,0,0,0">
         <TextBlock Text="当前检录项目" FontFamily="微软雅黑" FontSize="14" />
-        <DropDown Name="CheckSelect" Items="{Binding Games}" VerticalAlignment="Center" Width="525" Height="28" FontFamily="微软雅黑" FontSize="14" />
+        <ComboBox Name="CheckSelect" Items="{Binding Games}" VerticalAlignment="Center" Width="525" Height="28" FontFamily="微软雅黑" FontSize="14" />
       </StackPanel>
     </StackPanel>
 
