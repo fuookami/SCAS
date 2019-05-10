@@ -80,9 +80,7 @@ namespace SCAS
                 foreach (var list in lists)
                 {
                     list.Item2.RemoveAll((ele) => !ele.Item1.Valid());
-
-                    var j = Conf.EventPointInfo.Points.Count;
-                    for (Int32 i = 0; i != j; ++i)
+                    for (Int32 i = 0, j = Math.Min(list.Item2.Count, Conf.EventPointInfo.Points.Count); i != j; ++i)
                     {
                         var thisOrder = list.Item2[i];
                         var lines = thisOrder.Item2;
