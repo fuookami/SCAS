@@ -29,7 +29,7 @@ namespace SCAS
             this.InitializeComponent();
             this.AttachDevTools();
 
-            this.Position = new Avalonia.PixelPoint(screen.Bounds.X, screen.Bounds.Y);
+            this.Position = new Avalonia.Point(screen.Bounds.X, screen.Bounds.Y);
             this.Bounds = new Rect(new Size(width, height));
 
             this.FindControl<TextBlock>("Title").Text = data.Conf.Name;

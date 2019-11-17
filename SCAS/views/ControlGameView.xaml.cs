@@ -47,7 +47,7 @@ namespace SCAS.views
 
         private Game _data;
         private Model _model;
-        private ComboBox _groupSelect;
+        private DropDown _groupSelect;
         private GroupItem _currGroupItem;
         private Group _currGroup;
         private StackPanel _lineItemsBox;
@@ -73,7 +73,7 @@ namespace SCAS.views
         {
             AvaloniaXamlLoader.Load(this);
 
-            _groupSelect = this.FindControl<ComboBox>("GroupSelect");
+            _groupSelect = this.FindControl<DropDown>("GroupSelect");
             _lineItemsBox = this.FindControl<StackPanel>("LineItemsBox");
             _groupSelect.SelectionChanged += delegate
             {

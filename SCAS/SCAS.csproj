@@ -38,8 +38,8 @@
     <None Remove="views\InitView.xaml" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Avalonia" Version="0.8.0" />
-    <PackageReference Include="Avalonia.Desktop" Version="0.8.0" />
+    <PackageReference Include="Avalonia" Version="0.6.1" />
+    <PackageReference Include="Avalonia.Desktop" Version="0.6.1" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CompetitionConfigurationModule\CompetitionConfigurationModule.csproj" />
