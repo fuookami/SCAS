@@ -521,14 +521,17 @@ namespace SCAS
                 ret.Category = category;
 
                 var rankNode = (XmlElement)node.GetElementsByTagName("Rank")[0];
-                String rankName = rankNode.InnerText;
-                var rank = _conf.CompetitionRankInfo.AthleteRanks.Find((ele) => ele.Name == rankName);
-                if (rank == null)
+                if (rankNode != null)
                 {
-                    rank = _conf.CompetitionRankInfo.DefaultRank;
+                    String rankName = rankNode.InnerText;
+                    var rank = _conf.CompetitionRankInfo.AthleteRanks.Find((ele) => ele.Name == rankName);
+                    if (rank == null)
+                    {
+                        rank = _conf.CompetitionRankInfo.DefaultRank;
+                    }
+                    ret.Rank = rank;
                 }
-                ret.Rank = rank;
-
+                
                 return true;
             }
         }
