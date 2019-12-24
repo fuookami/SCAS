@@ -1,7 +1,0 @@
-﻿<Window xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="InitWindow"
-        xmlns:local="clr-namespace:SCAS.views"
-        Width="720" Height="480">
-  <local:InitView/>
-</Window>

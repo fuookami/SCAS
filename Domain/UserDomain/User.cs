@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace SCAS.Domain.User
 {
-    class User
+    public class User
     {
         // 使用者
         public Person Person { get; internal set; }

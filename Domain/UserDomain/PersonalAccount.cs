@@ -2,7 +2,7 @@
 
 namespace SCAS.Domain.User
 {
-    class PersonalAccount 
+    public class PersonalAccount 
         : Account
     {
         // 所属个人

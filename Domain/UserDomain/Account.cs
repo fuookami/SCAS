@@ -4,7 +4,7 @@ using System.Linq;
 namespace SCAS.Domain.User
 {
     // 账号类型
-    enum AccountType
+    public enum AccountType
     {
         Personal,
         Collective, 
@@ -12,7 +12,7 @@ namespace SCAS.Domain.User
     }
 
     // 账号权限
-    enum AccountAuthority
+    public enum AccountAuthority
     {
         Visitor,
         Applicant,
@@ -25,7 +25,7 @@ namespace SCAS.Domain.User
     }
 
     // 账号
-    abstract class Account
+    public abstract class Account
     {
         // 账号
         public string Id { get; internal set; }

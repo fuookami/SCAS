@@ -1,6 +1,6 @@
 ﻿namespace SCAS.Domain.User
 {
-    class PublicAccount
+    public class PublicAccount
         : Account
     {
     }

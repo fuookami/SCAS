@@ -1,29 +1,53 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace SCAS.Domain.User
 {
-    enum UsageType
+    public enum UsageType
     {
-        
+        Login, 
+        Logout
     }
 
-    class UsageRecord
+    public partial class UsageRecord
     {
-        UsageType Type;
-        string Message;
+        internal UsageRecord(User op, UsageType type, string message)
+        {
+            Operator = op;
+            Type = type;
+            Message = message;
+        }
+
+        // 操作人
+        public User Operator { get; }
+        // 使用记录类型
+        public UsageType Type { get; }
+        // 使用记录信息
+        public string Message { get; }
     }
 
     class UsageRecordList
     {
-        User AccountUser;
+        // 对应账号
+        public Account Account { get; internal set; }
 
-        Account UsageAccount;
+        // 记录列表
+        internal List<UsageRecord> RecordsList { get; set; }
+        public IReadOnlyList<UsageRecord> Records { get { return RecordsList; } }
 
-        DateTime LoginTime;
-        DateTime LogoutTime;
+        public IReadOnlyList<UsageRecord> RecordsOf(User op)
+        {
+            return RecordsList.Where(r => r.Operator == op).ToList();
+        }
 
-        List<UsageRecord> RecordsList;
-        IReadOnlyList<UsageRecord> Records;
+        public IReadOnlyList<UsageRecord> RecordsOf(UsageType type)
+        {
+            return RecordsList.Where(r => r.Type == type).ToList();
+        }
+
+        public IReadOnlyList<UsageRecord> RecordsOf(string message)
+        {
+            return RecordsList.Where(r => r.Message.Contains(message)).ToList();
+        }
     }
 }
