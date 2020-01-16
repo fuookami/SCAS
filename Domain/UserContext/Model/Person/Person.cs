@@ -10,7 +10,7 @@ namespace SCAS.Domain.UserContext
     }
 
     // 个人
-    public partial class Person
+    public class Person
         : IDomainAggregate<PersonValue>
     {
         // 系统识别码，由系统生成

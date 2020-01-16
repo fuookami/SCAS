@@ -14,7 +14,7 @@ namespace SCAS.Domain.UserContext
     }
 
     // 个人注册表
-    public partial class PersonRegister
+    public class PersonRegister
         : IDomainAggregate<PersonRegisterValue>
     {
         // 系统识别码，由系统生成
@@ -22,12 +22,12 @@ namespace SCAS.Domain.UserContext
         // 在当前组织的应用识别码，由系统使用者给定规则
         public string SId { get; }
         // 个人系统识别码
-        public string PersonId { get; }
+        internal string PersonId { get; }
 
         // 注册的组织
         public Organization RegisteredOrg { get; }
         // 注册信息
-        public PersonRegisterInfo Info { get; internal set; }
+        public PersonRegisterInfo Info { get; }
 
         public PersonRegisterValue ToValue()
         {
@@ -45,16 +45,14 @@ namespace SCAS.Domain.UserContext
         : IDomainValue
     {
         // 注册列表
-        private Dictionary<Organization, PersonRegister> orgRegistersList;
+        private Dictionary<Organization, PersonRegister> registers;
 
         // 已注册的组织
-        public IReadOnlyList<Organization> RegisteredOrgs { get { return orgRegistersList.Keys.ToList(); } }
-        // 已注册的域
-        public IReadOnlyList<Region> RegisteredRegions { get { return RegisteredOrgs.SelectMany(org => org.RegisteredRegions).Distinct().ToList(); } }
+        public IReadOnlyList<Organization> RegisteredOrgs { get { return registers.Keys.ToList(); } }
 
-        internal PersonRegisters(IReadOnlyList<PersonRegister> registers)
+        internal PersonRegisters(IReadOnlyList<PersonRegister> registersList)
         {
-            orgRegistersList = registers.ToDictionary(reg => reg.RegisteredOrg);
+            registers = registersList.ToDictionary(reg => reg.RegisteredOrg);
         }
     }
 }

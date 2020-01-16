@@ -18,13 +18,13 @@ namespace SCAS.Domain.UserContext
     }
 
     // 个人信息
-    public partial class PersonInfo
+    public class PersonInfo
         : IDomainEntity<PersonInfoValue>
     {
         // 系统识别码，由系统生成
         public string Id { get; }
         // 个人系统识别码
-        public string PersonId { get; }
+        internal string PersonId { get; }
 
         // 姓名
         public string Name { get; internal set; }

@@ -12,13 +12,13 @@ namespace SCAS.Domain.UserContext
         public DateTime RegisteredTime { get; internal set; }
     }
 
-    public partial class PersonRegisterInfo
+    public class PersonRegisterInfo
         : IDomainEntity<PersonRegisterInfoValue>
     {
         // 系统识别码，由系统生成
         public string Id { get; }
         // 注册表系统识别码
-        public string RegisterId { get; }
+        internal string RegisterId { get; }
 
         // 注册时间
         public DateTime RegisteredTime { get; }
