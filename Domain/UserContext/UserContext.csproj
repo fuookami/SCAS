@@ -8,8 +8,4 @@
     <ProjectReference Include="..\UniversalComponent\UniversalComponent.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Model\Base\" />
-  </ItemGroup>
-
 </Project>

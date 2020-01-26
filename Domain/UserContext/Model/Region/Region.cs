@@ -5,6 +5,11 @@ using System.Linq;
 
 namespace SCAS.Domain.UserContext
 {
+    public struct RegionValue
+    {
+        public string Id { get; internal set; }
+    };
+
     // 域
     public partial class Region
     {

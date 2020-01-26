@@ -2,6 +2,8 @@
 
 namespace SCAS.Domain.UserContext
 {
+    public 
+
     public class User
     {
         // 使用者

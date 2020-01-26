@@ -2,26 +2,18 @@
 
 namespace SCAS.Utils
 {
-    public interface IDomainEntity<out T>
+    public abstract class DomainEntity<T, U>
         : IComparable, IPersistentType<T> 
         where T : IPersistentValue
-    {
-    }
-
-    public abstract class DomainEntity<T, U, P>
-        : IDomainEntity<T> 
-        where T : IPersistentValue
         where U : DomainEntityID, new()
-        where P : DomainEntityID
     {
-        public U ID { get; }
+        protected U id;
 
-        public P PID { get; }
+        public string ID { get { return id.ID; } }
 
-        public DomainEntity(P parentID, U id = null)
+        public DomainEntity(U entityID = null)
         {
-            PID = parentID ?? throw new Exception("这不是一个可以为聚合根的类型。");
-            ID = id ?? new U();
+            id = entityID ?? new U();
         }
 
         public int CompareTo(object obj)

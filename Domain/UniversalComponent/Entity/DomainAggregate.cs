@@ -1,38 +1,28 @@
-﻿namespace SCAS.Utils
+﻿using System;
+
+namespace SCAS.Utils
 {
-    public abstract class DomainEntity<T, U>
-        : IDomainEntity<T> 
+    public abstract class DomainAggregateRoot<T, U>
+        : DomainEntity<T, U>
         where T : IPersistentValue
         where U : DomainEntityID, new()
     {
-        private U id;
+        public DomainAggregateRoot(U entityID = null)
+            : base(entityID) {}
+    }
 
-        public string ID { get { return id.ID; } }
+    public abstract class DomainAggregateChild<T, U, P>
+        : DomainEntity<T, U>
+        where T : IPersistentValue
+        where U : DomainEntityID, new()
+        where P : DomainEntityID
+    {
+        protected P pid;
 
-        public DomainEntity(U entityID = null)
+        public DomainAggregateChild(P parentEntityID, U entityID = null)
+            : base(entityID)
         {
-            id = entityID ?? new U();
+            pid = parentEntityID ?? throw new Exception("非聚合根。");
         }
-
-        public int CompareTo(object obj)
-        {
-            if (obj is DomainEntityID rhs)
-            {
-                return ID.CompareTo(rhs);
-            }
-            return 1;
-        }
-
-        public override int GetHashCode()
-        {
-            return ID.GetHashCode();
-        }
-
-        public override bool Equals(object obj)
-        {
-            return ID.Equals(obj);
-        }
-
-        public abstract T ToValue();
     }
 }

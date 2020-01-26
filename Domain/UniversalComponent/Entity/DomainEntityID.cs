@@ -21,7 +21,7 @@ namespace SCAS.Utils
         {
             if (obj is DomainEntityID rhs)
             {
-                return String.Compare(ID, rhs.ID);
+                return string.Compare(ID, rhs.ID);
             }
             return 1;
         }
