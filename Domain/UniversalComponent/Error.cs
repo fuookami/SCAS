@@ -30,7 +30,7 @@ namespace SCAS.Utils
 
         public override string ToString()
         {
-
+            return string.Format("Error:{0}, {1}, {2}", Code.ToString(), Time.ToString(), Message);
         }
     }
 

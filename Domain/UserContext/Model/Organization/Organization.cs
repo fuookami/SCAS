@@ -13,7 +13,7 @@ namespace SCAS.Domain.UserContext
         : DomainAggregate<OrganizationValue, OrganizationID>
     {
         // 在当前域下的识别码，由系统使用者给定
-        public string Sid { get; }
+        public string SID { get; }
         
         // 组织信息
         public OrganizationInfo Info { get; }

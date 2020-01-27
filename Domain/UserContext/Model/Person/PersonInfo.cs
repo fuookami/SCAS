@@ -46,20 +46,20 @@ namespace SCAS.Domain.UserContext
         internal List<string> EmailAddressesList { get; }
         public IReadOnlyList<string> EmailAddresses { get { return EmailAddressesList; } }
 
-        public PersonInfo(PersonID personID)
-            : base(personID)
+        internal PersonInfo(PersonID pid)
+            : base(pid)
         {
             TitlesList = new List<string>();
             TelephoneNumbersList = new List<string>();
             EmailAddressesList = new List<string>();
         }
 
-        public PersonInfo(PersonID personID, PersonInfoID personInfoID)
-            : base(personID, personInfoID)
+        internal PersonInfo(PersonID pid, PersonInfoID id, List<string> titles, List<string> telephoneNumbers, List<string> emailAddresses)
+            : base(pid, id)
         {
-            TitlesList = new List<string>();
-            TelephoneNumbersList = new List<string>();
-            EmailAddressesList = new List<string>();
+            TitlesList = titles;
+            TelephoneNumbersList = telephoneNumbers;
+            EmailAddressesList = emailAddresses;
         }
 
         public override PersonInfoValue ToValue()
