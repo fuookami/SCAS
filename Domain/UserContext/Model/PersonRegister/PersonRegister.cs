@@ -36,6 +36,8 @@ namespace SCAS.Domain.UserContext
 
         // 注册信息
         public PersonRegisterInfo Info { get; }
+        // 审批表单
+        public PersonRegisterForm Form { get; }
 
         internal PersonRegister(string sid, Person person, Organization org, PersonRegisterForm form)
         {
@@ -43,6 +45,7 @@ namespace SCAS.Domain.UserContext
             Person = person;
             Org = org;
             Info = new PersonRegisterInfo(id, form);
+
         }
 
         internal PersonRegister(PersonRegisterID id, string sid, Person person, Organization org, PersonRegisterInfo info)

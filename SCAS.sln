@@ -7,19 +7,21 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{C0F38D
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UniversalComponent", "Domain\UniversalComponent\UniversalComponent.csproj", "{66496B4C-5D52-44F3-9E1F-4B7A1D40068B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserContext", "Domain\UserContext\UserContext.csproj", "{08E4493B-3F91-42E0-BB43-0775957AFFB6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UserContext", "Domain\UserContext\UserContext.csproj", "{08E4493B-3F91-42E0-BB43-0775957AFFB6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SportContext", "Domain\SportContext\SportContext.csproj", "{00CAF49B-B3AA-4281-9767-62C084E4503D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SportContext", "Domain\SportContext\SportContext.csproj", "{00CAF49B-B3AA-4281-9767-62C084E4503D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeriesContext", "Domain\SeriesContext\SeriesContext.csproj", "{752852D8-D2F8-41E5-8627-DCA2078E64BD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SeriesContext", "Domain\SeriesContext\SeriesContext.csproj", "{752852D8-D2F8-41E5-8627-DCA2078E64BD}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CompetitionContext", "Domain\CompetitionContext\CompetitionContext.csproj", "{4F676941-485F-42BC-9ADF-D362B21B5DB1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApplicationContext", "Domain\ApplicationContext\ApplicationContext.csproj", "{500C17E9-138E-4891-8CAC-119BDCEF5B82}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApplicationContext", "Domain\ApplicationContext\ApplicationContext.csproj", "{500C17E9-138E-4891-8CAC-119BDCEF5B82}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParticipationContext", "Domain\ParticipationContext\ParticipationContext.csproj", "{8565425C-4323-4EA1-B625-2EB43FC1A485}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ParticipationContext", "Domain\ParticipationContext\ParticipationContext.csproj", "{8565425C-4323-4EA1-B625-2EB43FC1A485}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GradeContext", "Domain\GradeContext\GradeContext.csproj", "{757D339C-9B8C-4266-9A71-96ECFEB11301}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GradeContext", "Domain\GradeContext\GradeContext.csproj", "{757D339C-9B8C-4266-9A71-96ECFEB11301}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AccountContext", "Domain\AccountContext\AccountContext.csproj", "{E361451D-DA2D-443B-B439-9A02131A7805}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -161,6 +163,22 @@ Global
 		{757D339C-9B8C-4266-9A71-96ECFEB11301}.Release|x64.Build.0 = Release|Any CPU
 		{757D339C-9B8C-4266-9A71-96ECFEB11301}.Release|x86.ActiveCfg = Release|Any CPU
 		{757D339C-9B8C-4266-9A71-96ECFEB11301}.Release|x86.Build.0 = Release|Any CPU
+		{E361451D-DA2D-443B-B439-9A02131A7805}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E361451D-DA2D-443B-B439-9A02131A7805}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E361451D-DA2D-443B-B439-9A02131A7805}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{E361451D-DA2D-443B-B439-9A02131A7805}.Debug|ARM.Build.0 = Debug|Any CPU
+		{E361451D-DA2D-443B-B439-9A02131A7805}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{E361451D-DA2D-443B-B439-9A02131A7805}.Debug|x64.Build.0 = Debug|Any CPU
+		{E361451D-DA2D-443B-B439-9A02131A7805}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{E361451D-DA2D-443B-B439-9A02131A7805}.Debug|x86.Build.0 = Debug|Any CPU
+		{E361451D-DA2D-443B-B439-9A02131A7805}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E361451D-DA2D-443B-B439-9A02131A7805}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E361451D-DA2D-443B-B439-9A02131A7805}.Release|ARM.ActiveCfg = Release|Any CPU
+		{E361451D-DA2D-443B-B439-9A02131A7805}.Release|ARM.Build.0 = Release|Any CPU
+		{E361451D-DA2D-443B-B439-9A02131A7805}.Release|x64.ActiveCfg = Release|Any CPU
+		{E361451D-DA2D-443B-B439-9A02131A7805}.Release|x64.Build.0 = Release|Any CPU
+		{E361451D-DA2D-443B-B439-9A02131A7805}.Release|x86.ActiveCfg = Release|Any CPU
+		{E361451D-DA2D-443B-B439-9A02131A7805}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -174,6 +192,7 @@ Global
 		{500C17E9-138E-4891-8CAC-119BDCEF5B82} = {C0F38DFE-38EA-4F1C-A5EA-80FD985F3A96}
 		{8565425C-4323-4EA1-B625-2EB43FC1A485} = {C0F38DFE-38EA-4F1C-A5EA-80FD985F3A96}
 		{757D339C-9B8C-4266-9A71-96ECFEB11301} = {C0F38DFE-38EA-4F1C-A5EA-80FD985F3A96}
+		{E361451D-DA2D-443B-B439-9A02131A7805} = {C0F38DFE-38EA-4F1C-A5EA-80FD985F3A96}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C60E0834-406B-4DFA-8EA8-285436B0D90B}
