@@ -1,57 +1,55 @@
 ﻿using SCAS.Utils;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace SCAS.Domain.UserContext
 {
-    public struct RegionValue
+    public class RegionID
+        : DomainEntityID
     {
-        public string Id { get; internal set; }
-    };
-
-    // 域
-    public partial class Region
-    {
-        // 系统识别码，由系统生成
-        public string Id { get; }
-        // 域名
-        public string Name { get; internal set; }
-        // 描述
-        public string Description { get; internal set; }
-
-        internal List<Organization> OrganizationsList { get; }
-        public IReadOnlyList<Organization> Organizations { get { return OrganizationsList; } }
-
-        internal Region(string id = null)
+        public override string ToString()
         {
-            Id = id ?? Guid.NewGuid().ToString("N");
-            OrganizationsList = new List<Organization>();
+            return string.Format("Region-{0}", ID);
         }
-    };
+    }
 
     public struct RegionValue
         : IPersistentValue
     {
-        public string Id { get; internal set; }
-        public string Name { get; internal set; }
-        public string Description { get; internal set; }
+        public string ID { get; internal set; }
+        public string ParentRegionID { get; internal set; }
+    };
 
-        public IReadOnlyList<string> Organizations { get; internal set; }
-    }
-
-    public partial class Region
-        : IPersistentType<RegionValue>
+    // 域
+    public abstract class Region
+        : DomainAggregateRoot<RegionValue, RegionID>
     {
-        public RegionValue ToValue()
+        // 父域
+        public Region ParentRegion { get; }
+
+        // 域信息
+        public RegionInfo Info { get; }
+
+        public bool BeRoot { get { return ParentRegion == null; } }
+
+        internal Region(string name, Region parentRegion = null)
+        {
+            ParentRegion = parentRegion;
+            Info = new RegionInfo(this.id, name);
+        }
+
+        internal Region(RegionID id, RegionInfo info, Region parentRegion = null)
+            : base(id)
+        {
+            ParentRegion = parentRegion;
+            Info = info;
+        }
+
+        public override RegionValue ToValue()
         {
             return new RegionValue
             {
-                Id = this.Id,
-                Name = this.Name,
-                Description = this.Description,
-                Organizations = this.Organizations.Select(region => region.Id).ToList()
+                ID = this.ID,
+                ParentRegionID = this.ParentRegion?.ID
             };
         }
-    }
+    };
 }

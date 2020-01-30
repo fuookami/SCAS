@@ -23,14 +23,15 @@ namespace SCAS.Domain.UserContext
         : DomainAggregateRoot<PersonValue, PersonID>
     {
         // 应用识别码，由系统使用者给定规则
-        public string SID { get; internal set; }
+        public string SID { get; }
 
         // 个人信息
-        public PersonInfo Info { get; internal set; }
+        public PersonInfo Info { get; }
 
-        internal Person()
+        internal Person(string sid, string name)
         {
-            Info = new PersonInfo(id);
+            SID = sid;
+            Info = new PersonInfo(id, name);
         }
 
         internal Person(PersonID id, string sid, PersonInfo info)

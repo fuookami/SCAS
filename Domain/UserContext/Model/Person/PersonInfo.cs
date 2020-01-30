@@ -34,7 +34,7 @@ namespace SCAS.Domain.UserContext
         internal string PersonID { get { return pid.ID; } }
 
         // 姓名
-        public string Name { get; internal set; }
+        public string Name { get; }
 
         // 称号、头衔
         internal List<string> TitlesList { get; }
@@ -46,17 +46,19 @@ namespace SCAS.Domain.UserContext
         internal List<string> EmailAddressesList { get; }
         public IReadOnlyList<string> EmailAddresses { get { return EmailAddressesList; } }
 
-        internal PersonInfo(PersonID pid)
+        internal PersonInfo(PersonID pid, string name)
             : base(pid)
         {
+            Name = name;
             TitlesList = new List<string>();
             TelephoneNumbersList = new List<string>();
             EmailAddressesList = new List<string>();
         }
 
-        internal PersonInfo(PersonID pid, PersonInfoID id, List<string> titles, List<string> telephoneNumbers, List<string> emailAddresses)
+        internal PersonInfo(PersonID pid, PersonInfoID id, string name, List<string> titles, List<string> telephoneNumbers, List<string> emailAddresses)
             : base(pid, id)
         {
+            Name = name;
             TitlesList = titles;
             TelephoneNumbersList = telephoneNumbers;
             EmailAddressesList = emailAddresses;

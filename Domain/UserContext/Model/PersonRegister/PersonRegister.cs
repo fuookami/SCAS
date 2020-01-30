@@ -19,6 +19,7 @@ namespace SCAS.Domain.UserContext
         public string ID { get; internal set; }
         public string SID { get; internal set; }
         public string PersonID { get; internal set; }
+        public string RegionID { get; internal set; }
         public string OrgID { get; internal set; }
     }
 
@@ -31,29 +32,36 @@ namespace SCAS.Domain.UserContext
 
         // 个人
         public Person Person { get; }
+        // 注册的域
+        public Region RegisteredRegion { get; }
         // 注册的组织
-        public Organization Org { get; }
+        public Organization BelongingOrganization { get; }
 
         // 注册信息
         public PersonRegisterInfo Info { get; }
         // 审批表单
         public PersonRegisterForm Form { get; }
 
-        internal PersonRegister(string sid, Person person, Organization org, PersonRegisterForm form)
+        // 是否有所属的组织
+        public bool BelongedAnyOrganization { get { return BelongingOrganization != null; } }
+
+        internal PersonRegister(string sid, Person person, Region region, Organization org, PersonRegisterForm form)
         {
             SID = sid;
             Person = person;
-            Org = org;
+            RegisteredRegion = region;
+            BelongingOrganization = org;
             Info = new PersonRegisterInfo(id, form);
 
         }
 
-        internal PersonRegister(PersonRegisterID id, string sid, Person person, Organization org, PersonRegisterInfo info)
+        internal PersonRegister(PersonRegisterID id, string sid, Person person, Region region, Organization org, PersonRegisterInfo info)
             : base(id)
         {
             SID = sid;
-            Person = person;
-            Org = org;
+            Person = person; 
+            RegisteredRegion = region;
+            BelongingOrganization = org;
             Info = info;
         }
 
@@ -64,7 +72,8 @@ namespace SCAS.Domain.UserContext
                 ID = this.ID,
                 SID = this.SID,
                 PersonID = this.Person.ID,
-                OrgID = this.Org.ID
+                RegionID = this.RegisteredRegion.ID, 
+                OrgID = this.BelongingOrganization?.ID
             };
         }
     }
@@ -73,14 +82,29 @@ namespace SCAS.Domain.UserContext
         : IDomainValue
     {
         // 注册列表
-        private Dictionary<Organization, PersonRegister> registers;
+        private Dictionary<Region, PersonRegister> registers;
 
-        // 已注册的组织
-        public IReadOnlyList<Organization> RegisteredOrgs { get { return registers.Keys.ToList(); } }
+        // 已注册的域
+        public IReadOnlyList<Region> RegisteredRegions { get { return registers.Keys.ToList(); } }
+
+        public bool RegisteredIn(Region region)
+        {
+            return RegisteredRegions.Contains(region);
+        }
+
+        public bool? BePersonalIn(Region region)
+        {
+            return !registers[region]?.BelongedAnyOrganization;
+        }
+
+        public Organization BelongedOrganizationIn(Region region)
+        {
+            return registers?[region].BelongingOrganization;
+        }
 
         internal PersonRegisters(IReadOnlyList<PersonRegister> registersList)
         {
-            registers = registersList.ToDictionary(reg => reg.Org);
+            registers = registersList.ToDictionary(reg => reg.RegisteredRegion);
         }
     }
 }
