@@ -1,10 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using SCAS.Utils;
 
-namespace UserContext.Model.OrganizationRegisterForm
+namespace SCAS.Domain.UserContext
 {
-    class OrganizationRegisterForm
+    public class OrganizationRegisterFormID
+        : DomainEntityID
+    {
+
+    }
+
+    public struct OrganizationRegisterFormValue
+        : IPersistentValue
+    {
+
+    }
+
+    public class OrganizationRegisterForm
+        : DomainAggregateRoot<OrganizationRegisterFormValue, OrganizationRegisterFormID>
     {
     }
 }

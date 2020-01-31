@@ -5,39 +5,64 @@ using System.Linq;
 
 namespace SCAS.Domain.UserContext
 {
+    public class OrganizationRegisterID
+        : DomainEntityID
+    {
+        public override string ToString()
+        {
+            return string.Format("OrganizationRegister-{0}", ID);
+        }
+    }
+
     public struct OrganizationRegisterValue
         : IPersistentValue
     {
-        public string Id { get; internal set; }
-        public string SId { get; internal set; }
-        public string OrgId { get; internal set; }
-        public string RegionId { get; internal set; }
+        public string ID { get; internal set; }
+        public string SID { get; internal set; }
+        public string OrgID { get; internal set; }
+        public string RegionID { get; internal set; }
     }
 
     // 组织注册表
     public class OrganizationRegister
-        : IDomainAggregate<OrganizationRegisterValue>
+        : DomainAggregateRoot<OrganizationRegisterValue, OrganizationRegisterID>
     {
-        // 系统识别码，由系统生成
-        public string Id { get; }
         // 在当前域的应用识别码，由系统使用者给定规则
-        public string SId { get; }
-        // 组织系统识别码
-        internal string OrgId { get; }
+        public string SID { get; }
 
+        // 组织
+        public Organization Org { get; }
         // 注册的域
         public Region RegisteredRegion { get; }
+
         // 注册信息
         public OrganizationRegisterInfo Info { get; }
 
-        public OrganizationRegisterValue ToValue()
+        internal OrganizationRegister(string sid, Organization org, Region region, uint prefixCode, PersonRegisterForm form)
+        {
+            SID = sid;
+            Org = org;
+            RegisteredRegion = region;
+            Info = new OrganizationRegisterInfo(this.id, prefixCode, form);
+        }
+
+        internal OrganizationRegister(OrganizationRegisterID id, string sid, Organization org, Region region, OrganizationRegisterInfo info)
+            : base(id)
+        {
+            SID = sid;
+            Org = org;
+            RegisteredRegion = region;
+            Info = info;
+        }
+
+        public override OrganizationRegisterValue ToValue()
         {
             return new OrganizationRegisterValue
             {
-                Id = this.Id, 
-                SId = this.SId, 
-                OrgId = this.OrgId, 
-                RegionId = this.RegisteredRegion.Id
+                ID = this.ID, 
+                SID = this.SID, 
+                OrgID = this.Org.ID, 
+                RegionID = this.RegisteredRegion.ID
             };
         }
 

@@ -39,8 +39,6 @@ namespace SCAS.Domain.UserContext
 
         // 注册信息
         public PersonRegisterInfo Info { get; }
-        // 审批表单
-        public PersonRegisterForm Form { get; }
 
         // 是否有所属的组织
         public bool BelongedAnyOrganization { get { return BelongingOrganization != null; } }
@@ -52,7 +50,6 @@ namespace SCAS.Domain.UserContext
             RegisteredRegion = region;
             BelongingOrganization = org;
             Info = new PersonRegisterInfo(id, form);
-
         }
 
         internal PersonRegister(PersonRegisterID id, string sid, Person person, Region region, Organization org, PersonRegisterInfo info)
