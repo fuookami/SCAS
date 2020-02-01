@@ -17,6 +17,7 @@ namespace SCAS.Domain.UserContext
     {
     }
 
+    // 组织注册表审批表单审批结果
     public class OrganizationRegisterFormExamination
          : RegisterFormExaminationBase<OrganizationRegisterFormExaminationValue, OrganizationRegisterFormExaminationID, OrganizationRegisterFormID>
     {
@@ -32,9 +33,7 @@ namespace SCAS.Domain.UserContext
 
         public override OrganizationRegisterFormExaminationValue ToValue()
         {
-            var value = new OrganizationRegisterFormExaminationValue();
-            base.ToValue(value);
-            return value;
+            return base.ToValue(new OrganizationRegisterFormExaminationValue { });
         }
     }
 }

@@ -15,7 +15,6 @@ namespace SCAS.Domain.UserContext
     public class PersonRegisterFormInfoValue
         : RegisterFormInfoValueBase
     {
-
     }
 
     // 个人注册表审批表单信息

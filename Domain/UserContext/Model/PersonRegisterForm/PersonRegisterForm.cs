@@ -17,7 +17,7 @@ namespace SCAS.Domain.UserContext
     {
         [NotNull] public string PersonID { get; internal set; }
         [NotNull] public string RegionID { get; internal set; }
-        [NotNull] public string OrgID { get; internal set; }
+        public string OrgID { get; internal set; }
     }
 
     // 个人注册表审批表单
@@ -29,7 +29,7 @@ namespace SCAS.Domain.UserContext
         // 目标域
         [DisallowNull] public Region RegisteredRegion { get; }
         // 目标组织
-        [DisallowNull] public Organization BelongingOrganization { get; }
+        public Organization BelongingOrganization { get; }
 
         internal PersonRegisterForm(string sid, Person person, Region region, Person initiator)
             : base(sid)
@@ -53,16 +53,6 @@ namespace SCAS.Domain.UserContext
             BelongingOrganization = org;
         }
 
-        public override PersonRegisterFormValue ToValue()
-        {
-            return base.ToValue(new PersonRegisterFormValue
-            {
-                PersonID = this.Person.ID,
-                RegionID = this.RegisteredRegion.ID,
-                OrgID = this.BelongingOrganization?.ID
-            });
-        }
-
         public override PersonRegister Approve(string sid, Person examiner, string annotation)
         {
             Examination = new PersonRegisterFormExamination(id, examiner, true, annotation);
@@ -72,6 +62,16 @@ namespace SCAS.Domain.UserContext
         public override void Unapprove(Person examiner, string annotation)
         {
             Examination = new PersonRegisterFormExamination(id, examiner, false, annotation);
+        }
+
+        public override PersonRegisterFormValue ToValue()
+        {
+            return base.ToValue(new PersonRegisterFormValue
+            {
+                PersonID = this.Person.ID,
+                RegionID = this.RegisteredRegion.ID,
+                OrgID = this.BelongingOrganization?.ID
+            });
         }
     }
 }
