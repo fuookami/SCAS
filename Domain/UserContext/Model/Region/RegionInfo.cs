@@ -1,4 +1,5 @@
 ﻿using SCAS.Utils;
+using System.Diagnostics.CodeAnalysis;
 
 namespace SCAS.Domain.UserContext
 {
@@ -11,23 +12,26 @@ namespace SCAS.Domain.UserContext
         }
     }
 
-    public struct RegionInfoValue
-        : IPersistentValue
+    public class RegionInfoValue
+        : DomainEntityValueBase
     {
-        public string ID { get; internal set; }
-        public string RegionID { get; internal set; }
+        [NotNull] public string RegionID { get; internal set; }
 
-        public string Name { get; internal set; }
-        public string Description { get; internal set; }
+        [NotNull] public string Name { get; internal set; }
+        [NotNull] public string Description { get; internal set; }
     }
 
+    // 域信息
     public class RegionInfo
         : DomainAggregateChild<RegionInfoValue, RegionInfoID, RegionID>
     {
-        public string RegionID { get { return pid.ID; } }
+        // 域系统识别码
+        [NotNull] public string RegionID { get { return pid.ID; } }
 
-        public string Name { get; internal set; }
-        public string Description { get; internal set; }
+        // 域名
+        [DisallowNull] public string Name { get; internal set; }
+        // 域描述
+        [DisallowNull] public string Description { get; internal set; }
 
         internal RegionInfo(RegionID pid, string name)
             : base(pid)
@@ -44,13 +48,12 @@ namespace SCAS.Domain.UserContext
 
         public override RegionInfoValue ToValue()
         {
-            return new RegionInfoValue
+            return base.ToValue(new RegionInfoValue
             {
-                ID = this.ID,
                 RegionID = this.RegionID,
                 Name = this.Name,
                 Description = this.Description
-            };
+            });
         }
     }
 }

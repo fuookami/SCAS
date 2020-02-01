@@ -1,28 +1,29 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace SCAS.Utils
 {
     public abstract class DomainAggregateRoot<T, U>
         : DomainEntity<T, U>
-        where T : IPersistentValue
+        where T : DomainEntityValueBase
         where U : DomainEntityID, new()
     {
-        public DomainAggregateRoot(U entityID = null)
+        protected DomainAggregateRoot(U entityID = null)
             : base(entityID) {}
     }
 
     public abstract class DomainAggregateChild<T, U, P>
         : DomainEntity<T, U>
-        where T : IPersistentValue
+        where T : DomainEntityValueBase
         where U : DomainEntityID, new()
         where P : DomainEntityID
     {
-        protected P pid;
+        [DisallowNull] protected P pid;
 
-        public DomainAggregateChild(P parentEntityID, U entityID = null)
+        protected DomainAggregateChild(P parentEntityID, U entityID = null)
             : base(entityID)
         {
-            pid = parentEntityID ?? throw new Exception("非聚合根。");
+            pid = parentEntityID;
         }
     }
 }

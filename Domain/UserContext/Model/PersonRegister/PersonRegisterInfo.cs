@@ -1,5 +1,6 @@
 ﻿using SCAS.Utils;
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace SCAS.Domain.UserContext
 {
@@ -12,50 +13,42 @@ namespace SCAS.Domain.UserContext
         }
     }
 
-    public struct PersonRegisterInfoValue
-        : IPersistentValue
+    public class PersonRegisterInfoValue
+        : DomainEntityValueBase
     {
-        public string ID { get; internal set; }
-        public string RegisterID { get; internal set; }
+        [NotNull] public string RegisterID { get; internal set; }
 
         public DateTime RegisteredTime { get; internal set; }
-        public string FormID { get; internal set; }
     }
 
     public class PersonRegisterInfo
         : DomainAggregateChild<PersonRegisterInfoValue, PersonRegisterInfoID, PersonRegisterID>
     {
         // 注册表系统识别码
-        internal string RegisterID { get { return pid.ID; } }
+        [NotNull] public string RegisterID { get { return pid.ID; } }
 
         // 注册时间
         public DateTime RegisteredTime { get; }
-        // 审批表单
-        public PersonRegisterForm Form { get; }
 
-        internal PersonRegisterInfo(PersonRegisterID pid, PersonRegisterForm form)
+        internal PersonRegisterInfo(PersonRegisterID pid)
             : base(pid)
         {
             RegisteredTime = DateTime.Now;
-            Form = form;
         }
 
-        internal PersonRegisterInfo(PersonRegisterID pid, PersonRegisterInfoID id, DateTime registeredTime, PersonRegisterForm form)
+        internal PersonRegisterInfo(PersonRegisterID pid, PersonRegisterInfoID id, DateTime registeredTime)
             : base(pid, id)
         {
             RegisteredTime = registeredTime;
-            Form = form;
         }
 
         public override PersonRegisterInfoValue ToValue()
         {
-            return new PersonRegisterInfoValue
+            return base.ToValue(new PersonRegisterInfoValue
             {
-                ID = this.ID,
                 RegisterID = this.RegisterID,
-                RegisteredTime = this.RegisteredTime, 
-                FormID = this.Form.ID
-            };
+                RegisteredTime = this.RegisteredTime
+            });
         }
     }
 }

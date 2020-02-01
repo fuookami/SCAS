@@ -1,5 +1,6 @@
 ﻿using SCAS.Utils;
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace SCAS.Domain.UserContext
 {
@@ -12,56 +13,48 @@ namespace SCAS.Domain.UserContext
         }
     }
 
-    public struct OrganizationRegisterInfoValue
-        : IPersistentValue
+    public class OrganizationRegisterInfoValue
+        : DomainEntityValueBase
     {
-        public string ID { get; internal set; }
-        public string RegisterID { get; internal set; }
+        [NotNull] public string RegisterID { get; internal set; }
 
         public uint PrefixCode { get; internal set; }
         public DateTime RegisteredTime { get; internal set; }
-        public string FormID { get; internal set; }
     }
 
     public class OrganizationRegisterInfo
         : DomainAggregateChild<OrganizationRegisterInfoValue, OrganizationRegisterInfoID, OrganizationRegisterID>
     {
         // 注册表系统识别码
-        internal string RegisterID { get { return pid.ID; } }
+        [NotNull] public string RegisterID { get { return pid.ID; } }
 
         // 在当前域的前缀码，由系统使用者给定规则
         public uint PrefixCode { get; }
         // 注册时间
         public DateTime RegisteredTime { get; }
-        // 审批表单
-        public PersonRegisterForm Form { get; }
 
-        internal OrganizationRegisterInfo(OrganizationRegisterID pid, uint prefixCode, PersonRegisterForm form)
+        internal OrganizationRegisterInfo(OrganizationRegisterID pid, uint prefixCode)
             : base(pid)
         {
             PrefixCode = prefixCode;
             RegisteredTime = DateTime.Now;
-            Form = form;
         }
 
-        internal OrganizationRegisterInfo(OrganizationRegisterID pid, OrganizationRegisterInfoID id, uint prefixCode, DateTime registeredTime, PersonRegisterForm form)
+        internal OrganizationRegisterInfo(OrganizationRegisterID pid, OrganizationRegisterInfoID id, uint prefixCode, DateTime registeredTime)
             : base(pid, id)
         {
             PrefixCode = prefixCode;
             RegisteredTime = registeredTime;
-            Form = form;
         }
 
         public override OrganizationRegisterInfoValue ToValue()
         {
-            return new OrganizationRegisterInfoValue
+            return base.ToValue(new OrganizationRegisterInfoValue
             {
-                ID = this.ID,
                 RegisterID = this.RegisterID,
-                PrefixCode = this.PrefixCode, 
-                RegisteredTime = this.RegisteredTime,
-                FormID = this.Form.ID
-            };
+                PrefixCode = this.PrefixCode,
+                RegisteredTime = this.RegisteredTime
+            });
         }
     }
 }

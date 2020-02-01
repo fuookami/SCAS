@@ -1,4 +1,6 @@
 ﻿using SCAS.Utils;
+using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace SCAS.Domain.UserContext
 {
@@ -11,10 +13,9 @@ namespace SCAS.Domain.UserContext
         }
     }
 
-    public struct RegionValue
-        : IPersistentValue
+    public class RegionValue
+        : DomainEntityValueBase
     {
-        public string ID { get; internal set; }
         public string ParentRegionID { get; internal set; }
     };
 
@@ -26,7 +27,7 @@ namespace SCAS.Domain.UserContext
         public Region ParentRegion { get; }
 
         // 域信息
-        public RegionInfo Info { get; }
+        [DisallowNull] public RegionInfo Info { get; }
 
         public bool BeRoot { get { return ParentRegion == null; } }
 
@@ -45,11 +46,10 @@ namespace SCAS.Domain.UserContext
 
         public override RegionValue ToValue()
         {
-            return new RegionValue
+            return base.ToValue(new RegionValue
             {
-                ID = this.ID,
                 ParentRegionID = this.ParentRegion?.ID
-            };
+            });
         }
     };
 }

@@ -1,6 +1,6 @@
 ﻿using SCAS.Utils;
-using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace SCAS.Domain.UserContext
@@ -14,13 +14,12 @@ namespace SCAS.Domain.UserContext
         }
     }
 
-    public struct OrganizationRegisterValue
-        : IPersistentValue
+    public class OrganizationRegisterValue
+        : DomainEntityValueBase
     {
-        public string ID { get; internal set; }
-        public string SID { get; internal set; }
-        public string OrgID { get; internal set; }
-        public string RegionID { get; internal set; }
+        [NotNull] public string SID { get; internal set; }
+        [NotNull] public string OrgID { get; internal set; }
+        [NotNull] public string RegionID { get; internal set; }
     }
 
     // 组织注册表
@@ -28,22 +27,22 @@ namespace SCAS.Domain.UserContext
         : DomainAggregateRoot<OrganizationRegisterValue, OrganizationRegisterID>
     {
         // 在当前域的应用识别码，由系统使用者给定规则
-        public string SID { get; }
+        [DisallowNull] public string SID { get; }
 
         // 组织
-        public Organization Org { get; }
+        [DisallowNull] public Organization Org { get; }
         // 注册的域
-        public Region RegisteredRegion { get; }
+        [DisallowNull] public Region RegisteredRegion { get; }
 
         // 注册信息
-        public OrganizationRegisterInfo Info { get; }
+        [DisallowNull] public OrganizationRegisterInfo Info { get; }
 
-        internal OrganizationRegister(string sid, Organization org, Region region, uint prefixCode, PersonRegisterForm form)
+        internal OrganizationRegister(string sid, Organization org, Region region, uint prefixCode)
         {
             SID = sid;
             Org = org;
             RegisteredRegion = region;
-            Info = new OrganizationRegisterInfo(this.id, prefixCode, form);
+            Info = new OrganizationRegisterInfo(this.id, prefixCode);
         }
 
         internal OrganizationRegister(OrganizationRegisterID id, string sid, Organization org, Region region, OrganizationRegisterInfo info)
@@ -57,13 +56,12 @@ namespace SCAS.Domain.UserContext
 
         public override OrganizationRegisterValue ToValue()
         {
-            return new OrganizationRegisterValue
+            return base.ToValue(new OrganizationRegisterValue
             {
-                ID = this.ID, 
-                SID = this.SID, 
-                OrgID = this.Org.ID, 
+                SID = this.SID,
+                OrgID = this.Org.ID,
                 RegionID = this.RegisteredRegion.ID
-            };
+            });
         }
 
         public struct OrganizationRegisters

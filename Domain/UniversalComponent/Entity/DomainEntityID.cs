@@ -1,18 +1,19 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace SCAS.Utils
 {
     public abstract class DomainEntityID
          : IComparable
     {
-        public string ID { get; }
+        [DisallowNull] public string ID { get; }
 
-        public DomainEntityID()
+        protected DomainEntityID()
         {
             ID = Guid.NewGuid().ToString("N");
         }
 
-        public DomainEntityID(string id)
+        protected DomainEntityID(string id)
         {
             ID = id;
         }

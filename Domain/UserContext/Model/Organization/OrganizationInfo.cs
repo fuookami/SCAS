@@ -1,4 +1,5 @@
 ﻿using SCAS.Utils;
+using System.Diagnostics.CodeAnalysis;
 
 namespace SCAS.Domain.UserContext
 {
@@ -11,26 +12,25 @@ namespace SCAS.Domain.UserContext
         }
     }
 
-    public struct OrganizationInfoValue
-        : IPersistentValue
+    public class OrganizationInfoValue
+        : DomainEntityValueBase
     {
-        public string ID { get; internal set; }
-        public string OrgID { get; internal set; }
+        [NotNull] public string OrgID { get; internal set; }
 
-        public string Name { get; internal set; }
-        public string Description { get; internal set; }
+        [NotNull] public string Name { get; internal set; }
+        [NotNull] public string Description { get; internal set; }
     }
 
     public class OrganizationInfo
         : DomainAggregateChild<OrganizationInfoValue, OrganizationInfoID, OrganizationID>
     {
         // 组织系统识别码
-        internal string OrgID { get { return pid.ID; } }
+        [NotNull] public string OrgID { get { return pid.ID; } }
 
         // 组织名
-        public string Name { get; }
+        [DisallowNull] public string Name { get; }
         // 描述
-        public string Description { get; internal set; }
+        [DisallowNull] public string Description { get; internal set; }
 
         internal OrganizationInfo(OrganizationID pid, string name)
             : base(pid)
@@ -47,13 +47,12 @@ namespace SCAS.Domain.UserContext
 
         public override OrganizationInfoValue ToValue()
         {
-            return new OrganizationInfoValue
+            return base.ToValue(new OrganizationInfoValue
             {
-                ID = this.ID, 
-                OrgID = this.OrgID, 
-                Name = this.Name, 
+                OrgID = this.OrgID,
+                Name = this.Name,
                 Description = this.Description
-            };
+            });
         }
     }
 }

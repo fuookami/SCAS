@@ -1,17 +1,30 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace SCAS.Utils
 {
+    public interface IDomainEntity
+        : IComparable
+    {
+        public string ID { get; }
+    }
+
+    public abstract class DomainEntityValueBase
+        : IPersistentValue
+    {
+        [NotNull] public string ID { get; internal set; }
+    }
+
     public abstract class DomainEntity<T, U>
-        : IComparable, IPersistentType<T> 
-        where T : IPersistentValue
+        : IDomainEntity, IPersistentType<T>
+        where T : DomainEntityValueBase
         where U : DomainEntityID, new()
     {
-        protected U id;
+        [DisallowNull] protected U id;
 
-        public string ID { get { return id.ID; } }
+        [NotNull] public string ID { get { return id.ID; } }
 
-        public DomainEntity(U entityID = null)
+        protected DomainEntity(U entityID = null)
         {
             id = entityID ?? new U();
         }
@@ -36,5 +49,11 @@ namespace SCAS.Utils
         }
 
         public abstract T ToValue();
+
+        protected T ToValue(T value)
+        {
+            value.ID = this.ID;
+            return value;
+        }
     }
 }

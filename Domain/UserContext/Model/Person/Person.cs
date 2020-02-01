@@ -1,4 +1,6 @@
 ﻿using SCAS.Utils;
+using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace SCAS.Domain.UserContext
 {
@@ -11,11 +13,10 @@ namespace SCAS.Domain.UserContext
         }
     }
 
-    public struct PersonValue
-        : IPersistentValue
+    public class PersonValue
+        : DomainEntityValueBase
     {
-        public string ID { get; internal set; }
-        public string SID { get; internal set; }
+        [NotNull] public string SID { get; internal set; }
     }
 
     // 个人
@@ -23,10 +24,10 @@ namespace SCAS.Domain.UserContext
         : DomainAggregateRoot<PersonValue, PersonID>
     {
         // 应用识别码，由系统使用者给定规则
-        public string SID { get; }
+        [DisallowNull] public string SID { get; }
 
         // 个人信息
-        public PersonInfo Info { get; }
+        [DisallowNull] public PersonInfo Info { get; }
 
         internal Person(string sid, string name)
         {
@@ -43,11 +44,10 @@ namespace SCAS.Domain.UserContext
 
         public override PersonValue ToValue()
         {
-            return new PersonValue
+            return base.ToValue(new PersonValue
             {
-                ID = this.ID,
                 SID = this.SID
-            };
+            });
         }
     }
 }

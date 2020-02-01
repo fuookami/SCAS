@@ -1,6 +1,7 @@
 ﻿
 using SCAS.Utils;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace SCAS.Domain.UserContext
 {
@@ -13,17 +14,16 @@ namespace SCAS.Domain.UserContext
         }
     }
 
-    public struct PersonInfoValue
-        : IPersistentValue
+    public class PersonInfoValue
+        : DomainEntityValueBase
     {
-        public string ID { get; internal set; }
-        public string PersonID { get; internal set; }
+        [NotNull] public string PersonID { get; internal set; }
 
-        public string Name { get; internal set; }
+        [NotNull] public string Name { get; internal set; }
 
-        public IReadOnlyList<string> Titles { get; internal set; }
-        public IReadOnlyList<string> TelephoneNumber { get; internal set; }
-        public IReadOnlyList<string> EmailAddresses { get; internal set; }
+        [NotNull] public IReadOnlyList<string> Titles { get; internal set; }
+        [NotNull] public IReadOnlyList<string> TelephoneNumber { get; internal set; }
+        [NotNull] public IReadOnlyList<string> EmailAddresses { get; internal set; }
     }
 
     // 个人信息
@@ -31,20 +31,20 @@ namespace SCAS.Domain.UserContext
         : DomainAggregateChild<PersonInfoValue, PersonInfoID, PersonID>
     {
         // 个人系统识别码
-        internal string PersonID { get { return pid.ID; } }
+        [NotNull] public string PersonID { get { return pid.ID; } }
 
         // 姓名
-        public string Name { get; }
+        [DisallowNull] public string Name { get; }
 
         // 称号、头衔
-        internal List<string> TitlesList { get; }
-        public IReadOnlyList<string> Titles { get { return TitlesList; } }
+        [DisallowNull] internal List<string> TitlesList { get; }
+        [NotNull] public IReadOnlyList<string> Titles { get { return TitlesList; } }
         // 电话号码
-        internal List<string> TelephoneNumbersList { get; }
-        public IReadOnlyList<string> TelephoneNumbers { get { return TelephoneNumbersList; } }
+        [DisallowNull] internal List<string> TelephoneNumbersList { get; }
+        [NotNull] public IReadOnlyList<string> TelephoneNumbers { get { return TelephoneNumbersList; } }
         // 邮箱地址
-        internal List<string> EmailAddressesList { get; }
-        public IReadOnlyList<string> EmailAddresses { get { return EmailAddressesList; } }
+        [DisallowNull] internal List<string> EmailAddressesList { get; }
+        [NotNull] public IReadOnlyList<string> EmailAddresses { get { return EmailAddressesList; } }
 
         internal PersonInfo(PersonID pid, string name)
             : base(pid)
@@ -66,15 +66,14 @@ namespace SCAS.Domain.UserContext
 
         public override PersonInfoValue ToValue()
         {
-            return new PersonInfoValue
+            return base.ToValue(new PersonInfoValue
             {
-                ID = this.ID,
                 Name = this.Name,
                 PersonID = this.PersonID,
                 Titles = new List<string>(this.Titles),
                 TelephoneNumber = new List<string>(this.TelephoneNumbers),
                 EmailAddresses = new List<string>(this.EmailAddresses)
-            };
+            });
         }
     }
 }
