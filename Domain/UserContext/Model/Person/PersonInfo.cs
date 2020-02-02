@@ -34,7 +34,7 @@ namespace SCAS.Domain.UserContext
         [NotNull] public string PersonID { get { return pid.ID; } }
 
         // 姓名
-        [DisallowNull] public string Name { get; }
+        [DisallowNull] public string Name { get; internal set; }
 
         // 称号、头衔
         [DisallowNull] internal List<string> TitlesList { get; }

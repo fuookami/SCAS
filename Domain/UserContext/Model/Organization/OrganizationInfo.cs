@@ -28,7 +28,7 @@ namespace SCAS.Domain.UserContext
         [NotNull] public string OrgID { get { return pid.ID; } }
 
         // 组织名
-        [DisallowNull] public string Name { get; }
+        [DisallowNull] public string Name { get; internal set; }
         // 描述
         [DisallowNull] public string Description { get; internal set; }
 

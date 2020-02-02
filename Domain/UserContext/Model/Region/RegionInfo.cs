@@ -1,4 +1,5 @@
 ﻿using SCAS.Utils;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
 namespace SCAS.Domain.UserContext
@@ -19,6 +20,7 @@ namespace SCAS.Domain.UserContext
 
         [NotNull] public string Name { get; internal set; }
         [NotNull] public string Description { get; internal set; }
+        [NotNull] public IReadOnlyList<string> Tags { get; internal set; }
     }
 
     // 域信息
@@ -32,6 +34,9 @@ namespace SCAS.Domain.UserContext
         [DisallowNull] public string Name { get; internal set; }
         // 域描述
         [DisallowNull] public string Description { get; internal set; }
+        // 域标签
+        [DisallowNull] internal List<string> TagsList { get; }
+        [NotNull] public IReadOnlyList<string> Tags { get { return Tags; } }
 
         internal RegionInfo(RegionID pid, string name)
             : base(pid)
@@ -39,7 +44,7 @@ namespace SCAS.Domain.UserContext
             Name = name;
         }
 
-        internal RegionInfo(RegionID pid, RegionInfoID id, string name, string description = null)
+        internal RegionInfo(RegionID pid, RegionInfoID id, string name, bool independentPersonalityAllowed, bool organizationAllowed, string description = null)
             : base(pid, id)
         {
             Name = name;
@@ -52,7 +57,8 @@ namespace SCAS.Domain.UserContext
             {
                 RegionID = this.RegionID,
                 Name = this.Name,
-                Description = this.Description
+                Description = this.Description, 
+                Tags = new List<string>(Tags)
             });
         }
     }

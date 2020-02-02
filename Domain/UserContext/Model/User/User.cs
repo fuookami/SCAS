@@ -29,7 +29,7 @@ namespace SCAS.Domain.UserContext
         public Person Person { get; }
         public string Account { get; }
         public string Password { get; }
-        public bool Available { get; }
+        public bool Available { get; internal set; }
 
         internal User(Person person, string account, string password, IEncryptor encryptor = null)
         {

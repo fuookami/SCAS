@@ -83,16 +83,19 @@ namespace SCAS.Domain.UserContext
         // 已注册的域
         public IReadOnlyList<Region> RegisteredRegions { get { return registers.Keys.ToList(); } }
 
+        // 是否在某个域中注册
         public bool RegisteredIn(Region region)
         {
             return RegisteredRegions.Contains(region);
         }
 
+        // 是否以个人身份注册某个域
         public bool? BePersonalIn(Region region)
         {
             return !registers[region]?.BelongedAnyOrganization;
         }
 
+        // 在某个域中所属的组织
         public Organization BelongedOrganizationIn(Region region)
         {
             return registers?[region].BelongingOrganization;
