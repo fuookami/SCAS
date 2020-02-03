@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SCAS.Utils
+namespace SCAS.Module
 {
     public interface IDomainEvent
         : IDomainValue

@@ -1,7 +1,6 @@
-﻿using System;
-using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics.CodeAnalysis;
 
-namespace SCAS.Utils
+namespace SCAS.Module
 {
     public abstract class DomainAggregateRoot<T, U>
         : DomainEntity<T, U>

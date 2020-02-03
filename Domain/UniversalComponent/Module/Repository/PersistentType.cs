@@ -1,4 +1,4 @@
-﻿namespace SCAS.Utils
+﻿namespace SCAS.Module
 {
     public interface IPersistentValue
     {

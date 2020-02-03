@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Security.Cryptography;
 
-namespace SCAS.Utils
+namespace SCAS.Module
 {
     public interface IEncryptor
     {

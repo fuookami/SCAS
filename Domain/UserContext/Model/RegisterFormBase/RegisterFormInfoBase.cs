@@ -1,4 +1,4 @@
-﻿using SCAS.Utils;
+﻿using SCAS.Module;
 using System;
 
 namespace SCAS.Domain.UserContext

@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Text;
+﻿using System.Diagnostics.CodeAnalysis;
 
-namespace SCAS.Utils
+namespace SCAS.Module
 {
     public abstract class FormValueBase
         : DomainEntityValueBase

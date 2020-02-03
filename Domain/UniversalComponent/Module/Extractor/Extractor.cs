@@ -1,6 +1,6 @@
 ﻿using System.Security.Cryptography;
 
-namespace SCAS.Utils
+namespace SCAS.Module
 {
     public interface IExtractor
     {

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using SCAS.Domain.UserContext;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace SCAS.Domain.AccountContext
