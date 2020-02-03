@@ -1,4 +1,4 @@
-﻿namespace SCAS.Domain.UserContext
+﻿namespace SCAS.Domain.AccountContext
 {
     public class PersonalAccount 
         : Account

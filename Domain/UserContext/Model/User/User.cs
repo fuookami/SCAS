@@ -1,5 +1,7 @@
 ﻿using SCAS.Utils;
+using System.Text;
 using System.Diagnostics.CodeAnalysis;
+using System;
 
 namespace SCAS.Domain.UserContext
 {
@@ -26,25 +28,27 @@ namespace SCAS.Domain.UserContext
     {
         private IEncryptor encryptor;
 
-        public Person Person { get; }
-        public string Account { get; }
-        public string Password { get; }
+        [DisallowNull] public Person Person { get; }
+        [DisallowNull] public string Account { get; }
+        [DisallowNull] public string Password { get; }
         public bool Available { get; internal set; }
 
-        internal User(Person person, string account, string password, IEncryptor encryptor = null)
+        internal User(Person person, string account, string password, IEncryptor targetEncryptor = null)
         {
             Person = person;
-            Account = encryptor?.Decrypt(account) ?? account;
-            Password = encryptor?.Decrypt(password) ?? password;
+            encryptor = targetEncryptor;
+            Account = Decrypt(account);
+            Password = Decrypt(password);
             Available = true;
         }
 
-        internal User(UserID id, Person person, string account, string password, bool available, IEncryptor encryptor = null)
+        internal User(UserID id, Person person, string account, string password, bool available, IEncryptor targetEncryptor = null)
             : base(id)
         {
             Person = person;
-            Account = encryptor?.Decrypt(account) ?? account;
-            Password = encryptor?.Decrypt(password) ?? password;
+            encryptor = targetEncryptor;
+            Account = Decrypt(account);
+            Password = Decrypt(password);
             Available = available;
         }
 
@@ -52,11 +56,21 @@ namespace SCAS.Domain.UserContext
         {
             return base.ToValue(new UserValue
             {
-                PersonID = this.Person.ID, 
-                Account = this.encryptor?.Encrypt(Account) ?? Account, 
-                Password = this.encryptor?.Encrypt(Password) ?? Password, 
+                PersonID = this.Person.ID,
+                Account = Encrypt(this.Account), 
+                Password = Encrypt(this.Password),
                 Available = this.Available
             });
+        }
+
+        private string Encrypt(string plaintext)
+        {
+            return Convert.ToBase64String(this.encryptor?.Encrypt(Encoding.ASCII.GetBytes(plaintext))) ?? plaintext;
+        }
+
+        private string Decrypt(string ciphertext)
+        {
+            return Encoding.ASCII.GetString(encryptor?.Decrypt(Convert.FromBase64String(ciphertext))) ?? ciphertext;
         }
     }
 }

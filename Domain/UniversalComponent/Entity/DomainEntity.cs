@@ -31,9 +31,9 @@ namespace SCAS.Utils
 
         public int CompareTo(object obj)
         {
-            if (obj is DomainEntityID rhs)
+            if (obj is DomainEntity<T, U> rhs)
             {
-                return ID.CompareTo(rhs);
+                return id.CompareTo(rhs.id);
             }
             return 1;
         }
@@ -45,7 +45,11 @@ namespace SCAS.Utils
 
         public override bool Equals(object obj)
         {
-            return ID.Equals(obj);
+            if (obj is DomainEntity<T, U> rhs)
+            {
+                return ID.Equals(rhs.id);
+            }
+            return false;
         }
 
         public abstract T ToValue();

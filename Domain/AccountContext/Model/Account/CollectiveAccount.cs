@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace SCAS.Domain.UserContext
+namespace SCAS.Domain.AccountContext
 {
     public class CollectiveAccount
         : Account

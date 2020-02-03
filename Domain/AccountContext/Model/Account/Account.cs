@@ -1,4 +1,6 @@
-﻿namespace SCAS.Domain.UserContext
+﻿using SCAS.Domain.UserContext;
+
+namespace SCAS.Domain.AccountContext
 {
     // 账号类型
     public enum AccountType
