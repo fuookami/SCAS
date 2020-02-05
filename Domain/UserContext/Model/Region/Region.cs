@@ -23,7 +23,7 @@ namespace SCAS.Domain.UserContext
         : DomainAggregateRoot<RegionValue, RegionID>
     {
         // 类型
-        RegionType Type { get; }
+        public RegionType Type { get; }
         // 父域
         public Region ParentRegion { get; }
 
