@@ -11,9 +11,6 @@ namespace SCAS.Domain.UserContext
             return string.Format("Region-{0}", ID);
         }
     }
-
-    
-
     public class RegionValue
         : DomainEntityValueBase
     {
@@ -69,7 +66,7 @@ namespace SCAS.Domain.UserContext
         {
             return base.ToValue(new RegionValue
             {
-                Type = this.Type, 
+                Type = this.Type,
                 ParentRegionID = this.ParentRegion?.ID
             });
         }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace SCAS.Module
 {
@@ -6,40 +7,57 @@ namespace SCAS.Module
         : IDomainValue
     {
         public uint Code { get; }
-        public string Message { get; }
-        public string Digest { get; }
-        public string Data { get; }
+        public uint Type { get; }
+        public uint Level { get; }
+        public uint Priority { get; }
+        [NotNull] public string Message { get; }
+        [DisallowNull] public string Digest { get; }
+        [DisallowNull] public string Data { get; }
 
         public DateTime PostTime { get; }
     }
 
-    public abstract class DomainEventValueBase
+    public class DomainEventValue
         : IPersistentValue
     {
         public uint Code { get; internal set; }
-        public string Message { get; internal set; }
-        public string Digest { get; internal set; }
-        public string Data { get; internal set; }
+        public uint Type { get; internal set; }
+        public uint Level { get; internal set; }
+        public uint Priority { get; internal set; }
+        [NotNull] public string Digest { get; internal set; }
+        [NotNull] public string Data { get; internal set; }
 
         public DateTime PostTime { get; internal set; }
     }
 
     public abstract class DomainEventBase<T>
         : IComparable, IDomainEvent, IPersistentType<T>
-        where T : DomainEventValueBase
+        where T : DomainEventValue
     {
         public uint Code { get; }
-        public string Message { get; }
-        public string Digest { get; }
-        public string Data { get; }
+        public uint Type { get; }
+        public uint Level { get; }
+        public uint Priority { get; }
+        [NotNull] public abstract string Message { get; }
+        [DisallowNull] public string Digest { get; protected set; }
+        [DisallowNull] public string Data { get; protected set; }
 
         public DateTime PostTime { get; }
 
-        protected DomainEventBase(uint code, string message, string data)
+        protected DomainEventBase(uint code, uint type, uint level, uint priority)
         {
-            
+            Code = code;
+            Type = type;
+            Level = level;
+            Priority = priority;
+            PostTime = DateTime.Now;
         }
 
+        protected DomainEventBase(uint code, uint type, uint level, uint priority, DateTime postTime)
+            : this(code, type, level, priority)
+        {
+            PostTime = postTime;
+        }
 
         public int CompareTo(object obj)
         {
@@ -69,7 +87,9 @@ namespace SCAS.Module
         protected T ToValue(T value)
         {
             value.Code = this.Code;
-            value.Message = this.Message;
+            value.Type = this.Type;
+            value.Level = this.Level;
+            value.Priority = this.Priority;
             value.Digest = this.Digest;
             value.Data = this.Data;
             value.PostTime = PostTime;
