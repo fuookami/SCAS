@@ -2,6 +2,7 @@
 {
     public enum SCASEvent
     {
-        RegionCreated
+        RegionCreated,
+        RegionInfoChanged
     }
 }

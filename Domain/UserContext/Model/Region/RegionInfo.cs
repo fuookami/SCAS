@@ -44,7 +44,7 @@ namespace SCAS.Domain.UserContext
             Name = name;
         }
 
-        internal RegionInfo(RegionID pid, RegionInfoID id, string name, bool independentPersonalityAllowed, bool organizationAllowed, string description = null)
+        internal RegionInfo(RegionID pid, RegionInfoID id, string name, string description = null)
             : base(pid, id)
         {
             Name = name;
@@ -57,7 +57,7 @@ namespace SCAS.Domain.UserContext
             {
                 RegionID = this.RegionID,
                 Name = this.Name,
-                Description = this.Description, 
+                Description = this.Description,
                 Tags = new List<string>(Tags)
             });
         }

@@ -11,7 +11,7 @@ namespace SCAS.Domain.UserContext
         public string Name { get; set; }
         public string ParentID { get; set; }
 
-        public RegionCreatedEventData(Region region)
+        internal RegionCreatedEventData(Region region)
         {
             ID = region.ID;
             Type = region.Type;
@@ -38,8 +38,9 @@ namespace SCAS.Domain.UserContext
             var ret = string.Format("{0} region {1} created", region.Type.ToString(), region.Info.Name);
             if (!region.BeRoot)
             {
-                ret += string.Format(", is subject to {0}.", region.ParentRegion.Info.Name);
+                ret += string.Format(", is subject to {0}", region.ParentRegion.Info.Name);
             }
+            ret += ".";
             return ret;
         }
 
