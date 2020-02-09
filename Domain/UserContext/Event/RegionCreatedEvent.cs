@@ -1,6 +1,5 @@
 ﻿
 using SCAS.Module;
-using System.Text;
 
 namespace SCAS.Domain.UserContext
 {
