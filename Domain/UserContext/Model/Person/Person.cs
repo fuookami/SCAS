@@ -13,7 +13,7 @@ namespace SCAS.Domain.UserContext
     }
 
     public class PersonValue
-        : DomainEntityValueBase
+        : DomainAggregateRootValueBase
     {
         [NotNull] public string SID { get; internal set; }
     }
@@ -34,11 +34,16 @@ namespace SCAS.Domain.UserContext
             Info = new PersonInfo(id, name);
         }
 
-        internal Person(PersonID id, string sid, PersonInfo info)
-            : base(id)
+        internal Person(PersonID id, bool archived, string sid, PersonInfo info)
+            : base(id, archived)
         {
             SID = sid;
             Info = info;
+        }
+
+        public new bool Archive()
+        {
+            return base.Archive();
         }
 
         public override PersonValue ToValue()

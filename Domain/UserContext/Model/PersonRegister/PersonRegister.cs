@@ -10,12 +10,12 @@ namespace SCAS.Domain.UserContext
     {
         public override string ToString()
         {
-            return string.Format("PersonRegister-{0}", ID); 
+            return string.Format("PersonRegister-{0}", ID);
         }
     }
 
     public class PersonRegisterValue
-        : DomainEntityValueBase
+        : DomainAggregateRootValueBase
     {
         [NotNull] public string SID { get; internal set; }
         [NotNull] public string PersonID { get; internal set; }
@@ -52,14 +52,19 @@ namespace SCAS.Domain.UserContext
             Info = new PersonRegisterInfo(id);
         }
 
-        internal PersonRegister(PersonRegisterID id, string sid, Person person, Region region, Organization org, PersonRegisterInfo info)
-            : base(id)
+        internal PersonRegister(PersonRegisterID id, bool archived, string sid, Person person, Region region, Organization org, PersonRegisterInfo info)
+            : base(id, archived)
         {
             SID = sid;
-            Person = person; 
+            Person = person;
             RegisteredRegion = region;
             BelongingOrganization = org;
             Info = info;
+        }
+
+        public new bool Archive()
+        {
+            return base.Archive();
         }
 
         public override PersonRegisterValue ToValue()
@@ -68,7 +73,7 @@ namespace SCAS.Domain.UserContext
             {
                 SID = this.SID,
                 PersonID = this.Person.ID,
-                RegionID = this.RegisteredRegion.ID, 
+                RegionID = this.RegisteredRegion.ID,
                 OrgID = this.BelongingOrganization?.ID
             });
         }

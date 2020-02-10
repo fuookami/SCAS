@@ -56,12 +56,14 @@ namespace SCAS.Domain.UserContext
         public override PersonRegister Approve(string sid, Person examiner, string annotation)
         {
             Examination = new PersonRegisterFormExamination(id, examiner, true, annotation);
+            Archive();
             return new PersonRegister(sid, Person, RegisteredRegion, BelongingOrganization);
         }
 
         public override void Unapprove(Person examiner, string annotation)
         {
             Examination = new PersonRegisterFormExamination(id, examiner, false, annotation);
+            Archive();
         }
 
         public override PersonRegisterFormValue ToValue()

@@ -12,7 +12,7 @@ namespace SCAS.Domain.UserContext
         }
     }
     public class RegionValue
-        : DomainEntityValueBase
+        : DomainAggregateRootValueBase
     {
         public RegionType Type { get; internal set; }
         public string ParentRegionID { get; internal set; }
@@ -44,8 +44,8 @@ namespace SCAS.Domain.UserContext
             Info = new RegionInfo(this.id, name);
         }
 
-        internal Region(RegionID id, RegionType type, RegionInfo info, Region parentRegion = null)
-            : base(id)
+        internal Region(RegionID id, bool archived, RegionType type, RegionInfo info, Region parentRegion = null)
+            : base(id, archived)
         {
             Type = type;
             ParentRegion = parentRegion;
@@ -54,12 +54,18 @@ namespace SCAS.Domain.UserContext
 
         public bool RegisterValid(PersonRegisterForm register)
         {
-            return RegionTypeTrait.Allow(Type, register);
+            return !Archived && RegionTypeTrait.Allow(Type, register);
         }
 
         public bool RegisterValid(OrganizationRegisterForm register)
         {
-            return RegionTypeTrait.Allow(Type, register);
+            return !Archived && RegionTypeTrait.Allow(Type, register);
+        }
+
+        public new Region Archive()
+        {
+            base.Archive();
+            return this;
         }
 
         public override RegionValue ToValue()

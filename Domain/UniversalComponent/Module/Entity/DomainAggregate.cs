@@ -13,12 +13,27 @@ namespace SCAS.Module
         where T : DomainAggregateRootValueBase
         where U : DomainEntityID, new()
     {
-        public bool Archived { get; protected set; }
+        public bool Archived { get; private set; }
 
-        protected DomainAggregateRoot(U entityID = null)
+        protected DomainAggregateRoot()
+        {
+            Archived = false;
+        }
+
+        protected DomainAggregateRoot(U entityID, bool archived)
             : base(entityID)
         {
+            Archived = archived;
+        }
+
+        protected bool Archive()
+        {
+            if (Archived)
+            {
+                return false;
+            }
             Archived = true;
+            return true;
         }
 
         protected new T ToValue(T value)

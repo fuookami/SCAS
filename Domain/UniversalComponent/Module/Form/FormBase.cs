@@ -3,7 +3,7 @@
 namespace SCAS.Module
 {
     public abstract class FormValueBase
-        : DomainEntityValueBase
+        : DomainAggregateRootValueBase
     {
         public string SID { get; internal set; }
     }
@@ -60,7 +60,7 @@ namespace SCAS.Module
         }
 
         protected FormBase(U id, string sid, I info, E examination)
-            : base(id)
+            : base(id, examination != null)
         {
             SID = sid;
             Info = info;

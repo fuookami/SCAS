@@ -46,19 +46,21 @@ namespace SCAS.Domain.UserContext
         public override OrganizationRegister Approve(string sid, Person examiner, string annotation)
         {
             Examination = new OrganizationRegisterFormExamination(this.id, examiner, true, annotation);
+            Archive();
             return new OrganizationRegister(sid, Org, RegisteredRegion, Info.PrefixCode);
         }
 
         public override void Unapprove(Person examiner, string annotation)
         {
             Examination = new OrganizationRegisterFormExamination(id, examiner, false, annotation);
+            Archive();
         }
 
         public override OrganizationRegisterFormValue ToValue()
         {
-            return base.ToValue(new OrganizationRegisterFormValue 
+            return base.ToValue(new OrganizationRegisterFormValue
             {
-                OrgID = this.Org.ID, 
+                OrgID = this.Org.ID,
                 RegionID = this.RegisteredRegion.ID
             });
         }

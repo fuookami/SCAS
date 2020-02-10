@@ -13,7 +13,7 @@ namespace SCAS.Domain.UserContext
     }
 
     public class OrganizationValue
-        : DomainEntityValueBase
+        : DomainAggregateRootValueBase
     {
         [NotNull] public string SID { get; internal set; }
     }
@@ -33,11 +33,16 @@ namespace SCAS.Domain.UserContext
             Info = new OrganizationInfo(id, name);
         }
 
-        internal Organization(OrganizationID id, string sid, OrganizationInfo info)
-            : base(id)
+        internal Organization(OrganizationID id, bool archived, string sid, OrganizationInfo info)
+            : base(id, archived)
         {
             SID = sid;
             Info = info;
+        }
+
+        public new bool Archive()
+        {
+            return base.Archive();
         }
 
         public override OrganizationValue ToValue()

@@ -16,7 +16,7 @@ namespace SCAS.Domain.UserContext
     }
 
     public class OrganizationRegisterValue
-        : DomainEntityValueBase
+        : DomainAggregateRootValueBase
     {
         [NotNull] public string SID { get; internal set; }
         [NotNull] public string OrgID { get; internal set; }
@@ -46,13 +46,18 @@ namespace SCAS.Domain.UserContext
             Info = new OrganizationRegisterInfo(this.id, prefixCode);
         }
 
-        internal OrganizationRegister(OrganizationRegisterID id, string sid, Organization org, Region region, OrganizationRegisterInfo info)
-            : base(id)
+        internal OrganizationRegister(OrganizationRegisterID id, bool archived, string sid, Organization org, Region region, OrganizationRegisterInfo info)
+            : base(id, archived)
         {
             SID = sid;
             Org = org;
             RegisteredRegion = region;
             Info = info;
+        }
+
+        public new bool Archive()
+        {
+            return base.Archive();
         }
 
         public override OrganizationRegisterValue ToValue()
@@ -64,26 +69,25 @@ namespace SCAS.Domain.UserContext
                 RegionID = this.RegisteredRegion.ID
             });
         }
-
-        public struct OrganizationRegisters
+    }
+    public struct OrganizationRegisters
             : IDomainValue
+    {
+        private Dictionary<Region, OrganizationRegister> registers;
+
+        // 已注册的域
+        public IReadOnlyList<Region> RegisteredRegion { get { return registers.Keys.ToList(); } }
+
+        public Try<uint> PrefixCode(Region region)
         {
-            private Dictionary<Region, OrganizationRegister> registers;
+            return registers.ContainsKey(region)
+                ? new Try<uint>(registers[region].Info.PrefixCode)
+                : new Try<uint>();
+        }
 
-            // 已注册的域
-            public IReadOnlyList<Region> RegisteredRegion { get { return registers.Keys.ToList(); } }
-
-            public Try<uint> PrefixCode(Region region)
-            {
-                return registers.ContainsKey(region) 
-                    ? new Try<uint>(registers[region].Info.PrefixCode)
-                    : new Try<uint>();
-            }
-
-            internal OrganizationRegisters(IReadOnlyList<OrganizationRegister> registersList)
-            {
-                registers = registersList.ToDictionary(reg => reg.RegisteredRegion);
-            }
+        internal OrganizationRegisters(IReadOnlyList<OrganizationRegister> registersList)
+        {
+            registers = registersList.ToDictionary(reg => reg.RegisteredRegion);
         }
     }
 }
