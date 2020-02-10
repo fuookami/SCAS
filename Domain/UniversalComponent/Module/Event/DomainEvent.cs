@@ -5,8 +5,17 @@ using System.Text;
 
 namespace SCAS.Module
 {
+    public class DomainEventID
+        : DomainEntityID
+    {
+        public override string ToString()
+        {
+            return string.Format("DomainEvent-{0}", ID);
+        }
+    }
+
     public interface IDomainEvent
-        : IDomainValue
+        : IDomainEntity
     {
         public uint Code { get; }
         public uint Type { get; }
@@ -20,8 +29,10 @@ namespace SCAS.Module
     }
 
     public class DomainEventValue
-        : IPersistentValue
+        : DomainEntityValueBase
     {
+        public string TriggerID { get; internal set; }
+
         public uint Code { get; internal set; }
         public uint Type { get; internal set; }
         public uint Level { get; internal set; }
@@ -33,9 +44,11 @@ namespace SCAS.Module
     }
 
     public abstract class DomainEventBase<T, DTO>
-        : IComparable, IDomainEvent, IPersistentType<T>
+        : DomainEntity<T, DomainEventID>
         where T : DomainEventValue
     {
+        public IDomainEvent Trigger { get; }
+
         public uint Code { get; }
         public uint Type { get; }
         public uint Level { get; }
@@ -60,13 +73,33 @@ namespace SCAS.Module
             Digest = Encoding.UTF8.GetString(extractor.Extract(Encoding.UTF8.GetBytes(Data)));
         }
 
-        protected DomainEventBase(uint code, uint type, uint level, uint priority, DateTime postTime, DTO obj, IExtractor extractor = null)
+        protected DomainEventBase(IDomainEvent trigger, uint code, uint type, uint level, uint priority, DTO obj, IExtractor extractor = null)
             : this(code, type, level, priority, obj, extractor)
         {
-            PostTime = postTime;
+            Trigger = trigger;
         }
 
-        public int CompareTo(object obj)
+        protected DomainEventBase(DomainEventID id, uint code, uint type, uint level, uint priority, DateTime postTime, DTO obj, IExtractor extractor = null)
+            : base(id)
+        {
+            Code = code;
+            Type = type;
+            Level = level;
+            Priority = priority;
+            PostTime = postTime;
+
+            DataObj = obj;
+            Data = JsonConvert.SerializeObject(DataObj);
+            Digest = Encoding.UTF8.GetString(extractor.Extract(Encoding.UTF8.GetBytes(Data)));
+        }
+
+        protected DomainEventBase(DomainEventID id, IDomainEvent trigger, uint code, uint type, uint level, uint priority, DateTime postTime, DTO obj, IExtractor extractor = null)
+            : this(id, code, type, level, priority, postTime, obj, extractor)
+        {
+            Trigger = trigger;
+        }
+
+        public new int CompareTo(object obj)
         {
             if (obj is DomainEventBase<T, DTO> rhs)
             {
@@ -89,10 +122,10 @@ namespace SCAS.Module
             return false;
         }
 
-        public abstract T ToValue();
-
-        protected T ToValue(T value)
+        protected new T ToValue(T value)
         {
+            base.ToValue(value);
+            value.TriggerID = this.Trigger.ID;
             value.Code = this.Code;
             value.Type = this.Type;
             value.Level = this.Level;
