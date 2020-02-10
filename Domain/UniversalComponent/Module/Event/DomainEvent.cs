@@ -125,7 +125,7 @@ namespace SCAS.Module
         protected new T ToValue(T value)
         {
             base.ToValue(value);
-            value.TriggerID = this.Trigger.ID;
+            value.TriggerID = this.Trigger?.ID;
             value.Code = this.Code;
             value.Type = this.Type;
             value.Level = this.Level;
