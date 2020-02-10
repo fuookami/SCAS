@@ -4,9 +4,9 @@ namespace SCAS.Domain.UserContext
 {
     public struct OrganizationCreatedEventData
     {
-        public string ID { get; set; }
-        public string SID { get; set; }
-        public string Name { get; set; }
+        public string ID { get; }
+        public string SID { get; }
+        public string Name { get; }
 
         public OrganizationCreatedEventData(Organization org)
         {
@@ -24,7 +24,7 @@ namespace SCAS.Domain.UserContext
         public override string Message { get { return GetMessage(); } }
 
         internal OrganizationCreatedEvent(Organization newOrg, IExtractor extractor = null)
-            : base((uint)SCASEvent.RegionCreated, (uint)SCASEventType.Model, (uint)SCASEventLevel.Common, (uint)SCASEventPriority.Common, new OrganizationCreatedEventData(newOrg), extractor)
+            : base((uint)SCASEvent.OrganizationCreated, (uint)SCASEventType.Model, (uint)SCASEventLevel.Common, (uint)SCASEventPriority.Common, new OrganizationCreatedEventData(newOrg), extractor)
         {
             org = newOrg;
         }

@@ -5,10 +5,10 @@ namespace SCAS.Domain.UserContext
 {
     public struct RegionCreatedEventData
     {
-        public string ID { get; set; }
-        public RegionType Type { get; set; }
-        public string Name { get; set; }
-        public string ParentID { get; set; }
+        public string ID { get; }
+        public RegionType Type { get; }
+        public string Name { get; }
+        public string ParentID { get; }
 
         internal RegionCreatedEventData(Region region)
         {

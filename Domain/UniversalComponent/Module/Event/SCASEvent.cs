@@ -3,6 +3,10 @@
     public enum SCASEvent
     {
         RegionCreated,
-        RegionInfoChanged
+        RegionInfoModified,
+        OrganizationCreated,
+        OrganizationInfoModified,
+        PersonCreated,
+        PersonInfoModified
     }
 }
