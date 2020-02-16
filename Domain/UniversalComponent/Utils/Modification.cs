@@ -10,5 +10,11 @@
             OldValue = oldValue;
             NewValue = newValue;
         }
+
+        static public Modification<T> Make(T oldValue, T newValue)
+        {
+            return newValue == null ? null
+                : new Modification<T>(oldValue, newValue);
+        }
     }
 }

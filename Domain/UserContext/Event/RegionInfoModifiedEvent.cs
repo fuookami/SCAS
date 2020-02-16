@@ -15,20 +15,20 @@ namespace SCAS.Domain.UserContext
         internal RegionInfoChangedEventData(RegionInfo info, string name = null, string description = null, IReadOnlyCollection<string> tags = null)
         {
             ID = info.ID;
-            Name = name != null ? new Modification<string>(info.Name, name) : null;
-            Description = description != null ? new Modification<string>(info.Description, description) : null;
-            Tags = tags != null ? new Modification<IReadOnlyCollection<string>>(info.Tags, tags) : null;
+            Name = Modification<string>.Make(info.Name, name);
+            Description = Modification<string>.Make(info.Description, description);
+            Tags = Modification<IReadOnlyCollection<string>>.Make(info.Tags, tags);
         }
     }
 
-    class RegionInfoModifiedEvent
+    public class RegionInfoModifiedEvent
         : DomainEventBase<DomainEventValue, RegionInfoChangedEventData>
     {
         [NotNull] private RegionInfo info;
 
         public override string Message { get { return GetMessage(); } }
 
-        internal RegionInfoModifiedEvent(RegionInfo targetInfo, string name, string description, IReadOnlyCollection<string> tags, IExtractor extractor = null)
+        internal RegionInfoModifiedEvent(RegionInfo targetInfo, string name = null, string description = null, IReadOnlyCollection<string> tags = null, IExtractor extractor = null)
             : base((uint)SCASEvent.RegionInfoModified, (uint)SCASEventType.Model, (uint)SCASEventLevel.Common, (uint)SCASEventPriority.Common, new RegionInfoChangedEventData(targetInfo, name, description, tags), extractor)
         {
             info = targetInfo;

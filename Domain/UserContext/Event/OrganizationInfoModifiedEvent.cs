@@ -4,7 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace SCAS.Domain.UserContext
 {
-    class OrganizationInfoModifiedEventData
+    public struct OrganizationInfoModifiedEventData
     {
         public string ID { get; }
         public Modification<string> Name { get; }
@@ -13,19 +13,19 @@ namespace SCAS.Domain.UserContext
         internal OrganizationInfoModifiedEventData(OrganizationInfo info, string name = null, string description = null)
         {
             ID = info.ID;
-            Name = name != null ? new Modification<string>(info.Name, name) : null;
-            Description = description != null ? new Modification<string>(info.Description, description) : null;
+            Name = Modification<string>.Make(info.Name, name);
+            Description = Modification<string>.Make(info.Description, description);
         }
     }
 
-    class OrganizationInfoModifiedEvent
+    public class OrganizationInfoModifiedEvent
         : DomainEventBase<DomainEventValue, OrganizationInfoModifiedEventData>
     {
         [NotNull] private OrganizationInfo info;
 
         public override string Message { get { return GetMessage(); } }
 
-        internal OrganizationInfoModifiedEvent(OrganizationInfo targetInfo, string name, string description, IExtractor extractor = null)
+        internal OrganizationInfoModifiedEvent(OrganizationInfo targetInfo, string name = null, string description = null, IExtractor extractor = null)
             : base((uint)SCASEvent.OrganizationInfoModified, (uint)SCASEventType.Model, (uint)SCASEventLevel.Common, (uint)SCASEventPriority.Common, new OrganizationInfoModifiedEventData(targetInfo, name, description), extractor)
         {
             info = targetInfo;
