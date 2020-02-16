@@ -6,7 +6,7 @@ namespace SCAS.Domain.AccountContext
     public enum AccountType
     {
         Personal,
-        Collective, 
+        Collective,
         Public
     }
 
@@ -15,11 +15,11 @@ namespace SCAS.Domain.AccountContext
     {
         Visitor,
         Applicant,
-        ApplicantLeader, 
-        Staff, 
+        ApplicantLeader,
+        Staff,
         StaffManager,
-        StaffLeader, 
-        SystemManager, 
+        StaffLeader,
+        SystemManager,
         Administrator
     }
 
