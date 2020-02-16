@@ -21,17 +21,12 @@ namespace SCAS.Domain.UserContext
     {
         private Organization org;
 
-        public override string Message { get { return GetMessage(); } }
+        public override string Message { get { return string.Format("Organization {0} created", org.Info.Name); } }
 
         internal OrganizationCreatedEvent(Organization newOrg, IExtractor extractor = null)
             : base((uint)SCASEvent.OrganizationCreated, (uint)SCASEventType.Model, (uint)SCASEventLevel.Common, (uint)SCASEventPriority.Common, new OrganizationCreatedEventData(newOrg), extractor)
         {
             org = newOrg;
-        }
-
-        private string GetMessage()
-        {
-            return string.Format("Organization {0} created", org.Info.Name);
         }
 
         public override DomainEventValue ToValue()
