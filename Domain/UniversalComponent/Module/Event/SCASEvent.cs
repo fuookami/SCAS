@@ -4,9 +4,24 @@
     {
         RegionCreated,
         RegionInfoModified,
+        RegionArchived,
+
         OrganizationCreated,
         OrganizationInfoModified,
+        OrganizationRegisterInitiated,
+        OrganizationRegisterApproved,
+        OrganizationRegisterUnapproved,
+        OrganizationRegistered,
+        OrganizationRegisterArchived,
+        OrganizationArchived,
+
         PersonCreated,
-        PersonInfoModified
+        PersonInfoModified,
+        PersonRegisterInitiated,
+        PersonRegisterApproved,
+        PersonRegisterUnapproved,
+        PersonRegistered,
+        PersonRegisterArchived,
+        PersonArchived
     }
 }

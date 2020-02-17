@@ -4,7 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace SCAS.Domain.UserContext
 {
-    public struct OrganizationRegisterInitiatationEventData
+    public struct OrganizationRegisterInitiatedEventData
     {
         public string ID { get; }
         public string SID { get; }
@@ -13,7 +13,7 @@ namespace SCAS.Domain.UserContext
         public string InitiatorID { get; }
         public uint PrefixCode { get; }
 
-        internal OrganizationRegisterInitiatationEventData(OrganizationRegisterForm form)
+        internal OrganizationRegisterInitiatedEventData(OrganizationRegisterForm form)
         {
             ID = form.ID;
             SID = form.SID;
@@ -24,15 +24,15 @@ namespace SCAS.Domain.UserContext
         }
     }
 
-    public class OrganizationRegisterInitiatationEvent
-        : DomainEventBase<DomainEventValue, OrganizationRegisterInitiatationEventData>
+    public class OrganizationRegisterInitiatedEvent
+        : DomainEventBase<DomainEventValue, OrganizationRegisterInitiatedEventData>
     {
         [NotNull] private OrganizationRegisterForm form;
 
         public override string Message { get { return string.Format("Register of organization {0} to region {1} initiated by {2}, prefix code {3}", form.Org.Info.Name, form.RegisteredRegion.Info.Name, form.Info.Initiator.Info.Name, form.Info.PrefixCode); } }
 
-        internal OrganizationRegisterInitiatationEvent(OrganizationRegisterForm newForm, IExtractor extractor = null)
-            : base((uint)SCASEvent.OrganizationInfoModified, (uint)SCASEventType.Model, (uint)SCASEventLevel.Common, (uint)SCASEventPriority.Common, new OrganizationRegisterInitiatationEventData(newForm), extractor)
+        internal OrganizationRegisterInitiatedEvent(OrganizationRegisterForm newForm, IExtractor extractor = null)
+            : base((uint)SCASEvent.OrganizationInfoModified, (uint)SCASEventType.Model, (uint)SCASEventLevel.Common, (uint)SCASEventPriority.Common, new OrganizationRegisterInitiatedEventData(newForm), extractor)
         {
             form = newForm;
         }

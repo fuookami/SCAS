@@ -3,7 +3,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace SCAS.Domain.UserContext
 {
-    public struct PersonRegisterInitiatationEventData
+    public struct PersonRegisterInitiatedEventData
     {
         public string ID { get; }
         public string SID { get; }
@@ -12,7 +12,7 @@ namespace SCAS.Domain.UserContext
         public string InitiatorID { get; }
         public string OrgID { get; }
 
-        internal PersonRegisterInitiatationEventData(PersonRegisterForm form)
+        internal PersonRegisterInitiatedEventData(PersonRegisterForm form)
         {
             ID = form.ID;
             SID = form.SID;
@@ -23,15 +23,15 @@ namespace SCAS.Domain.UserContext
         }
     }
 
-    public class PersonRegisterInitiatationEvent
-        : DomainEventBase<DomainEventValue, PersonRegisterInitiatationEventData>
+    public class PersonRegisterInitiatedEvent
+        : DomainEventBase<DomainEventValue, PersonRegisterInitiatedEventData>
     {
         [NotNull] private PersonRegisterForm form;
 
         public override string Message { get { return GetMessage(); } }
 
-        internal PersonRegisterInitiatationEvent(PersonRegisterForm newForm, IExtractor extractor = null)
-            : base((uint)SCASEvent.OrganizationInfoModified, (uint)SCASEventType.Model, (uint)SCASEventLevel.Common, (uint)SCASEventPriority.Common, new PersonRegisterInitiatationEventData(newForm), extractor)
+        internal PersonRegisterInitiatedEvent(PersonRegisterForm newForm, IExtractor extractor = null)
+            : base((uint)SCASEvent.PersonRegisterInitiated, (uint)SCASEventType.Model, (uint)SCASEventLevel.Common, (uint)SCASEventPriority.Common, new PersonRegisterInitiatedEventData(newForm), extractor)
         {
             form = newForm;
         }
