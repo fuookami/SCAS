@@ -1,5 +1,4 @@
 ﻿using SCAS.Module;
-using SCAS.Utils;
 using System.Diagnostics.CodeAnalysis;
 
 namespace SCAS.Domain.UserContext
