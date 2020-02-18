@@ -12,6 +12,7 @@
         OrganizationRegisterApproved,
         OrganizationRegisterUnapproved,
         OrganizationRegistered,
+        OrganizationRegisterInfoModified,
         OrganizationRegisterArchived,
         OrganizationArchived,
 
@@ -21,6 +22,7 @@
         PersonRegisterApproved,
         PersonRegisterUnapproved,
         PersonRegistered,
+        PersonRegisterInfoModified,
         PersonRegisterArchived,
         PersonArchived
     }

@@ -2,7 +2,7 @@
 
 namespace SCAS.Domain.UserContext
 {
-    class PersonArchived
+    class PersonArchivedEvent
     {
     }
 }
