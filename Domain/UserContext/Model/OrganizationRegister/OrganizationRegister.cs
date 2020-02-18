@@ -76,7 +76,7 @@ namespace SCAS.Domain.UserContext
         private Dictionary<Region, OrganizationRegister> registers;
 
         // 已注册的域
-        public IReadOnlyList<Region> RegisteredRegion { get { return registers.Keys.ToList(); } }
+        public IReadOnlyList<Region> RegisteredRegion => registers.Keys.ToList();
 
         public Try<uint> PrefixCode(Region region)
         {

@@ -17,7 +17,7 @@ namespace SCAS.Domain.Basic
         public string Description { get; internal set; }
         // 项目列表
         internal List<SportItem> ItemsList { get; }
-        public IReadOnlyList<SportItem> Items { get { return ItemsList; } }
+        public IReadOnlyList<SportItem> Items => ItemsList;
 
         internal Sport(string id = null)
         {
@@ -28,7 +28,7 @@ namespace SCAS.Domain.Basic
 
     public struct SportValue
         : IPersistentValue
-    { 
+    {
         public string Id { get; internal set; }
         public string Name { get; internal set; }
         public string Description { get; internal set; }
@@ -44,8 +44,8 @@ namespace SCAS.Domain.Basic
             return new SportValue
             {
                 Id = this.Id,
-                Name = this.Name, 
-                Description = this.Description, 
+                Name = this.Name,
+                Description = this.Description,
                 Items = this.Items.Select(item => item.Id).ToList()
             };
         }

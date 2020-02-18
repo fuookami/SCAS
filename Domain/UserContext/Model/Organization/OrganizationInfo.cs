@@ -25,7 +25,7 @@ namespace SCAS.Domain.UserContext
         : DomainAggregateChild<OrganizationInfoValue, OrganizationInfoID, OrganizationID>
     {
         // 组织系统识别码
-        [NotNull] public string OrgID { get { return pid.ID; } }
+        [NotNull] public string OrgID => pid.ID;
 
         // 组织名
         [DisallowNull] public string Name { get; internal set; }

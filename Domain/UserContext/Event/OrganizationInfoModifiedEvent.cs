@@ -23,7 +23,7 @@ namespace SCAS.Domain.UserContext
     {
         [NotNull] private OrganizationInfo info;
 
-        public override string Message { get { return GetMessage(); } }
+        public override string Message => GetMessage();
 
         internal OrganizationInfoModifiedEvent(OrganizationInfo targetInfo, string name = null, string description = null, IExtractor extractor = null)
             : base((uint)SCASEvent.OrganizationInfoModified, (uint)SCASEventType.Model, (uint)SCASEventLevel.Common, (uint)SCASEventPriority.Common, new OrganizationInfoModifiedEventData(targetInfo, name, description), extractor)

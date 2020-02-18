@@ -50,9 +50,9 @@ namespace SCAS.Module
         public E Examination { get; protected set; }
 
         // 是否已经审批
-        public bool Examined { get { return Examination != null; } }
+        public bool Examined => Examination != null;
         // 审批是否通过
-        public bool Approved { get { return Examination.Approved; } }
+        public bool Approved => Examination.Approved;
 
         protected FormBase(string sid)
         {

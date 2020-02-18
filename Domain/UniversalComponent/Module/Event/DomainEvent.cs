@@ -44,7 +44,7 @@ namespace SCAS.Module
     }
 
     public abstract class DomainEventBase<T, DTO>
-        : DomainEntity<T, DomainEventID>
+        : DomainEntity<T, DomainEventID>, IDomainEvent
         where T : DomainEventValue
     {
         public IDomainEvent Trigger { get; }

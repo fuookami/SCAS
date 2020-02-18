@@ -28,7 +28,7 @@ namespace SCAS.Domain.UserContext
     {
         [NotNull] private PersonRegisterForm form;
 
-        public override string Message { get { return GetMessage(); } }
+        public override string Message => GetMessage();
 
         internal PersonRegisterInitiatedEvent(PersonRegisterForm newForm, IExtractor extractor = null)
             : base((uint)SCASEvent.PersonRegisterInitiated, (uint)SCASEventType.Model, (uint)SCASEventLevel.Common, (uint)SCASEventPriority.Common, new PersonRegisterInitiatedEventData(newForm), extractor)

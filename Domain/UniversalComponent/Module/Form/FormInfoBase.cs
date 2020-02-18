@@ -31,7 +31,7 @@ namespace SCAS.Module
         where I : IDomainEntity
     {
         // 审批表单系统识别码
-        [NotNull] public string FormID { get { return pid.ID; } }
+        [NotNull] public string FormID => pid.ID;
 
         // 发起者
         [DisallowNull] public I Initiator { get; }

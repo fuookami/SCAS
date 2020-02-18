@@ -30,20 +30,20 @@ namespace SCAS.Domain.UserContext
         : DomainAggregateChild<PersonInfoValue, PersonInfoID, PersonID>
     {
         // 个人系统识别码
-        [NotNull] public string PersonID { get { return pid.ID; } }
+        [NotNull] public string PersonID => pid.ID;
 
         // 姓名
         [DisallowNull] public string Name { get; internal set; }
 
         // 称号、头衔
         [DisallowNull] internal List<string> TitlesList { get; }
-        [NotNull] public IReadOnlyList<string> Titles { get { return TitlesList; } }
+        [NotNull] public IReadOnlyList<string> Titles => TitlesList;
         // 电话号码
         [DisallowNull] internal List<string> TelephoneNumbersList { get; }
-        [NotNull] public IReadOnlyList<string> TelephoneNumbers { get { return TelephoneNumbersList; } }
+        [NotNull] public IReadOnlyList<string> TelephoneNumbers => TelephoneNumbersList;
         // 邮箱地址
         [DisallowNull] internal List<string> EmailAddressesList { get; }
-        [NotNull] public IReadOnlyList<string> EmailAddresses { get { return EmailAddressesList; } }
+        [NotNull] public IReadOnlyList<string> EmailAddresses => EmailAddressesList;
 
         internal PersonInfo(PersonID pid, string name)
             : base(pid)

@@ -26,7 +26,7 @@ namespace SCAS.Domain.UserContext
         : DomainAggregateChild<OrganizationRegisterInfoValue, OrganizationRegisterInfoID, OrganizationRegisterID>
     {
         // 注册表系统识别码
-        [NotNull] public string RegisterID { get { return pid.ID; } }
+        [NotNull] public string RegisterID => pid.ID;
 
         // 在当前域的前缀码，由系统使用者给定规则
         public uint PrefixCode { get; }

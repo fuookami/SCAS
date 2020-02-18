@@ -15,7 +15,7 @@ namespace SCAS.Domain.AccountContext
 
         // 可使用的用户列表
         internal List<User> EnabledUsersList { get; }
-        public IReadOnlyList<User> EnabledUsers { get { return EnabledUsersList; } }
+        public IReadOnlyList<User> EnabledUsers => EnabledUsersList;
 
         public override bool Allow(User user)
         {

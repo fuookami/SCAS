@@ -22,7 +22,7 @@ namespace SCAS.Module
     {
         [DisallowNull] protected U id;
 
-        [NotNull] public string ID { get { return id.ID; } }
+        [NotNull] public string ID => id.ID;
 
         protected DomainEntity(U entityID = null)
         {

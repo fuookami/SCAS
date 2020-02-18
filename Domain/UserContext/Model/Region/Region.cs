@@ -31,11 +31,11 @@ namespace SCAS.Domain.UserContext
         [DisallowNull] public RegionInfo Info { get; }
 
         // 是否允许个人注册
-        public bool IndependentPersonalityAllowed { get { return RegionTypeTrait.IndependentPersonalityAllowed(Type); } }
+        public bool IndependentPersonalityAllowed => RegionTypeTrait.IndependentPersonalityAllowed(Type);
         // 是否允许组织注册
-        public bool OrganizationAllowed { get { return RegionTypeTrait.OrganizationAllowed(Type); } }
+        public bool OrganizationAllowed => RegionTypeTrait.OrganizationAllowed(Type);
 
-        public bool BeRoot { get { return ParentRegion == null; } }
+        public bool BeRoot => ParentRegion == null;
 
         internal Region(RegionType type, string name, Region parentRegion = null)
         {

@@ -28,7 +28,7 @@ namespace SCAS.Domain.UserContext
         : DomainAggregateChild<RegionInfoValue, RegionInfoID, RegionID>
     {
         // 域系统识别码
-        [NotNull] public string RegionID { get { return pid.ID; } }
+        [NotNull] public string RegionID => pid.ID;
 
         // 域名
         [DisallowNull] public string Name { get; internal set; }
@@ -36,7 +36,7 @@ namespace SCAS.Domain.UserContext
         [DisallowNull] public string Description { get; internal set; }
         // 域标签
         [DisallowNull] internal List<string> TagsList { get; }
-        [NotNull] public IReadOnlyList<string> Tags { get { return Tags; } }
+        [NotNull] public IReadOnlyList<string> Tags => TagsList;
 
         internal RegionInfo(RegionID pid, string name)
             : base(pid)

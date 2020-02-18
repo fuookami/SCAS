@@ -41,7 +41,7 @@ namespace SCAS.Domain.UserContext
         [DisallowNull] public PersonRegisterInfo Info { get; }
 
         // 是否有所属的组织
-        public bool BelongedAnyOrganization { get { return BelongingOrganization != null; } }
+        public bool BelongedAnyOrganization => BelongingOrganization != null;
 
         internal PersonRegister(string sid, Person person, Region region, Organization org)
         {
@@ -86,7 +86,7 @@ namespace SCAS.Domain.UserContext
         private Dictionary<Region, PersonRegister> registers;
 
         // 已注册的域
-        public IReadOnlyList<Region> RegisteredRegions { get { return registers.Keys.ToList(); } }
+        public IReadOnlyList<Region> RegisteredRegions => registers.Keys.ToList();
 
         // 是否在某个域中注册
         public bool RegisteredIn(Region region)

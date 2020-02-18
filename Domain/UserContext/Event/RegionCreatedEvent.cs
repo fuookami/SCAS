@@ -23,7 +23,7 @@ namespace SCAS.Domain.UserContext
     {
         private Region region;
 
-        public override string Message { get { return GetMessage(); } }
+        public override string Message => GetMessage();
 
         internal RegionCreatedEvent(Region newRegion, IExtractor extractor = null)
             : base((uint)SCASEvent.RegionCreated, (uint)SCASEventType.Model, (uint)SCASEventLevel.Common, (uint)SCASEventPriority.Common, new RegionCreatedEventData(newRegion), extractor)

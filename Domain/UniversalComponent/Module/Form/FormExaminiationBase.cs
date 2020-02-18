@@ -40,7 +40,7 @@ namespace SCAS.Module
         where E : IDomainEntity
     {
         // 审批表单系统识别码
-        [NotNull] public string FormID { get { return pid.ID; } }
+        [NotNull] public string FormID => pid.ID;
 
         // 审批人
         [DisallowNull] public E Examiner { get; }
