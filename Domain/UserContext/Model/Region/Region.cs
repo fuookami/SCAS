@@ -10,7 +10,11 @@ namespace SCAS.Domain.UserContext
         {
             return string.Format("Region-{0}", ID);
         }
+
+        public RegionID() { }
+        internal RegionID(string id) : base(id) { }
     }
+
     public class RegionValue
         : DomainAggregateRootValueBase
     {

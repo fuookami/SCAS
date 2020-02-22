@@ -52,6 +52,8 @@ namespace SCAS.Module
     {
         [DisallowNull] protected P pid;
 
+        public P PID => pid;
+
         protected DomainAggregateChild(P parentEntityID, U entityID = null)
             : base(entityID)
         {

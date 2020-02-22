@@ -15,23 +15,23 @@ namespace SCAS.Module
         [NotNull] public string ID { get; internal set; }
     }
 
-    public abstract class DomainEntity<T, U>
-        : IDomainEntity, IPersistentType<T>
-        where T : DomainEntityValueBase
+    public abstract class DomainEntityBase<U>
+        : IDomainEntity
         where U : DomainEntityID, new()
     {
         [DisallowNull] protected U id;
 
+        [NotNull] public U RawID => id;
         [NotNull] public string ID => id.ID;
 
-        protected DomainEntity(U entityID = null)
+        protected DomainEntityBase(U entityID = null)
         {
             id = entityID ?? new U();
         }
 
         public int CompareTo(object obj)
         {
-            if (obj is DomainEntity<T, U> rhs)
+            if (obj is DomainEntityBase<U> rhs)
             {
                 return id.CompareTo(rhs.id);
             }
@@ -45,11 +45,22 @@ namespace SCAS.Module
 
         public override bool Equals(object obj)
         {
-            if (obj is DomainEntity<T, U> rhs)
+            if (obj is DomainEntityBase<U> rhs)
             {
                 return ID.Equals(rhs.id);
             }
             return false;
+        }
+    }
+
+    public abstract class DomainEntity<T, U>
+        : DomainEntityBase<U>, IPersistentType<T>
+        where T : DomainEntityValueBase
+        where U : DomainEntityID, new()
+    {
+        protected DomainEntity(U entityID = null)
+            : base(entityID)
+        {
         }
 
         public abstract T ToValue();

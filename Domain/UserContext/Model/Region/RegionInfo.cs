@@ -11,6 +11,9 @@ namespace SCAS.Domain.UserContext
         {
             return string.Format("RegionInfo-{0}", ID);
         }
+
+        public RegionInfoID() { }
+        internal RegionInfoID(string id) : base(id) { }
     }
 
     public class RegionInfoValue

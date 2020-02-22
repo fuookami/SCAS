@@ -4,20 +4,37 @@ using System.Text;
 
 namespace SCAS.Utils
 {
-    public class Try<T>
+    public class Try
     {
         public bool Succeed { get; }
-        public T Value { get; }
+        public Error Err { get; }
 
         public Try()
         {
-            Succeed = false;
+            Succeed = true;
         }
 
-        public Try(T ret)
+        public Try(Error err)
         {
-            Succeed = true;
+            Succeed = false;
+            Err = err;
+        }
+    }
+
+    public class TryEx<T>
+        : Try
+    {
+        public T Value { get; }
+
+        public TryEx(T ret)
+            : base()
+        {
             Value = ret;
+        }
+
+        public TryEx(Error err)
+            : base(err)
+        {
         }
     }
 }
