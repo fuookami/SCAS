@@ -22,7 +22,7 @@ namespace SCAS.Domain.UserContext
     {
         private Person person;
 
-        public override string Message => string.Format("Person {0} created", person.Info.Name);
+        public override string Message => string.Format("Person {0} created.", person.Info.Name);
 
         internal PersonCreatedEvent(Person newPerson, IExtractor extractor = null)
             : base((uint)SCASEvent.OrganizationCreated, (uint)SCASEventType.Model, (uint)SCASEventLevel.Common, (uint)SCASEventPriority.Common, new PersonCreatedEventData(newPerson), extractor)

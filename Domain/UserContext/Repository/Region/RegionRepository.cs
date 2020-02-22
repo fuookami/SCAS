@@ -7,6 +7,7 @@ namespace SCAS.Domain.UserContext
         : IAggregateRepository<Region, RegionID>
     {
         public RegionInfo GetInfo(RegionID id);
-        public Try SaveInfo(RegionInfo info);
+        public Try Add(RegionInfo info);
+        public Try Save(RegionInfo info);
     }
 }

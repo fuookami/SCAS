@@ -31,11 +31,12 @@ namespace SCAS.Domain.UserContext
 
         private string GetMessage()
         {
-            var ret = string.Format("Register info of organization {0} to region {1} ({2}) changed", register.Org.Info.Name, register.RegisteredRegion.Info.Name, register.Info.PrefixCode);
+            var ret = string.Format("Register info of organization {0} to region {1} ({2}) modified", register.Org.Info.Name, register.RegisteredRegion.Info.Name, register.Info.PrefixCode);
             if (DataObj.PrefixCode != null)
             {
                 ret += string.Format(", now prefix code is {0}", DataObj.PrefixCode.NewValue);
             }
+            ret += ".";
             return ret;
         }
 

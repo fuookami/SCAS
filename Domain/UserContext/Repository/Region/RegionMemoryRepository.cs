@@ -23,21 +23,33 @@ namespace SCAS.Domain.UserContext
             return new Region(id, value.Archived, value.Type, info, parentRegion);
         }
 
+        public Try Add(Region region)
+        {
+            var ret = Add(region.Info);
+            if (!ret.Succeed)
+            {
+                return ret;
+            }
+            if (regions.ContainsKey(region.ID))
+            {
+                //todo: return error
+            }
+            regions.Add(region.ID, region.ToValue());
+            return new Try();
+        }
+
         public Try Save(Region region)
         {
-            var ret = SaveInfo(region.Info);
+            var ret = Save(region.Info);
             if (!ret.Succeed)
             {
                 return ret;
             }
             if (!regions.ContainsKey(region.ID))
             {
-                regions.Add(region.ID, region.ToValue());
+                //todo: return error
             }
-            else
-            {
-                regions[region.ID] = region.ToValue();
-            }
+            regions[region.ID] = region.ToValue();
             return new Try();
         }
 
@@ -47,16 +59,23 @@ namespace SCAS.Domain.UserContext
             return new RegionInfo(id, new RegionInfoID(value.ID), value.Name, value.Description);
         }
 
-        public Try SaveInfo(RegionInfo info)
+        public Try Add(RegionInfo info)
+        {
+            if (regionInfos.ContainsKey(info.RegionID))
+            {
+                //todo: return error
+            }
+            regionInfos.Add(info.RegionID, info.ToValue());
+            return new Try();
+        }
+
+        public Try Save(RegionInfo info)
         {
             if (!regionInfos.ContainsKey(info.RegionID))
             {
-                regionInfos.Add(info.RegionID, info.ToValue());
+                //todo: return error
             }
-            else
-            {
-                regionInfos[info.RegionID] = info.ToValue();
-            }
+            regionInfos[info.RegionID] = info.ToValue();
             return new Try();
         }
     }

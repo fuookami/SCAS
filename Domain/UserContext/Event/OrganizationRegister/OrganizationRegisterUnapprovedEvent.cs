@@ -22,7 +22,7 @@ namespace SCAS.Domain.UserContext
     {
         [NotNull] private OrganizationRegisterForm form;
 
-        public override string Message => string.Format("Register of organization {0} to region {1} unapproved by {2}", form.Org.Info.Name, form.RegisteredRegion.Info.Name, form.Examination.Examiner.Info.Name);
+        public override string Message => string.Format("Register of organization {0} to region {1} unapproved by {2}.", form.Org.Info.Name, form.RegisteredRegion.Info.Name, form.Examination.Examiner.Info.Name);
 
         internal OrganizationRegisterUnapprovedEvent(OrganizationRegisterForm targetForm, IExtractor extractor = null)
             : base((uint)SCASEvent.OrganizationRegisterUnapproved, (uint)SCASEventType.Model, (uint)SCASEventLevel.Common, (uint)SCASEventPriority.Common, new OrganizationRegisterUnapprovedEventData(targetForm), extractor)

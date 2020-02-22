@@ -7,6 +7,7 @@ namespace SCAS.Module
         where U : DomainEntityID, new()
     {
         T Get(U id);
+        Try Add(T entity);
         Try Save(T entity);
     }
 }

@@ -38,7 +38,7 @@ namespace SCAS.Domain.UserContext
 
         private string GetMessage()
         {
-            var ret = string.Format("Info of person {0} changed", info.Name);
+            var ret = string.Format("Info of person {0} modified", info.Name);
             if (DataObj.Name != null)
             {
                 ret += string.Format(", now is {0}", DataObj.Name.NewValue);

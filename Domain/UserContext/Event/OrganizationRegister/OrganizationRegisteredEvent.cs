@@ -26,7 +26,7 @@ namespace SCAS.Domain.UserContext
     {
         [NotNull] private OrganizationRegister register;
 
-        public override string Message => string.Format("Organization {0} registered to region {1} with prefix code {2}", register.Org.Info.Name, register.RegisteredRegion.Info.Name, register.Info.PrefixCode);
+        public override string Message => string.Format("Organization {0} registered to region {1} with prefix code {2}.", register.Org.Info.Name, register.RegisteredRegion.Info.Name, register.Info.PrefixCode);
 
         internal OrganizationRegisteredEvent(OrganizationRegisterApprovedEvent trigger, OrganizationRegister targetRegister, IExtractor extractor = null)
             : base(trigger, (uint)SCASEvent.OrganizationRegistered, (uint)SCASEventType.Model, (uint)SCASEventLevel.Common, (uint)SCASEventPriority.Common, new OrganizationRegisteredEventData(targetRegister), extractor)

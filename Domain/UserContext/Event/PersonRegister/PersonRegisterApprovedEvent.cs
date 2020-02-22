@@ -37,6 +37,7 @@ namespace SCAS.Domain.UserContext
             {
                 ret += string.Format(", belonging organization {0}", form.BelongingOrganization.Info.Name);
             }
+            ret += ".";
             return ret;
         }
 
