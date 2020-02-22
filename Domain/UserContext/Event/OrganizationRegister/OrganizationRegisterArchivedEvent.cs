@@ -1,4 +1,5 @@
 ﻿using SCAS.Module;
+using System.Diagnostics.CodeAnalysis;
 
 namespace SCAS.Domain.UserContext
 {
@@ -15,7 +16,7 @@ namespace SCAS.Domain.UserContext
     public class OrganizationRegisterArchivedEvent
         : DomainEventBase<DomainEventValue, OrganizationRegisterArchivedEventData>
     {
-        private OrganizationRegister register;
+        [NotNull] private OrganizationRegister register;
 
         public override string Message => string.Format("Register of organization {0} to region {1} archived.", register.RegisteredRegion.Info.Name, register.Org.Info.Name);
 

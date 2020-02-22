@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace SCAS.Domain.UserContext
 {
     public class RegionMemoryRepository
-        : IRegionRepository
+        : RegionRepository
     {
         private Dictionary<string, RegionValue> regions;
         private Dictionary<string, RegionInfoValue> regionInfos;
@@ -15,7 +15,7 @@ namespace SCAS.Domain.UserContext
             regionInfos = new Dictionary<string, RegionInfoValue>();
         }
 
-        public Region Get(RegionID id)
+        public override Region Get(RegionID id)
         {
             var info = GetInfo(id);
             var value = regions[id.ID];
@@ -23,43 +23,47 @@ namespace SCAS.Domain.UserContext
             return new Region(id, value.Archived, value.Type, info, parentRegion);
         }
 
-        public Try Add(Region region)
+        public override Try Add(Region region)
         {
+            if (regions.ContainsKey(region.ID))
+            {
+                //todo: return error
+            }
             var ret = Add(region.Info);
             if (!ret.Succeed)
             {
                 return ret;
             }
-            if (regions.ContainsKey(region.ID))
-            {
-                //todo: return error
-            }
             regions.Add(region.ID, region.ToValue());
             return new Try();
         }
 
-        public Try Save(Region region)
+        public override Try Save(Region region)
         {
+            if (!regions.ContainsKey(region.ID))
+            {
+                //todo: return error
+            }
+            if (regions[region.ID].Archived)
+            {
+                //todo: return error
+            }
             var ret = Save(region.Info);
             if (!ret.Succeed)
             {
                 return ret;
             }
-            if (!regions.ContainsKey(region.ID))
-            {
-                //todo: return error
-            }
             regions[region.ID] = region.ToValue();
             return new Try();
         }
 
-        public RegionInfo GetInfo(RegionID id)
+        protected override RegionInfo GetInfo(RegionID id)
         {
             var value = regionInfos[id.ID];
             return new RegionInfo(id, new RegionInfoID(value.ID), value.Name, value.Description);
         }
 
-        public Try Add(RegionInfo info)
+        protected override Try Add(RegionInfo info)
         {
             if (regionInfos.ContainsKey(info.RegionID))
             {
@@ -69,7 +73,7 @@ namespace SCAS.Domain.UserContext
             return new Try();
         }
 
-        public Try Save(RegionInfo info)
+        protected override Try Save(RegionInfo info)
         {
             if (!regionInfos.ContainsKey(info.RegionID))
             {

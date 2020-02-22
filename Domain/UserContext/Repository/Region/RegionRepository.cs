@@ -3,11 +3,15 @@ using SCAS.Utils;
 
 namespace SCAS.Domain.UserContext
 {
-    public interface IRegionRepository
+    public abstract class RegionRepository
         : IAggregateRepository<Region, RegionID>
     {
-        public RegionInfo GetInfo(RegionID id);
-        public Try Add(RegionInfo info);
-        public Try Save(RegionInfo info);
+        public abstract Region Get(RegionID id);
+        public abstract Try Add(Region region);
+        public abstract Try Save(Region region);
+
+        protected abstract RegionInfo GetInfo(RegionID id);
+        protected abstract Try Add(RegionInfo info);
+        protected abstract Try Save(RegionInfo info);
     }
 }
