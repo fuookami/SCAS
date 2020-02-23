@@ -15,12 +15,24 @@ namespace SCAS.Domain.UserContext
             regionInfos = new Dictionary<string, RegionInfoValue>();
         }
 
-        public override Region Get(RegionID id)
+        public override TryEx<Region> Get(RegionID id)
         {
-            var info = GetInfo(id);
+            if (!regions.ContainsKey(id.ID))
+            {
+                //todo: return error
+            }
             var value = regions[id.ID];
-            var parentRegion = id == null ? null : Get(new RegionID(value.ParentRegionID));
-            return new Region(id, value.Archived, value.Type, info, parentRegion);
+            var info = GetInfo(id);
+            if (!info.Succeed)
+            {
+                //todo: return error
+            }
+            var parentRegion = value.ParentRegionID == null ? null : Get(new RegionID(value.ParentRegionID));
+            if (parentRegion != null && !parentRegion.Succeed)
+            {
+                //todo: return error
+            }
+            return new TryEx<Region>(new Region(id, value.Archived, value.Type, info.Value, parentRegion?.Value));
         }
 
         public override Try Add(Region region)
@@ -57,10 +69,14 @@ namespace SCAS.Domain.UserContext
             return new Try();
         }
 
-        protected override RegionInfo GetInfo(RegionID id)
+        protected override TryEx<RegionInfo> GetInfo(RegionID id)
         {
+            if (!regionInfos.ContainsKey(id.ID))
+            {
+                //todo: return error
+            }
             var value = regionInfos[id.ID];
-            return new RegionInfo(id, new RegionInfoID(value.ID), value.Name, value.Description);
+            return new TryEx<RegionInfo>(new RegionInfo(id, new RegionInfoID(value.ID), value.Name, value.Description));
         }
 
         protected override Try Add(RegionInfo info)

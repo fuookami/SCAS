@@ -6,6 +6,7 @@ using System.Text;
 namespace SCAS.Domain.UserContext
 {
     public interface IUserRepository
+        : IRegionRepository
     {
     }
 }
