@@ -23,12 +23,12 @@ namespace SCAS.Domain.UserContext
             }
             var value = regions[id.ID];
             var info = GetInfo(id);
-            if (!info.Succeed)
+            if (!info.Succeeded)
             {
                 //todo: return error
             }
             var parentRegion = value.ParentRegionID == null ? null : Get(new RegionID(value.ParentRegionID));
-            if (parentRegion != null && !parentRegion.Succeed)
+            if (parentRegion != null && !parentRegion.Succeeded)
             {
                 //todo: return error
             }
@@ -42,12 +42,12 @@ namespace SCAS.Domain.UserContext
                 //todo: return error
             }
             var ret = Add(region.Info);
-            if (!ret.Succeed)
+            if (!ret.Succeeded)
             {
                 return ret;
             }
             regions.Add(region.ID, region.ToValue());
-            return new Try();
+            return Try.Success;
         }
 
         public override Try Save(Region region)
@@ -61,12 +61,12 @@ namespace SCAS.Domain.UserContext
                 //todo: return error
             }
             var ret = Save(region.Info);
-            if (!ret.Succeed)
+            if (!ret.Succeeded)
             {
                 return ret;
             }
             regions[region.ID] = region.ToValue();
-            return new Try();
+            return Try.Success;
         }
 
         protected override TryEx<RegionInfo> GetInfo(RegionID id)
@@ -86,7 +86,7 @@ namespace SCAS.Domain.UserContext
                 //todo: return error
             }
             regionInfos.Add(info.RegionID, info.ToValue());
-            return new Try();
+            return Try.Success;
         }
 
         protected override Try Save(RegionInfo info)
@@ -96,7 +96,7 @@ namespace SCAS.Domain.UserContext
                 //todo: return error
             }
             regionInfos[info.RegionID] = info.ToValue();
-            return new Try();
+            return Try.Success;
         }
     }
 }

@@ -6,18 +6,49 @@ namespace SCAS.Utils
 {
     public class Try
     {
-        public bool Succeed { get; }
+        public bool Succeeded { get; }
         public Error Err { get; }
+
+        public static Try Success;
+
+        static Try() {
+            Success = new Try();
+        }
 
         public Try()
         {
-            Succeed = true;
+            Succeeded = true;
         }
 
         public Try(Error err)
         {
-            Succeed = false;
+            Succeeded = false;
             Err = err;
+        }
+
+        public static implicit operator bool(Try v)
+        {
+            return v.Succeeded;
+        }
+
+        public static Try operator&(Try lhs, Try rhs)
+        {
+            return lhs.Succeeded ? rhs : lhs;
+        }
+
+        public static Try operator|(Try lhs, Try rhs)
+        {
+            return lhs.Succeeded ? lhs : rhs;
+        }
+
+        public static bool operator true(Try v)
+        {
+            return v.Succeeded;
+        }
+
+        public static bool operator false(Try v)
+        {
+            return !v.Succeeded;
         }
     }
 

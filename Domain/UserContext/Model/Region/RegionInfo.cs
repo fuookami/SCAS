@@ -1,6 +1,7 @@
 ﻿using SCAS.Module;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 
 namespace SCAS.Domain.UserContext
 {
@@ -45,13 +46,38 @@ namespace SCAS.Domain.UserContext
             : base(pid)
         {
             Name = name;
+            TagsList = new List<string>();
         }
 
-        internal RegionInfo(RegionID pid, RegionInfoID id, string name, string description = null)
+        internal RegionInfo(RegionID pid, RegionInfoID id, string name, string description = null, IReadOnlyList<string> tags = null)
             : base(pid, id)
         {
             Name = name;
             Description = description;
+            TagsList = tags?.ToList() ?? new List<string>();
+        }
+
+        public RegionInfo Snapshoot()
+        {
+            return new RegionInfo(pid, id, Name, Description, TagsList.ToList());
+        }
+
+        public RegionInfo Refresh(string name = null, string description = null, IReadOnlyCollection<string> tags = null)
+        {
+            if (name != null)
+            {
+                Name = name;
+            }
+            if (description != null)
+            {
+                Description = description;
+            }
+            if (tags != null)
+            {
+                TagsList.Clear();
+                TagsList.AddRange(tags);
+            }
+            return this;
         }
 
         public override RegionInfoValue ToValue()

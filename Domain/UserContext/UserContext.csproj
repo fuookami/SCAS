@@ -11,7 +11,8 @@
   <ItemGroup>
     <Folder Include="Repository\Person\" />
     <Folder Include="Repository\PersonRegister\" />
-    <Folder Include="Service\" />
+    <Folder Include="Repository\Organization\" />
+    <Folder Include="Repository\OrganizationRegister\" />
   </ItemGroup>
 
 </Project>
