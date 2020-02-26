@@ -32,6 +32,7 @@ namespace SCAS.Module
         : DomainEntityValueBase
     {
         public string TriggerID { get; internal set; }
+        public string OperatorID { get; internal set; }
 
         public uint Code { get; internal set; }
         public uint Type { get; internal set; }
@@ -43,11 +44,13 @@ namespace SCAS.Module
         public DateTime PostTime { get; internal set; }
     }
 
-    public abstract class DomainEventBase<T, DTO>
+    public abstract class DomainEventBase<T, DTO, O>
         : DomainEntity<T, DomainEventID>, IDomainEvent
         where T : DomainEventValue
+        where O : IDomainEntity
     {
         public IDomainEvent Trigger { get; }
+        public O Operator { get; }
 
         public uint Code { get; }
         public uint Type { get; }
@@ -60,7 +63,7 @@ namespace SCAS.Module
         [DisallowNull] public string Data { get; }
         [DisallowNull] public DTO DataObj { get; }
 
-        protected DomainEventBase(uint code, uint type, uint level, uint priority, DTO obj, IExtractor extractor = null)
+        private DomainEventBase(uint code, uint type, uint level, uint priority, DTO obj, IExtractor extractor = null)
         {
             Code = code;
             Type = type;
@@ -73,13 +76,19 @@ namespace SCAS.Module
             Digest = Encoding.UTF8.GetString(extractor.Extract(Encoding.UTF8.GetBytes(Data)));
         }
 
+        protected DomainEventBase(O op, uint code, uint type, uint level, uint priority, DTO obj, IExtractor extractor = null)
+            : this(code, type, level, priority, obj, extractor)
+        {
+            Operator = op;
+        }
+
         protected DomainEventBase(IDomainEvent trigger, uint code, uint type, uint level, uint priority, DTO obj, IExtractor extractor = null)
             : this(code, type, level, priority, obj, extractor)
         {
             Trigger = trigger;
         }
 
-        protected DomainEventBase(DomainEventID id, uint code, uint type, uint level, uint priority, DateTime postTime, DTO obj, IExtractor extractor = null)
+        private DomainEventBase(DomainEventID id, uint code, uint type, uint level, uint priority, DateTime postTime, DTO obj, IExtractor extractor = null)
             : base(id)
         {
             Code = code;
@@ -93,6 +102,12 @@ namespace SCAS.Module
             Digest = Encoding.UTF8.GetString(extractor.Extract(Encoding.UTF8.GetBytes(Data)));
         }
 
+        protected DomainEventBase(DomainEventID id, O op, uint code, uint type, uint level, uint priority, DateTime postTime, DTO obj, IExtractor extractor = null)
+            : this(id, code, type, level, priority, postTime, obj, extractor)
+        {
+            Operator = op;
+        }
+
         protected DomainEventBase(DomainEventID id, IDomainEvent trigger, uint code, uint type, uint level, uint priority, DateTime postTime, DTO obj, IExtractor extractor = null)
             : this(id, code, type, level, priority, postTime, obj, extractor)
         {
@@ -101,7 +116,7 @@ namespace SCAS.Module
 
         public new int CompareTo(object obj)
         {
-            if (obj is DomainEventBase<T, DTO> rhs)
+            if (obj is DomainEventBase<T, DTO, O> rhs)
             {
                 return Digest.CompareTo(rhs.Digest);
             }
@@ -115,7 +130,7 @@ namespace SCAS.Module
 
         public override bool Equals(object obj)
         {
-            if (obj is DomainEventBase<T, DTO> rhs)
+            if (obj is DomainEventBase<T, DTO, O> rhs)
             {
                 return Digest.Equals(rhs.Digest);
             }
@@ -125,6 +140,7 @@ namespace SCAS.Module
         protected new T ToValue(T value)
         {
             base.ToValue(value);
+            value.OperatorID = this.Operator?.ID;
             value.TriggerID = this.Trigger?.ID;
             value.Code = this.Code;
             value.Type = this.Type;
