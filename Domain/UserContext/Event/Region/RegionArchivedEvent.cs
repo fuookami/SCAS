@@ -18,7 +18,7 @@ namespace SCAS.Domain.UserContext
     {
         [NotNull] private Region region;
 
-        public override string Message => string.Format("Region {0} archived.", region.Info.Name);
+        public override string Message => string.Format("Region {0} was archived.", region.Info.Name);
 
         internal RegionArchivedEvent(Person op, Region targetRegion, IExtractor extractor = null)
             : base(op, (uint)SCASEvent.RegionArchived, (uint)SCASEventType.Model, (uint)SCASEventLevel.Common, (uint)SCASEventPriority.Common, new RegionArchivedEventData(targetRegion), extractor)

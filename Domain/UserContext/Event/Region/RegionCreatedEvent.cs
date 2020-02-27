@@ -33,10 +33,10 @@ namespace SCAS.Domain.UserContext
 
         private string GetMessage()
         {
-            var ret = string.Format("{0} region {1} created", region.Type.ToString(), region.Info.Name);
+            var ret = string.Format("{0} region {1} was created", region.Type.ToString(), region.Info.Name);
             if (!region.BeRoot)
             {
-                ret += string.Format(", is subject to {0}", region.ParentRegion.Info.Name);
+                ret += string.Format(". It is subject to {0}", region.ParentRegion.Info.Name);
             }
             ret += ".";
             return ret;

@@ -13,7 +13,6 @@ namespace SCAS.Module
         : IPersistentValue
     {
         [NotNull] public string ID { get; internal set; }
-        public bool Deleted { get; internal set; }
     }
 
     public abstract class DomainEntityBase<U>
@@ -25,17 +24,9 @@ namespace SCAS.Module
         [NotNull] public U RawID => id;
         [NotNull] public string ID => id.ID;
 
-        public bool Deleted { get; private set; }
-
         protected DomainEntityBase(U entityID = null)
         {
             id = entityID ?? new U();
-            Deleted = false;
-        }
-
-        public void Delete()
-        {
-            Deleted = true;
         }
 
         public int CompareTo(object obj)
@@ -77,7 +68,6 @@ namespace SCAS.Module
         protected T ToValue(T value)
         {
             value.ID = this.ID;
-            value.Deleted = this.Deleted;
             return value;
         }
     }

@@ -36,10 +36,10 @@ namespace SCAS.Domain.UserContext
 
         private string GetMessage()
         {
-            var ret = string.Format("Info of region {0} changed", info.Name);
+            var ret = string.Format("Info of region {0} was modified", info.Name);
             if (DataObj.Name != null)
             {
-                ret += string.Format(", now is {0}", DataObj.Name.NewValue);
+                ret += string.Format(". It is {0} now", DataObj.Name.NewValue);
             }
             ret += ".";
             return ret;
