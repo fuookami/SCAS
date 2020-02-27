@@ -5,6 +5,7 @@
         RegionCreated,
         RegionInfoModified,
         RegionArchived,
+        RegionDeleted,
 
         OrganizationCreated,
         OrganizationInfoModified,

@@ -14,14 +14,14 @@ namespace SCAS.Domain.UserContext
     }
 
     public class RegionArchivedEvent
-        : DomainEventBase<DomainEventValue, RegionArchivedEventData>
+        : DomainArtificialEventBase<DomainEventValue, RegionArchivedEventData, Person>
     {
         [NotNull] private Region region;
 
         public override string Message => string.Format("Region {0} archived.", region.Info.Name);
 
-        internal RegionArchivedEvent(Region targetRegion, IExtractor extractor = null)
-            : base((uint)SCASEvent.RegionArchived, (uint)SCASEventType.Model, (uint)SCASEventLevel.Common, (uint)SCASEventPriority.Common, new RegionArchivedEventData(targetRegion), extractor)
+        internal RegionArchivedEvent(Person op, Region targetRegion, IExtractor extractor = null)
+            : base(op, (uint)SCASEvent.RegionArchived, (uint)SCASEventType.Model, (uint)SCASEventLevel.Common, (uint)SCASEventPriority.Common, new RegionArchivedEventData(targetRegion), extractor)
         {
             region = targetRegion;
         }

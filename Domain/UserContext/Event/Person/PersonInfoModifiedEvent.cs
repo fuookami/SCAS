@@ -24,14 +24,14 @@ namespace SCAS.Domain.UserContext
     }
 
     public class PersonInfoModifiedEvent
-        : DomainEventBase<DomainEventValue, PersonInfoModifiedEventData>
+        : DomainArtificialEventBase<DomainEventValue, PersonInfoModifiedEventData, Person>
     {
         [NotNull] private PersonInfo info;
 
         public override string Message => GetMessage();
 
-        internal PersonInfoModifiedEvent(PersonInfo targetInfo, string name = null, IReadOnlyCollection<string> titles = null, IReadOnlyCollection<string> telephoneNumbers = null, IReadOnlyCollection<string> emailAddresses = null, IExtractor extractor = null)
-            : base((uint)SCASEvent.OrganizationInfoModified, (uint)SCASEventType.Model, (uint)SCASEventLevel.Common, (uint)SCASEventPriority.Common, new PersonInfoModifiedEventData(targetInfo, name, titles, telephoneNumbers, emailAddresses), extractor)
+        internal PersonInfoModifiedEvent(Person op, PersonInfo targetInfo, string name = null, IReadOnlyCollection<string> titles = null, IReadOnlyCollection<string> telephoneNumbers = null, IReadOnlyCollection<string> emailAddresses = null, IExtractor extractor = null)
+            : base(op, (uint)SCASEvent.OrganizationInfoModified, (uint)SCASEventType.Model, (uint)SCASEventLevel.Common, (uint)SCASEventPriority.Common, new PersonInfoModifiedEventData(targetInfo, name, titles, telephoneNumbers, emailAddresses), extractor)
         {
             info = targetInfo;
         }

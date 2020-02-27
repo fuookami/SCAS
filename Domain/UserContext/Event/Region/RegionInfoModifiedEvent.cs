@@ -22,14 +22,14 @@ namespace SCAS.Domain.UserContext
     }
 
     public class RegionInfoModifiedEvent
-        : DomainEventBase<DomainEventValue, RegionInfoChangedEventData>
+        : DomainArtificialEventBase<DomainEventValue, RegionInfoChangedEventData, Person>
     {
         [NotNull] private RegionInfo info;
 
         public override string Message => GetMessage();
 
-        internal RegionInfoModifiedEvent(RegionInfo targetInfo, string name = null, string description = null, IReadOnlyCollection<string> tags = null, IExtractor extractor = null)
-            : base((uint)SCASEvent.RegionInfoModified, (uint)SCASEventType.Model, (uint)SCASEventLevel.Common, (uint)SCASEventPriority.Common, new RegionInfoChangedEventData(targetInfo, name, description, tags), extractor)
+        internal RegionInfoModifiedEvent(Person op, RegionInfo targetInfo, string name = null, string description = null, IReadOnlyCollection<string> tags = null, IExtractor extractor = null)
+            : base(op, (uint)SCASEvent.RegionInfoModified, (uint)SCASEventType.Model, (uint)SCASEventLevel.Common, (uint)SCASEventPriority.Common, new RegionInfoChangedEventData(targetInfo, name, description, tags), extractor)
         {
             info = targetInfo;
         }

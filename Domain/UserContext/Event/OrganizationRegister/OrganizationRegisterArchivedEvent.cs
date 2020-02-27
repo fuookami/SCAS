@@ -14,7 +14,7 @@ namespace SCAS.Domain.UserContext
     }
 
     public class OrganizationRegisterArchivedEvent
-        : DomainEventBase<DomainEventValue, OrganizationRegisterArchivedEventData>
+        : DomainArtificialEventBase<DomainEventValue, OrganizationRegisterArchivedEventData, Person>
     {
         [NotNull] private OrganizationRegister register;
 
@@ -22,6 +22,12 @@ namespace SCAS.Domain.UserContext
 
         private OrganizationRegisterArchivedEvent(IDomainEvent trigger, OrganizationRegister targetRegister, IExtractor extractor)
             : base(trigger, (uint)SCASEvent.OrganizationRegisterArchived, (uint)SCASEventType.Model, (uint)SCASEventLevel.Common, (uint)SCASEventPriority.Common, new OrganizationRegisterArchivedEventData(targetRegister), extractor)
+        {
+            register = targetRegister;
+        }
+
+        internal OrganizationRegisterArchivedEvent(Person op, OrganizationRegister targetRegister, IExtractor extractor)
+            : base(op, (uint)SCASEvent.OrganizationRegisterArchived, (uint)SCASEventType.Model, (uint)SCASEventLevel.Common, (uint)SCASEventPriority.Common, new OrganizationRegisterArchivedEventData(targetRegister), extractor)
         {
             register = targetRegister;
         }

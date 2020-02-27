@@ -24,14 +24,14 @@ namespace SCAS.Domain.UserContext
     }
 
     public class OrganizationRegisterInitiatedEvent
-        : DomainEventBase<DomainEventValue, OrganizationRegisterInitiatedEventData>
+        : DomainArtificialEventBase<DomainEventValue, OrganizationRegisterInitiatedEventData, Person>
     {
         [NotNull] private OrganizationRegisterForm form;
 
         public override string Message => string.Format("Register of organization {0} to region {1} initiated by {2}, prefix code {3}.", form.Org.Info.Name, form.RegisteredRegion.Info.Name, form.Info.Initiator.Info.Name, form.Info.PrefixCode);
 
-        internal OrganizationRegisterInitiatedEvent(OrganizationRegisterForm newForm, IExtractor extractor = null)
-            : base((uint)SCASEvent.OrganizationInfoModified, (uint)SCASEventType.Model, (uint)SCASEventLevel.Common, (uint)SCASEventPriority.Common, new OrganizationRegisterInitiatedEventData(newForm), extractor)
+        internal OrganizationRegisterInitiatedEvent(Person op, OrganizationRegisterForm newForm, IExtractor extractor = null)
+            : base(op, (uint)SCASEvent.OrganizationInfoModified, (uint)SCASEventType.Model, (uint)SCASEventLevel.Common, (uint)SCASEventPriority.Common, new OrganizationRegisterInitiatedEventData(newForm), extractor)
         {
             form = newForm;
         }

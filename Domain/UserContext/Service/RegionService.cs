@@ -17,25 +17,30 @@ namespace SCAS.Domain.UserContext
             extractor = targetExtractor;
         }
 
-        public Try CreateRegion(Region newRegion)
+        public TryEx<Region> GetRegion(string id)
+        {
+            return repository.Get(new RegionID(id));
+        }
+
+        public Try CreateRegion(Person op, Region newRegion)
         {
             return repository.Add(newRegion)
-                && handler.Push(new RegionCreatedEvent(newRegion, extractor));
+                && handler.Push(new RegionCreatedEvent(op, newRegion, extractor));
         }
 
-        public Try ArchiveRegion(Region targetRegion)
+        public Try ArchiveRegion(Person op, Region targetRegion)
         {
             return repository.Save(targetRegion.Archive())
-                && handler.Push(new RegionArchivedEvent(targetRegion, extractor));
+                && handler.Push(new RegionArchivedEvent(op, targetRegion, extractor));
         }
 
-        public Try RegionInfoModified(Region targetRegion, string name = null, string description = null, IReadOnlyCollection<string> tags = null)
+        public Try RegionInfoModified(Person op, Region targetRegion, string name = null, string description = null, IReadOnlyCollection<string> tags = null)
         {
             var info = targetRegion.Info;
             var snapshoot = info.Snapshoot();
             info.Refresh(name, description, tags);
             return repository.Save(targetRegion)
-                && handler.Push(new RegionInfoModifiedEvent(snapshoot, name, description, tags, extractor));
+                && handler.Push(new RegionInfoModifiedEvent(op, snapshoot, name, description, tags, extractor));
         }
     }
 }

@@ -19,14 +19,14 @@ namespace SCAS.Domain.UserContext
     }
 
     public class RegionCreatedEvent
-        : DomainEventBase<DomainEventValue, RegionCreatedEventData>
+        : DomainArtificialEventBase<DomainEventValue, RegionCreatedEventData, Person>
     {
         private Region region;
 
         public override string Message => GetMessage();
 
-        internal RegionCreatedEvent(Region newRegion, IExtractor extractor = null)
-            : base((uint)SCASEvent.RegionCreated, (uint)SCASEventType.Model, (uint)SCASEventLevel.Common, (uint)SCASEventPriority.Common, new RegionCreatedEventData(newRegion), extractor)
+        internal RegionCreatedEvent(Person op, Region newRegion, IExtractor extractor = null)
+            : base(op, (uint)SCASEvent.RegionCreated, (uint)SCASEventType.Model, (uint)SCASEventLevel.Common, (uint)SCASEventPriority.Common, new RegionCreatedEventData(newRegion), extractor)
         {
             region = newRegion;
         }
