@@ -1,6 +1,5 @@
 ﻿using SCAS.Module;
 using SCAS.Utils;
-using System.Collections.Generic;
 
 namespace SCAS.Domain.UserContext
 {

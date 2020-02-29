@@ -17,7 +17,7 @@ namespace SCAS.Domain.UserContext
     {
         private Organization org;
 
-        public override string Message => string.Format("Organization {0} archived.", org.Info.Name);
+        public override string Message => string.Format("Organization {0} was archived.", org.Info.Name);
 
         internal OrganizationArchivedEvent(Person op, Organization targetOrg, IExtractor extractor = null)
             : base(op, UserContextEvent.OrganizationArchived, SCASEventType.Model, SCASEventLevel.Common, SCASEventPriority.Common, new OrganizationArchivedEventData(targetOrg), extractor)

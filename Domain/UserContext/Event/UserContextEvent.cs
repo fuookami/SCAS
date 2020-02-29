@@ -19,6 +19,7 @@ namespace SCAS.Domain.UserContext
         OrganizationRegisterInfoModified,
         OrganizationRegisterArchived,
         OrganizationArchived,
+        OrganizationDeleted,
 
         PersonCreated,
         PersonInfoModified,
@@ -28,7 +29,8 @@ namespace SCAS.Domain.UserContext
         PersonRegistered,
         PersonRegisterInfoModified,
         PersonRegisterArchived,
-        PersonArchived
+        PersonArchived,
+        PersonDeleted
     };
 
     public abstract class UserContextEventBase<T, DTO>

@@ -80,10 +80,6 @@ namespace SCAS.Domain.UserContext
                 //todo: return error
             }
             var value = regionInfos[id.ID];
-            if (value.Deleted)
-            {
-                //todo: return error
-            }
             return new TryEx<RegionInfo>(new RegionInfo(id, new RegionInfoID(value.ID), value.Name, value.Description));
         }
 
