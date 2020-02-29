@@ -22,14 +22,14 @@ namespace SCAS.Domain.UserContext
     }
 
     public class OrganizationRegisteredEvent
-        : DomainEventBase<DomainEventValue, OrganizationRegisteredEventData>
+        : UserContextEventBase<DomainEventValue, OrganizationRegisteredEventData>
     {
         [NotNull] private OrganizationRegister register;
 
         public override string Message => string.Format("Organization {0} registered to region {1} with prefix code {2}.", register.Org.Info.Name, register.RegisteredRegion.Info.Name, register.Info.PrefixCode);
 
         internal OrganizationRegisteredEvent(OrganizationRegisterApprovedEvent trigger, OrganizationRegister targetRegister, IExtractor extractor = null)
-            : base(trigger, (uint)SCASEvent.OrganizationRegistered, (uint)SCASEventType.Model, (uint)SCASEventLevel.Common, (uint)SCASEventPriority.Common, new OrganizationRegisteredEventData(targetRegister), extractor)
+            : base(trigger, UserContextEvent.OrganizationRegistered, SCASEventType.Model, SCASEventLevel.Common, SCASEventPriority.Common, new OrganizationRegisteredEventData(targetRegister), extractor)
         {
             register = targetRegister;
         }

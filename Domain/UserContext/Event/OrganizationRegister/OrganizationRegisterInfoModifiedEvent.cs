@@ -17,14 +17,14 @@ namespace SCAS.Domain.UserContext
     }
 
     public class OrganizationRegisterInfoModifiedEvent
-        : DomainArtificialEventBase<DomainEventValue, OrganizationRegisterInfoModifiedEventData, Person>
+        : UserContextArtificialEventBase<DomainEventValue, OrganizationRegisterInfoModifiedEventData>
     {
         [NotNull] public OrganizationRegister register;
 
         public override string Message => GetMessage();
 
         internal OrganizationRegisterInfoModifiedEvent(Person op, OrganizationRegister targetRegister, uint? prefixCode, IExtractor extractor = null)
-            : base(op, (uint)SCASEvent.OrganizationRegisterInfoModified, (uint)SCASEventType.Model, (uint)SCASEventLevel.Common, (uint)SCASEventPriority.Common, new OrganizationRegisterInfoModifiedEventData(targetRegister.Info), extractor)
+            : base(op, UserContextEvent.OrganizationRegisterInfoModified, SCASEventType.Model, SCASEventLevel.Common, SCASEventPriority.Common, new OrganizationRegisterInfoModifiedEventData(targetRegister.Info, prefixCode), extractor)
         {
             register = targetRegister;
         }

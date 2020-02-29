@@ -22,14 +22,14 @@ namespace SCAS.Domain.UserContext
     }
 
     public class PersonRegisteredEvent
-        : DomainEventBase<DomainEventValue, PersonRegisteredEventData>
+        : UserContextEventBase<DomainEventValue, PersonRegisteredEventData>
     {
         [NotNull] private PersonRegister register;
 
         public override string Message => GetMessage();
 
         internal PersonRegisteredEvent(PersonRegisterApprovedEvent trigger, PersonRegister targetRegister, IExtractor extractor = null)
-            : base(trigger, (uint)SCASEvent.PersonRegistered, (uint)SCASEventType.Model, (uint)SCASEventLevel.Common, (uint)SCASEventPriority.Common, new PersonRegisteredEventData(targetRegister), extractor)
+            : base(trigger, UserContextEvent.PersonRegistered, SCASEventType.Model, SCASEventLevel.Common, SCASEventPriority.Common, new PersonRegisteredEventData(targetRegister), extractor)
         {
             register = targetRegister;
         }

@@ -24,14 +24,14 @@ namespace SCAS.Domain.UserContext
     }
 
     public class PersonRegisterInitiatedEvent
-        : DomainArtificialEventBase<DomainEventValue, PersonRegisterInitiatedEventData, Person>
+        : UserContextArtificialEventBase<DomainEventValue, PersonRegisterInitiatedEventData>
     {
         [NotNull] private PersonRegisterForm form;
 
         public override string Message => GetMessage();
 
         internal PersonRegisterInitiatedEvent(Person op, PersonRegisterForm newForm, IExtractor extractor = null)
-            : base(op, (uint)SCASEvent.PersonRegisterInitiated, (uint)SCASEventType.Model, (uint)SCASEventLevel.Common, (uint)SCASEventPriority.Common, new PersonRegisterInitiatedEventData(newForm), extractor)
+            : base(op, UserContextEvent.PersonRegisterInitiated, SCASEventType.Model, SCASEventLevel.Common, SCASEventPriority.Common, new PersonRegisterInitiatedEventData(newForm), extractor)
         {
             form = newForm;
         }

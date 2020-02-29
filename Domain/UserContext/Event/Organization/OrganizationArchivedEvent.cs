@@ -13,14 +13,14 @@ namespace SCAS.Domain.UserContext
     }
 
     public class OrganizationArchivedEvent
-        : DomainArtificialEventBase<DomainEventValue, OrganizationArchivedEventData, Person>
+        : UserContextArtificialEventBase<DomainEventValue, OrganizationArchivedEventData>
     {
         private Organization org;
 
         public override string Message => string.Format("Organization {0} archived.", org.Info.Name);
 
         internal OrganizationArchivedEvent(Person op, Organization targetOrg, IExtractor extractor = null)
-            : base(op, (uint)SCASEvent.OrganizationArchived, (uint)SCASEventType.Model, (uint)SCASEventLevel.Common, (uint)SCASEventPriority.Common, new OrganizationArchivedEventData(targetOrg), extractor)
+            : base(op, UserContextEvent.OrganizationArchived, SCASEventType.Model, SCASEventLevel.Common, SCASEventPriority.Common, new OrganizationArchivedEventData(targetOrg), extractor)
         {
             org = targetOrg;
         }

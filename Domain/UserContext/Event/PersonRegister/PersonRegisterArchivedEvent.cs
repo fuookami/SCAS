@@ -14,20 +14,20 @@ namespace SCAS.Domain.UserContext
     }
 
     public class PersonRegisterArchivedEvent
-        : DomainArtificialEventBase<DomainEventValue, PersonRegisterArchivedEventData, Person>
+        : UserContextArtificialEventBase<DomainEventValue, PersonRegisterArchivedEventData>
     {
         [NotNull] private PersonRegister register;
 
         public override string Message => GetMessage();
 
         private PersonRegisterArchivedEvent(IDomainEvent trigger, PersonRegister targetRegister, IExtractor extractor)
-            : base(trigger, (uint)SCASEvent.PersonRegisterArchived, (uint)SCASEventType.Model, (uint)SCASEventLevel.Common, (uint)SCASEventPriority.Common, new PersonRegisterArchivedEventData(targetRegister), extractor)
+            : base(trigger, UserContextEvent.PersonRegisterArchived, SCASEventType.Model, SCASEventLevel.Common, SCASEventPriority.Common, new PersonRegisterArchivedEventData(targetRegister), extractor)
         {
             register = targetRegister;
         }
 
         internal PersonRegisterArchivedEvent(Person op, PersonRegister targetRegister, IExtractor extractor = null)
-            : base(op, (uint)SCASEvent.PersonRegisterArchived, (uint)SCASEventType.Model, (uint)SCASEventLevel.Common, (uint)SCASEventPriority.Common, new PersonRegisterArchivedEventData(targetRegister), extractor)
+            : base(op, UserContextEvent.PersonRegisterArchived, SCASEventType.Model, SCASEventLevel.Common, SCASEventPriority.Common, new PersonRegisterArchivedEventData(targetRegister), extractor)
         {
             register = targetRegister;
         }

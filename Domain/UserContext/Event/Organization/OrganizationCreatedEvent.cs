@@ -17,14 +17,14 @@ namespace SCAS.Domain.UserContext
     }
 
     public class OrganizationCreatedEvent
-        : DomainArtificialEventBase<DomainEventValue, OrganizationCreatedEventData, Person>
+        : UserContextArtificialEventBase<DomainEventValue, OrganizationCreatedEventData>
     {
         private Organization org;
 
         public override string Message => string.Format("Organization {0} created.", org.Info.Name);
 
         internal OrganizationCreatedEvent(Person op, Organization newOrg, IExtractor extractor = null)
-            : base(op, (uint)SCASEvent.OrganizationRegisterInitiated, (uint)SCASEventType.Model, (uint)SCASEventLevel.Common, (uint)SCASEventPriority.Common, new OrganizationCreatedEventData(newOrg), extractor)
+            : base(op, UserContextEvent.OrganizationRegisterInitiated, SCASEventType.Model, SCASEventLevel.Common, SCASEventPriority.Common, new OrganizationCreatedEventData(newOrg), extractor)
         {
             org = newOrg;
         }

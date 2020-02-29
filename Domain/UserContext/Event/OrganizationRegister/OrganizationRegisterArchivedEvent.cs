@@ -14,20 +14,20 @@ namespace SCAS.Domain.UserContext
     }
 
     public class OrganizationRegisterArchivedEvent
-        : DomainArtificialEventBase<DomainEventValue, OrganizationRegisterArchivedEventData, Person>
+        : UserContextArtificialEventBase<DomainEventValue, OrganizationRegisterArchivedEventData>
     {
         [NotNull] private OrganizationRegister register;
 
         public override string Message => string.Format("Register of organization {0} to region {1} archived.", register.RegisteredRegion.Info.Name, register.Org.Info.Name);
 
         private OrganizationRegisterArchivedEvent(IDomainEvent trigger, OrganizationRegister targetRegister, IExtractor extractor)
-            : base(trigger, (uint)SCASEvent.OrganizationRegisterArchived, (uint)SCASEventType.Model, (uint)SCASEventLevel.Common, (uint)SCASEventPriority.Common, new OrganizationRegisterArchivedEventData(targetRegister), extractor)
+            : base(trigger, UserContextEvent.OrganizationRegisterArchived, SCASEventType.Model, SCASEventLevel.Common, SCASEventPriority.Common, new OrganizationRegisterArchivedEventData(targetRegister), extractor)
         {
             register = targetRegister;
         }
 
         internal OrganizationRegisterArchivedEvent(Person op, OrganizationRegister targetRegister, IExtractor extractor)
-            : base(op, (uint)SCASEvent.OrganizationRegisterArchived, (uint)SCASEventType.Model, (uint)SCASEventLevel.Common, (uint)SCASEventPriority.Common, new OrganizationRegisterArchivedEventData(targetRegister), extractor)
+            : base(op, UserContextEvent.OrganizationRegisterArchived, SCASEventType.Model, SCASEventLevel.Common, SCASEventPriority.Common, new OrganizationRegisterArchivedEventData(targetRegister), extractor)
         {
             register = targetRegister;
         }

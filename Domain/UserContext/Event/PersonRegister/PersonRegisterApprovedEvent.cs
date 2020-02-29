@@ -18,14 +18,14 @@ namespace SCAS.Domain.UserContext
     }
 
     public class PersonRegisterApprovedEvent
-        : DomainArtificialEventBase<DomainEventValue, PersonRegisterApprovedEventData, Person>
+        : UserContextArtificialEventBase<DomainEventValue, PersonRegisterApprovedEventData>
     {
         [NotNull] private PersonRegisterForm form;
 
         public override string Message => GetMessage();
 
         internal PersonRegisterApprovedEvent(Person op, PersonRegisterForm targetForm, IExtractor extractor = null)
-            : base(op, (uint)SCASEvent.PersonRegisterApproved, (uint)SCASEventType.Model, (uint)SCASEventLevel.Common, (uint)SCASEventPriority.Common, new PersonRegisterApprovedEventData(targetForm), extractor)
+            : base(op, UserContextEvent.PersonRegisterApproved, SCASEventType.Model, SCASEventLevel.Common, SCASEventPriority.Common, new PersonRegisterApprovedEventData(targetForm), extractor)
         {
             form = targetForm;
         }

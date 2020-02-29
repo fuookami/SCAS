@@ -14,14 +14,14 @@ namespace SCAS.Domain.UserContext
     }
 
     public class RegionDeletedEvent
-        : DomainArtificialEventBase<DomainEventValue, RegionDeletedEventData, Person>
+        : UserContextArtificialEventBase<DomainEventValue, RegionDeletedEventData>
     {
         [NotNull] private Region region;
 
         public override string Message => string.Format("Region {0} was deleted.", region.Info.Name);
 
         internal RegionDeletedEvent(Person op, Region targetRegion, IExtractor extractor = null)
-            : base(op, (uint)SCASEvent.RegionDeleted, (uint)SCASEventType.Model, (uint)SCASEventLevel.Common, (uint)SCASEventPriority.Common, new RegionDeletedEventData(targetRegion), extractor)
+            : base(op, UserContextEvent.RegionDeleted, SCASEventType.Model, SCASEventLevel.Common, SCASEventPriority.Common, new RegionDeletedEventData(targetRegion), extractor)
         {
             region = targetRegion;
         }

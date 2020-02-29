@@ -17,10 +17,11 @@ namespace SCAS.Module
     public interface IDomainEvent
         : IDomainEntity
     {
-        public uint Code { get; }
-        public uint Type { get; }
-        public uint Level { get; }
-        public uint Priority { get; }
+        public SCASModuleCode ModuleCode { get; }
+        public uint EventCode { get; }
+        public SCASEventType Type { get; }
+        public SCASEventLevel Level { get; }
+        public SCASEventPriority Priority { get; }
         [NotNull] public string Message { get; }
         [DisallowNull] public string Digest { get; }
         [DisallowNull] public string Data { get; }
@@ -34,7 +35,8 @@ namespace SCAS.Module
         public string TriggerID { get; internal set; }
         public string OperatorID { get; internal set; }
 
-        public uint Code { get; internal set; }
+        public uint ModuleCode { get; internal set; }
+        public uint EventCode { get; internal set; }
         public uint Type { get; internal set; }
         public uint Level { get; internal set; }
         public uint Priority { get; internal set; }
@@ -50,10 +52,11 @@ namespace SCAS.Module
     {
         public IDomainEvent Trigger { get; }
 
-        public uint Code { get; }
-        public uint Type { get; }
-        public uint Level { get; }
-        public uint Priority { get; }
+        public SCASModuleCode ModuleCode { get; }
+        public uint EventCode { get; }
+        public SCASEventType Type { get; }
+        public SCASEventLevel Level { get; }
+        public SCASEventPriority Priority { get; }
         public DateTime PostTime { get; }
 
         [NotNull] public abstract string Message { get; }
@@ -61,11 +64,12 @@ namespace SCAS.Module
         [DisallowNull] public string Data { get; }
         [DisallowNull] public DTO DataObj { get; }
 
-        protected DomainEventBase(IDomainEvent trigger, uint code, uint type, uint level, uint priority, DTO obj, IExtractor extractor = null)
+        protected DomainEventBase(IDomainEvent trigger, SCASModuleCode moduleCode, uint eventCode, SCASEventType type, SCASEventLevel level, SCASEventPriority priority, DTO obj, IExtractor extractor = null)
         {
             Trigger = trigger;
 
-            Code = code;
+            ModuleCode = moduleCode;
+            EventCode = eventCode;
             Type = type;
             Level = level;
             Priority = priority;
@@ -76,12 +80,13 @@ namespace SCAS.Module
             Digest = Encoding.UTF8.GetString(extractor.Extract(Encoding.UTF8.GetBytes(Data)));
         }
 
-        protected DomainEventBase(DomainEventID id, IDomainEvent trigger, uint code, uint type, uint level, uint priority, DateTime postTime, DTO obj, IExtractor extractor = null)
+        protected DomainEventBase(DomainEventID id, IDomainEvent trigger, SCASModuleCode moduleCode, uint eventCode, SCASEventType type, SCASEventLevel level, SCASEventPriority priority, DateTime postTime, DTO obj, IExtractor extractor = null)
             : base(id)
         {
             Trigger = trigger;
 
-            Code = code;
+            ModuleCode = moduleCode;
+            EventCode = eventCode;
             Type = type;
             Level = level;
             Priority = priority;
@@ -119,10 +124,11 @@ namespace SCAS.Module
         {
             base.ToValue(value);
             value.TriggerID = this.Trigger?.ID;
-            value.Code = this.Code;
-            value.Type = this.Type;
-            value.Level = this.Level;
-            value.Priority = this.Priority;
+            value.ModuleCode = (uint)this.ModuleCode;
+            value.EventCode = this.EventCode;
+            value.Type = (uint)this.Type;
+            value.Level = (uint)this.Level;
+            value.Priority = (uint)this.Priority;
             value.Digest = this.Digest;
             value.Data = this.Data;
             value.PostTime = PostTime;
@@ -137,24 +143,24 @@ namespace SCAS.Module
     {
         public O Operator { get; }
 
-        protected DomainArtificialEventBase(IDomainEvent trigger, uint code, uint type, uint level, uint priority, DTO obj, IExtractor extractor = null)
-            : base(trigger, code, type, level, priority, obj, extractor)
+        protected DomainArtificialEventBase(IDomainEvent trigger, SCASModuleCode moduleCode, uint eventCode, SCASEventType type, SCASEventLevel level, SCASEventPriority priority, DTO obj, IExtractor extractor = null)
+            : base(trigger, moduleCode, eventCode, type, level, priority, obj, extractor)
         {
         }
 
-        protected DomainArtificialEventBase(O op, uint code, uint type, uint level, uint priority, DTO obj, IExtractor extractor = null)
-            : this(null, code, type, level, priority, obj, extractor)
+        protected DomainArtificialEventBase(O op, SCASModuleCode moduleCode, uint eventCode, SCASEventType type, SCASEventLevel level, SCASEventPriority priority, DTO obj, IExtractor extractor = null)
+            : this(null, moduleCode, eventCode, type, level, priority, obj, extractor)
         {
             Operator = op;
         }
 
-        protected DomainArtificialEventBase(DomainEventID id, IDomainEvent trigger, uint code, uint type, uint level, uint priority, DateTime postTime, DTO obj, IExtractor extractor = null)
-            : base(id, trigger, code, type, level, priority, postTime, obj, extractor)
+        protected DomainArtificialEventBase(DomainEventID id, IDomainEvent trigger, SCASModuleCode moduleCode, uint eventCode, SCASEventType type, SCASEventLevel level, SCASEventPriority priority, DateTime postTime, DTO obj, IExtractor extractor = null)
+            : base(id, trigger, moduleCode, eventCode, type, level, priority, postTime, obj, extractor)
         {
         }
 
-        protected DomainArtificialEventBase(DomainEventID id, O op, uint code, uint type, uint level, uint priority, DateTime postTime, DTO obj, IExtractor extractor = null)
-            : this(id, null, code, type, level, priority, postTime, obj, extractor)
+        protected DomainArtificialEventBase(DomainEventID id, O op, SCASModuleCode moduleCode, uint eventCode, SCASEventType type, SCASEventLevel level, SCASEventPriority priority, DateTime postTime, DTO obj, IExtractor extractor = null)
+            : this(id, null, moduleCode, eventCode, type, level, priority, postTime, obj, extractor)
         {
             Operator = op;
         }
