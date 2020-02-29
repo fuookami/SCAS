@@ -6,9 +6,9 @@ namespace SCAS.Domain.UserContext
 {
     public class UserEventHandler
     {
-        private IEventRepository repository;
+        private IEventRepository<IUserContextEvent> repository;
 
-        internal UserEventHandler(IEventRepository targetRepository = null)
+        internal UserEventHandler(IEventRepository<IUserContextEvent> targetRepository = null)
         {
             repository = targetRepository;
         }
@@ -33,7 +33,7 @@ namespace SCAS.Domain.UserContext
             return Save(e);
         }
 
-        private Try Save(IDomainEvent e)
+        private Try Save(IUserContextEvent e)
         {
             if (repository == null)
             {

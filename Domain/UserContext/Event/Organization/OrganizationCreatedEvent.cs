@@ -17,7 +17,7 @@ namespace SCAS.Domain.UserContext
     }
 
     public class OrganizationCreatedEvent
-        : UserContextArtificialEventBase<DomainEventValue, OrganizationCreatedEventData>
+        : UserContextArtificialEventBase<OrganizationCreatedEventData>
     {
         private Organization org;
 

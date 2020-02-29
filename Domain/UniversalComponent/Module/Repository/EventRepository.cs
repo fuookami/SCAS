@@ -1,12 +1,10 @@
 ﻿using SCAS.Utils;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace SCAS.Module
 {
-    public interface IEventRepository
+    public interface IEventRepository<T>
+        where T : IDomainEvent
     {
-        public Try Save(IDomainEvent e);
+        public Try Save(T e);
     }
 }

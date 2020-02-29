@@ -14,7 +14,7 @@ namespace SCAS.Domain.UserContext
     }
 
     public class RegionDeletedEvent
-        : UserContextArtificialEventBase<DomainEventValue, RegionDeletedEventData>
+        : UserContextArtificialEventBase<RegionDeletedEventData>
     {
         [NotNull] private Region region;
 

@@ -19,7 +19,7 @@ namespace SCAS.Domain.UserContext
     }
 
     public class OrganizationInfoModifiedEvent
-        : UserContextArtificialEventBase<DomainEventValue, OrganizationInfoModifiedEventData>
+        : UserContextArtificialEventBase<OrganizationInfoModifiedEventData>
     {
         [NotNull] private OrganizationInfo info;
 

@@ -13,7 +13,7 @@ namespace SCAS.Domain.UserContext
     }
 
     public class OrganizationArchivedEvent
-        : UserContextArtificialEventBase<DomainEventValue, OrganizationArchivedEventData>
+        : UserContextArtificialEventBase<OrganizationArchivedEventData>
     {
         private Organization org;
 

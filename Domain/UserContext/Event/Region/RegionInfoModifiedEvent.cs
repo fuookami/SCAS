@@ -22,7 +22,7 @@ namespace SCAS.Domain.UserContext
     }
 
     public class RegionInfoModifiedEvent
-        : UserContextArtificialEventBase<DomainEventValue, RegionInfoChangedEventData>
+        : UserContextArtificialEventBase<RegionInfoChangedEventData>
     {
         [NotNull] private RegionInfo info;
 

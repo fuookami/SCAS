@@ -17,7 +17,7 @@ namespace SCAS.Domain.UserContext
     }
 
     public class OrganizationRegisterInfoModifiedEvent
-        : UserContextArtificialEventBase<DomainEventValue, OrganizationRegisterInfoModifiedEventData>
+        : UserContextArtificialEventBase<OrganizationRegisterInfoModifiedEventData>
     {
         [NotNull] public OrganizationRegister register;
 

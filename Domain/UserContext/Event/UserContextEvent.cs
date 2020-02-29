@@ -33,9 +33,14 @@ namespace SCAS.Domain.UserContext
         PersonDeleted
     };
 
-    public abstract class UserContextEventBase<T, DTO>
-        : DomainEventBase<T, DTO>
-        where T : DomainEventValue
+    public interface IUserContextEvent
+        : IDomainEvent
+    {
+        public DomainEventValue ToValue();
+    }
+
+    public abstract class UserContextEventBase<DTO>
+        : DomainEventBase<DomainEventValue, DTO>, IUserContextEvent
     {
         protected UserContextEventBase(IDomainEvent trigger, UserContextEvent code, SCASEventType type, SCASEventLevel level, SCASEventPriority priority, DTO obj, IExtractor extractor = null)
             : base(trigger, SCASModuleCode.UserContext, (uint)code, type, level, priority, obj, extractor)
@@ -48,9 +53,8 @@ namespace SCAS.Domain.UserContext
         }
     }
 
-    public abstract class UserContextArtificialEventBase<T, DTO>
-        : DomainArtificialEventBase<T, DTO, Person>
-        where T : DomainEventValue
+    public abstract class UserContextArtificialEventBase<DTO>
+        : DomainArtificialEventBase<DomainEventValue, DTO, Person>, IUserContextEvent
     {
         protected UserContextArtificialEventBase(IDomainEvent trigger, UserContextEvent code, SCASEventType type, SCASEventLevel level, SCASEventPriority priority, DTO obj, IExtractor extractor = null)
             : base(trigger, SCASModuleCode.UserContext, (uint)code, type, level, priority, obj, extractor)

@@ -18,7 +18,7 @@ namespace SCAS.Domain.UserContext
     }
 
     public class PersonRegisterApprovedEvent
-        : UserContextArtificialEventBase<DomainEventValue, PersonRegisterApprovedEventData>
+        : UserContextArtificialEventBase<PersonRegisterApprovedEventData>
     {
         [NotNull] private PersonRegisterForm form;
 

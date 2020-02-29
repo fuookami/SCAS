@@ -18,7 +18,7 @@ namespace SCAS.Domain.UserContext
     }
 
     public class PersonCreatedEvent
-        : UserContextArtificialEventBase<DomainEventValue, PersonCreatedEventData>
+        : UserContextArtificialEventBase<PersonCreatedEventData>
     {
         private Person person;
 

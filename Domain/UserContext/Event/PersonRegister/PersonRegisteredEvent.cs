@@ -22,7 +22,7 @@ namespace SCAS.Domain.UserContext
     }
 
     public class PersonRegisteredEvent
-        : UserContextEventBase<DomainEventValue, PersonRegisteredEventData>
+        : UserContextEventBase<PersonRegisteredEventData>
     {
         [NotNull] private PersonRegister register;
 

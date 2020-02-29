@@ -13,7 +13,7 @@ namespace SCAS.Domain.UserContext
     }
 
     public class PersonDeletedEvent
-        : UserContextArtificialEventBase<DomainEventValue, PersonDeletedEventData>
+        : UserContextArtificialEventBase<PersonDeletedEventData>
     {
         private Person person;
 

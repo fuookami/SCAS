@@ -18,7 +18,7 @@ namespace SCAS.Domain.UserContext
     }
 
     public class OrganizationRegisterUnapprovedEvent
-        : UserContextArtificialEventBase<DomainEventValue, OrganizationRegisterUnapprovedEventData>
+        : UserContextArtificialEventBase<OrganizationRegisterUnapprovedEventData>
     {
         [NotNull] private OrganizationRegisterForm form;
 

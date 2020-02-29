@@ -19,7 +19,7 @@ namespace SCAS.Domain.UserContext
     }
 
     public class RegionCreatedEvent
-        : UserContextArtificialEventBase<DomainEventValue, RegionCreatedEventData>
+        : UserContextArtificialEventBase<RegionCreatedEventData>
     {
         private Region region;
 
