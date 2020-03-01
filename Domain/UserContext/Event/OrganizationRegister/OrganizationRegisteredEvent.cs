@@ -33,10 +33,5 @@ namespace SCAS.Domain.UserContext
         {
             register = targetRegister;
         }
-
-        public override DomainEventValue ToValue()
-        {
-            return base.ToValue(new DomainEventValue { });
-        }
     }
 }

@@ -26,24 +26,16 @@ namespace SCAS.Domain.UserContext
             register = targetRegister;
         }
 
-        internal OrganizationRegisterArchivedEvent(Person op, OrganizationRegister targetRegister, IExtractor extractor)
+        internal OrganizationRegisterArchivedEvent(Person op, OrganizationRegister targetRegister, IExtractor extractor = null)
             : base(op, UserContextEvent.OrganizationRegisterArchived, SCASEventType.Model, SCASEventLevel.Common, SCASEventPriority.Common, new OrganizationRegisterArchivedEventData(targetRegister), extractor)
         {
             register = targetRegister;
         }
-
-        internal OrganizationRegisterArchivedEvent(OrganizationRegister targetRegister, IExtractor extractor = null)
-            : this((IDomainEvent)null, targetRegister, extractor) { }
 
         internal OrganizationRegisterArchivedEvent(OrganizationArchivedEvent trigger, OrganizationRegister targetRegister, IExtractor extractor = null)
             : this((IDomainEvent)trigger, targetRegister, extractor) { }
 
         internal OrganizationRegisterArchivedEvent(RegionArchivedEvent trigger, OrganizationRegister targetRegister, IExtractor extractor = null)
             : this((IDomainEvent)trigger, targetRegister, extractor) { }
-
-        public override DomainEventValue ToValue()
-        {
-            return base.ToValue(new DomainEventValue { });
-        }
     }
 }

@@ -41,10 +41,5 @@ namespace SCAS.Domain.UserContext
             ret += ".";
             return ret;
         }
-
-        public override DomainEventValue ToValue()
-        {
-            return base.ToValue(new DomainEventValue { });
-        }
     }
 }

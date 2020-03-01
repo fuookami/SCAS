@@ -17,9 +17,10 @@ namespace SCAS.Domain.UserContext
         OrganizationRegisterUnapproved,
         OrganizationRegistered,
         OrganizationRegisterInfoModified,
-        OrganizationRegisterArchived,
         OrganizationArchived,
+        OrganizationRegisterArchived,
         OrganizationDeleted,
+        OrganizationRegisterDeleted,
 
         PersonCreated,
         PersonInfoModified,
@@ -28,9 +29,10 @@ namespace SCAS.Domain.UserContext
         PersonRegisterUnapproved,
         PersonRegistered,
         PersonRegisterInfoModified,
-        PersonRegisterArchived,
         PersonArchived,
-        PersonDeleted
+        PersonRegisterArchived,
+        PersonDeleted,
+        PersonRegisterDeleted
     };
 
     public interface IUserContextEvent
@@ -50,6 +52,11 @@ namespace SCAS.Domain.UserContext
         protected UserContextEventBase(DomainEventID id, IDomainEvent trigger, UserContextEvent code, SCASEventType type, SCASEventLevel level, SCASEventPriority priority, DateTime postTime, DTO obj, IExtractor extractor = null)
             : base(id, trigger, SCASModuleCode.UserContext, (uint)code, type, level, priority, postTime, obj, extractor)
         {
+        }
+
+        public override DomainEventValue ToValue()
+        {
+            return base.ToValue(new DomainEventValue { });
         }
     }
 
@@ -74,6 +81,11 @@ namespace SCAS.Domain.UserContext
         protected UserContextArtificialEventBase(DomainEventID id, Person op, UserContextEvent code, SCASEventType type, SCASEventLevel level, SCASEventPriority priority, DateTime postTime, DTO obj, IExtractor extractor = null)
             : base(id, op, SCASModuleCode.UserContext, (uint)code, type, level, priority, postTime, obj, extractor)
         {
+        }
+
+        public override DomainEventValue ToValue()
+        {
+            return base.ToValue(new DomainEventValue { });
         }
     }
 }

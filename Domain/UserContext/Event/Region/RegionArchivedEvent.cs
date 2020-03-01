@@ -25,10 +25,5 @@ namespace SCAS.Domain.UserContext
         {
             region = targetRegion;
         }
-
-        public override DomainEventValue ToValue()
-        {
-            return base.ToValue(new DomainEventValue { });
-        }
     }
 }

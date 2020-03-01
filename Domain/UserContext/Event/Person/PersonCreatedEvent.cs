@@ -29,10 +29,5 @@ namespace SCAS.Domain.UserContext
         {
             person = newPerson;
         }
-
-        public override DomainEventValue ToValue()
-        {
-            return base.ToValue(new DomainEventValue { });
-        }
     }
 }

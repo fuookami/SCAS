@@ -24,10 +24,5 @@ namespace SCAS.Domain.UserContext
         {
             org = targetOrg;
         }
-
-        public override DomainEventValue ToValue()
-        {
-            return base.ToValue(new DomainEventValue { });
-        }
     }
 }
