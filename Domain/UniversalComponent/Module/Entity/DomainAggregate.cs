@@ -14,7 +14,7 @@ namespace SCAS.Module
         where T : DomainAggregateRootValueBase
         where U : DomainEntityID, new()
     {
-        public bool Archived { get; private set; }
+        public bool Archived { get; protected set; }
         public bool Deleted { get; protected set; }
 
         protected DomainAggregateRoot()
@@ -30,9 +30,9 @@ namespace SCAS.Module
             Deleted = deleted;
         }
 
-        protected bool Archive()
+        public virtual bool Archive()
         {
-            if (Archived)
+            if (Archived || Deleted)
             {
                 return false;
             }
@@ -81,6 +81,16 @@ namespace SCAS.Module
             : base(entityID, archived, deleted)
         {
             Recycled = recycled;
+        }
+
+        public override bool Archive()
+        {
+            if (Archived || Recycled || Deleted)
+            {
+                return false;
+            }
+            Archived = true;
+            return true;
         }
 
         public bool Recycle()

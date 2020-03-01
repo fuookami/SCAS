@@ -60,7 +60,7 @@ namespace SCAS.Domain.UserContext
             {
                 //todo: return error
             }
-            if (regions[region.ID].Archived)
+            if (regions[region.ID].Archived || regions[region.ID].Deleted)
             {
                 //todo: return error
             }

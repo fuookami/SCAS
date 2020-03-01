@@ -18,7 +18,7 @@ namespace SCAS.Domain.UserContext
     {
         [NotNull] private OrganizationRegister register;
 
-        public override string Message => string.Format("Register of organization {0} to region {1} archived.", register.RegisteredRegion.Info.Name, register.Org.Info.Name);
+        public override string Message => string.Format("Register of organization {0} to region {1} was archived.", register.RegisteredRegion.Info.Name, register.Org.Info.Name);
 
         private OrganizationRegisterArchivedEvent(IDomainEvent trigger, OrganizationRegister targetRegister, IExtractor extractor)
             : base(trigger, UserContextEvent.OrganizationRegisterArchived, SCASEventType.Model, SCASEventLevel.Common, SCASEventPriority.Common, new OrganizationRegisterArchivedEventData(targetRegister), extractor)

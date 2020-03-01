@@ -66,12 +66,6 @@ namespace SCAS.Domain.UserContext
             return !Archived && RegionTypeTrait.Allow(Type, register);
         }
 
-        public new Region Archive()
-        {
-            base.Archive();
-            return this;
-        }
-
         public override RegionValue ToValue()
         {
             return base.ToValue(new RegionValue

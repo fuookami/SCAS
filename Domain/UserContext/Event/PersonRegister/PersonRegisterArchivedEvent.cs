@@ -43,7 +43,7 @@ namespace SCAS.Domain.UserContext
 
         private string GetMessage()
         {
-            var ret = string.Format("Register of person {0} to region {1} archived", register.Person.Info.Name, register.RegisteredRegion.Info.Name);
+            var ret = string.Format("Register of person {0} to region {1} was archived", register.Person.Info.Name, register.RegisteredRegion.Info.Name);
             if (register.BelongingOrganization != null)
             {
                 ret += string.Format(", belonging organization {0}", register.BelongingOrganization.Info.Name);

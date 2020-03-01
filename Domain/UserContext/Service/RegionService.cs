@@ -30,8 +30,22 @@ namespace SCAS.Domain.UserContext
 
         public Try ArchiveRegion(Person op, Region targetRegion)
         {
-            return repository.Save(targetRegion.Archive())
+            if (!targetRegion.Archive())
+            {
+                //todo: return error
+            }
+            return repository.Save(targetRegion)
                 && handler.Push(new RegionArchivedEvent(op, targetRegion, extractor));
+        }
+
+        public Try DeleteRegion(Person op, Region targetRegion)
+        {
+            if (!targetRegion.Delete())
+            {
+                //todo: return error
+            }
+            return repository.Save(targetRegion)
+                && handler.Push(new RegionDeletedEvent(op, targetRegion, extractor));
         }
 
         public Try RegionInfoModified(Person op, Region targetRegion, string name = null, string description = null, IReadOnlyCollection<string> tags = null)

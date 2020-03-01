@@ -32,7 +32,7 @@ namespace SCAS.Domain.UserContext
 
         private string GetMessage()
         {
-            var ret = string.Format("Register of person {0} to region {1} approved by {2}", form.Person.Info.Name, form.RegisteredRegion.Info.Name, form.Examination.Examiner.Info.Name);
+            var ret = string.Format("Register of person {0} to region {1} was approved by {2}", form.Person.Info.Name, form.RegisteredRegion.Info.Name, form.Examination.Examiner.Info.Name);
             if (form.BelongingOrganization != null)
             {
                 ret += string.Format(", belonging organization {0}", form.BelongingOrganization.Info.Name);

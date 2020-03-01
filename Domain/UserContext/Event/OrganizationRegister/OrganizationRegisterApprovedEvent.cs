@@ -22,7 +22,7 @@ namespace SCAS.Domain.UserContext
     {
         [NotNull] private OrganizationRegisterForm form;
 
-        public override string Message => string.Format("Register of organization {0} to region {1} approved by {2}.", form.Org.Info.Name, form.RegisteredRegion.Info.Name, form.Examination.Examiner.Info.Name);
+        public override string Message => string.Format("Register of organization {0} to region {1} was approved by {2}.", form.Org.Info.Name, form.RegisteredRegion.Info.Name, form.Examination.Examiner.Info.Name);
 
         internal OrganizationRegisterApprovedEvent(Person op, OrganizationRegisterForm targetForm, IExtractor extractor = null)
             : base(op, UserContextEvent.OrganizationRegisterApproved, SCASEventType.Model, SCASEventLevel.Common, SCASEventPriority.Common, new OrganizationRegisterApprovedEventData(targetForm), extractor)

@@ -14,20 +14,20 @@ namespace SCAS.Domain.UserContext
     }
 
     public class OrganizationRegisterDeletedEvent
-        : UserContextArtificialEventBase<OrganizationRegisterArchivedEventData>
+        : UserContextArtificialEventBase<OrganizationRegisterDeletedEventData>
     {
         [NotNull] private OrganizationRegister register;
 
-        public override string Message => string.Format("Register of organization {0} to region {1} deleted.", register.RegisteredRegion.Info.Name, register.Org.Info.Name);
+        public override string Message => string.Format("Register of organization {0} to region {1} was deleted.", register.RegisteredRegion.Info.Name, register.Org.Info.Name);
 
         private OrganizationRegisterDeletedEvent(IDomainEvent trigger, OrganizationRegister targetRegister, IExtractor extractor)
-            : base(trigger, UserContextEvent.OrganizationRegisterDeleted, SCASEventType.Model, SCASEventLevel.Common, SCASEventPriority.Common, new OrganizationRegisterArchivedEventData(targetRegister), extractor)
+            : base(trigger, UserContextEvent.OrganizationRegisterDeleted, SCASEventType.Model, SCASEventLevel.Common, SCASEventPriority.Common, new OrganizationRegisterDeletedEventData(targetRegister), extractor)
         {
             register = targetRegister;
         }
 
         internal OrganizationRegisterDeletedEvent(Person op, OrganizationRegister targetRegister, IExtractor extractor = null)
-            : base(op, UserContextEvent.OrganizationRegisterDeleted, SCASEventType.Model, SCASEventLevel.Common, SCASEventPriority.Common, new OrganizationRegisterArchivedEventData(targetRegister), extractor)
+            : base(op, UserContextEvent.OrganizationRegisterDeleted, SCASEventType.Model, SCASEventLevel.Common, SCASEventPriority.Common, new OrganizationRegisterDeletedEventData(targetRegister), extractor)
         {
             register = targetRegister;
         }

@@ -9,4 +9,8 @@
     <ProjectReference Include="..\UserContext\UserContext.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Model\Role\" />
+  </ItemGroup>
+
 </Project>
